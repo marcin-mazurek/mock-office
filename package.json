@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "electron-dev": "electron .",
+    "renderer-dev": "webpack --watch"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -14,7 +15,8 @@
   "author": "clixr",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron-reload": "^1.0.3"
+    "electron-reload": "^1.0.3",
+    "webpack": "^1.13.3"
   },
   "dependencies": {
     "electron": "^1.4.10"
