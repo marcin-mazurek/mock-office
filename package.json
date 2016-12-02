@@ -1,7 +1,7 @@
 {
   "name": "mockee",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "App for mocking API",
   "main": "main.js",
   "scripts": {
     "electron-dev": "electron .",
