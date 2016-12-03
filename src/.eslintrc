@@ -1,0 +1,31 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": "webpack"
+  },
+  "rules": {
+    "comma-dangle": 0,
+    "react/require-extension": "off",
+    "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+    "import/no-extraneous-dependencies": [2, {
+      "devDependencies": true,
+      "optionalDependencies": false
+    }],
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "globals": {
+    "api_config": true,
+    "describe": true,
+    "it": true,
+    "WrappedDiffusionClient": true
+  }
+}
