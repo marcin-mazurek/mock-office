@@ -4,9 +4,6 @@
     "browser": true,
     "node": true
   },
-  "settings": {
-    "import/resolver": "webpack"
-  },
   "rules": {
     "comma-dangle": 0,
     "react/require-extension": "off",
@@ -21,11 +18,5 @@
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }
-  },
-  "globals": {
-    "api_config": true,
-    "describe": true,
-    "it": true,
-    "WrappedDiffusionClient": true
   }
 }

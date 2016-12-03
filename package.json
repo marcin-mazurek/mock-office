@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "electron-dev": "electron .",
-    "renderer-dev": "webpack --watch"
+    "renderer-dev": "webpack --watch",
+    "lint": "eslint 'src/**/*.js'"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -17,6 +18,11 @@
   "devDependencies": {
     "babel-loader": "^6.2.8",
     "electron-reload": "^1.0.3",
+    "eslint": "^3.11.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1",
     "webpack": "^1.13.3"
   },
   "dependencies": {

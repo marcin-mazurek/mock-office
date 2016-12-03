@@ -13,5 +13,11 @@ module.exports = {
     path: './dist',
     filename: 'renderer.js'
   },
-  target: 'electron-renderer'
+  target: 'electron-renderer',
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+    modulesDirectories: [
+      'node_modules'
+    ]
+  }
 };
