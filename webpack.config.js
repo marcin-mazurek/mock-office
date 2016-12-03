@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './renderer.src.js',
+  entry: './src/renderer/main.js',
   output: {
     filename: 'renderer.js'
   },
