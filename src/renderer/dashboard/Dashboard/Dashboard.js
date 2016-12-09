@@ -22,6 +22,7 @@ export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.load = this.load.bind(this);
+    this.unload = this.unload.bind(this);
     this.toggleLive = this.toggleLive.bind(this);
     this.state = {
       mocks: MOCKS,
@@ -72,22 +73,11 @@ export default class Dashboard extends React.Component {
         <div className="dashboard-columns">
           <div>
             <h2>Mocks:</h2>
-            <MockList mocks={this.state.mocks} load={this.load} />
+            <MockList mocks={this.state.mocks} action={this.load} buttonText="Load" />
           </div>
           <div>
             <h2>Loaded:</h2>
-            <ul>
-              {
-                this.state.loaded.map(mock => (
-                  <li key={mock.id}>
-                    <a href="" onClick={() => this.unload(mock.id)}>
-                      <div>Request url: {mock.request.url}</div>
-                      <div>Response body: {JSON.stringify(mock.response.body)}</div>
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
+            <MockList mocks={this.state.loaded} action={this.unload} buttonText="Unload" />
           </div>
         </div>
         <button className="dashboard__button" onClick={this.toggleLive}>

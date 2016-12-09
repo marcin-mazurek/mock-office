@@ -1,14 +1,13 @@
 import React from 'react';
 
-const MockList = ({ mocks, load }) => (
+const MockList = ({ mocks, action, buttonText }) => (
   <ul>
     {
       mocks.map(mock => (
         <li key={mock.id}>
-          <a href="" onClick={() => load(mock.id)}>
-            <div>Request url: {mock.request.url}</div>
-            <div>Response body: {JSON.stringify(mock.response.body)}</div>
-          </a>
+          <div>Request url: {mock.request.url}</div>
+          <div>Response body: {JSON.stringify(mock.response.body)}</div>
+          <button onClick={() => action(mock.id)}>{buttonText}</button>
         </li>
       ))
     }
@@ -16,10 +15,9 @@ const MockList = ({ mocks, load }) => (
 );
 
 MockList.propTypes = {
-  mocks: React.PropTypes.arrayOf(
-    React.PropTypes.object
-  ).isRequired,
-  load: React.PropTypes.func.isRequired
+  mocks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  action: React.PropTypes.func.isRequired,
+  buttonText: React.PropTypes.string.isRequired
 };
 
 export default MockList;
