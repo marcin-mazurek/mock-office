@@ -1,4 +1,8 @@
 const electron = require('electron');
+const server = require('./dist/server').default;
+
+server();
+
 require('electron-reload')(__dirname);
 // Module to control application life.
 const app = electron.app;

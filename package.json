@@ -6,7 +6,8 @@
   "scripts": {
     "electron-dev": "electron .",
     "renderer-dev": "webpack --watch",
-    "lint": "eslint 'src/**/*.js'"
+    "lint": "eslint 'src/**/*.js'",
+    "server-dev": "babel src/server/index.js --out-file dist/server.js --watch"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
