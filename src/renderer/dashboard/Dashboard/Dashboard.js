@@ -1,4 +1,5 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 import MockList from '../MockList';
 
 const MOCKS = [
@@ -11,7 +12,7 @@ const MOCKS = [
       body: {
         bets: [
           'bet1',
-          'bet2'
+          'bet3'
         ]
       }
     }
@@ -62,8 +63,11 @@ export default class Dashboard extends React.Component {
   }
 
   toggleLive() {
+    const currentLive = !this.state.live;
+    ipcRenderer.send('go-live', currentLive);
+
     this.setState({
-      live: !this.state.live
+      live: currentLive
     });
   }
 

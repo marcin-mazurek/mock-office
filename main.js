@@ -1,7 +1,21 @@
 const electron = require('electron');
-const server = require('./dist/server').default;
+const MockServer = require('./dist/server').default;
 
-server();
+const ipcMain = electron.ipcMain;
+const server = new MockServer();
+/* eslint-disable no-console */
+ipcMain.on('go-live', (event, shouldBeLive) => {
+  console.log(shouldBeLive);
+  if (shouldBeLive && !server.isLive()) {
+    server.start(() => {
+      console.log('Mockee server is running!');
+    });
+  } else if (!shouldBeLive && server.isLive()) {
+    server.stop(() => {
+      console.log('Mockee server is shut down!');
+    });
+  }
+});
 
 require('electron-reload')(__dirname);
 // Module to control application life.
