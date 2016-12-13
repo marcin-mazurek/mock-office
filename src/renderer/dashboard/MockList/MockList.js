@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MockList = ({ mocks, action, buttonText }) => (
+const MockList = ({ mocks, buttonText = 'do action', action }) => (
   <ul>
     {
       mocks.map(mock => (
@@ -15,9 +15,9 @@ const MockList = ({ mocks, action, buttonText }) => (
 );
 
 MockList.propTypes = {
-  mocks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  action: React.PropTypes.func.isRequired,
-  buttonText: React.PropTypes.string.isRequired
+  mocks: React.PropTypes.shape(),
+  buttonText: React.PropTypes.string,
+  action: React.PropTypes.func
 };
 
 export default MockList;

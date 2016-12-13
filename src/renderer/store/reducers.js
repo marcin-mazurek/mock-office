@@ -1,7 +1,7 @@
-import expectationsReducer from '../expectations';
+import mocksReducer from '../mocks';
 import routingReducer from './utils';
 
 export default {
-  expectations: expectationsReducer,
+  mocks: mocksReducer,
   routing: routingReducer
 };
