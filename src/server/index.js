@@ -1,8 +1,10 @@
 import express from 'express';
-import endpoints from '../../mocks.json';
+import fs from 'fs';
 
 export default class MockServer {
-  constructor() {
+  constructor(pathToConfig) {
+    const endpoints = fs.readFileSync(pathToConfig);
+    this.endpoints = endpoints || {};
     this.app = express();
     this.live = false;
 
@@ -19,7 +21,7 @@ export default class MockServer {
   }
 
   preparePayload(req) {
-    const endpoint = endpoints[req.url];
+    const endpoint = this.endpoints[req.url];
 
     if (endpoint) {
       return endpoint.payload;
