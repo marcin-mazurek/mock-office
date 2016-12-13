@@ -1,9 +1,12 @@
+require('./devtools');
+require('electron-reload')(__dirname);
 const electron = require('electron');
 const path = require('path');
 const MockServer = require('./dist/server').default;
 
 const ipcMain = electron.ipcMain;
 const server = new MockServer(path.resolve(__dirname, 'mocks.json'));
+
 /* eslint-disable no-console */
 ipcMain.on('go-live', (event, shouldBeLive) => {
   if (shouldBeLive && !server.isLive()) {
@@ -17,7 +20,6 @@ ipcMain.on('go-live', (event, shouldBeLive) => {
   }
 });
 
-require('electron-reload')(__dirname);
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.

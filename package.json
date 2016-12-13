@@ -19,6 +19,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "babel-loader": "^6.2.8",
+    "electron-devtools-installer": "^2.0.1",
     "electron-reload": "^1.0.3",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
