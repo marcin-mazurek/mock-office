@@ -1,0 +1,7 @@
+{
+  "/some-url": {
+    "payload": {
+      "value": "Im JSON!"
+    }
+  }
+}

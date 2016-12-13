@@ -1,12 +1,5 @@
 import express from 'express';
-
-const endpoints = {
-  '/some-url': {
-    payload: {
-      value: 'Im JSON!'
-    }
-  }
-};
+import endpoints from '../../mocks.json';
 
 export default class MockServer {
   constructor() {
