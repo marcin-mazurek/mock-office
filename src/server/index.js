@@ -17,8 +17,7 @@ export default class MockServer {
       }
 
       if (payload) {
-        res.set('Content-Type', 'application/json');
-        res.send(payload);
+        res.json(payload);
       } else {
         res.status(404).end();
       }
