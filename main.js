@@ -1,8 +1,9 @@
 const electron = require('electron');
+const path = require('path');
 const MockServer = require('./dist/server').default;
 
 const ipcMain = electron.ipcMain;
-const server = new MockServer();
+const server = new MockServer(path.resolve(__dirname, 'mocks.json'));
 /* eslint-disable no-console */
 ipcMain.on('go-live', (event, shouldBeLive) => {
   if (shouldBeLive && !server.isLive()) {
@@ -22,7 +23,6 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
-const path = require('path');
 const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will

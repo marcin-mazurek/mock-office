@@ -3,13 +3,18 @@ import fs from 'fs';
 
 export default class MockServer {
   constructor(pathToConfig) {
-    const endpoints = fs.readFileSync(pathToConfig);
+    const endpoints = JSON.parse(fs.readFileSync(pathToConfig));
     this.endpoints = endpoints || {};
     this.app = express();
     this.live = false;
 
     this.app.get('/*', (req, res) => {
       const payload = this.preparePayload(req);
+
+      if (!this.live) {
+        res.status(404).end();
+        return;
+      }
 
       if (payload) {
         res.set('Content-Type', 'application/json');
