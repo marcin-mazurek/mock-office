@@ -5,7 +5,6 @@ const ipcMain = electron.ipcMain;
 const server = new MockServer();
 /* eslint-disable no-console */
 ipcMain.on('go-live', (event, shouldBeLive) => {
-  console.log(shouldBeLive);
   if (shouldBeLive && !server.isLive()) {
     server.start(() => {
       console.log('Mockee server is running!');
