@@ -1,9 +1,10 @@
 const electron = require('electron');
 const path = require('path');
-const MockServer = require('../dist/server').default;
+const MockServer = require('./server').default;
+const getMocksConfig = require('./persistent').default;
 
 const ipcMain = electron.ipcMain;
-const server = new MockServer(path.resolve(__dirname, '../mocks.json'));
+const server = new MockServer(getMocksConfig(path.resolve(__dirname, '../../mocks.json')));
 
 /* eslint-disable no-console */
 ipcMain.on('go-live', (event, shouldBeLive) => {
@@ -43,7 +44,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'renderer/index.html'),
+    pathname: path.join(__dirname, '../../index.html'),
     protocol: 'file:',
     slashes: true
   }));

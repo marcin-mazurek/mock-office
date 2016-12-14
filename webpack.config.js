@@ -10,8 +10,8 @@ module.exports = {
     ]
   },
   output: {
-    path: './dist',
-    filename: 'renderer.js'
+    path: './dist/renderer',
+    filename: 'bundle.js'
   },
   target: 'electron-renderer',
   resolve: {

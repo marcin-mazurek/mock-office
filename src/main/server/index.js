@@ -1,9 +1,7 @@
 import express from 'express';
-import fs from 'fs';
 
 export default class MockServer {
-  constructor(pathToConfig) {
-    const endpoints = JSON.parse(fs.readFileSync(pathToConfig));
+  constructor(endpoints) {
     this.endpoints = endpoints || {};
     this.loaded = [];
     this.app = express();
