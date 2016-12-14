@@ -1,5 +1,8 @@
 module.exports = {
-  entry: './src/renderer/main.js',
+  entry: [
+    'babel-polyfill',
+    './src/renderer/main.js'
+  ],
   module: {
     loaders: [
       {
