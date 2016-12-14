@@ -1,40 +1,9 @@
 import { List, Map } from 'immutable';
-import { LOAD, UNLOAD } from '../dashboard/MockList/actions';
-
-const MOCKS = {
-  1: {
-    id: '1',
-    request: {
-      url: '/some-url-1'
-    },
-    response: {
-      body: {
-        data: [
-          'item1',
-          'item2'
-        ]
-      }
-    }
-  },
-  2: {
-    id: '2',
-    request: {
-      url: '/some-url-2'
-    },
-    response: {
-      body: {
-        data: [
-          'item1',
-          'item3'
-        ]
-      }
-    }
-  }
-};
+import { LOAD, UNLOAD } from './actions';
 
 const initialState = new Map({
-  itemsById: new Map(MOCKS),
-  unloadedIds: new List(['1', '2']),
+  itemsById: new Map({}),
+  unloadedIds: new List([]),
   loadedIds: new List([])
 });
 
@@ -61,6 +30,19 @@ export default (state = initialState, action) => {
       return state
         .set('loadedIds', loadedIds)
         .set('unloadedIds', unloadedIds);
+    }
+    case 'mocks/LOAD_MOCKS': {
+      const { mocks } = action;
+      const mocksById = mocks.reduce(
+        (prev, next) => {
+          const reducedMocks = prev;
+          reducedMocks[next.id] = next;
+          return reducedMocks;
+        }, {}
+      );
+      let newState = state.set('unloadedIds', new List(mocks.map(mock => mock.id)));
+      newState = newState.set('itemsById', new Map(mocksById));
+      return newState;
     }
     default: {
       return state;

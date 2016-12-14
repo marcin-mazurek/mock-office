@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import MockList from './MockList';
 import { getUnloadedMocks } from '../../mocks/selectors';
-import { load } from './actions';
+import { load } from '../../mocks/actions';
 
 const mapStateToProps = state => ({
   mocks: getUnloadedMocks(state)

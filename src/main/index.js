@@ -4,7 +4,9 @@ import url from 'url';
 import MockServer from './server';
 import getMocksConfig from './persistent';
 
-const server = new MockServer(getMocksConfig(path.resolve(__dirname, '../../mocks.json')));
+const mocks = getMocksConfig(path.resolve(__dirname, '../../mocks.json'));
+
+const server = new MockServer(mocks);
 
 /* eslint-disable no-console */
 ipcMain.on('go-live', (event, shouldBeLive) => {
@@ -44,6 +46,9 @@ function createWindow() {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+  ipcMain.on('MAIN_WINDOW_READY', () => {
+    mainWindow.webContents.send('mocks-loaded', mocks);
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

@@ -1,8 +1,14 @@
 import express from 'express';
 
 export default class MockServer {
-  constructor(endpoints) {
-    this.endpoints = endpoints || {};
+  constructor(mocks) {
+    this.endpoints = mocks.reduce(
+        (prev, next) => {
+          const reducedMocks = prev;
+          reducedMocks[next.id] = next;
+          return reducedMocks;
+        }, {}
+      ) || {};
     this.loaded = [];
     this.app = express();
     this.live = false;

@@ -13,8 +13,10 @@ const history = syncHistoryWithStore(hashHistory, store, {
   }
 });
 
-ipcRenderer.on('redux-action', (event, action) => {
-  store.dispatch(action);
+ipcRenderer.send('MAIN_WINDOW_READY');
+
+ipcRenderer.on('mocks-loaded', (event, mocks) => {
+  store.dispatch({ type: 'mocks/LOAD_MOCKS', mocks });
 });
 
 const App = () => (
