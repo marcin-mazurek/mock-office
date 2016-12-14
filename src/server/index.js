@@ -5,6 +5,7 @@ export default class MockServer {
   constructor(pathToConfig) {
     const endpoints = JSON.parse(fs.readFileSync(pathToConfig));
     this.endpoints = endpoints || {};
+    this.loaded = [];
     this.app = express();
     this.live = false;
 
@@ -25,10 +26,15 @@ export default class MockServer {
   }
 
   preparePayload(req) {
-    const endpoint = this.endpoints[req.url];
+    let endpoint;
+    this.loaded.forEach((loadedId) => {
+      if (this.endpoints[loadedId].request.url === req.url) {
+        endpoint = this.endpoints[loadedId];
+      }
+    });
 
     if (endpoint) {
-      return endpoint.payload;
+      return endpoint.response.body;
     }
 
     return undefined;
@@ -46,5 +52,14 @@ export default class MockServer {
 
   isLive() {
     return this.live;
+  }
+
+  load(id) {
+    this.loaded.push(id);
+  }
+
+  unload(id) {
+    const indexOfMockToLoad = this.loaded.indexOf(endpointId => endpointId === id);
+    this.loaded.splice(indexOfMockToLoad, 1);
   }
 }

@@ -18,6 +18,14 @@ ipcMain.on('go-live', (event, shouldBeLive) => {
   }
 });
 
+ipcMain.on('mock-load', (event, id) => {
+  server.load(id);
+});
+
+ipcMain.on('mock-unload', (event, id) => {
+  server.unload(id);
+});
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.

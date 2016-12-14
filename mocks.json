@@ -1,7 +1,30 @@
 {
-  "/some-url": {
-    "payload": {
-      "value": "Im JSON!"
+  "1": {
+    "id": "1",
+    "request": {
+      "url": "/some-url-1"
+    },
+    "response": {
+      "body": {
+        "data": [
+          "item1",
+          "item2"
+        ]
+      }
+    }
+  },
+  "2": {
+    "id": "2",
+    "request": {
+      "url": "/some-url-2"
+    },
+    "response": {
+      "body": {
+        "data": [
+          "item1",
+          "item3"
+        ]
+      }
     }
   }
 }
