@@ -1,9 +1,9 @@
-const electron = require('electron');
-const path = require('path');
-const MockServer = require('./server').default;
-const getMocksConfig = require('./persistent').default;
+import { ipcMain, BrowserWindow, app } from 'electron';
+import path from 'path';
+import url from 'url';
+import MockServer from './server';
+import getMocksConfig from './persistent';
 
-const ipcMain = electron.ipcMain;
 const server = new MockServer(getMocksConfig(path.resolve(__dirname, '../../mocks.json')));
 
 /* eslint-disable no-console */
@@ -26,13 +26,6 @@ ipcMain.on('mock-load', (event, id) => {
 ipcMain.on('mock-unload', (event, id) => {
   server.unload(id);
 });
-
-// Module to control application life.
-const app = electron.app;
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
-
-const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
