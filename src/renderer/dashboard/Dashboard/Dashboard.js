@@ -2,6 +2,7 @@ import React from 'react';
 import { ipcRenderer } from 'electron';
 import UnloadedMockList from '../MockList/UnloadedMockList';
 import LoadedMockList from '../MockList/LoadedMockList';
+import FilePicker from '../../mocks/addFromFile/FilePicker';
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <div className="dashboard">
+        <FilePicker />
         <div className="dashboard-columns">
           <div>
             <h2>Mocks:</h2>

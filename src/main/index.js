@@ -1,12 +1,16 @@
 import { ipcMain, BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
+import uniqueId from 'node-unique';
 import MockServer from './server';
 import getMocksConfig from './persistent';
 
 const mocks = getMocksConfig(path.resolve(__dirname, '../../mocks.json'));
-
 const server = new MockServer(mocks);
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow;
 
 /* eslint-disable no-console */
 ipcMain.on('go-live', (event, shouldBeLive) => {
@@ -29,9 +33,16 @@ ipcMain.on('mock-unload', (event, id) => {
   server.unload(id);
 });
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+ipcMain.on('mock-loaded-from-file', (event, mocksFromFile) => {
+  const mocksWithIds = mocksFromFile.map((mockFromFile) => {
+    const mock = mockFromFile;
+    mock.id = uniqueId();
+    return mock;
+  });
+  server.add(mocksWithIds);
+
+  mainWindow.webContents.send('mocks-added-from-file', mocksWithIds);
+});
 
 function createWindow() {
   // Create the browser window.

@@ -1,21 +1,21 @@
 [
   {
     "request": {
-      "url": "/some-url-1"
+      "url": "/some-url-3"
     },
     "response": {
       "body": {
-        "data": "response for some-url-1"
+        "data": "response for some-url-3"
       }
     }
   },
   {
     "request": {
-      "url": "/some-url-2"
+      "url": "/some-url-4"
     },
     "response": {
       "body": {
-        "data": "response for some-url-2"
+        "data": "response for some-url-4"
       }
     }
   }

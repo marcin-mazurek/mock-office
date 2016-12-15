@@ -54,6 +54,18 @@ export default class MockServer {
     this.live = false;
   }
 
+  add(mocks) {
+    const mocksAsMap = mocks.reduce(
+        (prev, next) => {
+          const reducedMocks = prev;
+          reducedMocks[next.id] = next;
+          return reducedMocks;
+        }, {}
+      ) || {};
+
+    Object.assign(this.endpoints, mocksAsMap);
+  }
+
   isLive() {
     return this.live;
   }

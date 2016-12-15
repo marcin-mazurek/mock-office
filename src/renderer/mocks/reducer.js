@@ -40,8 +40,8 @@ export default (state = initialState, action) => {
           return reducedMocks;
         }, {}
       );
-      let newState = state.set('unloadedIds', new List(mocks.map(mock => mock.id)));
-      newState = newState.set('itemsById', new Map(mocksById));
+      let newState = state.set('unloadedIds', state.get('unloadedIds').push(...mocks.map(mock => mock.id)));
+      newState = newState.set('itemsById', newState.get('itemsById').merge(mocksById));
       return newState;
     }
     default: {

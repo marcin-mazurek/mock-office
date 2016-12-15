@@ -4,10 +4,10 @@ const MockList = ({ mocks, buttonText = 'do action', action }) => (
   <ul>
     {
       mocks.map(mock => (
-        <li key={mock.id}>
-          <div>Request url: {mock.request.url}</div>
-          <div>Response body: {JSON.stringify(mock.response.body)}</div>
-          <button onClick={() => action(mock.id)}>{buttonText}</button>
+        <li key={mock.get('id')}>
+          <div>Request url: {mock.getIn(['request', 'url'])}</div>
+          <div>Response body: {JSON.stringify(mock.getIn(['response', 'body']))}</div>
+          <button onClick={() => action(mock.get('id'))}>{buttonText}</button>
         </li>
       ))
     }
