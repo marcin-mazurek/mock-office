@@ -41,6 +41,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "immutable": "^3.8.1",
+    "node-unique": "^1.0.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
