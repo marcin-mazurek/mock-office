@@ -6,9 +6,10 @@
   "scripts": {
     "electron-dev": "electron .",
     "renderer-dev": "webpack --watch",
+    "main-dev": "babel src/main --out-dir dist/main --watch --source-maps",
+    "common-dev": "babel src/common --out-dir dist/common --watch --source-maps",
     "lint": "eslint 'src/**/*.js'",
-    "test": "jest",
-    "main-dev": "babel src/main --out-dir dist/main --watch --source-maps"
+    "test": "jest"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [

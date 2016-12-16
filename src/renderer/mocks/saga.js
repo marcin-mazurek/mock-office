@@ -2,6 +2,11 @@ import { take, spawn, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import { LOAD, UNLOAD } from './actions';
+import {
+  EXPECTATION_ADD,
+  EXPECTATION_LOAD,
+  EXPECTATION_UNLOAD
+} from '../../common/messageNames';
 
 function* filePickedAgent() {
   // eslint-disable-next-line no-constant-condition
@@ -12,7 +17,7 @@ function* filePickedAgent() {
     reader.onload = (e) => {
       try {
         const mocksFromFile = JSON.parse(e.target.result);
-        ipcRenderer.send('mock-loaded-from-file', mocksFromFile);
+        ipcRenderer.send(EXPECTATION_LOAD, mocksFromFile);
       } catch (parseError) {
         // eslint-disable-next-line no-console
         console.error(parseError.message);
@@ -24,7 +29,7 @@ function* filePickedAgent() {
 
 const mocksAddedFromFileChannel = () => (
   eventChannel((emitter) => {
-    ipcRenderer.on('mocks-added-from-file', (event, mocks) => {
+    ipcRenderer.on(EXPECTATION_ADD, (event, mocks) => {
       emitter(mocks);
     });
 
@@ -48,9 +53,9 @@ function* fileLoadAgent() {
     const { type, id } = yield take([LOAD, UNLOAD]);
 
     if (type === LOAD) {
-      ipcRenderer.send('mock-load', id);
+      ipcRenderer.send(EXPECTATION_LOAD, id);
     } else {
-      ipcRenderer.send('mock-unload', id);
+      ipcRenderer.send(EXPECTATION_UNLOAD, id);
     }
   }
 }

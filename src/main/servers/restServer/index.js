@@ -1,6 +1,6 @@
 import express from 'express';
 
-export default class MockServer {
+export default class RestServer {
   constructor(mocks) {
     this.endpoints = mocks.reduce(
         (prev, next) => {

@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import UnloadedMockList from '../MockList/UnloadedMockList';
 import LoadedMockList from '../MockList/LoadedMockList';
 import FilePicker from '../../mocks/addFromFile/FilePicker';
+import { SERVER_START, SERVER_STOP } from '../../../common/messageNames';
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ export default class Dashboard extends React.Component {
 
   toggleLive() {
     const currentLive = !this.state.live;
-    ipcRenderer.send('go-live', currentLive);
+    const message = currentLive ? SERVER_START : SERVER_STOP;
+    ipcRenderer.send(message);
 
     this.setState({
       live: currentLive

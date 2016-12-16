@@ -2,38 +2,47 @@ import { ipcMain, BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
 import uniqueId from 'node-unique';
-import MockServer from './server';
-import getMocksConfig from './persistent';
+import RestServer from './servers/restServer';
+import {
+  EXPECTATION_ADD,
+  EXPECTATION_LOAD,
+  EXPECTATION_UNLOAD,
+  SERVER_START,
+  SERVER_STOP
+} from '../common/messageNames';
 
-const mocks = getMocksConfig(path.resolve(__dirname, '../../mocks.json'));
-const server = new MockServer(mocks);
+const server = new RestServer();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 /* eslint-disable no-console */
-ipcMain.on('go-live', (event, shouldBeLive) => {
-  if (shouldBeLive && !server.isLive()) {
+ipcMain.on(SERVER_START, () => {
+  if (!server.isLive()) {
     server.start(() => {
       console.log('Mockee server is running!');
     });
-  } else if (!shouldBeLive && server.isLive()) {
+  }
+});
+
+ipcMain.on(SERVER_STOP, () => {
+  if (server.isLive()) {
     server.stop(() => {
       console.log('Mockee server is shut down!');
     });
   }
 });
 
-ipcMain.on('mock-load', (event, id) => {
+ipcMain.on(EXPECTATION_LOAD, (event, id) => {
   server.load(id);
 });
 
-ipcMain.on('mock-unload', (event, id) => {
+ipcMain.on(EXPECTATION_UNLOAD, (event, id) => {
   server.unload(id);
 });
 
-ipcMain.on('mock-loaded-from-file', (event, mocksFromFile) => {
+ipcMain.on(EXPECTATION_ADD, (event, mocksFromFile) => {
   const mocksWithIds = mocksFromFile.map((mockFromFile) => {
     const mock = mockFromFile;
     mock.id = uniqueId();
@@ -57,9 +66,6 @@ function createWindow() {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-  ipcMain.on('MAIN_WINDOW_READY', () => {
-    mainWindow.webContents.send('mocks-loaded', mocks);
-  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
