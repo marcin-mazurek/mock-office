@@ -1,8 +1,7 @@
 import React from 'react';
 import { ipcRenderer } from 'electron';
-import UnloadedMockList from '../MockList/UnloadedMockList';
-import LoadedMockList from '../MockList/LoadedMockList';
-import FilePicker from '../../mocks/addFromFile/FilePicker';
+import Server from '../Server';
+import ServerList from '../ServerList';
 import { SERVER_START, SERVER_STOP } from '../../../common/messageNames';
 
 export default class Main extends React.Component {
@@ -27,24 +26,18 @@ export default class Main extends React.Component {
   render() {
     return (
       <div className="main">
-        <FilePicker />
-        <div className="main-columns">
-          <div>
-            <h2>Mocks:</h2>
-            <UnloadedMockList buttonText="Load" />
-          </div>
-          <div>
-            <h2>Loaded:</h2>
-            <LoadedMockList buttonText="Unload" />
-          </div>
+        <div className="main-server-list">
+          <div>List of servers:</div>
+          <ServerList />
         </div>
-        <button className="main" onClick={this.toggleLive}>
-          {
+        <Server
+          toggleLive={this.toggleLive}
+          buttonText={
             this.state.live
               ? 'Stop'
               : 'Start'
           }
-        </button>
+        />
       </div>
     );
   }

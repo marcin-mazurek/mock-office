@@ -20,11 +20,13 @@ ipcRenderer.on('mocks-loaded', (event, mocks) => {
 });
 
 const App = () => (
-  <Provider store={store}>
-    <Router history={history}>
-      {routes}
-    </Router>
-  </Provider>
+  <div className="app">
+    <Provider store={store}>
+      <Router history={history}>
+        {routes}
+      </Router>
+    </Provider>
+  </div>
 );
 
 export default App;
