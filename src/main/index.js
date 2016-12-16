@@ -2,16 +2,15 @@ import { ipcMain, BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
 import uniqueId from 'node-unique';
-import RestServer from './servers/restServer';
 import {
   EXPECTATION_ADD,
   SERVER_START,
   SERVER_STOP
 } from '../common/messageNames';
 import expectationsEvents from './listeners/expectationsEvents';
+import servers from './servers';
 
-const server = new RestServer();
-
+const server = servers.add('my-server', 'rest');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
