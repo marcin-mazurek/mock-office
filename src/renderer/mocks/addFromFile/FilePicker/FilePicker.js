@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { filePick } from '../../actions';
 
 const mapDispatchToProps = {
-  onChange: files => ({ type: 'mocks/FILE_PICKED', files })
+  filePick
 };
 
 class FilePicker extends React.Component {
@@ -12,7 +13,7 @@ class FilePicker extends React.Component {
   }
 
   handleChange() {
-    this.props.onChange(this.fileNode.files);
+    this.props.filePick(this.fileNode.files);
   }
 
   render() {
@@ -27,7 +28,7 @@ class FilePicker extends React.Component {
 }
 
 FilePicker.propTypes = {
-  onChange: React.PropTypes.func.isRequired
+  filePick: React.PropTypes.func.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(FilePicker);

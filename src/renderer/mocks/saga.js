@@ -1,7 +1,12 @@
 import { take, spawn, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
-import { LOAD, UNLOAD } from './actions';
+import {
+  LOAD,
+  UNLOAD,
+  FILE_PICK,
+  add
+} from './actions';
 import {
   EXPECTATION_ADD,
   EXPECTATION_LOAD,
@@ -11,13 +16,13 @@ import {
 function* filePickedAgent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const { files } = yield take('mocks/FILE_PICKED');
+    const { files } = yield take(FILE_PICK);
     const file = files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
         const mocksFromFile = JSON.parse(e.target.result);
-        ipcRenderer.send(EXPECTATION_LOAD, mocksFromFile);
+        ipcRenderer.send(EXPECTATION_ADD, mocksFromFile);
       } catch (parseError) {
         // eslint-disable-next-line no-console
         console.error(parseError.message);
@@ -43,7 +48,7 @@ function* mocksAddedFromFileAgent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const mocks = yield take(channel);
-    yield put({ type: 'mocks/LOAD_MOCKS', mocks });
+    yield put(add(mocks));
   }
 }
 

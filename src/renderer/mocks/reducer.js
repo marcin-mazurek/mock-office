@@ -1,5 +1,5 @@
 import { List, Map } from 'immutable';
-import { LOAD, UNLOAD } from './actions';
+import { LOAD, UNLOAD, ADD } from './actions';
 
 const initialState = new Map({
   itemsById: new Map({}),
@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
         .set('loadedIds', loadedIds)
         .set('unloadedIds', unloadedIds);
     }
-    case 'mocks/LOAD_MOCKS': {
+    case ADD: {
       const { mocks } = action;
       const mocksById = mocks.reduce(
         (prev, next) => {

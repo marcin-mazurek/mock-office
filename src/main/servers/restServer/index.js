@@ -2,13 +2,16 @@ import express from 'express';
 
 export default class RestServer {
   constructor(mocks) {
-    this.endpoints = mocks.reduce(
+    this.load = this.load.bind(this);
+    this.unload = this.unload.bind(this);
+    this.add = this.add.bind(this);
+    this.endpoints = mocks ? mocks.reduce(
         (prev, next) => {
           const reducedMocks = prev;
           reducedMocks[next.id] = next;
           return reducedMocks;
         }, {}
-      ) || {};
+      ) : {};
     this.loaded = [];
     this.app = express();
     this.live = false;

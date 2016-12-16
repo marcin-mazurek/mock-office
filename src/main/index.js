@@ -5,11 +5,10 @@ import uniqueId from 'node-unique';
 import RestServer from './servers/restServer';
 import {
   EXPECTATION_ADD,
-  EXPECTATION_LOAD,
-  EXPECTATION_UNLOAD,
   SERVER_START,
   SERVER_STOP
 } from '../common/messageNames';
+import expectationsEvents from './listeners/expectationsEvents';
 
 const server = new RestServer();
 
@@ -34,23 +33,18 @@ ipcMain.on(SERVER_STOP, () => {
   }
 });
 
-ipcMain.on(EXPECTATION_LOAD, (event, id) => {
-  server.load(id);
-});
+const Mock = (data) => {
+  const mock = data;
+  mock.id = uniqueId();
+  return mock;
+};
 
-ipcMain.on(EXPECTATION_UNLOAD, (event, id) => {
-  server.unload(id);
-});
-
-ipcMain.on(EXPECTATION_ADD, (event, mocksFromFile) => {
-  const mocksWithIds = mocksFromFile.map((mockFromFile) => {
-    const mock = mockFromFile;
-    mock.id = uniqueId();
-    return mock;
-  });
+expectationsEvents.on('load', server.load);
+expectationsEvents.on('unload', server.unload);
+expectationsEvents.on('add', (mocks) => {
+  const mocksWithIds = mocks.map(mock => new Mock(mock));
   server.add(mocksWithIds);
-
-  mainWindow.webContents.send('mocks-added-from-file', mocksWithIds);
+  mainWindow.webContents.send(EXPECTATION_ADD, mocksWithIds);
 });
 
 function createWindow() {
