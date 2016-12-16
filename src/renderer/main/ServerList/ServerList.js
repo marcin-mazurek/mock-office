@@ -7,10 +7,9 @@ const ServerList = ({ servers, select, idOfSelected }) => (
   <ul>
     {
       servers.map(server => (
-        <li key={server.id}>
+        <li key={server.id} className={idOfSelected === server.id ? 'server-list__item--selected' : ''}>
           <a href="" onClick={e => select(e, server.id)}>
             {server.name}
-            { idOfSelected === server.id ? 'SELECTED' : ''}
           </a>
         </li>
       ))
