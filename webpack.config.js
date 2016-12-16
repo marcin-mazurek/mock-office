@@ -1,6 +1,7 @@
 module.exports = {
   entry: [
     'babel-polyfill',
+    './src/renderer/styles/main.scss',
     './src/renderer/main.js'
   ],
   module: {
@@ -9,6 +10,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel'
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'postcss', 'sass']
       }
     ]
   },
