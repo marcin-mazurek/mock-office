@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Dashboard from '../dashboard/Dashboard';
+import Main from '../main/Main';
 
-const routes = <Route path="/" component={Dashboard} />;
+const routes = <Route path="/" component={Main} />;
 
 export default routes;

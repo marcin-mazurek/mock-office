@@ -5,7 +5,7 @@ import LoadedMockList from '../MockList/LoadedMockList';
 import FilePicker from '../../mocks/addFromFile/FilePicker';
 import { SERVER_START, SERVER_STOP } from '../../../common/messageNames';
 
-export default class Dashboard extends React.Component {
+export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.toggleLive = this.toggleLive.bind(this);
@@ -26,9 +26,9 @@ export default class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className="dashboard">
+      <div className="main">
         <FilePicker />
-        <div className="dashboard-columns">
+        <div className="main-columns">
           <div>
             <h2>Mocks:</h2>
             <UnloadedMockList buttonText="Load" />
@@ -38,7 +38,7 @@ export default class Dashboard extends React.Component {
             <LoadedMockList buttonText="Unload" />
           </div>
         </div>
-        <button className="dashboard__button" onClick={this.toggleLive}>
+        <button className="main" onClick={this.toggleLive}>
           {
             this.state.live
               ? 'Stop'
@@ -50,4 +50,4 @@ export default class Dashboard extends React.Component {
   }
 }
 
-Dashboard.propTypes = {};
+Main.propTypes = {};
