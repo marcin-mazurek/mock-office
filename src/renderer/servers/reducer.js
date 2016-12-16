@@ -1,5 +1,4 @@
 import { List, Record, Map } from 'immutable';
-import unique from 'node-unique';
 import { ADD, SELECT } from './actions';
 
 const Server = new Record({
@@ -16,8 +15,8 @@ const initialState = new Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { name, port } = action;
-      const server = new Server({ name, port, id: unique() });
+      const { name, port, id } = action;
+      const server = new Server({ name, port, id });
       let items = state.get('items');
       items = items.push(server);
       let newState = state;

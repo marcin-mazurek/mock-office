@@ -5,12 +5,14 @@ import uniqueId from 'node-unique';
 import {
   EXPECTATION_ADD,
   SERVER_START,
-  SERVER_STOP
+  SERVER_STOP,
+  SERVER_ADD
 } from '../common/messageNames';
 import expectationsEvents from './listeners/expectationsEvents';
 import servers from './servers';
 
-const server = servers.add('my-server', 'rest');
+const id = servers.add('my-server', 'rest');
+const server = servers.get(id);
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -30,6 +32,12 @@ ipcMain.on(SERVER_STOP, () => {
       console.log('Mockee server is shut down!');
     });
   }
+});
+
+ipcMain.on(SERVER_ADD, (e, args) => {
+  const { name, port } = args;
+  const serverId = servers.add(name, 'rest');
+  mainWindow.webContents.send(SERVER_ADD, { name, port, id: serverId });
 });
 
 const Mock = (data) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { add } from '../../servers/actions';
+import { requestAdd } from '../../servers/actions';
 
 class AddServer extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class AddServer extends React.Component {
   }
 
   submit() {
-    this.props.add(this.state.name, this.state.port);
+    this.props.requestAdd(this.state.name, this.state.port);
   }
 
   render() {
@@ -53,11 +53,11 @@ class AddServer extends React.Component {
 }
 
 AddServer.propTypes = {
-  add: React.PropTypes.func.isRequired
+  requestAdd: React.PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
-  add
+  requestAdd
 };
 
 export default connect(null, mapDispatchToProps)(AddServer);

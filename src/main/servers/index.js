@@ -1,3 +1,4 @@
+import unique from 'node-unique';
 import RestServer from './restServer';
 
 const serverTypes = {
@@ -7,15 +8,16 @@ const serverTypes = {
 const servers = {};
 
 export default {
-  add(name, type) {
+  add(type) {
     const Server = serverTypes[type];
     const serverInstance = new Server();
-    servers[name] = serverInstance;
+    const id = unique();
+    servers[id] = serverInstance;
 
-    return serverInstance;
+    return id;
   },
-  get(name) {
-    return servers[name];
+  get(id) {
+    return servers[id];
   },
   remove(name) {
     servers[name] = undefined;
