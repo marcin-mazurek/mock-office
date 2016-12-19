@@ -1,5 +1,10 @@
-import { List, Record, Map } from 'immutable';
-import { ADD, SELECT } from './actions';
+import { List, Record, Map, Set } from 'immutable';
+import {
+  ADD,
+  SELECT,
+  START,
+  STOP
+} from './actions';
 
 const Server = new Record({
   id: '',
@@ -9,7 +14,8 @@ const Server = new Record({
 
 const initialState = new Map({
   items: new List(),
-  selected: null
+  selected: null,
+  running: new Set()
 });
 
 export default (state = initialState, action) => {
@@ -27,6 +33,14 @@ export default (state = initialState, action) => {
     case SELECT: {
       const { id } = action;
       return state.set('selected', id);
+    }
+    case START: {
+      const { id } = action;
+      return state.set('running', state.get('running').add(id));
+    }
+    case STOP: {
+      const { id } = action;
+      return state.set('running', state.get('running').delete(id));
     }
     default: {
       return state;

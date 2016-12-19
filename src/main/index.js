@@ -1,4 +1,4 @@
-import { ipcMain, BrowserWindow, app } from 'electron';
+import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
 import uniqueId from 'node-unique';
@@ -9,35 +9,36 @@ import {
   SERVER_ADD
 } from '../common/messageNames';
 import expectationsEvents from './listeners/expectationsEvents';
+import serverEvents from './listeners/serversEvents';
 import servers from './servers';
 
-const id = servers.add('my-server', 'rest');
-const server = servers.get(id);
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 /* eslint-disable no-console */
-ipcMain.on(SERVER_START, () => {
-  if (!server.isLive()) {
-    server.start(() => {
+serverEvents.on('start', (id) => {
+  const serverToStart = servers.get(id);
+
+  if (!serverToStart.isLive()) {
+    serverToStart.start(() => {
+      mainWindow.webContents.send(SERVER_START);
       console.log('Mockee server is running!');
     });
   }
 });
 
-ipcMain.on(SERVER_STOP, () => {
-  if (server.isLive()) {
-    server.stop(() => {
+serverEvents.on('stop', (id) => {
+  const serverToStop = servers.get(id);
+
+  if (serverToStop.isLive()) {
+    console.log('before serverToStop()');
+    serverToStop.stop(() => {
+      console.log('after serverToStop()');
+      mainWindow.webContents.send(SERVER_STOP);
       console.log('Mockee server is shut down!');
     });
   }
-});
-
-ipcMain.on(SERVER_ADD, (e, args) => {
-  const { name, port } = args;
-  const serverId = servers.add(name, 'rest');
-  mainWindow.webContents.send(SERVER_ADD, { name, port, id: serverId });
 });
 
 const Mock = (data) => {
@@ -46,17 +47,30 @@ const Mock = (data) => {
   return mock;
 };
 
-expectationsEvents.on('load', server.load);
-expectationsEvents.on('unload', server.unload);
-expectationsEvents.on('add', (mocks) => {
-  const mocksWithIds = mocks.map(mock => new Mock(mock));
-  server.add(mocksWithIds);
-  mainWindow.webContents.send(EXPECTATION_ADD, mocksWithIds);
+serverEvents.on('add', (args) => {
+  const { name, port } = args;
+  const serverId = servers.add(name, 'rest');
+  mainWindow.webContents.send(SERVER_ADD, { name, port, id: serverId });
+});
+
+expectationsEvents.on('load', (args) => {
+  servers.get(args.serverId).load(args.expectationId);
+});
+
+expectationsEvents.on('unload', (args) => {
+  servers.get(args.serverId).unload(args.expectationId);
+});
+
+expectationsEvents.on('add', (args) => {
+  const expectationsWithIds = args.expectations.map(mock => new Mock(mock));
+  const serverToAddMock = servers.get(args.serverId);
+  serverToAddMock.add(expectationsWithIds);
+  mainWindow.webContents.send(EXPECTATION_ADD, expectationsWithIds);
 });
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow = new BrowserWindow({ width: 1000, height: 700 });
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({

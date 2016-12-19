@@ -16,7 +16,7 @@ export default class RestServer {
     this.app = express();
     this.live = false;
 
-    this.app.get('/*', (req, res) => {
+    this.app.get('*', (req, res) => {
       const payload = this.preparePayload(req);
 
       if (!this.live) {
