@@ -5,6 +5,7 @@ export default class RestServer {
     this.load = this.load.bind(this);
     this.unload = this.unload.bind(this);
     this.add = this.add.bind(this);
+    this.sockets = [];
     this.endpoints = mocks ? mocks.reduce(
         (prev, next) => {
           const reducedMocks = prev;
@@ -49,12 +50,13 @@ export default class RestServer {
 
   start(cb) {
     this.server = this.app.listen(3000, cb);
-    this.live = true;
+    this.server.on('connection', socket => this.sockets.push(socket));
   }
 
   stop(cb) {
+    this.sockets.forEach(socket => socket.destroy());
+    this.sockets.length = 0;
     this.server.close(cb);
-    this.live = false;
   }
 
   add(mocks) {
@@ -70,7 +72,7 @@ export default class RestServer {
   }
 
   isLive() {
-    return this.live;
+    return this.server ? this.server.listening : false;
   }
 
   load(id) {
