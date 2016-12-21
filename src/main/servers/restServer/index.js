@@ -1,21 +1,17 @@
 import express from 'express';
 
 export default class RestServer {
-  constructor(mocks) {
+  constructor(config) {
     this.load = this.load.bind(this);
     this.unload = this.unload.bind(this);
     this.add = this.add.bind(this);
     this.sockets = [];
-    this.endpoints = mocks ? mocks.reduce(
-        (prev, next) => {
-          const reducedMocks = prev;
-          reducedMocks[next.id] = next;
-          return reducedMocks;
-        }, {}
-      ) : {};
+    this.endpoints = {};
     this.loaded = [];
     this.app = express();
     this.live = false;
+    this.port = config.port || 3000;
+    this.name = config.name;
 
     this.app.get('*', (req, res) => {
       const payload = this.preparePayload(req);
@@ -49,7 +45,7 @@ export default class RestServer {
   }
 
   start(cb) {
-    this.server = this.app.listen(3000, cb);
+    this.server = this.app.listen(this.port, cb);
     this.server.on('connection', socket => this.sockets.push(socket));
   }
 

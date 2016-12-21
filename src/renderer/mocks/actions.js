@@ -12,6 +12,7 @@ export const filePick = files => ({
 
 export const add = (serverId, expectations) => ({
   type: ADD,
+  serverId,
   expectations
 });
 

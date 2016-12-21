@@ -49,7 +49,7 @@ const Mock = (data) => {
 
 serverEvents.on('add', (args) => {
   const { name, port } = args;
-  const serverId = servers.add(name, 'rest');
+  const serverId = servers.add('rest', { name, port });
   mainWindow.webContents.send(SERVER_ADD, { name, port, id: serverId });
 });
 

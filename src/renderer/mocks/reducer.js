@@ -3,36 +3,29 @@ import { ADD, LOAD, UNLOAD } from './actions';
 
 const initialState = new Map({
   itemsById: new Map(),
-  loadedByServer: new Map()
+  itemsByServer: new Map(),
+  loaded: new Set()
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const { serverId, expectationId } = action;
-      let serverExpectationList = state.get('loadedByServer').get(serverId);
+      const { expectationId } = action;
 
-      if (!serverExpectationList) {
-        serverExpectationList = Set.of(expectationId);
-      } else {
-        serverExpectationList = serverExpectationList.add(expectationId);
-      }
-
-      return state.set('loadedByServer',
-        state.get('loadedByServer').set(serverId, serverExpectationList)
+      return state.set('loaded',
+        state.get('loaded').add(expectationId)
       );
     }
     case UNLOAD: {
-      const { serverId, expectationId } = action;
-      let serverExpectationList = state.get('loadedByServer').get(serverId);
-      serverExpectationList = serverExpectationList.delete(expectationId);
+      const { expectationId } = action;
 
-      return state.set('loadedByServer',
-        state.get('loadedByServer').set(serverId, serverExpectationList)
+      return state.set('loaded',
+        state.get('loaded').delete(expectationId)
       );
     }
     case ADD: {
-      const { expectations } = action;
+      const { serverId, expectations } = action;
+      let newState = state;
       const expectationsById = expectations.reduce(
         (prev, next) => {
           const reducedExpectations = prev;
@@ -40,7 +33,18 @@ export default (state = initialState, action) => {
           return reducedExpectations;
         }, {}
       );
-      return state.set('itemsById', state.get('itemsById').merge(expectationsById));
+
+      if (!newState.get('itemsByServer').get(serverId)) {
+        newState = newState.setIn(['itemsByServer', serverId],
+          Set.of(...expectations.map(ex => ex.id)));
+      } else {
+        newState = newState.setIn(['itemsByServer', 'serverId'],
+          newState.getIn(['itemsByServer', serverId])
+            .concat(Set.of(...expectations.map(ex => ex.id)))
+        );
+      }
+
+      return newState.set('itemsById', newState.get('itemsById').merge(expectationsById));
     }
     default: {
       return state;

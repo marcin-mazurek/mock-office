@@ -6,6 +6,8 @@ class AddServer extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleChangePort = this.handleChangePort.bind(this);
 
     this.state = {
       name: 'Server name',
@@ -21,7 +23,7 @@ class AddServer extends React.Component {
 
   handleChangePort(e) {
     this.setState({
-      port: e.currentTarget.value
+      port: parseInt(e.currentTarget.value, 10)
     });
   }
 
