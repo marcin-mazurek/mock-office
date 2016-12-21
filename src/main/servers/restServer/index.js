@@ -20,7 +20,7 @@ export default class RestServer {
     this.app.get('*', (req, res) => {
       const payload = this.preparePayload(req);
 
-      if (!this.live) {
+      if (!this.isLive()) {
         res.status(404).end();
         return;
       }

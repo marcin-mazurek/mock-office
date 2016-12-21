@@ -1,4 +1,4 @@
-import { List, Record, Map, Set } from 'immutable';
+import { Record, Map, Set } from 'immutable';
 import {
   ADD,
   SELECT,
@@ -9,11 +9,12 @@ import {
 const Server = new Record({
   id: '',
   name: 'New Server',
-  port: 3000
+  port: 3000,
+  expectations: new Set()
 });
 
 const initialState = new Map({
-  items: new List(),
+  itemsById: new Map(),
   selected: null,
   running: new Set()
 });
@@ -23,12 +24,10 @@ export default (state = initialState, action) => {
     case ADD: {
       const { name, port, id } = action;
       const server = new Server({ name, port, id });
-      let items = state.get('items');
-      items = items.push(server);
-      let newState = state;
-      newState = newState.set('items', items);
 
-      return newState;
+      return state.set('itemsById',
+        state.get('itemsById').set(id, server)
+      );
     }
     case SELECT: {
       const { id } = action;

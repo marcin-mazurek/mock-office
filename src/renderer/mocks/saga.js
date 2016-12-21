@@ -2,10 +2,12 @@ import { take, spawn, call, put, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import {
-  LOAD,
-  UNLOAD,
   FILE_PICK,
-  add
+  REQUEST_LOAD,
+  REQUEST_UNLOAD,
+  add,
+  load,
+  unload
 } from './actions';
 import {
   EXPECTATION_ADD,
@@ -14,7 +16,17 @@ import {
 } from '../../common/messageNames';
 import { getSelected } from '../servers/selectors';
 
-function* filePickedAgent() {
+const expectationAddChannel = () => (
+  eventChannel((emitter) => {
+    ipcRenderer.on(EXPECTATION_ADD, (event, expectations) => {
+      emitter(expectations);
+    });
+
+    return () => {};
+  })
+);
+
+function* expectationAddAgent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const { files } = yield take(FILE_PICK);
@@ -35,53 +47,57 @@ function* filePickedAgent() {
       }
     };
     reader.readAsText(file);
+
+    const channel = yield call(expectationAddChannel);
+    const expectations = yield take(channel);
+    yield put(add(serverId, expectations));
   }
 }
 
-const mocksAddedFromFileChannel = () => (
+const loadChannel = () => (
   eventChannel((emitter) => {
-    ipcRenderer.on(EXPECTATION_ADD, (event, mocks) => {
-      emitter(mocks);
-    });
+    ipcRenderer.on(EXPECTATION_LOAD, () => emitter('action'));
 
     return () => {};
   })
 );
 
-function* mocksAddedFromFileAgent() {
-  const channel = yield call(mocksAddedFromFileChannel);
-
+function* requestLoadAgent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const mocks = yield take(channel);
-    yield put(add(mocks));
+    const { serverId, expectationId } = yield take(REQUEST_LOAD);
+    ipcRenderer.send(EXPECTATION_LOAD, { serverId, expectationId });
+
+    const chan = yield call(loadChannel);
+    yield take(chan);
+    yield put(load(serverId, expectationId));
   }
 }
 
-function* fileLoadAgent() {
+const unloadChannel = () => (
+  eventChannel((emitter) => {
+    ipcRenderer.on(EXPECTATION_UNLOAD, () => emitter('action'));
+
+    return () => {};
+  })
+);
+
+function* requestUnloadAgent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const { type, id } = yield take([LOAD, UNLOAD]);
-    const serverId = yield select(getSelected);
+    const { serverId, expectationId } = yield take(REQUEST_UNLOAD);
+    ipcRenderer.send(EXPECTATION_UNLOAD, { serverId, expectationId });
 
-    if (type === LOAD) {
-      ipcRenderer.send(EXPECTATION_LOAD, {
-        expectationId: id,
-        serverId
-      });
-    } else {
-      ipcRenderer.send(EXPECTATION_UNLOAD, {
-        expectationId: id,
-        serverId
-      });
-    }
+    const chan = yield call(unloadChannel);
+    yield take(chan);
+    yield put(unload(serverId, expectationId));
   }
 }
 
 export default function* main() {
   yield [
-    spawn(filePickedAgent),
-    spawn(fileLoadAgent),
-    spawn(mocksAddedFromFileAgent)
+    spawn(expectationAddAgent),
+    spawn(requestLoadAgent),
+    spawn(requestUnloadAgent)
   ];
 }

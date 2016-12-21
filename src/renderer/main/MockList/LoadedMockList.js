@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 import MockList from './MockList';
-import { getLoadedMocks } from '../../mocks/selectors';
-import { unload } from '../../mocks/actions';
+import { getLoadedByServer } from '../../mocks/selectors';
+import { requestUnload } from '../../mocks/actions';
+import { getSelected } from '../../servers/selectors';
 
 const mapStateToProps = state => ({
-  mocks: getLoadedMocks(state)
+  mocks: getLoadedByServer(state),
+  serverId: getSelected(state)
 });
 
 const mapDispatchToProps = {
-  action: unload
+  action: requestUnload
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MockList);

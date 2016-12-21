@@ -4,6 +4,8 @@ import url from 'url';
 import uniqueId from 'node-unique';
 import {
   EXPECTATION_ADD,
+  EXPECTATION_LOAD,
+  EXPECTATION_UNLOAD,
   SERVER_START,
   SERVER_STOP,
   SERVER_ADD
@@ -32,9 +34,7 @@ serverEvents.on('stop', (id) => {
   const serverToStop = servers.get(id);
 
   if (serverToStop.isLive()) {
-    console.log('before serverToStop()');
     serverToStop.stop(() => {
-      console.log('after serverToStop()');
       mainWindow.webContents.send(SERVER_STOP);
       console.log('Mockee server is shut down!');
     });
@@ -55,10 +55,12 @@ serverEvents.on('add', (args) => {
 
 expectationsEvents.on('load', (args) => {
   servers.get(args.serverId).load(args.expectationId);
+  mainWindow.webContents.send(EXPECTATION_LOAD);
 });
 
 expectationsEvents.on('unload', (args) => {
   servers.get(args.serverId).unload(args.expectationId);
+  mainWindow.webContents.send(EXPECTATION_UNLOAD);
 });
 
 expectationsEvents.on('add', (args) => {

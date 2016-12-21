@@ -7,9 +7,13 @@ import {
   REQUEST_STOP,
   add,
   start,
-  stop
+  stop,
 } from '../servers/actions';
-import { SERVER_ADD, SERVER_START, SERVER_STOP } from '../../common/messageNames';
+import {
+  SERVER_ADD,
+  SERVER_START,
+  SERVER_STOP
+} from '../../common/messageNames';
 
 function* requestAddServerAgent() {
   // eslint-disable-next-line no-constant-condition

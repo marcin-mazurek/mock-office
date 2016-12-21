@@ -6,7 +6,7 @@ const Expectations = () => (
   <div>
     <div>Expectations:</div>
     <UnloadedMockList buttonText="Load" />
-    <div>Active:</div>
+    <div>Loaded:</div>
     <LoadedMockList buttonText="Unload" />
   </div>
 );

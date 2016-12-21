@@ -1,48 +1,46 @@
-import { List, Map } from 'immutable';
-import { LOAD, UNLOAD, ADD } from './actions';
+import { Map, Set } from 'immutable';
+import { ADD, LOAD, UNLOAD } from './actions';
 
 const initialState = new Map({
-  itemsById: new Map({}),
-  unloadedIds: new List([]),
-  loadedIds: new List([])
+  itemsById: new Map(),
+  loadedByServer: new Map()
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const { id } = action;
-      const loadedIds = state.get('loadedIds').push(id);
-      let unloadedIds = state.get('unloadedIds');
-      const indexOfMockToUnload = unloadedIds.findIndex(mockId => mockId === id);
-      unloadedIds = unloadedIds.delete(indexOfMockToUnload);
+      const { serverId, expectationId } = action;
+      let serverExpectationList = state.get('loadedByServer').get(serverId);
 
-      return state
-        .set('loadedIds', loadedIds)
-        .set('unloadedIds', unloadedIds);
+      if (!serverExpectationList) {
+        serverExpectationList = Set.of(expectationId);
+      } else {
+        serverExpectationList = serverExpectationList.add(expectationId);
+      }
+
+      return state.set('loadedByServer',
+        state.get('loadedByServer').set(serverId, serverExpectationList)
+      );
     }
     case UNLOAD: {
-      const { id } = action;
-      const unloadedIds = state.get('unloadedIds').push(id);
-      let loadedIds = state.get('loadedIds');
-      const indexOfMockToUnload = loadedIds.findIndex(mockId => mockId === id);
-      loadedIds = loadedIds.delete(indexOfMockToUnload);
+      const { serverId, expectationId } = action;
+      let serverExpectationList = state.get('loadedByServer').get(serverId);
+      serverExpectationList = serverExpectationList.delete(expectationId);
 
-      return state
-        .set('loadedIds', loadedIds)
-        .set('unloadedIds', unloadedIds);
+      return state.set('loadedByServer',
+        state.get('loadedByServer').set(serverId, serverExpectationList)
+      );
     }
     case ADD: {
-      const { mocks } = action;
-      const mocksById = mocks.reduce(
+      const { expectations } = action;
+      const expectationsById = expectations.reduce(
         (prev, next) => {
-          const reducedMocks = prev;
-          reducedMocks[next.id] = next;
-          return reducedMocks;
+          const reducedExpectations = prev;
+          reducedExpectations[next.id] = next;
+          return reducedExpectations;
         }, {}
       );
-      let newState = state.set('unloadedIds', state.get('unloadedIds').push(...mocks.map(mock => mock.id)));
-      newState = newState.set('itemsById', newState.get('itemsById').merge(mocksById));
-      return newState;
+      return state.set('itemsById', state.get('itemsById').merge(expectationsById));
     }
     default: {
       return state;
