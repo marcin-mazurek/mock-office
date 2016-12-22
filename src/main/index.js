@@ -8,7 +8,7 @@ import {
   EXPECTATION_UNLOAD,
   SERVER_START,
   SERVER_STOP,
-  SERVER_ADD
+  ADD_SERVER
 } from '../common/messageNames';
 import expectationsEvents from './listeners/expectationsEvents';
 import serverEvents from './listeners/serversEvents';
@@ -50,7 +50,7 @@ const Mock = (data) => {
 serverEvents.on('add', (args) => {
   const { name, port } = args;
   const serverId = servers.add('rest', { name, port });
-  mainWindow.webContents.send(SERVER_ADD, { name, port, id: serverId });
+  mainWindow.webContents.send(ADD_SERVER, { name, port, id: serverId });
 });
 
 expectationsEvents.on('load', (args) => {

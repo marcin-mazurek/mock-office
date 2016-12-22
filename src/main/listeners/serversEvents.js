@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
 import {
-  SERVER_ADD,
+  ADD_SERVER,
   SERVER_START,
   SERVER_STOP
 } from '../../common/messageNames';
@@ -11,7 +11,7 @@ const callbacks = {
   stop: []
 };
 
-ipcMain.on(SERVER_ADD, (event, arg) => {
+ipcMain.on(ADD_SERVER, (event, arg) => {
   callbacks.add.forEach(cb => cb(arg));
 });
 

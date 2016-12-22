@@ -1,4 +1,4 @@
-export const REQUEST_ADD = 'servers/REQUEST_ADD';
+export const REQUEST_ADD = 'REQUEST_ADD';
 export const ADD = 'servers/ADD';
 export const SELECT = 'servers/SELECT';
 export const START = 'servers/START';
@@ -11,12 +11,6 @@ export const add = (name, port, id) => ({
   name,
   port,
   id
-});
-
-export const requestAdd = (name, port) => ({
-  type: REQUEST_ADD,
-  name,
-  port
 });
 
 export const select = id => ({
