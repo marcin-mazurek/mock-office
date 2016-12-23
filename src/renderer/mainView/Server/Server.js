@@ -4,7 +4,7 @@ import FilePicker from '../../mocks/addFromFile/FilePicker';
 import Expectations from '../Expectations';
 import {
   stop as dispatchStop
-} from '../../servers/server/actions';
+} from '../../servers/stopServer/actions';
 import dispatchStart from '../../servers/startServer/actions';
 import { getSelected, isRunning } from '../../servers/selectors';
 
