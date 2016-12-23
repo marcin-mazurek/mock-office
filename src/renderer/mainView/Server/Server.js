@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import FilePicker from '../../mocks/addFromFile/FilePicker';
 import Expectations from '../Expectations';
 import {
-  start as dispatchStart,
   stop as dispatchStop
 } from '../../servers/server/actions';
+import dispatchStart from '../../servers/startServer/actions';
 import { getSelected, isRunning } from '../../servers/selectors';
 
 const Server = ({ start, stop, id, running }) => (
