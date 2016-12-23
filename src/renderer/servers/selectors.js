@@ -8,3 +8,13 @@ export const isRunning = createSelector(
   getRunning,
   (id, running) => running.has(id)
 );
+export const getServerList = createSelector(
+  getAll,
+  getRunning,
+  (servers, running) => servers.map((server) => {
+    const mappedServer = server;
+    mappedServer.running = running.has(mappedServer.id);
+
+    return mappedServer;
+  })
+);
