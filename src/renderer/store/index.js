@@ -6,16 +6,12 @@ import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 
-const DEBUG = process.env.NODE_ENV !== 'production';
-
 export default () => {
   const initialState = fromJS({});
   const sagaMiddleware = createSagaMiddleware();
   const routerMiddleware = createRouterMiddleware(browserHistory);
   const enhancer = compose(
-    applyMiddleware(sagaMiddleware, routerMiddleware),
-    (DEBUG && window.devToolsExtension) ? window.devToolsExtension() : f => f
-  );
+    applyMiddleware(sagaMiddleware, routerMiddleware));
   const store = createStore(rootReducer, initialState, enhancer);
   sagaMiddleware.run(rootSaga);
 
