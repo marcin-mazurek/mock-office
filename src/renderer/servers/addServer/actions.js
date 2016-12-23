@@ -1,7 +1,7 @@
-export const ADD = 'addServer/ADD';
+export const INIT = 'addServer/INIT';
 
-export const add = (name, port) => ({
-  type: ADD,
+export default (name, port) => ({
+  type: INIT,
   name,
   port
 });

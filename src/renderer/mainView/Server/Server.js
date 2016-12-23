@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FilePicker from '../../mocks/addFromFile/FilePicker';
 import Expectations from '../Expectations';
-import {
-  stop as dispatchStop
-} from '../../servers/stopServer/actions';
-import dispatchStart from '../../servers/startServer/actions';
+import initServerStop from '../../servers/stopServer/actions';
+import initServerStart from '../../servers/startServer/actions';
 import { getSelected, isRunning } from '../../servers/selectors';
 
 const Server = ({ start, stop, id, running }) => (
@@ -32,8 +30,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  start: dispatchStart,
-  stop: dispatchStop
+  start: initServerStart,
+  stop: initServerStop
 };
 
 Server.propTypes = {

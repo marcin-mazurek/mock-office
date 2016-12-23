@@ -1,6 +1,6 @@
-export const START = 'server/START';
+export const INIT = 'startServer/INIT';
 
 export default id => ({
-  type: START,
+  type: INIT,
   id
 });

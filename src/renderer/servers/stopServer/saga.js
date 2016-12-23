@@ -1,8 +1,8 @@
 import { eventChannel } from 'redux-saga';
 import { take, call, put } from 'redux-saga/effects';
 import { ipcRenderer } from 'electron';
-import { stop, } from '../actions';
-import { STOP as SERVER_STOP } from './actions';
+import { stop } from '../actions';
+import { INIT } from './actions';
 import * as messageNames from '../../../common/messageNames';
 
 const ipcRendererChannel = () => (
@@ -18,9 +18,8 @@ const ipcRendererChannel = () => (
 export default function* agent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const { id } = yield take(SERVER_STOP);
+    const { id } = yield take(INIT);
     ipcRenderer.send(messageNames.SERVER_STOP, id);
-
     yield take(yield call(ipcRendererChannel));
     yield put(stop(id));
   }

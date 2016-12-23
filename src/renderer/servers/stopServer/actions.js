@@ -1,6 +1,6 @@
-export const STOP = 'server/STOP';
+export const INIT = 'stopServer/INIT';
 
-export const stop = id => ({
-  type: STOP,
+export default id => ({
+  type: INIT,
   id
 });
