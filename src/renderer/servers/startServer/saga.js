@@ -7,7 +7,9 @@ import * as messageNames from '../../../common/messageNames';
 
 const ipcRendererChannel = () => (
   eventChannel((emitter) => {
-    ipcRenderer.on(messageNames.SERVER_START, () => emitter('action'));
+    // we can't emit undefined event, so we need to create empty one
+    const EMPTY_EVENT = {};
+    ipcRenderer.on(messageNames.SERVER_START, () => emitter(EMPTY_EVENT));
 
     return () => {};
   })
