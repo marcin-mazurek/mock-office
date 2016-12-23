@@ -13,6 +13,7 @@ import {
 import expectationsEvents from './listeners/expectationsEvents';
 import serverEvents from './listeners/serversEvents';
 import servers from './servers';
+import Expectation from './expectations/httpExpectation/Expectation';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -41,12 +42,6 @@ serverEvents.on('stop', (id) => {
   }
 });
 
-const Mock = (data) => {
-  const mock = data;
-  mock.id = uniqueId();
-  return mock;
-};
-
 serverEvents.on('add', (args) => {
   const { name, port } = args;
   const serverId = servers.add('http', { name, port });
@@ -64,7 +59,7 @@ expectationsEvents.on('unload', (args) => {
 });
 
 expectationsEvents.on('add', (args) => {
-  const expectationsWithIds = args.expectations.map(mock => new Mock(mock));
+  const expectationsWithIds = args.expectations.map(mock => new Expectation(mock));
   const serverToAddMock = servers.get(args.serverId);
   serverToAddMock.add(expectationsWithIds);
   mainWindow.webContents.send(EXPECTATION_ADD, expectationsWithIds);
