@@ -2,19 +2,15 @@ import { eventChannel } from 'redux-saga';
 import { take, spawn, call, put } from 'redux-saga/effects';
 import { ipcRenderer } from 'electron';
 import {
-  REQUEST_START,
-  REQUEST_STOP,
   start,
   stop,
 } from '../servers/actions';
-import {
-  SERVER_START,
-  SERVER_STOP
-} from '../../common/messageNames';
+import { START as SERVER_START, STOP as SERVER_STOP } from './server/actions';
+import * as messageNames from '../../common/messageNames';
 
 const startChannel = () => (
   eventChannel((emitter) => {
-    ipcRenderer.on(SERVER_START, () => emitter('action'));
+    ipcRenderer.on(messageNames.SERVER_START, () => emitter('action'));
 
     return () => {};
   })
@@ -23,8 +19,8 @@ const startChannel = () => (
 function* requestStartAgent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const { id } = yield take(REQUEST_START);
-    ipcRenderer.send(SERVER_START, id);
+    const { id } = yield take(SERVER_START);
+    ipcRenderer.send(messageNames.SERVER_START, id);
 
     const chan = yield call(startChannel);
     yield take(chan);
@@ -34,7 +30,7 @@ function* requestStartAgent() {
 
 const stopChannel = () => (
   eventChannel((emitter) => {
-    ipcRenderer.on(SERVER_STOP, () => emitter('action'));
+    ipcRenderer.on(messageNames.SERVER_STOP, () => emitter('action'));
 
     return () => {};
   })
@@ -43,8 +39,8 @@ const stopChannel = () => (
 function* requestStopAgent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const { id } = yield take(REQUEST_STOP);
-    ipcRenderer.send(SERVER_STOP, id);
+    const { id } = yield take(SERVER_STOP);
+    ipcRenderer.send(messageNames.SERVER_STOP, id);
 
     const chan = yield call(stopChannel);
     yield take(chan);

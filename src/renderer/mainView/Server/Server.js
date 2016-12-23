@@ -3,21 +3,21 @@ import { connect } from 'react-redux';
 import FilePicker from '../../mocks/addFromFile/FilePicker';
 import Expectations from '../Expectations';
 import {
-  requestStart as dispatchRequestStart,
-  requestStop as dispatchRequestStop
-} from '../../servers/actions';
+  start as dispatchStart,
+  stop as dispatchStop
+} from '../../servers/server/actions';
 import { getSelected, isRunning } from '../../servers/selectors';
 
-const Server = ({ requestStart, requestStop, id, running }) => (
+const Server = ({ start, stop, id, running }) => (
   <div className="server">
     <FilePicker />
     <Expectations />
     <button
       onClick={() => {
         if (running) {
-          requestStop(id);
+          stop(id);
         } else {
-          requestStart(id);
+          start(id);
         }
       }}
     >
@@ -32,14 +32,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  requestStart: dispatchRequestStart,
-  requestStop: dispatchRequestStop
+  start: dispatchStart,
+  stop: dispatchStop
 };
 
 Server.propTypes = {
   id: React.PropTypes.string.isRequired,
-  requestStart: React.PropTypes.func.isRequired,
-  requestStop: React.PropTypes.func.isRequired,
+  start: React.PropTypes.func.isRequired,
+  stop: React.PropTypes.func.isRequired,
   running: React.PropTypes.bool.isRequired
 };
 
