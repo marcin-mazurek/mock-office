@@ -2,8 +2,8 @@ import { call, take, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import { ADD } from './actions';
-import { ADD_SERVER } from '../../common/messageNames';
-import { add as dispatchAdd } from '../servers/actions';
+import { ADD_SERVER } from '../../../common/messageNames';
+import { add as dispatchAdd } from '../actions';
 
 const addServerChannel = () => (
   eventChannel((emitter) => {
