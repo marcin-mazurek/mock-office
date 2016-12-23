@@ -49,7 +49,7 @@ const Mock = (data) => {
 
 serverEvents.on('add', (args) => {
   const { name, port } = args;
-  const serverId = servers.add('rest', { name, port });
+  const serverId = servers.add('http', { name, port });
   mainWindow.webContents.send(ADD_SERVER, { name, port, id: serverId });
 });
 

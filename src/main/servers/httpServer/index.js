@@ -1,6 +1,6 @@
 import express from 'express';
 
-export default class RestServer {
+export default class HttpServer {
   constructor(config) {
     this.load = this.load.bind(this);
     this.unload = this.unload.bind(this);

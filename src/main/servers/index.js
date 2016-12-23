@@ -1,8 +1,8 @@
 import unique from 'node-unique';
-import RestServer from './restServer';
+import HttpServer from './httpServer';
 
 const serverTypes = {
-  rest: RestServer
+  http: HttpServer
 };
 
 const servers = {};
