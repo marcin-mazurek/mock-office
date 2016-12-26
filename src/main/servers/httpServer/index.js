@@ -1,6 +1,7 @@
 import express from 'express';
 import uniqueId from 'node-unique';
 import expectationsService from '../../expectations';
+import { EXPECTATION_UNLOAD_AFTER_USE } from '../../../common/messageNames';
 
 export default class HttpServer {
   constructor(config) {
@@ -26,7 +27,7 @@ export default class HttpServer {
       }
 
       if (matchedExp) {
-        this.ee.emit('EXPECTATION_UNLOAD_AFTER_USE', {
+        this.ee.emit(EXPECTATION_UNLOAD_AFTER_USE, {
           serverId: this.id,
           expectationId: matchedExp.id
         });

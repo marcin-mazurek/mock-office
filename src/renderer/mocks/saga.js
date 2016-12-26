@@ -12,7 +12,8 @@ import {
 import {
   EXPECTATION_ADD,
   EXPECTATION_LOAD,
-  EXPECTATION_UNLOAD
+  EXPECTATION_UNLOAD,
+  EXPECTATION_UNLOAD_AFTER_USE
 } from '../../common/messageNames';
 import { getSelected } from '../servers/selectors';
 
@@ -97,7 +98,7 @@ function* requestUnloadAgent() {
 function* unloadAfterUseAgent() {
   const unloadChan = () => (
     eventChannel((emitter) => {
-      ipcRenderer.on('EXPECTATION_UNLOAD_AFTER_USE', (event, args) => emitter(args));
+      ipcRenderer.on(EXPECTATION_UNLOAD_AFTER_USE, (event, args) => emitter(args));
 
       return () => {};
     })

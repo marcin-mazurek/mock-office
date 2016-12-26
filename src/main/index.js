@@ -8,7 +8,8 @@ import {
   EXPECTATION_UNLOAD,
   SERVER_START,
   SERVER_STOP,
-  ADD_SERVER
+  ADD_SERVER,
+  EXPECTATION_UNLOAD_AFTER_USE
 } from '../common/messageNames';
 import expectationsEvents from './listeners/expectationsEvents';
 import serverEvents from './listeners/serversEvents';
@@ -61,8 +62,8 @@ expectationsEvents.on('unload', (args) => {
   mainWindow.webContents.send(EXPECTATION_UNLOAD);
 });
 
-myEE.on('EXPECTATION_UNLOAD_AFTER_USE', ({ serverId, expectationId }) => {
-  mainWindow.webContents.send('EXPECTATION_UNLOAD_AFTER_USE', { serverId, expectationId });
+myEE.on(EXPECTATION_UNLOAD_AFTER_USE, ({ serverId, expectationId }) => {
+  mainWindow.webContents.send(EXPECTATION_UNLOAD_AFTER_USE, { serverId, expectationId });
 });
 
 expectationsEvents.on('add', (args) => {
