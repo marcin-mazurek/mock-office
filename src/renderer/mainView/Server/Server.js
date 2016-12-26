@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import FilePicker from '../../mocks/addFromFile/FilePicker';
+import FilePicker from '../../expectations/addFromFile/FilePicker';
 import LoadedExpectationList from '../LoadedExpectationList';
 import UnloadedExpectationList from '../UnloadedExpectationList';
 import initServerStop from '../../servers/stopServer/actions';

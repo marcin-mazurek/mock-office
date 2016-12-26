@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { getSelectedServerLoadedExpectations } from '../../mocks/selectors';
-import { requestUnload } from '../../mocks/actions';
+import { getSelectedServerLoadedExpectations } from '../../expectations/selectors';
+import { requestUnload } from '../../expectations/actions';
 import { getSelected } from '../../servers/selectors';
 
 const LoadedExpectationList = ({ expectations, unload, serverId }) => (

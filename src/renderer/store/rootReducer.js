@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux-immutable';
-import mocksReducer from '../mocks';
+import expectationsReducer from '../expectations';
 import routingReducer from './utils';
 import serversReducer from '../servers/reducer';
 
 export default combineReducers({
-  mocks: mocksReducer,
+  expectations: expectationsReducer,
   routing: routingReducer,
   servers: serversReducer
 });

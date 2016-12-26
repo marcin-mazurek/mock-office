@@ -15,8 +15,8 @@ const history = syncHistoryWithStore(hashHistory, store, {
 
 ipcRenderer.send('MAIN_WINDOW_READY');
 
-ipcRenderer.on('mocks-loaded', (event, mocks) => {
-  store.dispatch({ type: 'mocks/LOAD_MOCKS', mocks });
+ipcRenderer.on('expectations-loaded', (event, expectations) => {
+  store.dispatch({ type: 'expectations/LOAD_expectations', expectations });
 });
 
 const App = () => (
