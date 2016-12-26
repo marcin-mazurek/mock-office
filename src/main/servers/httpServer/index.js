@@ -15,28 +15,28 @@ export default class HttpServer {
     this.name = config.name;
 
     this.app.get('*', (req, res) => {
-      const payload = this.preparePayload(req);
+      const matchedExp = this.matchExpectation(req);
 
       if (!this.isLive()) {
         res.status(404).end();
         return;
       }
 
-      if (payload) {
-        res.json(payload);
+      if (matchedExp) {
+        res.json(matchedExp.response.body);
       } else {
         res.status(404).end();
       }
     });
   }
 
-  preparePayload(req) {
+  matchExpectation(req) {
     const matchedExpId = this.loaded.find(loadedId => (
       expectationsService.get(loadedId).request.url === req.url
     ));
 
     if (matchedExpId) {
-      return expectationsService.get(matchedExpId).response.body;
+      return expectationsService.get(matchedExpId);
     }
 
     return undefined;
