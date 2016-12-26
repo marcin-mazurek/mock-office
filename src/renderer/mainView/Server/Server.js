@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FilePicker from '../../mocks/addFromFile/FilePicker';
-import Expectations from '../Expectations';
+import LoadedExpectationList from '../LoadedExpectationList';
+import UnloadedExpectationList from '../UnloadedExpectationList';
 import initServerStop from '../../servers/stopServer/actions';
 import initServerStart from '../../servers/startServer/actions';
 import { getSelected, isRunning } from '../../servers/selectors';
@@ -9,7 +10,10 @@ import { getSelected, isRunning } from '../../servers/selectors';
 const Server = ({ start, stop, id, running }) => (
   <div className="server">
     <FilePicker />
-    <Expectations />
+    <h2>Not loaded:</h2>
+    <UnloadedExpectationList />
+    <h2>Loaded:</h2>
+    <LoadedExpectationList />
     <button
       onClick={() => {
         if (running) {

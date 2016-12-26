@@ -7,16 +7,24 @@ const types = {
 const expectations = [];
 
 const add = (type, config) => {
-  const Exp = types[type];
   const id = unique();
-  expectations[id] = new Exp(config);
+  expectations[id] = {
+    type,
+    config
+  };
 
   return id;
+};
+
+const create = (id) => {
+  const { type, config } = expectations[id];
+  return new types[type](config);
 };
 
 const get = id => expectations[id];
 
 export default {
   add,
-  get
+  get,
+  create
 };

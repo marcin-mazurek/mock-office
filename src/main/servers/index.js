@@ -9,10 +9,9 @@ const servers = {};
 
 export default {
   add(type, config) {
-    const Server = serverTypes[type];
-    const serverInstance = new Server(config);
     const id = unique();
-    servers[id] = serverInstance;
+    const Server = serverTypes[type];
+    servers[id] = new Server(Object.assign(config, { id }));
 
     return id;
   },

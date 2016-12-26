@@ -1,4 +1,5 @@
 import express from 'express';
+import uniqueId from 'node-unique';
 import expectationsService from '../../expectations';
 
 export default class HttpServer {
@@ -6,6 +7,7 @@ export default class HttpServer {
     this.load = this.load.bind(this);
     this.unload = this.unload.bind(this);
     this.add = this.add.bind(this);
+    this.ee = config.ee;
     this.sockets = [];
     this.expectations = [];
     this.loaded = [];
@@ -13,9 +15,10 @@ export default class HttpServer {
     this.live = false;
     this.port = config.port || 3000;
     this.name = config.name;
+    this.id = config.id;
 
     this.app.get('*', (req, res) => {
-      const matchedExp = this.matchExpectation(req);
+      const matchedExp = this.getResponse(req);
 
       if (!this.isLive()) {
         res.status(404).end();
@@ -23,23 +26,31 @@ export default class HttpServer {
       }
 
       if (matchedExp) {
-        res.json(matchedExp.response.body);
+        this.ee.emit('EXPECTATION_UNLOAD_AFTER_USE', {
+          serverId: this.id,
+          expectationId: matchedExp.id
+        });
+        res.json(matchedExp.instance.response.body);
       } else {
         res.status(404).end();
       }
     });
   }
 
-  matchExpectation(req) {
-    const matchedExpId = this.loaded.find(loadedId => (
-      expectationsService.get(loadedId).request.url === req.url
-    ));
+  getResponse(req) {
+    const matchedExpIndex = this.matchExpectation(req);
 
-    if (matchedExpId) {
-      return expectationsService.get(matchedExpId);
+    if (matchedExpIndex >= 0) {
+      return this.loaded.splice(matchedExpIndex, 1)[0];
     }
 
     return undefined;
+  }
+
+  matchExpectation(req) {
+    return this.loaded.findIndex(expectation => (
+      expectation.instance.request.url === req.url
+    ));
   }
 
   start(cb) {
@@ -62,11 +73,15 @@ export default class HttpServer {
   }
 
   load(id) {
-    this.loaded.push(id);
+    const instance = expectationsService.create(id);
+    const instanceId = uniqueId();
+    this.loaded.push({ id: instanceId, instance });
+
+    return instanceId;
   }
 
   unload(id) {
-    const indexOfMockToLoad = this.loaded.indexOf(endpointId => endpointId === id);
-    this.loaded.splice(indexOfMockToLoad, 1);
+    const expectationToUnloadIndex = this.loaded.indexOf(expectation => expectation.id === id);
+    this.loaded.splice(expectationToUnloadIndex, 1);
   }
 }

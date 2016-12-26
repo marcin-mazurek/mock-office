@@ -16,14 +16,11 @@ export const getSelectedServerExpectations = createSelector(
 );
 export const getLoaded = state => state.getIn(['mocks', 'loaded']);
 export const getSelectedServerLoadedExpectations = createSelector(
-  getSelectedServerExpectationsIds,
   getLoaded,
   getAll,
-  (expectations, loadedExpecationsIds, allExpectations) => (
-    expectations
-      ? expectations
-      .filter(expId => loadedExpecationsIds.has(expId))
-      .map(expId => allExpectations.get(expId))
-      : new List()
-  )
-);
+  (loadedExpectations, allExpectations) => (
+    loadedExpectations.map(exp => ({
+      instanceId: exp.instanceId,
+      expectation: allExpectations.get(exp.expectationId)
+    }))
+  ));

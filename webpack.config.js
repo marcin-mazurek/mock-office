@@ -17,6 +17,7 @@ module.exports = {
       }
     ]
   },
+  devtool: 'source-map',
   output: {
     path: './dist/renderer',
     filename: 'bundle.js'

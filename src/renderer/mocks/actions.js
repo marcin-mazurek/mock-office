@@ -16,10 +16,11 @@ export const add = (serverId, expectations) => ({
   expectations
 });
 
-export const load = (serverId, expectationId) => ({
+export const load = (serverId, expectationId, instanceId) => ({
   type: LOAD,
   serverId,
-  expectationId
+  expectationId,
+  instanceId
 });
 
 export const requestLoad = (serverId, expectationId) => ({

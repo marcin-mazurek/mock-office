@@ -1,6 +1,7 @@
 import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
+import EventEmitter from 'events';
 import {
   EXPECTATION_ADD,
   EXPECTATION_LOAD,
@@ -14,6 +15,8 @@ import serverEvents from './listeners/serversEvents';
 import servers from './servers';
 import expectations from './expectations';
 import Expectation from './expectations/httpExpectation/Expectation';
+
+const myEE = new EventEmitter();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -44,18 +47,22 @@ serverEvents.on('stop', (id) => {
 
 serverEvents.on('add', (args) => {
   const { name, port } = args;
-  const serverId = servers.add('http', { name, port });
+  const serverId = servers.add('http', { name, port, ee: myEE });
   mainWindow.webContents.send(ADD_SERVER, { name, port, id: serverId });
 });
 
 expectationsEvents.on('load', (args) => {
-  servers.get(args.serverId).load(args.expectationId);
-  mainWindow.webContents.send(EXPECTATION_LOAD);
+  const id = servers.get(args.serverId).load(args.expectationId);
+  mainWindow.webContents.send(EXPECTATION_LOAD, { id });
 });
 
 expectationsEvents.on('unload', (args) => {
   servers.get(args.serverId).unload(args.expectationId);
   mainWindow.webContents.send(EXPECTATION_UNLOAD);
+});
+
+myEE.on('EXPECTATION_UNLOAD_AFTER_USE', ({ serverId, expectationId }) => {
+  mainWindow.webContents.send('EXPECTATION_UNLOAD_AFTER_USE', { serverId, expectationId });
 });
 
 expectationsEvents.on('add', (args) => {
