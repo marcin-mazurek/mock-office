@@ -1,7 +1,6 @@
 import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
-import uniqueId from 'node-unique';
 import {
   EXPECTATION_ADD,
   EXPECTATION_LOAD,
@@ -13,6 +12,7 @@ import {
 import expectationsEvents from './listeners/expectationsEvents';
 import serverEvents from './listeners/serversEvents';
 import servers from './servers';
+import expectations from './expectations';
 import Expectation from './expectations/httpExpectation/Expectation';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -59,10 +59,13 @@ expectationsEvents.on('unload', (args) => {
 });
 
 expectationsEvents.on('add', (args) => {
-  const expectationsWithIds = args.expectations.map(mock => new Expectation(mock));
   const serverToAddMock = servers.get(args.serverId);
-  serverToAddMock.add(expectationsWithIds);
-  mainWindow.webContents.send(EXPECTATION_ADD, expectationsWithIds);
+  const exps = args.expectations.map(exp => new Expectation(exp));
+  const expectationsIds = exps.map(exp => expectations.add('http', exp));
+  serverToAddMock.add(expectationsIds);
+  mainWindow.webContents.send(EXPECTATION_ADD, exps.map((exp, index) =>
+    Object.assign({}, exp, { id: expectationsIds[index] })
+  ));
 });
 
 function createWindow() {

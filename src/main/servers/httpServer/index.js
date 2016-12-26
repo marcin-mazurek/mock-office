@@ -1,4 +1,5 @@
 import express from 'express';
+import expectationsService from '../../expectations';
 
 export default class HttpServer {
   constructor(config) {
@@ -6,7 +7,7 @@ export default class HttpServer {
     this.unload = this.unload.bind(this);
     this.add = this.add.bind(this);
     this.sockets = [];
-    this.endpoints = {};
+    this.expectations = [];
     this.loaded = [];
     this.app = express();
     this.live = false;
@@ -30,15 +31,12 @@ export default class HttpServer {
   }
 
   preparePayload(req) {
-    let endpoint;
-    this.loaded.forEach((loadedId) => {
-      if (this.endpoints[loadedId].request.url === req.url) {
-        endpoint = this.endpoints[loadedId];
-      }
-    });
+    const matchedExpId = this.loaded.find(loadedId => (
+      expectationsService.get(loadedId).request.url === req.url
+    ));
 
-    if (endpoint) {
-      return endpoint.response.body;
+    if (matchedExpId) {
+      return expectationsService.get(matchedExpId).response.body;
     }
 
     return undefined;
@@ -55,16 +53,8 @@ export default class HttpServer {
     this.server.close(cb);
   }
 
-  add(mocks) {
-    const mocksAsMap = mocks.reduce(
-        (prev, next) => {
-          const reducedMocks = prev;
-          reducedMocks[next.id] = next;
-          return reducedMocks;
-        }, {}
-      ) || {};
-
-    Object.assign(this.endpoints, mocksAsMap);
+  add(expectations) {
+    this.expectations = this.expectations.concat(expectations);
   }
 
   isLive() {
