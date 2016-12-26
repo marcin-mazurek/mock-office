@@ -1,26 +1,26 @@
-import { Map, Set } from 'immutable';
+import { Map, Set, List } from 'immutable';
 import { ADD, LOAD, UNLOAD } from './actions';
 
 const initialState = new Map({
   itemsById: new Map(),
   itemsByServer: new Map(),
-  loaded: new Set()
+  loaded: new List()
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const { expectationId } = action;
+      const { expectationId, instanceId } = action;
 
       return state.set('loaded',
-        state.get('loaded').add(expectationId)
+        state.get('loaded').push({ instanceId, expectationId })
       );
     }
     case UNLOAD: {
       const { expectationId } = action;
 
       return state.set('loaded',
-        state.get('loaded').delete(expectationId)
+        state.get('loaded').filter(expectation => expectation.instanceId !== expectationId)
       );
     }
     case ADD: {

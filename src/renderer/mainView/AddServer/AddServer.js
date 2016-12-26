@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { add } from '../actions';
+import init from '../../servers/addServer/actions';
 
 class AddServer extends React.Component {
   constructor(props) {
@@ -59,7 +59,7 @@ AddServer.propTypes = {
 };
 
 const mapDispatchToProps = {
-  add
+  add: init
 };
 
 export default connect(null, mapDispatchToProps)(AddServer);

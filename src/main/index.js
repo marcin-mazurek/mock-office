@@ -1,18 +1,23 @@
 import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
-import uniqueId from 'node-unique';
+import EventEmitter from 'events';
 import {
   EXPECTATION_ADD,
   EXPECTATION_LOAD,
   EXPECTATION_UNLOAD,
   SERVER_START,
   SERVER_STOP,
-  ADD_SERVER
+  ADD_SERVER,
+  EXPECTATION_UNLOAD_AFTER_USE
 } from '../common/messageNames';
 import expectationsEvents from './listeners/expectationsEvents';
 import serverEvents from './listeners/serversEvents';
 import servers from './servers';
+import expectations from './expectations';
+import Expectation from './expectations/httpExpectation/Expectation';
+
+const myEE = new EventEmitter();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -41,21 +46,15 @@ serverEvents.on('stop', (id) => {
   }
 });
 
-const Mock = (data) => {
-  const mock = data;
-  mock.id = uniqueId();
-  return mock;
-};
-
 serverEvents.on('add', (args) => {
   const { name, port } = args;
-  const serverId = servers.add('rest', { name, port });
+  const serverId = servers.add('http', { name, port, ee: myEE });
   mainWindow.webContents.send(ADD_SERVER, { name, port, id: serverId });
 });
 
 expectationsEvents.on('load', (args) => {
-  servers.get(args.serverId).load(args.expectationId);
-  mainWindow.webContents.send(EXPECTATION_LOAD);
+  const id = servers.get(args.serverId).load(args.expectationId);
+  mainWindow.webContents.send(EXPECTATION_LOAD, { id });
 });
 
 expectationsEvents.on('unload', (args) => {
@@ -63,11 +62,18 @@ expectationsEvents.on('unload', (args) => {
   mainWindow.webContents.send(EXPECTATION_UNLOAD);
 });
 
+myEE.on(EXPECTATION_UNLOAD_AFTER_USE, ({ serverId, expectationId }) => {
+  mainWindow.webContents.send(EXPECTATION_UNLOAD_AFTER_USE, { serverId, expectationId });
+});
+
 expectationsEvents.on('add', (args) => {
-  const expectationsWithIds = args.expectations.map(mock => new Mock(mock));
   const serverToAddMock = servers.get(args.serverId);
-  serverToAddMock.add(expectationsWithIds);
-  mainWindow.webContents.send(EXPECTATION_ADD, expectationsWithIds);
+  const exps = args.expectations.map(exp => new Expectation(exp));
+  const expectationsIds = exps.map(exp => expectations.add('http', exp));
+  serverToAddMock.add(expectationsIds);
+  mainWindow.webContents.send(EXPECTATION_ADD, exps.map((exp, index) =>
+    Object.assign({}, exp, { id: expectationsIds[index] })
+  ));
 });
 
 function createWindow() {

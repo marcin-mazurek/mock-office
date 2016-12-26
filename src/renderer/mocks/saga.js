@@ -12,7 +12,8 @@ import {
 import {
   EXPECTATION_ADD,
   EXPECTATION_LOAD,
-  EXPECTATION_UNLOAD
+  EXPECTATION_UNLOAD,
+  EXPECTATION_UNLOAD_AFTER_USE
 } from '../../common/messageNames';
 import { getSelected } from '../servers/selectors';
 
@@ -56,7 +57,7 @@ function* expectationAddAgent() {
 
 const loadChannel = () => (
   eventChannel((emitter) => {
-    ipcRenderer.on(EXPECTATION_LOAD, () => emitter('action'));
+    ipcRenderer.on(EXPECTATION_LOAD, (event, args) => emitter(args.id));
 
     return () => {};
   })
@@ -69,8 +70,8 @@ function* requestLoadAgent() {
     ipcRenderer.send(EXPECTATION_LOAD, { serverId, expectationId });
 
     const chan = yield call(loadChannel);
-    yield take(chan);
-    yield put(load(serverId, expectationId));
+    const instanceId = yield take(chan);
+    yield put(load(serverId, expectationId, instanceId));
   }
 }
 
@@ -94,10 +95,28 @@ function* requestUnloadAgent() {
   }
 }
 
+function* unloadAfterUseAgent() {
+  const unloadChan = () => (
+    eventChannel((emitter) => {
+      ipcRenderer.on(EXPECTATION_UNLOAD_AFTER_USE, (event, args) => emitter(args));
+
+      return () => {};
+    })
+  );
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const chan = yield call(unloadChan);
+    const { serverId, expectationId } = yield take(chan);
+    yield put(unload(serverId, expectationId));
+  }
+}
+
 export default function* main() {
   yield [
     spawn(expectationAddAgent),
     spawn(requestLoadAgent),
-    spawn(requestUnloadAgent)
+    spawn(requestUnloadAgent),
+    spawn(unloadAfterUseAgent)
   ];
 }

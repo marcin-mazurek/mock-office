@@ -1,18 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getAll, getSelected } from '../../servers/selectors';
+import classnames from 'classnames';
+import { getServerList, getSelected } from '../../servers/selectors';
 import { select as dispatchSelect } from '../../servers/actions';
 
-const ServerList = ({ servers, select, idOfSelected }) => (
+const ServerList = ({ servers, select, selectedId }) => (
   <ul>
     {
-      servers.map(server => (
-        <li key={server.id} className={idOfSelected === server.id ? 'server-list__item--selected' : ''}>
-          <a href="" onClick={e => select(e, server.id)}>
-            {server.name}
-          </a>
-        </li>
-      ))
+      servers.map((server) => {
+        const itemClassNames = classnames({
+          'server-list__item': true,
+          'server-list__item--selected': selectedId === server.id
+        });
+
+        return (
+          <li
+            key={server.id}
+            className={itemClassNames}
+          >
+            <a href="" onClick={e => select(e, server.id)}>
+              {server.name}
+            </a>
+          </li>
+        );
+      })
     }
   </ul>
 );
@@ -20,12 +31,12 @@ const ServerList = ({ servers, select, idOfSelected }) => (
 ServerList.propTypes = {
   servers: React.PropTypes.shape().isRequired,
   select: React.PropTypes.func.isRequired,
-  idOfSelected: React.PropTypes.string
+  selectedId: React.PropTypes.string
 };
 
 const mapStateToProps = state => ({
-  servers: getAll(state),
-  idOfSelected: getSelected(state)
+  servers: getServerList(state),
+  selectedId: getSelected(state)
 });
 const mapDispatchToProps = {
   select: (e, id) => {
