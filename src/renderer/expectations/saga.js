@@ -3,13 +3,11 @@ import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import {
   FILE_PICK,
-  REQUEST_UNLOAD,
   add,
   unload
 } from './actions';
 import {
   EXPECTATION_ADD,
-  EXPECTATION_UNLOAD,
   EXPECTATION_UNLOAD_AFTER_USE
 } from '../../common/messageNames';
 import { getSelected } from '../servers/selectors';
@@ -52,26 +50,6 @@ function* expectationAddAgent() {
   }
 }
 
-const unloadChannel = () => (
-  eventChannel((emitter) => {
-    ipcRenderer.on(EXPECTATION_UNLOAD, () => emitter('action'));
-
-    return () => {};
-  })
-);
-
-function* requestUnloadAgent() {
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const { serverId, expectationId } = yield take(REQUEST_UNLOAD);
-    ipcRenderer.send(EXPECTATION_UNLOAD, { serverId, expectationId });
-
-    const chan = yield call(unloadChannel);
-    yield take(chan);
-    yield put(unload(serverId, expectationId));
-  }
-}
-
 function* unloadAfterUseAgent() {
   const unloadChan = () => (
     eventChannel((emitter) => {
@@ -92,7 +70,6 @@ function* unloadAfterUseAgent() {
 export default function* main() {
   yield [
     spawn(expectationAddAgent),
-    spawn(requestUnloadAgent),
     spawn(unloadAfterUseAgent)
   ];
 }

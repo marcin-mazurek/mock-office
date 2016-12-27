@@ -4,6 +4,7 @@ import addServerAgent from '../servers/addServer/saga';
 import serverStartAgent from '../servers/startServer/saga';
 import serverStopAgent from '../servers/stopServer/saga';
 import loadExpectationAgent from '../expectations/loadExpectation/saga';
+import unloadExpectationAgent from '../expectations/unloadExpectation/saga';
 
 export default function* rootSaga() {
   yield [
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     yield spawn(addServerAgent),
     yield spawn(serverStartAgent),
     yield spawn(serverStopAgent),
-    yield spawn(loadExpectationAgent)
+    yield spawn(loadExpectationAgent),
+    yield spawn(unloadExpectationAgent)
   ];
 }
