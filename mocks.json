@@ -11,6 +11,16 @@
   },
   {
     "request": {
+      "url": "/some-url-1"
+    },
+    "response": {
+      "body": {
+        "data": "another response for some-url-1"
+      }
+    }
+  },
+  {
+    "request": {
       "url": "/some-url-2"
     },
     "response": {
