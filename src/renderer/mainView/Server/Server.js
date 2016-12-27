@@ -3,46 +3,27 @@ import { connect } from 'react-redux';
 import FilePicker from '../../expectations/addFromFile/FilePicker';
 import LoadedExpectationList from '../LoadedExpectationList';
 import UnloadedExpectationList from '../UnloadedExpectationList';
-import initServerStop from '../../servers/stopServer/actions';
-import initServerStart from '../../servers/startServer/actions';
-import { getSelected, isRunning } from '../../servers/selectors';
+import { isRunning } from '../../servers/selectors';
+import StartButton from '../../servers/startServer/StartButton';
+import StopButton from '../../servers/stopServer/StopButton';
 
-const Server = ({ start, stop, id, running }) => (
+const Server = ({ running }) => (
   <div className="server">
     <FilePicker />
     <h2>Not loaded:</h2>
     <UnloadedExpectationList />
     <h2>Loaded:</h2>
     <LoadedExpectationList />
-    <button
-      onClick={() => {
-        if (running) {
-          stop(id);
-        } else {
-          start(id);
-        }
-      }}
-    >
-      { running ? 'Stop' : 'Start' }
-    </button>
+    { running ? <StopButton /> : <StartButton /> }
   </div>
 );
 
 const mapStateToProps = state => ({
-  id: getSelected(state),
   running: isRunning(state)
 });
 
-const mapDispatchToProps = {
-  start: initServerStart,
-  stop: initServerStop
-};
-
 Server.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  start: React.PropTypes.func.isRequired,
-  stop: React.PropTypes.func.isRequired,
   running: React.PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Server);
+export default connect(mapStateToProps)(Server);

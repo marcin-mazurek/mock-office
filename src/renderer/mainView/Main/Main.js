@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Server from '../Server';
 import ServerList from '../ServerList';
 import { getSelected } from '../../servers/selectors';
-import AddServer from '../AddServer';
+import AddServer from '../../servers/addServer/AddServer';
 
 class Main extends React.Component {
   render() {
