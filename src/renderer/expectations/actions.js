@@ -2,7 +2,6 @@ export const ADD = 'expectations/ADD';
 export const FILE_PICK = 'expectations/FILE_PICK';
 export const LOAD = 'expectations/LOAD';
 export const UNLOAD = 'expectations/UNLOAD';
-export const REQUEST_LOAD = 'expectations/REQUEST_LOAD';
 export const REQUEST_UNLOAD = 'expectations/REQUEST_UNLOAD';
 
 export const filePick = files => ({
@@ -21,12 +20,6 @@ export const load = (serverId, expectationId, instanceId) => ({
   serverId,
   expectationId,
   instanceId
-});
-
-export const requestLoad = (serverId, expectationId) => ({
-  type: REQUEST_LOAD,
-  serverId,
-  expectationId
 });
 
 export const unload = (serverId, expectationId) => ({
