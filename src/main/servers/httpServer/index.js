@@ -27,10 +27,6 @@ export default class HttpServer {
       }
 
       if (matchedExp) {
-        this.ee.emit(EXPECTATION_UNLOAD_AFTER_USE, {
-          serverId: this.id,
-          expectationId: matchedExp.id
-        });
         res.json(matchedExp.instance.response.body);
       } else {
         res.status(404).end();
@@ -42,7 +38,20 @@ export default class HttpServer {
     const matchedExpIndex = this.matchExpectation(req);
 
     if (matchedExpIndex >= 0) {
-      return this.loaded.splice(matchedExpIndex, 1)[0];
+      const matchedExp = this.loaded[matchedExpIndex];
+
+      matchedExp.quantity -= 1;
+
+      if (matchedExp.quantity < 1) {
+        this.ee.emit(EXPECTATION_UNLOAD_AFTER_USE, {
+          serverId: this.id,
+          expectationId: matchedExp.id
+        });
+
+        this.loaded.splice(matchedExpIndex, 1);
+      }
+
+      return matchedExp;
     }
 
     return undefined;
@@ -73,10 +82,10 @@ export default class HttpServer {
     return this.server ? this.server.listening : false;
   }
 
-  load(id) {
+  load(id, quantity) {
     const instance = expectationsService.create(id);
     const instanceId = uniqueId();
-    this.loaded.push({ id: instanceId, instance });
+    this.loaded.push({ id: instanceId, instance, quantity });
 
     return instanceId;
   }
