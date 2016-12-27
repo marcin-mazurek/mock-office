@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { getSelectedServerLoadedExpectations } from '../../expectations/selectors';
-import { requestUnload } from '../../expectations/actions';
+import { init } from '../../expectations/unloadExpectation/actions';
 import { getSelected } from '../../servers/selectors';
 import UnloadButton from '../../expectations/unloadExpectation/UnloadButton';
 
@@ -30,7 +30,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  unload: requestUnload
+  unload: init
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoadedExpectationList);

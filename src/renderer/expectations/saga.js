@@ -1,15 +1,8 @@
 import { take, spawn, call, put, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
-import {
-  FILE_PICK,
-  add,
-  unload
-} from './actions';
-import {
-  EXPECTATION_ADD,
-  EXPECTATION_UNLOAD_AFTER_USE
-} from '../../common/messageNames';
+import { FILE_PICK, add } from './actions';
+import { EXPECTATION_ADD } from '../../common/messageNames';
 import { getSelected } from '../servers/selectors';
 
 const expectationAddChannel = () => (
@@ -50,26 +43,8 @@ function* expectationAddAgent() {
   }
 }
 
-function* unloadAfterUseAgent() {
-  const unloadChan = () => (
-    eventChannel((emitter) => {
-      ipcRenderer.on(EXPECTATION_UNLOAD_AFTER_USE, (event, args) => emitter(args));
-
-      return () => {};
-    })
-  );
-
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const chan = yield call(unloadChan);
-    const { serverId, expectationId } = yield take(chan);
-    yield put(unload(serverId, expectationId));
-  }
-}
-
 export default function* main() {
   yield [
-    spawn(expectationAddAgent),
-    spawn(unloadAfterUseAgent)
+    spawn(expectationAddAgent)
   ];
 }
