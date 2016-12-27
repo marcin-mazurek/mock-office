@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import init from '../../servers/addServer/actions';
+import init from '../actions';
 
 class AddServer extends React.Component {
   constructor(props) {
