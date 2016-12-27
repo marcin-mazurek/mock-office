@@ -10,8 +10,9 @@ const LoadedExpectationList = ({ expectations, serverId }) => (
     {
       expectations.map(({ instanceId, expectation, quantity }) => (
         <li key={instanceId}>
-          <div>Request url: {expectation.getIn(['request', 'url'])}</div>
           <div>How many times: { quantity }</div>
+          <div>Request url: {expectation.getIn(['request', 'url'])}</div>
+          <div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>
           <UnloadButton serverId={serverId} instanceId={instanceId} />
         </li>
       ))
