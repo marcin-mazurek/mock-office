@@ -2,7 +2,7 @@ import { Record, Map, Set } from 'immutable';
 import {
   ADD,
   SELECT,
-  START_SERVER,
+  START,
   STOP
 } from './actions';
 
@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
       const { id } = action;
       return state.set('selected', id);
     }
-    case START_SERVER: {
+    case START: {
       const { id } = action;
       return state.set('running', state.get('running').add(id));
     }
