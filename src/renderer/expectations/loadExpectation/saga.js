@@ -23,6 +23,6 @@ export default function* agent() {
 
     const chan = yield call(loadChannel);
     const instanceId = yield take(chan);
-    yield put(load(serverId, expectationId, instanceId));
+    yield put(load(serverId, expectationId, instanceId, quantity));
   }
 }

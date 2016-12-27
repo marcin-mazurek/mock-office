@@ -10,10 +10,10 @@ const initialState = new Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const { expectationId, instanceId } = action;
+      const { expectationId, instanceId, quantity } = action;
 
       return state.set('loaded',
-        state.get('loaded').push({ instanceId, expectationId })
+        state.get('loaded').push({ instanceId, expectationId, quantity })
       );
     }
     case UNLOAD: {

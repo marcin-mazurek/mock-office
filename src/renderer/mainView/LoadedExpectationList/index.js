@@ -8,10 +8,10 @@ import UnloadButton from '../../expectations/unloadExpectation/UnloadButton';
 const LoadedExpectationList = ({ expectations, serverId }) => (
   <ul>
     {
-      expectations.map(({ instanceId, expectation }) => (
+      expectations.map(({ instanceId, expectation, quantity }) => (
         <li key={instanceId}>
           <div>Request url: {expectation.getIn(['request', 'url'])}</div>
-          <div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>
+          <div>How many times: { quantity }</div>
           <UnloadButton serverId={serverId} instanceId={instanceId} />
         </li>
       ))
