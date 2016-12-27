@@ -1,5 +1,5 @@
 import { spawn } from 'redux-saga/effects';
-import expectationsSaga from '../expectations/saga';
+import addExpectationFromFileAgent from '../expectations/addFromFile/saga';
 import addServerAgent from '../servers/addServer/saga';
 import serverStartAgent from '../servers/startServer/saga';
 import serverStopAgent from '../servers/stopServer/saga';
@@ -9,7 +9,7 @@ import unloadExpectationAfterUseAgent from '../expectations/unloadExpectationAft
 
 export default function* rootSaga() {
   yield [
-    yield spawn(expectationsSaga),
+    yield spawn(addExpectationFromFileAgent),
     yield spawn(addServerAgent),
     yield spawn(serverStartAgent),
     yield spawn(serverStopAgent),

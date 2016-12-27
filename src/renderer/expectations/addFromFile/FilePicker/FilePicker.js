@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { filePick } from '../../actions';
+import { filePick } from '../actions';
 
 const mapDispatchToProps = {
   filePick

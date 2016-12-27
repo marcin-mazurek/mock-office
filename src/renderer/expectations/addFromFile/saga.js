@@ -1,9 +1,10 @@
-import { take, spawn, call, put, select } from 'redux-saga/effects';
+import { take, call, put, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
-import { FILE_PICK, add } from './actions';
-import { EXPECTATION_ADD } from '../../common/messageNames';
-import { getSelected } from '../servers/selectors';
+import { add } from '../actions';
+import { FILE_PICK } from './actions';
+import { EXPECTATION_ADD } from '../../../common/messageNames';
+import { getSelected } from '../../servers/selectors';
 
 const expectationAddChannel = () => (
   eventChannel((emitter) => {
@@ -15,7 +16,7 @@ const expectationAddChannel = () => (
   })
 );
 
-function* expectationAddAgent() {
+export default function* agent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const { files } = yield take(FILE_PICK);
@@ -41,10 +42,4 @@ function* expectationAddAgent() {
     const expectations = yield take(channel);
     yield put(add(serverId, expectations));
   }
-}
-
-export default function* main() {
-  yield [
-    spawn(expectationAddAgent)
-  ];
 }
