@@ -8,11 +8,12 @@ export const add = (serverId, expectations) => ({
   expectations
 });
 
-export const load = (serverId, expectationId, instanceId) => ({
+export const load = (serverId, expectationId, instanceId, quantity) => ({
   type: LOAD,
   serverId,
   expectationId,
-  instanceId
+  instanceId,
+  quantity
 });
 
 export const unload = (serverId, expectationId) => ({

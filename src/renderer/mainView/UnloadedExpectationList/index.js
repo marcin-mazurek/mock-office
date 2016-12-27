@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getSelectedServerExpectations } from '../../expectations/selectors';
 import { getSelected } from '../../servers/selectors';
 import { requestLoad } from '../../expectations/actions';
-import LoadButton from '../../expectations/loadExpectation/LoadButton';
+import UnloadedExpectation from '../UnloadedExpectation';
 
 const UnloadedExpectationList = ({ expectations, serverId }) => (
   <ul>
@@ -12,9 +12,7 @@ const UnloadedExpectationList = ({ expectations, serverId }) => (
         ? (
         expectations.map(expectation => (
           <li key={expectation.get('id')}>
-            <div>Request url: {expectation.getIn(['request', 'url'])}</div>
-            <div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>
-            <LoadButton serverId={serverId} instanceId={expectation.get('id')} />
+            <UnloadedExpectation expectation={expectation} serverId={serverId} />
           </li>
         ))
       ) : null

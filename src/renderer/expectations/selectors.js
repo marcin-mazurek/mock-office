@@ -21,6 +21,7 @@ export const getSelectedServerLoadedExpectations = createSelector(
   (loadedExpectations, allExpectations) => (
     loadedExpectations.map(exp => ({
       instanceId: exp.instanceId,
-      expectation: allExpectations.get(exp.expectationId)
+      expectation: allExpectations.get(exp.expectationId),
+      quantity: exp.quantity
     }))
   ));
