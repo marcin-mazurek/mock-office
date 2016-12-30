@@ -5,9 +5,11 @@ export default class UnloadedExpectation extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleCounterChange = this.handleCounterChange.bind(this);
+    this.handleInfiniteChange = this.handleInfiniteChange.bind(this);
 
     this.state = {
-      quantity: 1
+      quantity: 1,
+      infinite: false
     };
   }
 
@@ -21,9 +23,17 @@ export default class UnloadedExpectation extends React.PureComponent {
     }
   }
 
+  handleInfiniteChange(event) {
+    const currentInfinite = event.currentTarget.checked;
+
+    this.setState({
+      infinite: currentInfinite
+    });
+  }
+
   render() {
     const { expectation, serverId } = this.props;
-    const { quantity } = this.state;
+    const { quantity, infinite } = this.state;
 
     return (
       <div>
@@ -31,9 +41,23 @@ export default class UnloadedExpectation extends React.PureComponent {
         <div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>
         <div>
           How many times should be used:
-          <input type="number" value={quantity} onChange={this.handleCounterChange} />
+          <input
+            type="number"
+            value={quantity}
+            onChange={this.handleCounterChange}
+            disabled={infinite}
+          />
         </div>
-        <LoadButton serverId={serverId} instanceId={expectation.get('id')} quantity={quantity} />
+        <div>
+          Infinite:
+          <input type="checkbox" checked={infinite} onChange={this.handleInfiniteChange} />
+        </div>
+        <LoadButton
+          serverId={serverId}
+          instanceId={expectation.get('id')}
+          quantity={quantity}
+          infinite={infinite}
+        />
       </div>
     );
   }

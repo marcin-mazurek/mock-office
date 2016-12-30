@@ -53,7 +53,7 @@ serverEvents.on('add', (args) => {
 });
 
 expectationsEvents.on('load', (args) => {
-  const id = servers.get(args.serverId).load(args.expectationId, args.quantity);
+  const id = servers.get(args.serverId).load(args.expectationId, args.quantity, args.infinite);
   mainWindow.webContents.send(EXPECTATION_LOAD, { id });
 });
 

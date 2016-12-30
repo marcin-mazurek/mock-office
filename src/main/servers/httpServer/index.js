@@ -40,7 +40,9 @@ export default class HttpServer {
     if (matchedExpIndex >= 0) {
       const matchedExp = this.loaded[matchedExpIndex];
 
-      matchedExp.quantity -= 1;
+      if (!matchedExp.infinite) {
+        matchedExp.quantity -= 1;
+      }
 
       if (matchedExp.quantity < 1) {
         this.ee.emit(EXPECTATION_UNLOAD_AFTER_USE, {
@@ -82,10 +84,10 @@ export default class HttpServer {
     return this.server ? this.server.listening : false;
   }
 
-  load(id, quantity) {
+  load(id, quantity, infinite) {
     const instance = expectationsService.create(id);
     const instanceId = uniqueId();
-    this.loaded.push({ id: instanceId, instance, quantity });
+    this.loaded.push({ id: instanceId, instance, quantity, infinite });
 
     return instanceId;
   }

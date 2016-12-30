@@ -18,8 +18,8 @@ const loadChannel = () => (
 export default function* agent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const { serverId, expectationId, quantity } = yield take(INIT);
-    ipcRenderer.send(EXPECTATION_LOAD, { serverId, expectationId, quantity });
+    const { serverId, expectationId, quantity, infinite } = yield take(INIT);
+    ipcRenderer.send(EXPECTATION_LOAD, { serverId, expectationId, quantity, infinite });
 
     const chan = yield call(loadChannel);
     const instanceId = yield take(chan);
