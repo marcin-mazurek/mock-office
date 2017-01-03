@@ -1,15 +1,14 @@
 import express from 'express';
 import uniqueId from 'node-unique';
 import expectationsService from '../../expectations';
-import { EXPECTATION_UNLOAD_AFTER_USE } from '../../../common/messageNames';
 
 export default class HttpServer {
   constructor(config) {
     this.load = this.load.bind(this);
     this.unload = this.unload.bind(this);
     this.add = this.add.bind(this);
-    this.ee = config.ee;
     this.sockets = [];
+    this.type = 'http';
     this.expectations = [];
     this.loaded = [];
     this.app = express();
@@ -17,6 +16,7 @@ export default class HttpServer {
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
+    this.emitUnload = config.emitUnload;
 
     this.app.get('*', (req, res) => {
       const matchedExp = this.getResponse(req);
@@ -45,11 +45,7 @@ export default class HttpServer {
       }
 
       if (matchedExp.quantity < 1) {
-        this.ee.emit(EXPECTATION_UNLOAD_AFTER_USE, {
-          serverId: this.id,
-          expectationId: matchedExp.id
-        });
-
+        this.emitUnload(this.id, matchedExp.id);
         this.loaded.splice(matchedExpIndex, 1);
       }
 
