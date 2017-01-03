@@ -58,7 +58,8 @@
     "redux": "^3.6.0",
     "redux-immutable": "^3.0.8",
     "redux-saga": "^0.13.0",
-    "reselect": "^2.5.4"
+    "reselect": "^2.5.4",
+    "ws": "^1.1.1"
   },
   "jest": {
     "moduleDirectories": [

@@ -59,6 +59,7 @@ class AddServer extends React.Component {
         <label htmlFor="type">Type:</label>
         <select name="type" value={this.state.type} onChange={this.handleTypeChange}>
           <option value="http">http</option>
+          <option value="ws">ws</option>
         </select>
         <button onClick={this.submit}>Create</button>
       </div>

@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron';
 import unique from 'node-unique';
 import HttpServer from './httpServer';
+import WSMockServer from './wsServer';
 import {
   ADD_SERVER,
   SERVER_START,
@@ -14,7 +15,8 @@ import expectations from '../expectations';
 import Expectation from '../expectations/httpExpectation/Expectation';
 
 const serverTypes = {
-  http: HttpServer
+  http: HttpServer,
+  ws: WSMockServer
 };
 
 const servers = {};
