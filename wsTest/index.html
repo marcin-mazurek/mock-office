@@ -26,8 +26,14 @@
       showMessage('server open');
 
       setTimeout(function() {
-        ws.send('message');
-      }, 3000);
+        ws.send('message-1');
+        showMessage('Sending: message-1');
+      }, 1000);
+
+      setTimeout(function() {
+        ws.send('message-2');
+        showMessage('Sending: message-2');
+      }, 2000);
     };
 
     ws.onclose = function() {

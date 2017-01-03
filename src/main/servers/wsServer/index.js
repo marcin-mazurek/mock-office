@@ -32,7 +32,7 @@ export default class WSMockServer {
         this.loaded.splice(matchedExpIndex, 1);
       }
 
-      return matchedExp.responseMessage;
+      return matchedExp.instance.responseMessage;
     }
 
     return undefined;
@@ -54,11 +54,11 @@ export default class WSMockServer {
 
     this.wss.on('listening', () => {
       this.listening = true;
+      cb();
     });
 
     this.wss.on('connection', (ws) => {
       this.ws = ws;
-      cb();
 
       this.startReadingMessages();
     });
@@ -70,6 +70,8 @@ export default class WSMockServer {
 
       if (response) {
         this.ws.send(response);
+      } else {
+        this.ws.send('Unknown message');
       }
     });
   }
