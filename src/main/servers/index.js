@@ -29,11 +29,11 @@ const api = {
     mainWindow = win;
 
     ipcMain.on(ADD_SERVER, (event, args) => {
-      const { name, port } = args;
+      const { name, port, type } = args;
       const id = unique();
-      const Server = serverTypes.http;
+      const Server = serverTypes[type];
       servers[id] = new Server({ name, port, id, emitUnload });
-      mainWindow.webContents.send(ADD_SERVER, { name, port, id });
+      mainWindow.webContents.send(ADD_SERVER, { name, port, type, id });
     });
 
     ipcMain.on(SERVER_START, (event, id) => {

@@ -16,16 +16,16 @@ const addServerChannel = () => (
   })
 );
 
-function* addServer(name, port) {
-  ipcRenderer.send(ADD_SERVER, { name, port });
+function* addServer(name, port, type) {
+  ipcRenderer.send(ADD_SERVER, { name, port, type });
   const { id } = yield take(yield call(addServerChannel));
-  yield put(add(name, port, id));
+  yield put(add(name, port, type, id));
 }
 
 export default function* agent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const { name, port } = yield take(INIT);
-    yield fork(addServer, name, port);
+    const { name, port, serverType } = yield take(INIT);
+    yield fork(addServer, name, port, serverType);
   }
 }

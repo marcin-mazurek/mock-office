@@ -10,7 +10,8 @@ const Server = new Record({
   id: '',
   name: 'New Server',
   port: 3000,
-  expectations: new Set()
+  expectations: new Set(),
+  type: 'http'
 });
 
 const initialState = new Map({
@@ -22,8 +23,8 @@ const initialState = new Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { name, port, id } = action;
-      const server = new Server({ name, port, id });
+      const { name, port, id, serverType } = action;
+      const server = new Server({ name, port, id, type: serverType });
 
       return state.set('itemsById',
         state.get('itemsById').set(id, server)

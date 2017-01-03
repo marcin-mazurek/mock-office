@@ -8,10 +8,12 @@ class AddServer extends React.Component {
     this.submit = this.submit.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleChangePort = this.handleChangePort.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
 
     this.state = {
       name: 'Server name',
-      port: 3000
+      port: 3000,
+      type: 'http'
     };
   }
 
@@ -27,8 +29,14 @@ class AddServer extends React.Component {
     });
   }
 
+  handleTypeChange(e) {
+    this.setState({
+      type: e.currentTarget.value
+    });
+  }
+
   submit() {
-    this.props.add(this.state.name, this.state.port);
+    this.props.add(this.state.name, this.state.port, this.state.type);
   }
 
   render() {
@@ -48,6 +56,10 @@ class AddServer extends React.Component {
           name="port"
           onChange={this.handleChangePort}
         />
+        <label htmlFor="type">Type:</label>
+        <select name="type" value={this.state.type} onChange={this.handleTypeChange}>
+          <option value="http">http</option>
+        </select>
         <button onClick={this.submit}>Create</button>
       </div>
     );
