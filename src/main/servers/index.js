@@ -73,7 +73,7 @@ const api = {
     ipcMain.on(EXPECTATION_ADD, (event, args) => {
       const serverToAddMock = servers[args.serverId];
       const exps = args.expectations.map(exp => new Expectation(exp));
-      const expectationsIds = exps.map(exp => expectations.add('http', exp));
+      const expectationsIds = exps.map(exp => expectations.add(serverToAddMock.type, exp));
       serverToAddMock.add(expectationsIds);
       mainWindow.webContents.send(EXPECTATION_ADD, exps.map((exp, index) =>
         Object.assign({}, exp, { id: expectationsIds[index] })
