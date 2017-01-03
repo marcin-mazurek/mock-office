@@ -3,11 +3,12 @@ export const SELECT = 'servers/SELECT';
 export const START = 'servers/START';
 export const STOP = 'servers/STOP';
 
-export const add = (name, port, id) => ({
+export const add = (name, port, serverType, id) => ({
   type: ADD,
   name,
   port,
-  id
+  id,
+  serverType
 });
 
 export const select = id => ({
