@@ -17,8 +17,8 @@ export default class WSMockServer {
     this.listening = false;
   }
 
-  getResponse(req) {
-    const matchedExpIndex = this.matchExpectation(req);
+  getResponse(message) {
+    const matchedExpIndex = this.matchExpectation(message);
 
     if (matchedExpIndex >= 0) {
       const matchedExp = this.loaded[matchedExpIndex];
@@ -32,15 +32,15 @@ export default class WSMockServer {
         this.loaded.splice(matchedExpIndex, 1);
       }
 
-      return matchedExp;
+      return matchedExp.responseMessage;
     }
 
     return undefined;
   }
 
-  matchExpectation(req) {
+  matchExpectation(message) {
     return this.loaded.findIndex(expectation => (
-      expectation.instance.request.url === req.url
+      expectation.instance.incomingMessage === message
     ));
   }
 
@@ -65,8 +65,12 @@ export default class WSMockServer {
   }
 
   startReadingMessages() {
-    this.ws.on('message', () => {
-      this.ws.send(JSON.stringify({ message: 'its JSON!' }));
+    this.ws.on('message', (message) => {
+      const response = this.getResponse(message);
+
+      if (response) {
+        this.ws.send(response);
+      }
     });
   }
 

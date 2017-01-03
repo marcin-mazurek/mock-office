@@ -1,8 +1,10 @@
 import unique from 'node-unique';
 import HttpExpectation from './httpExpectation/Expectation';
+import WsExpectation from './wsExpectation';
 
 const types = {
-  http: HttpExpectation
+  http: HttpExpectation,
+  ws: WsExpectation
 };
 const expectations = [];
 
