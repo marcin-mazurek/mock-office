@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import { getSelectedServerExpectations } from '../../expectations/selectors';
 import { getSelected } from '../../servers/selectors';
 import { requestLoad } from '../../expectations/actions';
-import UnloadedExpectation from '../UnloadedExpectation';
+import HttpUnloadedExpectation from '../HttpUnloadedExpectation';
 
-const UnloadedExpectationList = ({ expectations, serverId }) => (
+const HttpUnloadedExpectationList = ({ expectations, serverId }) => (
   <ul>
     {
       expectations
         ? (
         expectations.map(expectation => (
           <li key={expectation.get('id')}>
-            <UnloadedExpectation expectation={expectation} serverId={serverId} />
+            <HttpUnloadedExpectation expectation={expectation} serverId={serverId} />
           </li>
         ))
       ) : null
@@ -20,7 +20,7 @@ const UnloadedExpectationList = ({ expectations, serverId }) => (
   </ul>
 );
 
-UnloadedExpectationList.propTypes = {
+HttpUnloadedExpectationList.propTypes = {
   expectations: React.PropTypes.shape(),
   serverId: React.PropTypes.string.isRequired
 };
@@ -34,4 +34,4 @@ const mapDispatchToProps = {
   load: requestLoad
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnloadedExpectationList);
+export default connect(mapStateToProps, mapDispatchToProps)(HttpUnloadedExpectationList);

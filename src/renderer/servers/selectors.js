@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect';
 
-export const getAll = state => state.getIn(['servers', 'itemsById']).toList();
+export const getAll = state => state.getIn(['servers', 'itemsById']);
+export const getAllAsList = createSelector(
+  getAll,
+  servers => servers.toList()
+);
 export const getSelected = state => state.getIn(['servers', 'selected']);
 export const getRunning = state => state.getIn(['servers', 'running']);
 export const isRunning = createSelector(
@@ -9,7 +13,7 @@ export const isRunning = createSelector(
   (id, running) => running.has(id)
 );
 export const getServerList = createSelector(
-  getAll,
+  getAllAsList,
   getRunning,
   (servers, running) => servers.map((server) => {
     const mappedServer = server;
@@ -17,4 +21,10 @@ export const getServerList = createSelector(
 
     return mappedServer;
   })
+);
+
+export const getSelectedServerType = createSelector(
+  getSelected,
+  getAll,
+  (serverId, all) => all.get(serverId).type
 );

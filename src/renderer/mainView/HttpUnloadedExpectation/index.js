@@ -1,7 +1,7 @@
 import React from 'react';
 import LoadButton from '../../expectations/loadExpectation/LoadButton';
 
-export default class UnloadedExpectation extends React.PureComponent {
+export default class HttpUnloadedExpectation extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleCounterChange = this.handleCounterChange.bind(this);
@@ -37,21 +37,21 @@ export default class UnloadedExpectation extends React.PureComponent {
 
     return (
       <div>
-        {/*<div>Request url: {expectation.getIn(['request', 'url'])}</div>*/}
-        {/*<div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>*/}
-        {/*<div>*/}
-          {/*How many times should be used:*/}
-          {/*<input*/}
-            {/*type="number"*/}
-            {/*value={quantity}*/}
-            {/*onChange={this.handleCounterChange}*/}
-            {/*disabled={infinite}*/}
-          {/*/>*/}
-        {/*</div>*/}
-        {/*<div>*/}
-          {/*Infinite:*/}
-          {/*<input type="checkbox" checked={infinite} onChange={this.handleInfiniteChange} />*/}
-        {/*</div>*/}
+        <div>Request url: {expectation.getIn(['request', 'url'])}</div>
+        <div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>
+        <div>
+          How many times should be used:
+          <input
+            type="number"
+            value={quantity}
+            onChange={this.handleCounterChange}
+            disabled={infinite}
+          />
+        </div>
+        <div>
+          Infinite:
+          <input type="checkbox" checked={infinite} onChange={this.handleInfiniteChange} />
+        </div>
         <LoadButton
           serverId={serverId}
           instanceId={expectation.get('id')}
@@ -63,7 +63,7 @@ export default class UnloadedExpectation extends React.PureComponent {
   }
 }
 
-UnloadedExpectation.propTypes = {
+HttpUnloadedExpectation.propTypes = {
   expectation: React.PropTypes.shape().isRequired,
   serverId: React.PropTypes.string.isRequired
 };
