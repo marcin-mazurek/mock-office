@@ -11,7 +11,7 @@ LoadButton.propTypes = {
   serverId: React.PropTypes.string.isRequired,
   instanceId: React.PropTypes.string.isRequired,
   quantity: React.PropTypes.number.isRequired,
-  infinite: React.PropTypes.bool.isRequire
+  infinite: React.PropTypes.bool.isRequired
 };
 
 const mapDispatchToProps = {
