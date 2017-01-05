@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { getServerList, getSelected } from '../../servers/selectors';
-import { select as dispatchSelect } from '../../servers/actions';
+import { getServerList, getSelected } from '../../../servers/selectors';
+import { select as dispatchSelect } from '../../../servers/actions';
 
 const ServerList = ({ servers, select, selectedId }) => (
   <ul>
