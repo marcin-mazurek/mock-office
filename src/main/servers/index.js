@@ -12,7 +12,6 @@ import {
   EXPECTATION_UNLOAD
 } from '../../common/messageNames';
 import expectations from '../expectations';
-import HttpExpectation from '../expectations/httpExpectation/Expectation';
 
 const serverTypes = {
   http: HttpServer,
