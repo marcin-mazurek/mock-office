@@ -1,0 +1,10 @@
+[
+  {
+    "incomingMessage": "message-1",
+    "responseMessage": "response for message-1"
+  },
+  {
+    "incomingMessage": "message-2",
+    "responseMessage": "response for message-2"
+  }
+]

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Tahoma, Geneva, sans-serif;
+    }
+    div {
+      display: inline;
+    }
+  </style>
+  <script>
+    var index = 1;
+    function showMessage(message) {
+      var message = document.createTextNode(index + '. ' + message);
+      var newLine = document.createElement('br');
+      document.getElementById('message').appendChild(message);
+      document.getElementById('message').appendChild(newLine);
+      index += 1;
+    }
+    var ws = new WebSocket('ws://localhost:3000');
+    ws.onmessage = function (event) {
+      showMessage(event.data);
+    };
+    ws.onopen = function() {
+      showMessage('server open');
+
+      setTimeout(function() {
+        ws.send('message-1');
+        showMessage('Sending: message-1');
+      }, 1000);
+
+      setTimeout(function() {
+        ws.send('message-2');
+        showMessage('Sending: message-2');
+      }, 2000);
+    };
+
+    ws.onclose = function() {
+      showMessage('server closed');
+    };
+  </script>
+</head>
+<body>
+  <h1>Message</h1>
+  <div id="message"></div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron';
 import unique from 'node-unique';
 import HttpServer from './httpServer';
+import WSMockServer from './wsServer';
 import {
   ADD_SERVER,
   SERVER_START,
@@ -11,10 +12,10 @@ import {
   EXPECTATION_UNLOAD
 } from '../../common/messageNames';
 import expectations from '../expectations';
-import Expectation from '../expectations/httpExpectation/Expectation';
 
 const serverTypes = {
-  http: HttpServer
+  http: HttpServer,
+  ws: WSMockServer
 };
 
 const servers = {};
@@ -72,10 +73,11 @@ const api = {
 
     ipcMain.on(EXPECTATION_ADD, (event, args) => {
       const serverToAddMock = servers[args.serverId];
-      const exps = args.expectations.map(exp => new Expectation(exp));
-      const expectationsIds = exps.map(exp => expectations.add(serverToAddMock.type, exp));
+      const expectationsIds = args.expectations.map(
+        exp => expectations.add(serverToAddMock.type, exp)
+      );
       serverToAddMock.add(expectationsIds);
-      mainWindow.webContents.send(EXPECTATION_ADD, exps.map((exp, index) =>
+      mainWindow.webContents.send(EXPECTATION_ADD, args.expectations.map((exp, index) =>
         Object.assign({}, exp, { id: expectationsIds[index] })
       ));
     });

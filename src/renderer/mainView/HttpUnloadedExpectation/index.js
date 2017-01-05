@@ -1,7 +1,7 @@
 import React from 'react';
 import LoadButton from '../../expectations/loadExpectation/LoadButton';
 
-export default class UnloadedExpectation extends React.PureComponent {
+export default class HttpUnloadedExpectation extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleCounterChange = this.handleCounterChange.bind(this);
@@ -63,7 +63,7 @@ export default class UnloadedExpectation extends React.PureComponent {
   }
 }
 
-UnloadedExpectation.propTypes = {
+HttpUnloadedExpectation.propTypes = {
   expectation: React.PropTypes.shape().isRequired,
   serverId: React.PropTypes.string.isRequired
 };
