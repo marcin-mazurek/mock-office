@@ -4,6 +4,7 @@ import Server from '../Server';
 import ServerList from '../ServerList';
 import { getSelected } from '../../servers/selectors';
 import AddServer from '../../servers/addServer/AddServer';
+import NavBar from '../NavBar';
 
 class Main extends React.Component {
   render() {
@@ -11,6 +12,7 @@ class Main extends React.Component {
 
     return (
       <div className="main">
+        <NavBar />
         <div className="main-server-list">
           <div>List of servers:</div>
           <ServerList />
