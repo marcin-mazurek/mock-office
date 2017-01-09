@@ -9,9 +9,9 @@ import {
 const Server = new Record({
   id: '',
   name: 'New Server',
-  port: 3000,
+  port: null,
   expectations: new Set(),
-  type: 'http'
+  type: ''
 });
 
 const initialState = new Map({
@@ -25,10 +25,9 @@ export default (state = initialState, action) => {
     case ADD: {
       const { name, port, id, serverType } = action;
       const server = new Server({ name, port, id, type: serverType });
+      const newItemsById = state.get('itemsById').set(id, server);
 
-      return state.set('itemsById',
-        state.get('itemsById').set(id, server)
-      );
+      return state.set('itemsById', newItemsById);
     }
     case SELECT: {
       const { id } = action;
