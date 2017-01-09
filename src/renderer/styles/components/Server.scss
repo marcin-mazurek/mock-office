@@ -1,0 +1,38 @@
+.server {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+}
+
+.server__details {
+  flex: none;
+}
+
+.server__expectations {
+  flex: auto;
+}
+
+.server-expectations {
+  display: flex;
+}
+
+.server-expectations__type {
+  flex: 1;
+
+}
+
+.server-expectations-type {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+.server-expectations-type__header {
+  flex: none;
+}
+
+.server-expectations-type__list {
+  flex: auto;
+  overflow: auto;
+}

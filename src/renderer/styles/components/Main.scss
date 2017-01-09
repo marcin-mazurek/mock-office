@@ -1,8 +1,16 @@
 .main {
   height: 100%;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
-.main-server-list {
-  border-right: 1px solid #ddd;
+.main__nav-bar {
+  flex: none;
+}
+
+.main__content {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
 }

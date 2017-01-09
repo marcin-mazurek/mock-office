@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import classnames from 'classnames';
 import { getServerList, getSelected } from '../../../servers/selectors';
 import { select as dispatchSelect } from '../../../servers/actions';
 
-const ServerList = ({ servers, select, selectedId }) => (
+const ServerList = ({ servers, select, selectedId, goToServerPage }) => (
   <ul>
     {
       servers.map((server) => {
@@ -18,7 +19,14 @@ const ServerList = ({ servers, select, selectedId }) => (
             key={server.id}
             className={itemClassNames}
           >
-            <a href="" onClick={e => select(e, server.id)}>
+            <a
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+                select(server.id);
+                goToServerPage();
+              }}
+            >
               {server.name}
             </a>
           </li>
@@ -31,6 +39,7 @@ const ServerList = ({ servers, select, selectedId }) => (
 ServerList.propTypes = {
   servers: React.PropTypes.shape().isRequired,
   select: React.PropTypes.func.isRequired,
+  goToServerPage: React.PropTypes.func.isRequired,
   selectedId: React.PropTypes.string
 };
 
@@ -38,11 +47,10 @@ const mapStateToProps = state => ({
   servers: getServerList(state),
   selectedId: getSelected(state)
 });
+
 const mapDispatchToProps = {
-  select: (e, id) => {
-    e.preventDefault();
-    return dispatchSelect(id);
-  }
+  select: id => dispatchSelect(id),
+  goToServerPage: () => push('/server')
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServerList);

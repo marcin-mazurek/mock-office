@@ -23,8 +23,12 @@ export const getServerList = createSelector(
   })
 );
 
-export const getSelectedServerType = createSelector(
+export const getSelectedServerDetails = createSelector(
   getSelected,
   getAll,
-  (serverId, all) => all.get(serverId).type
+  (serverId, all) => ({
+    type: all.get(serverId).type,
+    name: all.get(serverId).name,
+    port: all.get(serverId).port
+  })
 );
