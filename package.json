@@ -21,6 +21,7 @@
   "author": "clixr",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@kadira/storybook": "^2.21.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
@@ -45,14 +46,14 @@
     "redux-mock-store": "^1.2.1",
     "sass-loader": "^4.1.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.3",
-    "@kadira/storybook": "^2.21.0"
+    "webpack": "^1.13.3"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "express": "^4.14.0",
     "immutable": "^3.8.1",
     "node-unique": "^1.0.0",
+    "ramda": "^0.23.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
