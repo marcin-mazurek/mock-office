@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Main from '../mainView/Main';
+import Main from '../layout/main';
 import Servers from '../pages/Servers';
 import AddServerPage from '../pages/AddServerPage';
 import ServerPage from '../pages/ServerPage';
