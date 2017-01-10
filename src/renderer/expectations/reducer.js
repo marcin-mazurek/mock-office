@@ -1,4 +1,5 @@
 import { Map, Set, List } from 'immutable';
+import R from 'ramda';
 import { ADD, LOAD, UNLOAD } from './actions';
 
 const initialState = new Map({
@@ -10,41 +11,67 @@ const initialState = new Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const { expectationId, instanceId, quantity } = action;
-
-      return state.set('loaded',
-        state.get('loaded').push({ instanceId, expectationId, quantity })
+      return R.invoker(2, 'set')('loaded',
+        R.pipe(
+          R.invoker(1, 'get')('loaded'),
+          R.invoker(1, 'push')(R.pick(['expectationId', 'instanceId', 'quantity'], action))
+        )(state),
+        state
       );
     }
     case UNLOAD: {
-      const { expectationId } = action;
-
-      return state.set('loaded',
-        state.get('loaded').filter(expectation => expectation.instanceId !== expectationId)
+      return R.invoker(2, 'set')('loaded',
+        R.pipe(
+          R.invoker(1, 'get')('loaded'),
+          R.invoker(1, 'filter')(
+            expectation => expectation.instanceId !== R.prop('expectationId', action)
+          )
+        )(state),
+        state
       );
     }
     case ADD: {
       const { serverId, expectations } = action;
-      let newState = state;
-      const expectationsById = expectations.reduce(
-        (prev, next) => {
-          const reducedExpectations = prev;
-          reducedExpectations[next.id] = next;
-          return reducedExpectations;
-        }, {}
-      );
+      let stateRef = state;
 
-      if (!newState.get('itemsByServer').get(serverId)) {
-        newState = newState.setIn(['itemsByServer', serverId],
-          Set.of(...expectations.map(ex => ex.id)));
-      } else {
-        newState = newState.setIn(['itemsByServer', 'serverId'],
-          newState.getIn(['itemsByServer', serverId])
-            .concat(Set.of(...expectations.map(ex => ex.id)))
-        );
-      }
-
-      return newState.set('itemsById', newState.get('itemsById').merge(expectationsById));
+      return R.pipe(
+        R.invoker(2, 'setIn')(['itemsByServer', serverId],
+          R.ifElse(
+            R.invoker(1, 'getIn')(['itemsByServer', serverId]),
+            R.pipe(
+              R.invoker(1, 'getIn')(['itemsByServer', serverId]),
+              R.invoker(1, 'concat')(
+                R.pipe(
+                  R.map(ex => ex.id),
+                  R.construct(Set)
+                )(expectations)
+              )
+            ),
+            () => R.pipe(
+              R.map(ex => ex.id),
+              R.construct(Set)
+            )(expectations)
+          )(stateRef)
+        ),
+        R.tap((st) => {
+          stateRef = st;
+        }),
+        R.invoker(2, 'set')('itemsById',
+          R.pipe(
+            R.invoker(1, 'get')('itemsById'),
+            R.invoker(1, 'merge')(
+              R.pipe(
+                R.pipe(
+                  R.prop('expectations'),
+                  R.reduce(
+                    (acc, value) => R.assoc(value.id, value)(acc), {}
+                  )
+                )
+              )(action)
+            )
+          )(stateRef)
+        )
+      )(stateRef);
     }
     default: {
       return state;
