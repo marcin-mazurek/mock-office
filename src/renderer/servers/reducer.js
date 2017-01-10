@@ -1,5 +1,5 @@
 import { Record, Map, Set } from 'immutable';
-import R, { __ as argPlaceholder } from 'ramda';
+import R from 'ramda';
 import {
   ADD,
   SELECT,
@@ -24,20 +24,15 @@ const initialState = new Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const constructServer = R.construct(Server);
-      const getConstructArgs = R.pick(['name', 'port', 'id', 'serverType']);
-      const createServerFromAction = R.pipe(
-        getConstructArgs,
-        constructServer
-      );
-      const getOldItems = R.invoker(1, 'get')('itemsById');
-      const addNewItem = R.invoker(2, 'set')(action.id, createServerFromAction(action));
-      const updateState = R.invoker(2, 'set')('itemsById', argPlaceholder, state);
-
       return R.pipe(
-        getOldItems,
-        addNewItem,
-        updateState
+        R.invoker(1, 'get')('itemsById'),
+        R.invoker(2, 'set')(action.id,
+          R.pipe(
+            R.pick(['name', 'port', 'id', 'serverType']),
+            R.construct(Server)
+          )
+        ),
+        R.invoker(2, 'set')('itemsById', R.__, state)
       )(state);
     }
     case SELECT: {
