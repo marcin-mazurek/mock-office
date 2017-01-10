@@ -29,23 +29,32 @@ export default (state = initialState, action) => {
         R.invoker(2, 'set')(action.id,
           R.pipe(
             R.pick(['name', 'port', 'id', 'serverType']),
+            R.over(
+              R.lens(R.prop('serverType'), R.assoc('type')),
+              obj => obj
+            ),
             R.construct(Server)
-          )
+          )(action)
         ),
         R.invoker(2, 'set')('itemsById', R.__, state)
       )(state);
     }
     case SELECT: {
-      const { id } = action;
-      return state.set('selected', id);
+      return R.invoker(2, 'set')('selected', action.id, state);
     }
     case START: {
-      const { id } = action;
-      return state.set('running', state.get('running').add(id));
+      return R.pipe(
+        R.invoker(1, 'get')('running'),
+        R.invoker(1, 'add')(action.id),
+        R.invoker(2, 'set')('running', R.__, state)
+      )(state);
     }
     case STOP: {
-      const { id } = action;
-      return state.set('running', state.get('running').delete(id));
+      return R.pipe(
+        R.invoker(1, 'get')('running'),
+        R.invoker(1, 'delete')(action.id),
+        R.invoker(2, 'set')('running', R.__, state)
+      )(state);
     }
     default: {
       return state;
