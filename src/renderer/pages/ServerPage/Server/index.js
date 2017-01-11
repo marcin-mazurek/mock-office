@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Chip } from 'react-mdl';
 import FilePicker from '../../../expectations/addFromFile/FilePicker';
 import HttpLoadedExpectationList from '../../../layout/main/HttpLoadedExpectationList';
 import HttpUnloadedExpectationList from '../../../layout/main/HttpUnloadedExpectationList';
@@ -14,40 +15,45 @@ const Server = ({ running, serverDetails }) => {
 
   return (
     <div className="server">
-      <div className="server__details">
-        <div>
-          Name: {name}
+      <header className="mdl-layout__header">
+        <div className="mdl-layout__header-row">
+          <span className="mdl-layout-title">
+            {name}
+          </span>
         </div>
-        <div>
-          Port: {port}
+      </header>
+      <div className="server-details server__details">
+        <div className="server-details__row">
+          <div className="server-details__cell">
+            <Chip>
+              Port: {port}
+            </Chip>
+          </div>
+          <div className="server-details__cell">
+            <Chip>
+              Type: {type}
+            </Chip>
+          </div>
         </div>
-        <div>
-          Type: {type}
-        </div>
-        <div>
-          { running ? 'ACTIVE' : 'NOT ACTIVE' }
-        </div>
-        <div>
-          <FilePicker />
-        </div>
-        <div>
-          { running ? <StopButton /> : <StartButton /> }
+        <div className="server-details__row">
+          <div className="server-details__cell">
+            { running ? <StopButton /> : <StartButton /> }
+          </div>
+          <div className="server-details__cell">
+            <FilePicker />
+          </div>
         </div>
       </div>
       <div className="server__expectations server-expectations">
         <div className="server-expectations-type server-expectations__type">
-          <h2 className="server-expectations-type__header">
-            Not loaded:
-          </h2>
+          <span>Not loaded:</span>
           <div className="server-expectations-type__list">
             { type === 'http' ? <HttpUnloadedExpectationList /> : null }
             { type === 'ws' ? <WsUnloadedExpectationList /> : null }
           </div>
         </div>
         <div className="server-expectations-type server-expectations__type">
-          <h2 className="server-expectations-type__header">
-            Loaded:
-          </h2>
+          <span>Loaded:</span>
           <div className="server-expectations-type__list">
             { type === 'http' ? <HttpLoadedExpectationList /> : null }
             { type === 'ws' ? <WsLoadedExpectationList /> : null }

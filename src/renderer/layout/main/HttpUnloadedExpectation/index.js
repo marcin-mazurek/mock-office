@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Textfield, Card } from 'react-mdl';
 import LoadButton from '../../../expectations/loadExpectation/LoadButton';
 
 export default class HttpUnloadedExpectation extends React.PureComponent {
@@ -36,29 +37,44 @@ export default class HttpUnloadedExpectation extends React.PureComponent {
     const { quantity, infinite } = this.state;
 
     return (
-      <div>
-        <div>Request url: {expectation.getIn(['request', 'url'])}</div>
-        <div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>
-        <div>
-          How many times should be used:
-          <input
-            type="number"
-            value={quantity}
-            onChange={this.handleCounterChange}
-            disabled={infinite}
-          />
+      <Card shadow={0}>
+        <div className="expectation">
+          <div className="expectation-details">
+            <div className="expectation-details__row">
+              <div>Request url: {expectation.getIn(['request', 'url'])}</div>
+              <div>Response body: {JSON.stringify(expectation.getIn(['response', 'body']))}</div>
+            </div>
+            <div className="expectation-details__row">
+              <Textfield
+                floatingLabel
+                label="How many times should be used:"
+                type="number"
+                value={quantity}
+                onChange={this.handleCounterChange}
+                disabled={infinite}
+              />
+            </div>
+            <div className="expectation-details__row">
+              <Switch
+                ripple
+                id="switch1"
+                checked={infinite}
+                onChange={this.handleInfiniteChange}
+              >
+                Infinite
+              </Switch>
+            </div>
+          </div>
+          <div className="expectation__button">
+            <LoadButton
+              serverId={serverId}
+              instanceId={expectation.get('id')}
+              quantity={quantity}
+              infinite={infinite}
+            />
+          </div>
         </div>
-        <div>
-          Infinite:
-          <input type="checkbox" checked={infinite} onChange={this.handleInfiniteChange} />
-        </div>
-        <LoadButton
-          serverId={serverId}
-          instanceId={expectation.get('id')}
-          quantity={quantity}
-          infinite={infinite}
-        />
-      </div>
+      </Card>
     );
   }
 }

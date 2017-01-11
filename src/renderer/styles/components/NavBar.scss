@@ -1,13 +1,12 @@
 .nav-bar {
+  background-color: #EEE;
   border: 1px solid #DDD;
   display: flex;
   margin: 0;
   list-style: none;
-  padding: 5px;
+  padding: 10px;
 }
 
 .nav-bar__item {
-  border: 1px solid #DDD;
   margin-right: 20px;
-  padding: 10px;
 }

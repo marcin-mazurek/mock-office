@@ -1,23 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { List, ListItem } from 'react-mdl';
 import { getSelectedServerExpectations } from '../../../expectations/selectors';
 import { getSelected } from '../../../servers/selectors';
 import { requestLoad } from '../../../expectations/actions';
 import HttpUnloadedExpectation from '../HttpUnloadedExpectation';
 
 const HttpUnloadedExpectationList = ({ expectations, serverId }) => (
-  <ul>
+  <List>
     {
       expectations
         ? (
-        expectations.map(expectation => (
-          <li key={expectation.get('id')}>
-            <HttpUnloadedExpectation expectation={expectation} serverId={serverId} />
-          </li>
-        ))
-      ) : null
+          expectations.map(expectation => (
+            <ListItem key={expectation.get('id')}>
+              <HttpUnloadedExpectation expectation={expectation} serverId={serverId} />
+            </ListItem>
+          ))
+        ) : null
     }
-  </ul>
+  </List>
 );
 
 HttpUnloadedExpectationList.propTypes = {

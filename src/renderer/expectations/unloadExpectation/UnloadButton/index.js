@@ -1,9 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'react-mdl';
 import { init } from '../actions';
 
 const UnloadButton = ({ unload, serverId, instanceId }) => (
-  <button onClick={() => unload(serverId, instanceId)}>{'Unload'}</button>
+  <Button
+    raised
+    ripple
+    onClick={() => unload(serverId, instanceId)}
+  >
+    {'Unload'}
+  </Button>
 );
 
 UnloadButton.propTypes = {

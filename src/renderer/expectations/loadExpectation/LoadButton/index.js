@@ -1,9 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'react-mdl';
 import { init } from '../actions';
 
 const LoadButton = ({ load, serverId, instanceId, quantity, infinite }) => (
-  <button onClick={() => load(serverId, instanceId, quantity, infinite)}>{'Load'}</button>
+  <Button
+    raised
+    ripple
+    onClick={() => load(serverId, instanceId, quantity, infinite)}
+  >
+    Load
+  </Button>
 );
 
 LoadButton.propTypes = {

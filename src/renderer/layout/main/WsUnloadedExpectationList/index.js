@@ -1,23 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { List, ListItem } from 'react-mdl';
 import { getSelectedServerExpectations } from '../../../expectations/selectors';
 import { getSelected } from '../../../servers/selectors';
 import { requestLoad } from '../../../expectations/actions';
 import WsUnloadedExpectation from '../WsUnloadedExpectation';
 
 const WsUnloadedExpectationList = ({ expectations, serverId }) => (
-  <ul>
+  <List>
     {
       expectations
         ? (
         expectations.map(expectation => (
-          <li key={expectation.get('id')}>
+          <ListItem key={expectation.get('id')}>
             <WsUnloadedExpectation expectation={expectation} serverId={serverId} />
-          </li>
+          </ListItem>
         ))
       ) : null
     }
-  </ul>
+  </List>
 );
 
 WsUnloadedExpectationList.propTypes = {

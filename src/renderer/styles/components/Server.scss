@@ -2,6 +2,21 @@
   display: flex;
   flex: auto;
   flex-direction: column;
+  padding: 15px;
+}
+
+.server-details__row {
+  align-items: center;
+  display: flex;
+  margin: 10px 0;
+}
+
+.server-details__cell {
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .server__details {

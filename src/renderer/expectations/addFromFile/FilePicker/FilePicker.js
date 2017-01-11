@@ -20,9 +20,11 @@ class FilePicker extends React.Component {
     const { handleChange } = this;
 
     return (
-      <div>
-        <input type="file" ref={(node) => { this.fileNode = node; }} onChange={handleChange} />
-      </div>
+      <input
+        type="file"
+        ref={(node) => { this.fileNode = node; }}
+        onChange={handleChange}
+      />
     );
   }
 }

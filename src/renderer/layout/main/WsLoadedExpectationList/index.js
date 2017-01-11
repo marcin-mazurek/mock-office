@@ -1,23 +1,36 @@
 import { connect } from 'react-redux';
 import React from 'react';
+import { List, ListItem, Card } from 'react-mdl';
 import { getSelectedServerLoadedExpectations } from '../../../expectations/selectors';
 import { init } from '../../../expectations/unloadExpectation/actions';
 import { getSelected } from '../../../servers/selectors';
 import UnloadButton from '../../../expectations/unloadExpectation/UnloadButton';
 
 const WsLoadedExpectationList = ({ expectations, serverId }) => (
-  <ul>
+  <List>
     {
       expectations.map(({ instanceId, expectation, quantity }) => (
-        <li key={instanceId}>
-          <div>How many times: { quantity }</div>
-          <div>Incoming message: {expectation.getIn(['incomingMessage'])}</div>
-          <div>Response message: {expectation.getIn(['responseMessage'])}</div>
-          <UnloadButton serverId={serverId} instanceId={instanceId} />
-        </li>
+        <ListItem key={instanceId}>
+          <Card shadow={0}>
+            <div className="expectation">
+              <div className="expectation-details">
+                <div className="expectation-details__row">
+                  How many times: { quantity }
+                </div>
+                <div className="expectation-details__row">
+                  Incoming message: {expectation.getIn(['incomingMessage'])}</div>
+                <div className="expectation-details__row">
+                  Response message: {expectation.getIn(['responseMessage'])}</div>
+              </div>
+              <div className="expectation__button">
+                <UnloadButton serverId={serverId} instanceId={instanceId} />
+              </div>
+            </div>
+          </Card>
+        </ListItem>
       ))
     }
-  </ul>
+  </List>
 );
 
 WsLoadedExpectationList.propTypes = {

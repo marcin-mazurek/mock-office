@@ -1,16 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'react-mdl';
 import init from '../actions';
 import { getSelected } from '../../selectors';
 
 const StopButton = ({ serverId, stop }) => (
-  <button
+  <Button
+    raised
+    ripple
+    style={{ backgroundColor: '#ff5959', color: '#FFF' }}
     onClick={() => {
       stop(serverId);
     }}
   >
     {'Stop'}
-  </button>
+  </Button>
 );
 
 StopButton.propTypes = {
