@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FilePicker from '../../../expectations/addFromFile/FilePicker';
-import HttpLoadedExpectationList from '../../../mainView/HttpLoadedExpectationList';
-import HttpUnloadedExpectationList from '../../../mainView/HttpUnloadedExpectationList';
-import WsLoadedExpectationList from '../../../mainView/WsLoadedExpectationList';
-import WsUnloadedExpectationList from '../../../mainView/WsUnloadedExpectationList';
+import HttpLoadedExpectationList from '../../../layout/main/HttpLoadedExpectationList';
+import HttpUnloadedExpectationList from '../../../layout/main/HttpUnloadedExpectationList';
+import WsLoadedExpectationList from '../../../layout/main/WsLoadedExpectationList';
+import WsUnloadedExpectationList from '../../../layout/main/WsUnloadedExpectationList';
 import { isRunning, getSelectedServerDetails } from '../../../servers/selectors';
 import StartButton from '../../../servers/startServer/StartButton';
 import StopButton from '../../../servers/stopServer/StopButton';

@@ -1,6 +1,7 @@
 import { Map, Set, List } from 'immutable';
 import R from 'ramda';
 import { ADD, LOAD, UNLOAD } from './actions';
+import createExpectation from './model';
 
 const initialState = new Map({
   itemsById: new Map(),
@@ -33,24 +34,35 @@ export default (state = initialState, action) => {
     case ADD: {
       const { serverId, expectations } = action;
       let stateRef = state;
+      let expectationsCache = R.construct(List)();
 
       return R.pipe(
         R.invoker(2, 'setIn')(['itemsByServer', serverId],
-          R.ifElse(
-            R.invoker(1, 'getIn')(['itemsByServer', serverId]),
-            R.pipe(
-              R.invoker(1, 'getIn')(['itemsByServer', serverId]),
-              R.invoker(1, 'concat')(
-                R.pipe(
-                  R.map(ex => ex.id),
-                  R.construct(Set)
-                )(expectations)
-              )
+          R.pipe(
+            R.tap(
+              () => {
+                expectationsCache = R.pipe(
+                  R.map(createExpectation),
+                  R.filter(R.pipe(R.isNil, R.not)),
+                )(expectations);
+              }
             ),
-            () => R.pipe(
-              R.map(ex => ex.id),
-              R.construct(Set)
-            )(expectations)
+            R.ifElse(
+              R.invoker(1, 'getIn')(['itemsByServer', serverId]),
+              R.pipe(
+                R.invoker(1, 'getIn')(['itemsByServer', serverId]),
+                R.invoker(1, 'concat')(
+                  R.pipe(
+                    R.map(R.prop('id')),
+                    R.construct(Set)
+                  )(expectationsCache)
+                )
+              ),
+              () => R.pipe(
+                R.map(R.prop('id')),
+                R.construct(Set)
+              )(expectationsCache)
+            )
           )(stateRef)
         ),
         R.tap((st) => {

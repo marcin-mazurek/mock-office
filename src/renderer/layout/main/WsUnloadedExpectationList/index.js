@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getSelectedServerExpectations } from '../../expectations/selectors';
-import { getSelected } from '../../servers/selectors';
-import { requestLoad } from '../../expectations/actions';
+import { getSelectedServerExpectations } from '../../../expectations/selectors';
+import { getSelected } from '../../../servers/selectors';
+import { requestLoad } from '../../../expectations/actions';
 import WsUnloadedExpectation from '../WsUnloadedExpectation';
 
 const WsUnloadedExpectationList = ({ expectations, serverId }) => (

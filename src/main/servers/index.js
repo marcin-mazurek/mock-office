@@ -78,7 +78,11 @@ const api = {
       );
       serverToAddMock.add(expectationsIds);
       mainWindow.webContents.send(EXPECTATION_ADD, args.expectations.map((exp, index) =>
-        Object.assign({}, exp, { id: expectationsIds[index] })
+        Object.assign({}, exp,
+          {
+            id: expectationsIds[index],
+            type: serverToAddMock.type
+          })
       ));
     });
   }

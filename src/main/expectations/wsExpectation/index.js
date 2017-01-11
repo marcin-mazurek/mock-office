@@ -1,6 +1,7 @@
 export default class WsExpectation {
-  constructor(args) {
-    this.incomingMessage = args.incomingMessage;
-    this.responseMessage = args.responseMessage;
+  constructor(id, cfg) {
+    this.id = id;
+    this.incomingMessage = cfg.incomingMessage;
+    this.responseMessage = cfg.responseMessage;
   }
 }

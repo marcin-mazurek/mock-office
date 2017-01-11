@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadButton from '../../expectations/loadExpectation/LoadButton';
+import LoadButton from '../../../expectations/loadExpectation/LoadButton';
 
 export default class WsUnloadedExpectation extends React.PureComponent {
   constructor(props) {

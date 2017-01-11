@@ -20,7 +20,7 @@ const add = (type, config) => {
 
 const create = (id) => {
   const { type, config } = expectations[id];
-  return new types[type](config);
+  return new types[type](id, config);
 };
 
 const get = id => expectations[id];

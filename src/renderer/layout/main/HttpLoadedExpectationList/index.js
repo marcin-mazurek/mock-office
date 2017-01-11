@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { getSelectedServerLoadedExpectations } from '../../expectations/selectors';
-import { init } from '../../expectations/unloadExpectation/actions';
-import { getSelected } from '../../servers/selectors';
-import UnloadButton from '../../expectations/unloadExpectation/UnloadButton';
+import { getSelectedServerLoadedExpectations } from '../../../expectations/selectors';
+import { init } from '../../../expectations/unloadExpectation/actions';
+import { getSelected } from '../../../servers/selectors';
+import UnloadButton from '../../../expectations/unloadExpectation/UnloadButton';
 
 const HttpLoadedExpectationList = ({ expectations, serverId }) => (
   <ul>
