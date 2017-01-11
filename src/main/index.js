@@ -2,6 +2,7 @@ import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
 import servers from './servers';
+import expectationsService from './expectations';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -20,7 +21,10 @@ function createWindow() {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  // init services for managing servers, expectations
   servers.init(mainWindow);
+  expectationsService.init(mainWindow);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

@@ -85,6 +85,9 @@ const api = {
           })
       ));
     });
+  },
+  get(id) {
+    return servers[id];
   }
 };
 
