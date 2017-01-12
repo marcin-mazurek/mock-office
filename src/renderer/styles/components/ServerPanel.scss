@@ -1,17 +1,17 @@
-.server {
+.server-panel {
   display: flex;
   flex: auto;
   flex-direction: column;
   padding: 15px;
 }
 
-.server-details__row {
+.server-panel-details__row {
   align-items: center;
   display: flex;
   margin: 10px 0;
 }
 
-.server-details__cell {
+.server-panel-details__cell {
   margin-right: 10px;
 
   &:last-child {
@@ -27,27 +27,27 @@
   flex: auto;
 }
 
-.server-expectations {
+.server-panel-expectations {
   display: flex;
 }
 
-.server-expectations__type {
+.server-panel-expectations__type {
   flex: 1;
 
 }
 
-.server-expectations-type {
+.server-panel-expectations-type {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
 
-.server-expectations-type__header {
+.server-panel-expectations-type__header {
   flex: none;
 }
 
-.server-expectations-type__list {
+.server-panel-expectations-type__list {
   flex: auto;
   overflow: auto;
 }

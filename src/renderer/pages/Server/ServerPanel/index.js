@@ -11,11 +11,11 @@ import { isRunning, getSelectedServerDetails } from '../../../servers/selectors'
 import StartButton from '../../../servers/startServer/StartButton';
 import StopButton from '../../../servers/stopServer/StopButton';
 
-const Server = ({ running, serverDetails }) => {
+const ServerPanel = ({ running, serverDetails }) => {
   const { type, name, port } = serverDetails;
 
   return (
-    <div className="server">
+    <div className="server-panel">
       <header className="mdl-layout__header">
         <div className="mdl-layout__header-row">
           <span className="mdl-layout-title">
@@ -23,40 +23,40 @@ const Server = ({ running, serverDetails }) => {
           </span>
         </div>
       </header>
-      <div className="server-details server__details">
-        <div className="server-details__row">
-          <div className="server-details__cell">
+      <div className="server-panel-details server__details">
+        <div className="server-panel-details__row">
+          <div className="server-panel-details__cell">
             <Chip>
               Port: {port}
             </Chip>
           </div>
-          <div className="server-details__cell">
+          <div className="server-panel-details__cell">
             <Chip>
               Type: {type}
             </Chip>
           </div>
         </div>
-        <div className="server-details__row">
-          <div className="server-details__cell">
+        <div className="server-panel-details__row">
+          <div className="server-panel-details__cell">
             { running ? <StopButton /> : <StartButton /> }
           </div>
-          <div className="server-details__cell">
+          <div className="server-panel-details__cell">
             <ScriptPicker />
             <FilePicker />
           </div>
         </div>
       </div>
-      <div className="server__expectations server-expectations">
-        <div className="server-expectations-type server-expectations__type">
+      <div className="server-panel__expectations server-panel-expectations">
+        <div className="server-panel-expectations-type server-panel-expectations__type">
           <span>Not loaded:</span>
-          <div className="server-expectations-type__list">
+          <div className="server-panel-expectations-type__list">
             { type === 'http' ? <HttpUnloadedExpectationList /> : null }
             { type === 'ws' ? <WsUnloadedExpectationList /> : null }
           </div>
         </div>
-        <div className="server-expectations-type server-expectations__type">
+        <div className="server-panel-expectations-type server-panel-expectations__type">
           <span>Loaded:</span>
-          <div className="server-expectations-type__list">
+          <div className="server-panel-expectations-type__list">
             { type === 'http' ? <HttpLoadedExpectationList /> : null }
             { type === 'ws' ? <WsLoadedExpectationList /> : null }
           </div>
@@ -66,7 +66,7 @@ const Server = ({ running, serverDetails }) => {
   );
 };
 
-Server.propTypes = {
+ServerPanel.propTypes = {
   running: React.PropTypes.bool.isRequired,
   serverDetails: React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
@@ -80,4 +80,4 @@ const mapStateToProps = state => ({
   serverDetails: getSelectedServerDetails(state)
 });
 
-export default connect(mapStateToProps)(Server);
+export default connect(mapStateToProps)(ServerPanel);
