@@ -42,6 +42,7 @@ const api = {
 
       if (!serverToStart.isLive()) {
         serverToStart.start(() => {
+          serverToStart.respond();
           mainWindow.webContents.send(SERVER_START);
           // eslint-disable-next-line no-console
           console.log('Mockee server is running!');

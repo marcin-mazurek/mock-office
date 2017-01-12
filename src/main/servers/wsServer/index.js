@@ -44,23 +44,23 @@ export default class WSMockServer {
     ));
   }
 
-  start(cb) {
-    this.wss = new WebSocketServer({ port: this.port });
-
-    this.wss.on('error', (err) => {
+  respond() {
+    this.instance.on('error', (err) => {
       // eslint-disable-next-line no-console
       console.error(err.message);
     });
 
-    this.wss.on('listening', () => {
-      this.listening = true;
-      cb();
-    });
-
-    this.wss.on('connection', (ws) => {
+    this.instance.on('connection', (ws) => {
       this.ws = ws;
 
       this.startReadingMessages();
+    });
+  }
+
+  start(cb) {
+    this.instance = new WebSocketServer({ port: this.port }, () => {
+      this.listening = true;
+      cb();
     });
   }
 
@@ -77,7 +77,7 @@ export default class WSMockServer {
   }
 
   stop(cb) {
-    this.wss.close(() => {
+    this.instance.close(() => {
       this.listening = false;
       cb();
     });

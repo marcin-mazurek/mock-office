@@ -11,27 +11,12 @@ export default class HttpServer {
     this.type = 'http';
     this.expectations = [];
     this.loaded = [];
-    this.app = express();
+    this.instance = express();
     this.live = false;
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
     this.emitUnload = config.emitUnload;
-
-    this.app.get('*', (req, res) => {
-      const matchedExp = this.getResponse(req);
-
-      if (!this.isLive()) {
-        res.status(404).end();
-        return;
-      }
-
-      if (matchedExp) {
-        res.json(matchedExp.instance.response.body);
-      } else {
-        res.status(404).end();
-      }
-    });
   }
 
   getResponse(req) {
@@ -62,14 +47,32 @@ export default class HttpServer {
   }
 
   start(cb) {
-    this.server = this.app.listen(this.port, cb);
-    this.server.on('connection', socket => this.sockets.push(socket));
+    this.httpServer = this.instance.listen(this.port, cb);
+  }
+
+  respond() {
+    this.httpServer.on('connection', socket => this.sockets.push(socket));
+
+    this.instance.get('*', (req, res) => {
+      const matchedExp = this.getResponse(req);
+
+      if (!this.isLive()) {
+        res.status(404).end();
+        return;
+      }
+
+      if (matchedExp) {
+        res.json(matchedExp.instance.response.body);
+      } else {
+        res.status(404).end();
+      }
+    });
   }
 
   stop(cb) {
     this.sockets.forEach(socket => socket.destroy());
     this.sockets.length = 0;
-    this.server.close(cb);
+    this.httpServer.close(cb);
   }
 
   add(expectations) {
@@ -77,7 +80,7 @@ export default class HttpServer {
   }
 
   isLive() {
-    return this.server ? this.server.listening : false;
+    return this.httpServer ? this.httpServer.listening : false;
   }
 
   load(id, quantity, infinite) {

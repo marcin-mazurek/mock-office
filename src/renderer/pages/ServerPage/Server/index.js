@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Chip } from 'react-mdl';
 import FilePicker from '../../../expectations/addFromFile/FilePicker';
+import ScriptPicker from '../../../serverScripts/addFromFile/FilePicker';
 import HttpLoadedExpectationList from '../../../layout/main/HttpLoadedExpectationList';
 import HttpUnloadedExpectationList from '../../../layout/main/HttpUnloadedExpectationList';
 import WsLoadedExpectationList from '../../../layout/main/WsLoadedExpectationList';
@@ -40,6 +41,7 @@ const Server = ({ running, serverDetails }) => {
             { running ? <StopButton /> : <StartButton /> }
           </div>
           <div className="server-details__cell">
+            <ScriptPicker />
             <FilePicker />
           </div>
         </div>
