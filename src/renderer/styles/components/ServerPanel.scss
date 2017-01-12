@@ -5,49 +5,10 @@
   padding: 15px;
 }
 
-.server-panel-details__row {
-  align-items: center;
-  display: flex;
-  margin: 10px 0;
-}
-
-.server-panel-details__cell {
-  margin-right: 10px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
-.server__details {
+.server-panel__header {
   flex: none;
 }
 
-.server__expectations {
+.server-panel__main {
   flex: auto;
-}
-
-.server-panel-expectations {
-  display: flex;
-}
-
-.server-panel-expectations__type {
-  flex: 1;
-
-}
-
-.server-panel-expectations-type {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-
-.server-panel-expectations-type__header {
-  flex: none;
-}
-
-.server-panel-expectations-type__list {
-  flex: auto;
-  overflow: auto;
 }

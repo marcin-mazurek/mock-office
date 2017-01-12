@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import Main from '../layout/main';
 import Servers from '../pages/Servers';
 import AddServerPage from '../pages/AddServerPage';
-import ServerPage from '../pages/ServerPage';
+import ServerPage from '../pages/Server';
 
 const routes = (
   <Route component={Main}>
