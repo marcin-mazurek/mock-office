@@ -1,26 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Tabs, Tab } from 'react-mdl';
 import ConfigTab from '../ConfigTab';
+import ScriptTab from '../ScriptTab';
 import { isRunning, getSelectedServerDetails } from '../../../servers/selectors';
 
-const ServerPanel = ({ running, serverDetails }) => {
-  const { name } = serverDetails;
+class ServerPanel extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      activeTab: 0
+    };
+  }
 
-  return (
-    <div className="server-panel">
-      <header className="server-panel__header mdl-layout__header">
-        <div className="mdl-layout__header-row">
-          <span className="mdl-layout-title">
-            {name}
-          </span>
-        </div>
-      </header>
-      <main className="server-panel__main">
-        <ConfigTab {...{ running, serverDetails }} />
-      </main>
-    </div>
-  );
-};
+  render() {
+    const { running, serverDetails } = this.props;
+    const { name } = serverDetails;
+    const { activeTab } = this.state;
+
+    return (
+      <div className="server-panel">
+        <header className="server-panel__header mdl-layout__header">
+          <div className="mdl-layout__header-row">
+            <span className="mdl-layout-title">
+              {name}
+            </span>
+          </div>
+        </header>
+        <main className="server-panel__main">
+          <Tabs
+            activeTab={this.state.activeTab}
+            onChange={(tabId) => this.setState({ activeTab: tabId })}
+            ripple
+          >
+            <Tab>Config mode</Tab>
+            <Tab>Script mode</Tab>
+          </Tabs>
+          { activeTab === 0 ? <ConfigTab {...{ running, serverDetails }} /> : null }
+          { activeTab === 1 ? <ScriptTab {...{ running, serverDetails }} /> : null }
+        </main>
+      </div>
+    );
+  }
+}
 
 ServerPanel.propTypes = {
   running: React.PropTypes.bool.isRequired,
