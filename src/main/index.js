@@ -1,6 +1,7 @@
 import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
+import addDevTools from './devtools';
 import servers from './servers';
 import expectationsService from './expectations';
 
@@ -20,6 +21,7 @@ function createWindow() {
   }));
 
   // Open the DevTools.
+  addDevTools();
   mainWindow.webContents.openDevTools();
 
   // init services for managing servers, expectations
