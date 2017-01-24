@@ -4,7 +4,6 @@ import HttpExpectation from './httpExpectation/Expectation';
 import WsExpectation from './wsExpectation';
 import serversService from '../servers';
 import {
-  EXPECTATION_LOAD,
   EXPECTATION_UNLOAD
 } from '../../common/messageNames';
 
@@ -47,14 +46,12 @@ export default {
         })
     );
   },
+  load(serverId, expectationId, quantity, infinite) {
+    return serversService.get(serverId)
+      .load(expectationId, quantity, infinite);
+  },
   init(win) {
     mainWindow = win;
-
-    ipcMain.on(EXPECTATION_LOAD, (event, args) => {
-      const id = serversService.get(args.serverId)
-        .load(args.expectationId, args.quantity, args.infinite);
-      mainWindow.webContents.send(EXPECTATION_LOAD, { id });
-    });
 
     ipcMain.on(EXPECTATION_UNLOAD, (event, args) => {
       serversService.get(args.serverId).unload(args.expectationId);
