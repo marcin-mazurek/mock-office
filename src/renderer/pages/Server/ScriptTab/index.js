@@ -6,7 +6,7 @@ import ScriptPicker from '../../../serverScripts/addFromFile/FilePicker';
 import ScriptTrigger from '../ScriptTrigger';
 
 const ScriptTab = ({ scripts, server }) => (
-  <div>
+  <div className="server-script-tab">
     <ScriptPicker />
     <div>
       <h3>scripts:</h3>

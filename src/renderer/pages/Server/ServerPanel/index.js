@@ -27,17 +27,21 @@ class ServerPanel extends React.Component {
             </span>
           </div>
         </header>
-        <main className="server-panel__main">
-          <Tabs
-            activeTab={this.state.activeTab}
-            onChange={(tabId) => this.setState({ activeTab: tabId })}
-            ripple
-          >
-            <Tab>Config mode</Tab>
-            <Tab>Script mode</Tab>
-          </Tabs>
-          { activeTab === 0 ? <ConfigTab {...{ running, serverDetails }} /> : null }
-          { activeTab === 1 ? <ScriptTab {...{ running, serverDetails }} /> : null }
+        <main className="server-panel-main server-panel__main">
+          <div className="server-panel__tabs">
+            <Tabs
+              activeTab={this.state.activeTab}
+              onChange={(tabId) => this.setState({ activeTab: tabId })}
+              ripple
+            >
+              <Tab>Config mode</Tab>
+              <Tab>Script mode</Tab>
+            </Tabs>
+          </div>
+          <div className="server-panel__tab">
+            { activeTab === 0 ? <ConfigTab {...{ running, serverDetails }} /> : null }
+            { activeTab === 1 ? <ScriptTab {...{ running, serverDetails }} /> : null }
+          </div>
         </main>
       </div>
     );

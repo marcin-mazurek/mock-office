@@ -12,8 +12,8 @@ const ConfigTab = ({ running, serverDetails }) => {
   const { port, type } = serverDetails;
 
   return (
-    <div>
-      <div className="server-config-tab">
+    <div className="server-config-tab">
+      <div className="server-config-tab-details">
         <div className="server-config-tab-details__row">
           <div className="server-config-tab-details__cell">
             <Chip>
