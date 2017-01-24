@@ -5,10 +5,8 @@ import HttpLoadedExpectationList from '../HttpLoadedExpectationList';
 import HttpUnloadedExpectationList from '../HttpUnloadedExpectationList';
 import WsLoadedExpectationList from '../WsLoadedExpectationList';
 import WsUnloadedExpectationList from '../WsUnloadedExpectationList';
-import StartButton from '../../../servers/startServer/StartButton';
-import StopButton from '../../../servers/stopServer/StopButton';
 
-const ConfigTab = ({ running, serverDetails }) => {
+const ConfigTab = ({ serverDetails }) => {
   const { port, type } = serverDetails;
 
   return (
@@ -27,9 +25,6 @@ const ConfigTab = ({ running, serverDetails }) => {
           </div>
         </div>
         <div className="server-config-tab-details__row">
-          <div className="server-config-tab-details__cell">
-            { running ? <StopButton /> : <StartButton /> }
-          </div>
           <div className="server-config-tab-details__cell">
             <FilePicker />
           </div>
@@ -56,7 +51,6 @@ const ConfigTab = ({ running, serverDetails }) => {
 };
 
 ConfigTab.propTypes = {
-  running: React.PropTypes.bool.isRequired,
   serverDetails: React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-mdl';
 import ConfigTab from '../ConfigTab';
 import ScriptTab from '../ScriptTab';
+import StartButton from '../../../servers/startServer/StartButton';
+import StopButton from '../../../servers/stopServer/StopButton';
 import { isRunning, getSelectedServerDetails } from '../../../servers/selectors';
 
 class ServerPanel extends React.Component {
@@ -23,7 +25,7 @@ class ServerPanel extends React.Component {
         <header className="server-panel__header mdl-layout__header">
           <div className="mdl-layout__header-row">
             <span className="mdl-layout-title">
-              {name}
+              { running ? <StopButton /> : <StartButton /> } {name}
             </span>
           </div>
         </header>
@@ -31,7 +33,7 @@ class ServerPanel extends React.Component {
           <div className="server-panel__tabs">
             <Tabs
               activeTab={this.state.activeTab}
-              onChange={(tabId) => this.setState({ activeTab: tabId })}
+              onChange={tabId => this.setState({ activeTab: tabId })}
               ripple
             >
               <Tab>Config mode</Tab>
