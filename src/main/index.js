@@ -3,7 +3,6 @@ import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
 import servers from './servers';
-import expectationsService from './expectations';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -26,7 +25,6 @@ function createWindow() {
 
   // init services for managing servers, expectations
   servers.init(mainWindow);
-  expectationsService.init(mainWindow);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

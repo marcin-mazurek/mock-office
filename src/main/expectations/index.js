@@ -1,11 +1,7 @@
-import { ipcMain } from 'electron';
 import unique from 'node-unique';
 import HttpExpectation from './httpExpectation/Expectation';
 import WsExpectation from './wsExpectation';
 import serversService from '../servers';
-import {
-  EXPECTATION_UNLOAD
-} from '../../common/messageNames';
 
 const types = {
   http: HttpExpectation,
@@ -29,7 +25,6 @@ const create = (id) => {
 };
 
 const get = id => expectations[id];
-let mainWindow;
 
 export default {
   add(serverId, expectationsToAdd) {
@@ -50,13 +45,8 @@ export default {
     return serversService.get(serverId)
       .load(expectationId, quantity, infinite);
   },
-  init(win) {
-    mainWindow = win;
-
-    ipcMain.on(EXPECTATION_UNLOAD, (event, args) => {
-      serversService.get(args.serverId).unload(args.expectationId);
-      mainWindow.webContents.send(EXPECTATION_UNLOAD);
-    });
+  unload(serverId, expectationId) {
+    serversService.get(serverId).unload(expectationId);
   },
   get,
   create
