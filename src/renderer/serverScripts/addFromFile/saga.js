@@ -1,8 +1,6 @@
-import { take, call, select } from 'redux-saga/effects';
+import { take, call, select, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import { ipcRenderer } from 'electron';
 import { FILE_PICK } from './actions';
-import { ADD_SCRIPT } from '../../../common/messageNames';
 import { getSelected } from '../../servers/selectors';
 
 const readerChannel = reader => (
@@ -25,11 +23,7 @@ export default function* agent() {
 
     const rChannel = yield call(readerChannel, reader);
     reader.readAsText(file);
-    const script = yield take(rChannel);
-
-    ipcRenderer.send(ADD_SCRIPT, {
-      serverId,
-      script
-    });
+    const scriptContent = yield take(rChannel);
+    yield put({ type: 'serverScripts/ADD', serverId, content: scriptContent, name: file.name });
   }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
 import FilePicker from '../../../expectations/addFromFile/FilePicker';
-import HttpLoadedExpectationList from '../../../layout/main/HttpLoadedExpectationList';
-import HttpUnloadedExpectationList from '../../../layout/main/HttpUnloadedExpectationList';
-import WsLoadedExpectationList from '../../../layout/main/WsLoadedExpectationList';
-import WsUnloadedExpectationList from '../../../layout/main/WsUnloadedExpectationList';
+import HttpLoadedExpectationList from '../HttpLoadedExpectationList';
+import HttpUnloadedExpectationList from '../HttpUnloadedExpectationList';
+import WsLoadedExpectationList from '../WsLoadedExpectationList';
+import WsUnloadedExpectationList from '../WsUnloadedExpectationList';
 import StartButton from '../../../servers/startServer/StartButton';
 import StopButton from '../../../servers/stopServer/StopButton';
 

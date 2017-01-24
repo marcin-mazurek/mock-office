@@ -7,6 +7,7 @@ import loadExpectationAgent from '../expectations/loadExpectation/saga';
 import unloadExpectationAgent from '../expectations/unloadExpectation/saga';
 import unloadExpectationAfterUseAgent from '../expectations/unloadExpectationAfterUse/saga';
 import addScriptFromFileAgent from '../serverScripts/addFromFile/saga';
+import runScriptAgent from '../serverScripts/runScript/saga';
 
 export default function* rootSaga() {
   yield [
@@ -17,6 +18,7 @@ export default function* rootSaga() {
     yield spawn(loadExpectationAgent),
     yield spawn(unloadExpectationAgent),
     yield spawn(unloadExpectationAfterUseAgent),
-    yield spawn(addScriptFromFileAgent)
+    yield spawn(addScriptFromFileAgent),
+    yield spawn(runScriptAgent)
   ];
 }
