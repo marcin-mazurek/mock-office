@@ -4,7 +4,6 @@ import HttpExpectation from './httpExpectation/Expectation';
 import WsExpectation from './wsExpectation';
 import serversService from '../servers';
 import {
-  EXPECTATION_ADD,
   EXPECTATION_LOAD,
   EXPECTATION_UNLOAD
 } from '../../common/messageNames';
@@ -15,7 +14,7 @@ const types = {
 };
 const expectations = [];
 
-const add = (type, config) => {
+const save = (type, config) => {
   const id = unique();
   expectations[id] = {
     type,
@@ -34,6 +33,20 @@ const get = id => expectations[id];
 let mainWindow;
 
 export default {
+  add(serverId, expectationsToAdd) {
+    const serverToAddMock = serversService.get(serverId);
+    const expectationsIds = expectationsToAdd.map(
+      exp => save(serverToAddMock.type, exp)
+    );
+    serverToAddMock.add(expectationsIds);
+    return expectationsToAdd.map((exp, index) =>
+      Object.assign({}, exp,
+        {
+          id: expectationsIds[index],
+          type: serverToAddMock.type
+        })
+    );
+  },
   init(win) {
     mainWindow = win;
 
@@ -47,23 +60,7 @@ export default {
       serversService.get(args.serverId).unload(args.expectationId);
       mainWindow.webContents.send(EXPECTATION_UNLOAD);
     });
-
-    ipcMain.on(EXPECTATION_ADD, (event, args) => {
-      const serverToAddMock = serversService.get(args.serverId);
-      const expectationsIds = args.expectations.map(
-        exp => add(serverToAddMock.type, exp)
-      );
-      serverToAddMock.add(expectationsIds);
-      mainWindow.webContents.send(EXPECTATION_ADD, args.expectations.map((exp, index) =>
-        Object.assign({}, exp,
-          {
-            id: expectationsIds[index],
-            type: serverToAddMock.type
-          })
-      ));
-    });
   },
-  add,
   get,
   create
 };

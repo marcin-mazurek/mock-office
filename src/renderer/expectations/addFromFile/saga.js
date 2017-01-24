@@ -1,20 +1,9 @@
 import { take, call, put, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import { ipcRenderer } from 'electron';
+import { remote } from 'electron';
 import { add } from '../actions';
 import { FILE_PICK } from './actions';
-import { EXPECTATION_ADD } from '../../../common/messageNames';
 import { getSelected } from '../../servers/selectors';
-
-const expectationAddChannel = () => (
-  eventChannel((emitter) => {
-    ipcRenderer.on(EXPECTATION_ADD, (event, expectations) => {
-      emitter(expectations);
-    });
-
-    return () => {};
-  })
-);
 
 const readerChannel = reader => (
   eventChannel((emitter) => {
@@ -38,13 +27,8 @@ export default function* agent() {
       reader.readAsText(file);
       const expectations = yield take(rChannel);
 
-      ipcRenderer.send(EXPECTATION_ADD, {
-        serverId,
-        expectations
-      });
-
-      const channel = yield call(expectationAddChannel);
-      const expectationsAdded = yield take(channel);
+      const expectationsAdded = remote.require('./dist/main/expectations').default
+        .add(serverId, expectations);
       yield put(add(serverId, expectationsAdded));
     } catch (parseError) {
       // eslint-disable-next-line no-console
