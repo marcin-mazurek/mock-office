@@ -1,14 +1,7 @@
-import { ipcMain } from 'electron';
 import unique from 'node-unique';
 import HttpServer from './httpServer';
 import WSMockServer from './wsServer';
-import {
-  SERVER_STOP,
-  EXPECTATION_UNLOAD_AFTER_USE,
-  EXPECTATION_ADD,
-  EXPECTATION_LOAD,
-  EXPECTATION_UNLOAD
-} from '../../common/messageNames';
+import { EXPECTATION_UNLOAD_AFTER_USE } from '../../common/messageNames';
 import expectations from '../expectations';
 
 const serverTypes = {
@@ -48,49 +41,49 @@ const api = {
     console.log('Mockee server is running!');
     return Promise.resolve();
   },
-  init(win) {
-    mainWindow = win;
+  stop(id) {
+    const serverToStop = servers[id];
 
-    ipcMain.on(SERVER_STOP, (event, id) => {
-      const serverToStop = servers[id];
-
-      if (serverToStop.isLive()) {
+    if (serverToStop.isLive()) {
+      return new Promise((resolve) => {
         serverToStop.stop(() => {
-          mainWindow.webContents.send(SERVER_STOP);
           // eslint-disable-next-line no-console
           console.log('Mockee server is shut down!');
+          resolve();
         });
-      }
-    });
+      });
+    }
 
-    ipcMain.on(EXPECTATION_LOAD, (event, args) => {
-      const id = servers[args.serverId].load(args.expectationId, args.quantity, args.infinite);
-      mainWindow.webContents.send(EXPECTATION_LOAD, { id });
-    });
-
-    ipcMain.on(EXPECTATION_UNLOAD, (event, args) => {
-      servers[args.serverId].unload(args.expectationId);
-      mainWindow.webContents.send(EXPECTATION_UNLOAD);
-    });
-
-    ipcMain.on(EXPECTATION_ADD, (event, args) => {
-      const serverToAddMock = servers[args.serverId];
-      const expectationsIds = args.expectations.map(
-        exp => expectations.add(serverToAddMock.type, exp)
-      );
-      serverToAddMock.add(expectationsIds);
-      mainWindow.webContents.send(EXPECTATION_ADD, args.expectations.map((exp, index) =>
-        Object.assign({}, exp,
-          {
-            id: expectationsIds[index],
-            type: serverToAddMock.type
-          })
-      ));
-    });
+    // eslint-disable-next-line no-console
+    console.log('Mockee server is shut down!');
+    return Promise.resolve();
+  },
+  loadExpectation(serverId, expectationId, quantity, infinite) {
+    return servers[serverId].load(expectationId, quantity, infinite);
+  },
+  unloadExpectation(serverId, expectationId) {
+    servers[serverId].unload(expectationId);
+  },
+  addExpectation(serverId, expectationsToAdd) {
+    const serverToAddMock = servers[serverId];
+    const expectationsIds = expectationsToAdd.map(
+      exp => expectations.add(serverToAddMock.type, exp)
+    );
+    serverToAddMock.add(expectationsIds);
+    return expectationsToAdd.map((exp, index) =>
+      Object.assign({}, exp,
+        {
+          id: expectationsIds[index],
+          type: serverToAddMock.type
+        })
+    );
   },
   get(id) {
     return servers[id];
-  }
+  },
+  init(win) {
+    mainWindow = win;
+  },
 };
 
 export default api;
