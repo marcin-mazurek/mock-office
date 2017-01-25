@@ -3,8 +3,6 @@ import unique from 'node-unique';
 import HttpServer from './httpServer';
 import WSMockServer from './wsServer';
 import {
-  ADD_SERVER,
-  SERVER_START,
   SERVER_STOP,
   EXPECTATION_UNLOAD_AFTER_USE,
   EXPECTATION_ADD,
@@ -26,29 +24,32 @@ const emitUnload = (serverId, expectationId) => {
 };
 
 const api = {
-  init(win) {
-    mainWindow = win;
+  add(name, port, type) {
+    const id = unique();
+    const Server = serverTypes[type];
+    servers[id] = new Server({ name, port, id, emitUnload });
+    return { name, port, type, id };
+  },
+  start(id) {
+    const serverToStart = servers[id];
 
-    ipcMain.on(ADD_SERVER, (event, args) => {
-      const { name, port, type } = args;
-      const id = unique();
-      const Server = serverTypes[type];
-      servers[id] = new Server({ name, port, id, emitUnload });
-      mainWindow.webContents.send(ADD_SERVER, { name, port, type, id });
-    });
-
-    ipcMain.on(SERVER_START, (event, id) => {
-      const serverToStart = servers[id];
-
-      if (!serverToStart.isLive()) {
+    if (!serverToStart.isLive()) {
+      return new Promise((resolve) => {
         serverToStart.start(() => {
           serverToStart.respond();
-          mainWindow.webContents.send(SERVER_START);
           // eslint-disable-next-line no-console
           console.log('Mockee server is running!');
+          resolve();
         });
-      }
-    });
+      });
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('Mockee server is running!');
+    return Promise.resolve();
+  },
+  init(win) {
+    mainWindow = win;
 
     ipcMain.on(SERVER_STOP, (event, id) => {
       const serverToStop = servers[id];
