@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "deep-equal": "^1.0.1",
     "express": "^4.14.0",
     "immutable": "^3.8.1",
     "node-unique": "^1.0.0",

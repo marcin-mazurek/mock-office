@@ -24,4 +24,7 @@ export const getSelectedServerLoadedExpectations = createSelector(
       expectation: allExpectations.get(exp.expectationId),
       quantity: exp.quantity
     }))
-  ));
+  )
+);
+
+export const getExpectation = (state, id) => state.getIn(['expectations', 'itemsById', id]);

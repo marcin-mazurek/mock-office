@@ -1,6 +1,6 @@
 import { Map, Set, List } from 'immutable';
 import R from 'ramda';
-import { ADD, LOAD, UNLOAD } from './actions';
+import { ADD } from './actions';
 import createExpectation from './model';
 
 const initialState = new Map({
@@ -11,26 +11,6 @@ const initialState = new Map({
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOAD: {
-      return R.invoker(2, 'set')('loaded',
-        R.pipe(
-          R.invoker(1, 'get')('loaded'),
-          R.invoker(1, 'push')(R.pick(['expectationId', 'instanceId', 'quantity'], action))
-        )(state),
-        state
-      );
-    }
-    case UNLOAD: {
-      return R.invoker(2, 'set')('loaded',
-        R.pipe(
-          R.invoker(1, 'get')('loaded'),
-          R.invoker(1, 'filter')(
-            expectation => expectation.instanceId !== R.prop('expectationId', action)
-          )
-        )(state),
-        state
-      );
-    }
     case ADD: {
       const { serverId, expectations } = action;
       let stateRef = state;

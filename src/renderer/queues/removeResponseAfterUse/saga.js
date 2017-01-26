@@ -2,7 +2,7 @@ import { take, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import { EXPECTATION_UNLOAD_AFTER_USE } from '../../../common/messageNames';
-import { unload } from '../actions';
+import { removeFromQueue } from '../actions';
 
 export default function* agent() {
   const unloadChan = () => (
@@ -16,7 +16,7 @@ export default function* agent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const chan = yield call(unloadChan);
-    const { serverId, expectationId } = yield take(chan);
-    yield put(unload(serverId, expectationId));
+    const { queueId, responseId } = yield take(chan);
+    yield put(removeFromQueue(queueId, responseId));
   }
 }

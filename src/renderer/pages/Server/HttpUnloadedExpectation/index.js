@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Textfield, Card } from 'react-mdl';
-import LoadButton from '../../../expectations/loadExpectation/LoadButton';
+import LoadButton from '../../../queues/loadExpectation/LoadButton';
 
 export default class HttpUnloadedExpectation extends React.PureComponent {
   constructor(props) {

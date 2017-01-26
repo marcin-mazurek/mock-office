@@ -1,7 +1,7 @@
 import { take, put } from 'redux-saga/effects';
 import { remote } from 'electron';
 import { INIT } from './actions';
-import { load } from '../actions';
+import { addToQueue } from '../actions';
 
 export default function* agent() {
   // eslint-disable-next-line no-constant-condition

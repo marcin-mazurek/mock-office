@@ -1,4 +1,4 @@
-export const INIT = 'loadExpectation/INIT';
+export const INIT = 'addToQueue/INIT';
 
 export const init = (serverId, expectationId, quantity, infinite) => ({
   type: INIT,

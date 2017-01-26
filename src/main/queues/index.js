@@ -1,36 +1,34 @@
 import unique from 'node-unique';
+import deepEqual from 'deep-equal';
 
 const queues = {};
 
-const createQueue = expectation => ({
+const createQueue = (server, request) => ({
   id: unique(),
-  expectation,
+  request,
+  server,
   responses: []
 });
 
 const createResponse = response => Object.assign(response, { id: unique() });
 
-const addQueue = (queue) => {
-  const q = createQueue(queue);
+const addQueue = (server, request) => {
+  const q = createQueue(server, request);
   queues.push(q);
 
   return q.id;
 };
 
-const findQueue = queueId => (
-  queues.find(queue =>
-    queue.id === queueId
-  )
-);
-
 const getQueue = id => queues.find(q => q.id === id);
-
 const removeQueue = (id) => {
   queues.filter(queue => queue.id !== id);
 };
 
+const findQueueByRequest = (server, request) =>
+  queues.find(q => q.server === server && deepEqual(q.request, request));
+
 const getResponse = (server, request) => {
-  const queue = findQueue(server, request);
+  const queue = getQueue(server, request);
 
   if (!queue) {
     return undefined;
@@ -44,7 +42,7 @@ const getResponse = (server, request) => {
 };
 
 const addResponse = (queueId, response) => {
-  const queue = findQueue(queueId);
+  const queue = getQueue(queueId);
   const res = createResponse(response);
   queue.responses.push(res);
 
@@ -52,11 +50,12 @@ const addResponse = (queueId, response) => {
 };
 
 const removeResponse = (queueId, responseId) => {
-  const queue = findQueue(queueId);
+  const queue = getQueue(queueId);
   queue.responses.filter(res => res.id !== responseId);
 };
 
 export default {
+  findQueueByRequest,
   addQueue,
   getQueue,
   removeQueue,

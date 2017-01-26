@@ -1,9 +1,7 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
 import FilePicker from '../../../expectations/addFromFile/FilePicker';
-import HttpLoadedExpectationList from '../HttpLoadedExpectationList';
 import HttpUnloadedExpectationList from '../HttpUnloadedExpectationList';
-import WsLoadedExpectationList from '../WsLoadedExpectationList';
 import WsUnloadedExpectationList from '../WsUnloadedExpectationList';
 
 const ConfigTab = ({ serverDetails }) => {
@@ -41,8 +39,7 @@ const ConfigTab = ({ serverDetails }) => {
         <div className="server-config-tab-expectations-type server-config-tab-expectations__type">
           <span>Loaded:</span>
           <div className="server-config-tab-expectations-type__list">
-            { type === 'http' ? <HttpLoadedExpectationList /> : null }
-            { type === 'ws' ? <WsLoadedExpectationList /> : null }
+            <h2>Queues placeholder</h2>
           </div>
         </div>
       </div>

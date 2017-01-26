@@ -3,11 +3,10 @@ import addExpectationFromFileAgent from '../expectations/addFromFile/saga';
 import addServerAgent from '../servers/addServer/saga';
 import serverStartAgent from '../servers/startServer/saga';
 import serverStopAgent from '../servers/stopServer/saga';
-import loadExpectationAgent from '../expectations/loadExpectation/saga';
-import unloadExpectationAgent from '../expectations/unloadExpectation/saga';
-import unloadExpectationAfterUseAgent from '../expectations/unloadExpectationAfterUse/saga';
+import removeResponseAfterUseAgent from '../queues/removeResponseAfterUse/saga';
 import addScriptFromFileAgent from '../serverScripts/addFromFile/saga';
 import runScriptAgent from '../serverScripts/runScript/saga';
+import addToQueueAgent from '../queues/addToQueue/saga';
 
 export default function* rootSaga() {
   yield [
@@ -15,10 +14,9 @@ export default function* rootSaga() {
     yield spawn(addServerAgent),
     yield spawn(serverStartAgent),
     yield spawn(serverStopAgent),
-    yield spawn(loadExpectationAgent),
-    yield spawn(unloadExpectationAgent),
-    yield spawn(unloadExpectationAfterUseAgent),
+    yield spawn(removeResponseAfterUseAgent),
     yield spawn(addScriptFromFileAgent),
-    yield spawn(runScriptAgent)
+    yield spawn(runScriptAgent),
+    yield spawn(addToQueueAgent)
   ];
 }
