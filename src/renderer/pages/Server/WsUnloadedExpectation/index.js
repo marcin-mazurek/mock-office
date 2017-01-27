@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Textfield, Switch } from 'react-mdl';
-import LoadButton from '../../../queues/loadExpectation/LoadButton';
+import AddButton from '../../../queues/addToQueue/AddButton';
 
 export default class WsUnloadedExpectation extends React.PureComponent {
   constructor(props) {
@@ -66,7 +66,7 @@ export default class WsUnloadedExpectation extends React.PureComponent {
             </div>
           </div>
           <div className="expectation__button">
-            <LoadButton
+            <AddButton
               serverId={serverId}
               instanceId={expectation.get('id')}
               quantity={quantity}

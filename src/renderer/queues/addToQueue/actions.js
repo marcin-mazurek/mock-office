@@ -1,9 +1,7 @@
 export const INIT = 'addToQueue/INIT';
 
-export const init = (serverId, expectationId, quantity, infinite) => ({
+export const init = (serverId, expectationId) => ({
   type: INIT,
   serverId,
-  expectationId,
-  quantity,
-  infinite
+  expectationId
 });

@@ -1,7 +1,7 @@
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
 
-const queues = {};
+const queues = [];
 
 const createQueue = (server, request) => ({
   id: unique(),

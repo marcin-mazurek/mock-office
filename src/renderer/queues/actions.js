@@ -1,6 +1,21 @@
-export const REMOVE_FROM_QUEUE = 'queues/REMOVE_FROM_QUEUE';
+export const ADD_RESPONSE = 'queues/ADD_RESPONSE';
+export const REMOVE_RESPONSE = 'queues/REMOVE_RESPONSE';
+export const ADD_QUEUE = 'queues/ADD_QUEUE';
 
-export const removeFromQueue = id => ({
-  type: REMOVE_FROM_QUEUE,
+export const addResponse = (queueId, responseId, response) => ({
+  type: ADD_RESPONSE,
+  queueId,
+  responseId,
+  response
+});
+
+export const removeResponse = id => ({
+  type: REMOVE_RESPONSE,
   id
+});
+
+export const addQueue = (id, request) => ({
+  type: ADD_QUEUE,
+  id,
+  request
 });

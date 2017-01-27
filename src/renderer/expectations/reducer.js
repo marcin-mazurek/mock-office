@@ -53,11 +53,9 @@ export default (state = initialState, action) => {
             R.invoker(1, 'get')('itemsById'),
             R.invoker(1, 'merge')(
               R.pipe(
-                R.pipe(
-                  R.prop('expectations'),
-                  R.reduce(
-                    (acc, value) => R.assoc(value.id, value)(acc), {}
-                  )
+                R.prop('expectations'),
+                R.reduce(
+                  (acc, value) => R.assoc(value.id, createExpectation(value))(acc), {}
                 )
               )(action)
             )
