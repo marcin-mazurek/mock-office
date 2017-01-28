@@ -1,6 +1,7 @@
 import express from 'express';
 import uniqueId from 'node-unique';
 import expectationsService from '../../expectations';
+import queues from '../../queues';
 
 export default class HttpServer {
   constructor(config) {
@@ -54,18 +55,20 @@ export default class HttpServer {
     this.httpServer.on('connection', socket => this.sockets.push(socket));
 
     this.instance.get('*', (req, res) => {
-      const matchedExp = this.getResponse(req);
-
       if (!this.isLive()) {
         res.status(404).end();
         return;
       }
 
-      if (matchedExp) {
-        res.json(matchedExp.instance.response.body);
-      } else {
+      const matchedResponse = queues.getResponse(this.id, req);
+      console.log(matchedResponse);
+
+      if (!matchedResponse) {
         res.status(404).end();
+        return;
       }
+
+      res.json(matchedResponse.body);
     });
   }
 
