@@ -8,17 +8,12 @@ const addResponse = R.curry(
   (responseId, response, responses) => responses.set(responseId, response)
 );
 
-const mapResponses = R.curry(
-  (updater, currentState) =>
-    currentState.update('responses', updater)
-);
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
       const { responseId, response } = action;
 
-      return mapResponses(addResponse(responseId, response))(state);
+      return addResponse(responseId, response)(state);
     }
     default: {
       return state;

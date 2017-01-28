@@ -24,7 +24,7 @@ export default function* agent() {
     }
 
     const responseId = queues.addResponse(currentQueueId, response);
-    yield put(addResponse(currentQueueId, responseId, response));
-    yield put(add(response));
+    yield put(addResponse(currentQueueId, responseId));
+    yield put(add(response, responseId));
   }
 }
