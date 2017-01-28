@@ -61,7 +61,6 @@ export default class HttpServer {
       }
 
       const matchedResponse = queues.getResponse(this.id, req);
-      console.log(matchedResponse);
 
       if (!matchedResponse) {
         res.status(404).end();

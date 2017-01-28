@@ -25,7 +25,7 @@ const removeQueue = (id) => {
 };
 
 const findQueueByRequest = (server, request) =>
-  queues.find(q => q.server === server && deepEqual(request, q.request));
+  queues.find(q => q.server === server && deepEqual(request.url, q.request.url));
 
 const getResponse = (server, request) => {
   const queue = findQueueByRequest(server, request);
@@ -38,7 +38,7 @@ const getResponse = (server, request) => {
     return undefined;
   }
 
-  return queue.responses.unshift();
+  return queue.responses.shift();
 };
 
 const addResponse = (queueId, response) => {

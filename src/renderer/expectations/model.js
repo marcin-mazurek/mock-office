@@ -33,8 +33,8 @@ const createExpectation = (ex) => {
       return R.construct(HttpExpectation)({
         id: ex.id,
         type: ex.type,
-        request: R.construct(HttpRequest)(ex.request),
-        response: R.construct(HttpResponse)(ex.response)
+        request: ex.request,
+        response: ex.response
       });
     }
     case 'ws': {
