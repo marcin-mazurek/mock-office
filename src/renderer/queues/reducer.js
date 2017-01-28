@@ -10,7 +10,7 @@ const initialState = new Map({
 
 const Queue = new Record({
   request: {},
-  responseIds: new List()
+  responses: new List()
 });
 
 const addToQueueResponses = R.curry(
@@ -37,7 +37,7 @@ const addId = R.curry(
   (queueId, queueIds) => queueIds.push(queueId)
 );
 const mapIds = R.curry(
-  (updater, currentState) => currentState.update(['queueIds'], updater)
+  (updater, currentState) => currentState.update('queueIds', updater)
 );
 
 export default (state = initialState, action) => {
