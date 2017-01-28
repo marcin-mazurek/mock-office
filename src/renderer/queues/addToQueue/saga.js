@@ -2,6 +2,7 @@ import { take, put, select, call } from 'redux-saga/effects';
 import { remote } from 'electron';
 import { INIT } from './actions';
 import { addResponse, addQueue } from '../actions';
+import { add } from '../../responses/actions';
 import { getExpectation } from '../../expectations/selectors';
 import prepareForCall from '../../utils/redux-saga';
 
@@ -24,5 +25,6 @@ export default function* agent() {
 
     const responseId = queues.addResponse(currentQueueId, response);
     yield put(addResponse(currentQueueId, responseId, response));
+    yield put(add(response));
   }
 }

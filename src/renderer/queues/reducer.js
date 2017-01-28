@@ -4,8 +4,7 @@ import { ADD_QUEUE, ADD_RESPONSE } from './actions';
 
 const initialState = new Map({
   queueIds: new List(),
-  queues: new Map(),
-  responses: new Map()
+  queues: new Map()
 });
 
 const Queue = new Record({
@@ -16,16 +15,9 @@ const Queue = new Record({
 const addToQueueResponses = R.curry(
   (response, responses) => responses.push(response)
 );
-const addResponse = R.curry(
-  (responseId, response, responses) => responses.set(responseId, response)
-);
 const mapQueueResponses = R.curry(
   (queueId, updater, currentState) =>
     currentState.updateIn(['queues', queueId, 'responses'], updater)
-);
-const mapResponses = R.curry(
-  (updater, currentState) =>
-    currentState.update('responses', updater)
 );
 const mapQueues = R.curry(
   (updater, currentState) => currentState.update('queues', updater)
@@ -51,12 +43,9 @@ export default (state = initialState, action) => {
       )(state);
     }
     case ADD_RESPONSE: {
-      const { queueId, responseId, response } = action;
+      const { queueId, responseId } = action;
 
-      return R.pipe(
-        mapResponses(addResponse(responseId, response)),
-        mapQueueResponses(queueId, addToQueueResponses(responseId))
-      )(state);
+      return mapQueueResponses(queueId, addToQueueResponses(responseId))(state);
     }
     default: {
       return state;
