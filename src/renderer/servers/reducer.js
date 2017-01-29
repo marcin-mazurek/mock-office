@@ -1,10 +1,11 @@
-import { Record, Map, Set } from 'immutable';
+import { Record, Map, Set, List } from 'immutable';
 import R from 'ramda';
 import {
   ADD,
   SELECT,
   START,
-  STOP
+  STOP,
+  ADD_QUEUE
 } from './actions';
 
 const Server = new Record({
@@ -12,7 +13,8 @@ const Server = new Record({
   name: 'New Server',
   port: null,
   expectations: new Set(),
-  type: ''
+  type: '',
+  queues: new List()
 });
 
 const initialState = new Map({
@@ -20,6 +22,13 @@ const initialState = new Map({
   selected: null,
   running: new Set()
 });
+
+const addId = R.curry(
+  (queueId, queues) => queues.push(queueId)
+);
+const addQueue = R.curry(
+  (serverId, updater, currentState) => currentState.updateIn(['itemsById', serverId, 'queues'], updater)
+);
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -56,6 +65,11 @@ export default (state = initialState, action) => {
           R.invoker(1, 'delete')(action.id),
         )(state),
         state);
+    }
+    case ADD_QUEUE: {
+      const { serverId, queueId } = action;
+
+      return addQueue(serverId, addId(queueId))(state);
     }
     default: {
       return state;
