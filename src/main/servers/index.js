@@ -1,7 +1,6 @@
 import unique from 'node-unique';
 import HttpServer from './httpServer';
 import WSMockServer from './wsServer';
-import expectations from '../expectations';
 
 const serverTypes = {
   http: HttpServer,
@@ -51,26 +50,6 @@ const api = {
     // eslint-disable-next-line no-console
     console.log('Mockee server is shut down!');
     return Promise.resolve();
-  },
-  loadExpectation(serverId, expectationId, quantity, infinite) {
-    return servers[serverId].load(expectationId, quantity, infinite);
-  },
-  unloadExpectation(serverId, expectationId) {
-    servers[serverId].unload(expectationId);
-  },
-  addExpectation(serverId, expectationsToAdd) {
-    const serverToAddMock = servers[serverId];
-    const expectationsIds = expectationsToAdd.map(
-      exp => expectations.add(serverToAddMock.type, exp)
-    );
-    serverToAddMock.add(expectationsIds);
-    return expectationsToAdd.map((exp, index) =>
-      Object.assign({}, exp,
-        {
-          id: expectationsIds[index],
-          type: serverToAddMock.type
-        })
-    );
   },
   get(id) {
     return servers[id];
