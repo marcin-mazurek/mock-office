@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { filePick } from '../actions';
+import { init as initAddQueueFromFile } from '../actions';
 
 const mapDispatchToProps = {
-  filePick
+  initAddQueueFromFile
 };
 
 class FilePicker extends React.Component {
@@ -13,7 +13,7 @@ class FilePicker extends React.Component {
   }
 
   handleChange() {
-    this.props.filePick(this.fileNode.files);
+    this.props.initAddQueueFromFile(this.fileNode.files);
   }
 
   render() {
@@ -30,7 +30,7 @@ class FilePicker extends React.Component {
 }
 
 FilePicker.propTypes = {
-  filePick: React.PropTypes.func.isRequired
+  initAddQueueFromFile: React.PropTypes.func.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(FilePicker);
