@@ -1,7 +1,7 @@
 import React from 'react';
-import AddServerForm from '../../servers/addServer/AddServerForm';
+import AddServerForm from '../../addServer/AddServerForm';
 
-const AddServerPage = () => (
+const AddServer = () => (
   <div>
     <header className="mdl-layout__header">
       <div className="mdl-layout__header-row">
@@ -14,4 +14,4 @@ const AddServerPage = () => (
   </div>
 );
 
-export default AddServerPage;
+export default AddServer;

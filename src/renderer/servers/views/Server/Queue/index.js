@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Request from './Request';
 import Response from './Response';
-import { getRequest, getResponses } from '../../../queues/selectors';
+import { getRequest, getResponses } from '../../../../queues/selectors';
 
 const HttpQueue = ({ request, responses }) => (
   <div>
@@ -18,6 +18,11 @@ const HttpQueue = ({ request, responses }) => (
     </ul>
   </div>
 );
+
+HttpQueue.propTypes = {
+  request: React.PropTypes.shape({}),
+  responses: React.PropTypes.arrayOf(React.PropTypes.shape({}))
+};
 
 const mapStateToProps = state => ({
   request: getRequest(state),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { init } from '../../../serverScripts/runScript/actions';
-import { getRunning } from '../../../serverScripts/selectors';
+import { init } from '../../../../serverScripts/runScript/actions';
+import { getRunning } from '../../../../serverScripts/selectors';
 
 const ScriptTrigger = ({ script, server, run, running }) => (
   <div>

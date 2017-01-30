@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
-import FilePicker from '../../../expectations/addFromFile/FilePicker';
+import FilePicker from '../../../../expectations/addFromFile/FilePicker';
 import HttpUnloadedExpectationList from '../HttpUnloadedExpectationList';
 import WsUnloadedExpectationList from '../WsUnloadedExpectationList';
 

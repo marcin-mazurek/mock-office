@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getSelectedServerScripts } from '../../../serverScripts/selectors';
-import { getSelected } from '../../../servers/selectors';
-import ScriptPicker from '../../../serverScripts/addFromFile/FilePicker';
+import { getSelectedServerScripts } from '../../../../serverScripts/selectors';
+import { getSelected } from '../../../selectors';
+import ScriptPicker from '../../../../serverScripts/addFromFile/FilePicker';
 import ScriptTrigger from '../ScriptTrigger';
 
 const ScriptTab = ({ scripts, server }) => (

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-mdl';
 import ConfigTab from '../ConfigTab';
 import ScriptTab from '../ScriptTab';
-import StartButton from '../../../servers/startServer/StartButton';
-import StopButton from '../../../servers/stopServer/StopButton';
-import { isRunning, getSelectedServerDetails } from '../../../servers/selectors';
+import StartButton from '../../../startServer/StartButton';
+import StopButton from '../../../stopServer/StopButton';
+import { isRunning, getSelectedServerDetails } from '../../../selectors';
 
 class ServerPanel extends React.Component {
   constructor() {

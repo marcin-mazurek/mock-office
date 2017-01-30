@@ -1,11 +1,11 @@
 import { take, put, select, call } from 'redux-saga/effects';
 import { remote } from 'electron';
 import { INIT } from './actions';
-import { addResponse, addQueue } from '../../../queues/actions';
-import { addQueue as addQueueToServer } from '../../../servers/actions';
-import { add } from '../../../responses/actions';
-import { getExpectation } from '../../../expectations/selectors';
-import prepareForCall from '../../../utils/redux-saga';
+import { addResponse, addQueue } from '../../../../queues/actions';
+import { addQueue as addQueueToServer } from '../../../actions';
+import { add } from '../../../../responses/actions';
+import { getExpectation } from '../../../../expectations/selectors';
+import prepareForCall from '../../../../utils/redux-saga';
 
 export default function* agent() {
   // eslint-disable-next-line no-constant-condition

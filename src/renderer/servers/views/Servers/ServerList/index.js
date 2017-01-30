@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { List, ListItem } from 'react-mdl';
-import { getServerList } from '../../../servers/selectors';
-import { select as dispatchSelect } from '../../../servers/actions';
+import { getServerList } from '../../../selectors';
+import { select as dispatchSelect } from '../../../actions';
 
 const ServerList = ({ servers, select, goToServerPage }) => (
   <List>
