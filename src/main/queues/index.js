@@ -42,6 +42,7 @@ const getResponse = (server, request) => {
 };
 
 const addResponse = (queueId, response) => {
+  console.log(queueId, response);
   const queue = getQueue(queueId);
   const res = createResponse(response);
   queue.responses.push(res);

@@ -22,27 +22,30 @@ export default function* agent() {
     try {
       const { files } = yield take(INIT);
       const file = files[0];
-      const reader = new FileReader();
-      const serverId = yield select(getSelected);
 
-      const rChannel = yield call(readerChannel, reader);
-      reader.readAsText(file);
-      const queueToAdd = yield take(rChannel);
+      if (file) {
+        const reader = new FileReader();
+        const serverId = yield select(getSelected);
 
-      const queues = remote.require('./dist/main/queues').default;
-      const existedQueueId = queues.findQueueByRequest(serverId, queueToAdd.request);
+        const rChannel = yield call(readerChannel, reader);
+        reader.readAsText(file);
+        const queueToAdd = yield take(rChannel);
 
-      if (existedQueueId) {
-        const responseId = queues.addResponse(existedQueueId, queueToAdd.response);
-        yield put(addResponse(queueToAdd.response, responseId));
-        yield put(addResponseToQueue(existedQueueId, responseId));
-      } else {
-        const newQueueId = queues.addQueue(serverId, queueToAdd.request);
-        yield put(addQueue(newQueueId, queueToAdd.request));
-        yield put(addQueueToServer(serverId, newQueueId));
-        const responseId = queues.addResponse(newQueueId, queueToAdd.response);
-        yield put(addResponse(queueToAdd.response, responseId));
-        yield put(addResponseToQueue(newQueueId, responseId));
+        const queues = remote.require('./dist/main/queues').default;
+        const existedQueue = queues.findQueueByRequest(serverId, queueToAdd.request);
+
+        if (existedQueue) {
+          const responseId = queues.addResponse(existedQueue.id, queueToAdd.response);
+          yield put(addResponse(queueToAdd.response, responseId));
+          yield put(addResponseToQueue(existedQueue.id, responseId));
+        } else {
+          const newQueueId = queues.addQueue(serverId, queueToAdd.request);
+          yield put(addQueue(newQueueId, queueToAdd.request));
+          yield put(addQueueToServer(serverId, newQueueId));
+          const responseId = queues.addResponse(newQueueId, queueToAdd.response);
+          yield put(addResponse(queueToAdd.response, responseId));
+          yield put(addResponseToQueue(newQueueId, responseId));
+        }
       }
     } catch (parseError) {
       // eslint-disable-next-line no-console

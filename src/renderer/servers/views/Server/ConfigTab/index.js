@@ -1,8 +1,7 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
 import FilePicker from '../../../../queues/addFromFile/FilePicker';
-import HttpUnloadedExpectationList from '../HttpUnloadedExpectationList';
-import WsUnloadedExpectationList from '../WsUnloadedExpectationList';
+import Queues from '../Queues';
 
 const ConfigTab = ({ serverDetails }) => {
   const { port, type } = serverDetails;
@@ -28,20 +27,8 @@ const ConfigTab = ({ serverDetails }) => {
           </div>
         </div>
       </div>
-      <div className="server-config-tab__expectations server-config-tab-expectations">
-        <div className="server-config-tab-expectations-type server-config-tab-expectations__type">
-          <span>Not loaded:</span>
-          <div className="server-config-tab-expectations-type__list">
-            { type === 'http' ? <HttpUnloadedExpectationList /> : null }
-            { type === 'ws' ? <WsUnloadedExpectationList /> : null }
-          </div>
-        </div>
-        <div className="server-config-tab-expectations-type server-config-tab-expectations__type">
-          <span>Loaded:</span>
-          <div className="server-config-tab-expectations-type__list">
-            <h2>Queues placeholder</h2>
-          </div>
-        </div>
+      <div className="server-config-tab__expectations server-config-tab-queues">
+        <Queues />
       </div>
     </div>
   );

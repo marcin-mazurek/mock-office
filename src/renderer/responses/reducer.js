@@ -12,8 +12,9 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
       const { responseId, response } = action;
+      const responseWithId = Object.assign(response, { id: responseId });
 
-      return addResponse(responseId, response)(state);
+      return addResponse(responseId, responseWithId)(state);
     }
     default: {
       return state;

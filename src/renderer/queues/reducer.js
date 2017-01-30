@@ -5,6 +5,7 @@ import { ADD_QUEUE, ADD_RESPONSE } from './actions';
 const initialState = new Map();
 
 const Queue = new Record({
+  id: '',
   request: {},
   responses: new List()
 });
@@ -17,7 +18,7 @@ const updateResponses = R.curry(
     currentState.updateIn([queueId, 'responses'], updater)
 );
 const addQueue = R.curry(
-  (queueId, request, currentState) => currentState.set(queueId, new Queue({ request }))
+  (queueId, request, currentState) => currentState.set(queueId, new Queue({ id: queueId, request }))
 );
 
 export default (state = initialState, action) => {
