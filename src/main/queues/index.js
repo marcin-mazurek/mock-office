@@ -42,7 +42,6 @@ const getResponse = (server, request) => {
 };
 
 const addResponse = (queueId, response) => {
-  console.log(queueId, response);
   const queue = getQueue(queueId);
   const res = createResponse(response);
   queue.responses.push(res);
@@ -55,6 +54,8 @@ const removeResponse = (queueId, responseId) => {
   queue.responses.filter(res => res.id !== responseId);
 };
 
+const getAll = () => queues;
+
 export default {
   findQueueByRequest,
   addQueue,
@@ -62,5 +63,6 @@ export default {
   removeQueue,
   addResponse,
   getResponse,
+  getAll,
   removeResponse
 };

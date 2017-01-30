@@ -81,6 +81,9 @@ const api = {
   get(id) {
     return servers[id];
   },
+  getAll() {
+    return servers;
+  },
   init(win) {
     mainWindow = win;
   },
