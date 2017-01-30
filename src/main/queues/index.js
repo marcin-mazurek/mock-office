@@ -1,7 +1,18 @@
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
+import { REMOVE_RESPONSE_AFTER_USE } from '../../common/messageNames';
 
 const queues = [];
+
+let mainWin;
+
+const init = (mW) => {
+  mainWin = mW;
+};
+
+const emitRemove = (queueId, responseId) => {
+  mainWin.webContents.send(REMOVE_RESPONSE_AFTER_USE, { queueId, responseId });
+};
 
 const createQueue = (server, request) => ({
   id: unique(),
@@ -38,7 +49,10 @@ const getResponse = (server, request) => {
     return undefined;
   }
 
-  return queue.responses.shift();
+  const response = queue.responses.shift();
+  emitRemove(queue.id, response.id);
+
+  return response;
 };
 
 const addResponse = (queueId, response) => {
@@ -57,6 +71,7 @@ const removeResponse = (queueId, responseId) => {
 const getAll = () => queues;
 
 export default {
+  init,
   findQueueByRequest,
   addQueue,
   getQueue,

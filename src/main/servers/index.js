@@ -1,7 +1,6 @@
 import unique from 'node-unique';
 import HttpServer from './httpServer';
 import WSMockServer from './wsServer';
-import { EXPECTATION_UNLOAD_AFTER_USE } from '../../common/messageNames';
 import expectations from '../expectations';
 
 const serverTypes = {
@@ -10,17 +9,12 @@ const serverTypes = {
 };
 
 const servers = {};
-let mainWindow;
-
-const emitUnload = (serverId, expectationId) => {
-  mainWindow.webContents.send(EXPECTATION_UNLOAD_AFTER_USE, { serverId, expectationId });
-};
 
 const api = {
   add(name, port, type) {
     const id = unique();
     const Server = serverTypes[type];
-    servers[id] = new Server({ name, port, id, emitUnload });
+    servers[id] = new Server({ name, port, id });
     return { name, port, type, id };
   },
   start(id) {
@@ -83,10 +77,7 @@ const api = {
   },
   getAll() {
     return servers;
-  },
-  init(win) {
-    mainWindow = win;
-  },
+  }
 };
 
 export default api;

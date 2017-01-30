@@ -14,7 +14,7 @@ const Queues = ({ queues }) => (
               <div>{JSON.stringify(queue.request)}</div>
             </div>
             <div>
-              <div>responses!</div>
+              <div>responses</div>
               <ul>
                 {
                   queue.responses.map(response => (

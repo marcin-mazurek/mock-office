@@ -8,9 +8,10 @@ export const addResponse = (queueId, responseId) => ({
   responseId
 });
 
-export const removeResponse = id => ({
+export const removeResponse = (queueId, responseId) => ({
   type: REMOVE_RESPONSE,
-  id
+  queueId,
+  responseId
 });
 
 export const addQueue = (id, request) => ({

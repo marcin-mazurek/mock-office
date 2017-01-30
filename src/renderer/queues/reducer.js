@@ -1,6 +1,10 @@
 import { Map, Record, List } from 'immutable';
 import R from 'ramda';
-import { ADD_QUEUE, ADD_RESPONSE } from './actions';
+import {
+  ADD_QUEUE,
+  ADD_RESPONSE,
+  REMOVE_RESPONSE
+} from './actions';
 
 const initialState = new Map();
 
@@ -12,6 +16,11 @@ const Queue = new Record({
 
 const addResponse = R.curry(
   (response, responses) => responses.push(response)
+);
+const removeResponse = R.curry(
+  (response, responses) => responses.delete(
+    responses.findIndex(res => res === response),
+    1)
 );
 const updateResponses = R.curry(
   (queueId, updater, currentState) =>
@@ -32,6 +41,11 @@ export default (state = initialState, action) => {
       const { queueId, responseId } = action;
 
       return updateResponses(queueId, addResponse(responseId))(state);
+    }
+    case REMOVE_RESPONSE: {
+      const { queueId, responseId } = action;
+
+      return updateResponses(queueId, removeResponse(responseId))(state);
     }
     default: {
       return state;

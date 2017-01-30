@@ -2,7 +2,7 @@ import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
-import servers from './servers';
+import queues from './queues';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -23,8 +23,8 @@ function createWindow() {
   addDevTools();
   mainWindow.webContents.openDevTools();
 
-  // init services for managing servers, expectations
-  servers.init(mainWindow);
+  // queuesEventsEmitter
+  queues.init(mainWindow);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

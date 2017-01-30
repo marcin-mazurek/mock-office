@@ -1,13 +1,13 @@
 import { take, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
-import { EXPECTATION_UNLOAD_AFTER_USE } from '../../../common/messageNames';
-import { removeFromQueue } from '../actions';
+import { REMOVE_RESPONSE_AFTER_USE } from '../../../common/messageNames';
+import { removeResponse } from '../actions';
 
 export default function* agent() {
-  const unloadChan = () => (
+  const channel = () => (
     eventChannel((emitter) => {
-      ipcRenderer.on(EXPECTATION_UNLOAD_AFTER_USE, (event, args) => emitter(args));
+      ipcRenderer.on(REMOVE_RESPONSE_AFTER_USE, (event, args) => emitter(args));
 
       return () => {};
     })
@@ -15,8 +15,8 @@ export default function* agent() {
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const chan = yield call(unloadChan);
-    const { queueId, responseId } = yield take(chan);
-    yield put(removeFromQueue(queueId, responseId));
+    const removeResponseChannel = yield call(channel);
+    const { queueId, responseId } = yield take(removeResponseChannel);
+    yield put(removeResponse(queueId, responseId));
   }
 }
