@@ -2,27 +2,22 @@ import { Map, Record, List } from 'immutable';
 import R from 'ramda';
 import { ADD_QUEUE, ADD_RESPONSE } from './actions';
 
-const initialState = new Map({
-  queues: new Map()
-});
+const initialState = new Map();
 
 const Queue = new Record({
   request: {},
   responses: new List()
 });
 
-const addToQueueResponses = R.curry(
+const addResponse = R.curry(
   (response, responses) => responses.push(response)
 );
-const mapQueueResponses = R.curry(
+const updateResponses = R.curry(
   (queueId, updater, currentState) =>
-    currentState.updateIn(['queues', queueId, 'responses'], updater)
+    currentState.updateIn([queueId, 'responses'], updater)
 );
-const mapQueues = R.curry(
-  (updater, currentState) => currentState.update('queues', updater)
-);
-const addToQueues = R.curry(
-  (queueId, request, queues) => queues.set(queueId, new Queue({ request }))
+const addQueue = R.curry(
+  (queueId, request, currentState) => currentState.set(queueId, new Queue({ request }))
 );
 
 export default (state = initialState, action) => {
@@ -30,12 +25,12 @@ export default (state = initialState, action) => {
     case ADD_QUEUE: {
       const { request, id: queueId } = action;
 
-      return mapQueues(addToQueues(queueId, request))(state);
+      return addQueue(queueId, request)(state);
     }
     case ADD_RESPONSE: {
       const { queueId, responseId } = action;
 
-      return mapQueueResponses(queueId, addToQueueResponses(responseId))(state);
+      return updateResponses(queueId, addResponse(responseId))(state);
     }
     default: {
       return state;
