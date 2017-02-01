@@ -31,38 +31,41 @@ const updateServerQueues = R.curry(
   (serverId, updater, currentState) => currentState.updateIn(['itemsById', serverId, 'queues'], updater)
 );
 
-const select = R.curry((id, currentState) => currentState.set('selected', id));
-const updateRunning = R.curry((updater, currentState) => currentState.set('running', updater));
-const addToRunning = R.curry((id, runningServers) => runningServers.add(id));
-const removeFromRunning = R.curry((id, runningServers) => runningServers.delete(id));
+const select = R.invoker(2, 'set')('selected');
+const updateRunningServers = R.invoker(2, 'update')('running');
+const addToSet = R.invoker(1, 'add');
+const removeFromRunning = R.invoker(1, 'delete');
 const addServer = R.curry((id, server, currentState) => currentState.setIn(['itemsById', id], server));
+const changeObjPropName = (old, current) => R.over(
+  R.lens(R.prop(old), R.assoc(current)),
+  R.identity
+);
+const pickRequiredFields = R.pick(['name', 'port', 'id', 'serverType']);
+const constructServer = R.construct(Server);
 const createServer = R.pipe(
-  R.pick(['name', 'port', 'id', 'serverType']),
-  R.over(
-    R.lens(R.prop('serverType'), R.assoc('type')),
-    R.identity
-  ),
-  R.construct(Server)
+  pickRequiredFields,
+  changeObjPropName('serverType', 'type'),
+  constructServer
 );
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      return addServer(action.id, createServer(action), state);
+      return addServer(action.id, createServer(action))(state);
     }
     case SELECT: {
-      return select(action.id, state);
+      return select(action.id)(state);
     }
     case START: {
-      return updateRunning(addToRunning(action.id), state);
+      return updateRunningServers(addToSet(action.id))(state);
     }
     case STOP: {
-      return updateRunning(removeFromRunning(action.id), state);
+      return updateRunningServers(removeFromRunning(action.id))(state);
     }
     case ADD_QUEUE: {
       const { serverId, queueId } = action;
 
-      return updateServerQueues(serverId, addId(queueId), state);
+      return updateServerQueues(serverId, addId(queueId))(state);
     }
     default: {
       return state;

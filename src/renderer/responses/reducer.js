@@ -4,17 +4,15 @@ import { ADD } from './actions';
 
 const initialState = new Map();
 
-const addResponse = R.curry(
-  (responseId, response, responses) => responses.set(responseId, response)
-);
+const addResponse = R.invoker(2, 'set');
+const extendWithId = id => R.assoc('id', id);
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
       const { responseId, response } = action;
-      const responseWithId = Object.assign(response, { id: responseId });
 
-      return addResponse(responseId, responseWithId)(state);
+      return addResponse(responseId, extendWithId(responseId, response))(state);
     }
     default: {
       return state;

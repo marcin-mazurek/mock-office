@@ -14,9 +14,7 @@ const Queue = new Record({
   responses: new List()
 });
 
-const addResponse = R.curry(
-  (response, responses) => responses.push(response)
-);
+const addResponse = R.invoker(1, 'push');
 const removeResponse = R.curry(
   (response, responses) => responses.delete(
     responses.findIndex(res => res === response),
@@ -26,16 +24,15 @@ const updateResponses = R.curry(
   (queueId, updater, currentState) =>
     currentState.updateIn([queueId, 'responses'], updater)
 );
-const addQueue = R.curry(
-  (queueId, request, currentState) => currentState.set(queueId, new Queue({ id: queueId, request }))
-);
+const constructQueue = (queueId, request) => new Queue({ id: queueId, request });
+const addToQueues = R.invoker(2, 'set');
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_QUEUE: {
       const { request, id: queueId } = action;
 
-      return addQueue(queueId, request)(state);
+      return addToQueues(queueId, constructQueue(queueId, request))(state);
     }
     case ADD_RESPONSE: {
       const { queueId, responseId } = action;
