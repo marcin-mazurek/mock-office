@@ -7,16 +7,14 @@ import { add as addResponse } from '../../responses/actions';
 
 export default function* syncServers() {
   const serversApi = remote.require('./dist/main/servers').default;
-  const serversMap = serversApi.getAll();
-  const serverIds = Object.keys(serversMap);
+  const servers = serversApi.getAll();
 
-  for (let i = 0; i < serverIds.length; i += 1) {
-    const serverId = serverIds[i];
-    const server = serversMap[serverId];
-    yield put(add(server.name, server.port, server.type, serverId));
+  for (let i = 0; i < servers.length; i += 1) {
+    const server = servers[i];
+    yield put(add(server.name, server.port, server.type, server.id));
 
     if (server.isLive()) {
-      yield put(start(serverId));
+      yield put(start(server.id));
     }
   }
 

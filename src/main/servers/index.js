@@ -7,17 +7,17 @@ const serverTypes = {
   ws: WSMockServer
 };
 
-const servers = {};
+const servers = [];
 
 const api = {
   add(name, port, type) {
     const id = unique();
     const Server = serverTypes[type];
-    servers[id] = new Server({ name, port, id });
+    servers.push(new Server({ name, port, id }));
     return { name, port, type, id };
   },
   start(id) {
-    const serverToStart = servers[id];
+    const serverToStart = servers.find(server => server.id === id);
 
     if (!serverToStart.isLive()) {
       return new Promise((resolve) => {
@@ -35,7 +35,7 @@ const api = {
     return Promise.resolve();
   },
   stop(id) {
-    const serverToStop = servers[id];
+    const serverToStop = servers.find(server => server.id === id);
 
     if (serverToStop.isLive()) {
       return new Promise((resolve) => {
@@ -52,7 +52,7 @@ const api = {
     return Promise.resolve();
   },
   get(id) {
-    return servers[id];
+    return servers.find(server => server.id === id);
   },
   getAll() {
     return servers;
