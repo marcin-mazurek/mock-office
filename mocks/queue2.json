@@ -1,0 +1,10 @@
+{
+  "request": {
+    "url": "/some-url-2"
+  },
+  "response": {
+    "body": {
+      "data": "response for some-url-2"
+    }
+  }
+}
