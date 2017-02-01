@@ -32,7 +32,7 @@ export default function* agent() {
         const queueToAdd = yield take(rChannel);
 
         const queues = remote.require('./dist/main/queues').default;
-        const existedQueue = queues.findQueueByRequest(serverId, queueToAdd.request);
+        const existedQueue = queues.findQueue(serverId, queueToAdd.request);
 
         if (existedQueue) {
           const responseId = queues.addResponse(existedQueue.id, queueToAdd.response);

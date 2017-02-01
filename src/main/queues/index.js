@@ -35,11 +35,11 @@ const removeQueue = (id) => {
   queues.filter(queue => queue.id !== id);
 };
 
-const findQueueByRequest = (server, request) =>
+const findQueue = (server, request) =>
   queues.find(q => q.server === server && deepEqual(request.url, q.request.url));
 
-const getResponse = (server, request) => {
-  const queue = findQueueByRequest(server, request);
+const getResponse = (server, trigger) => {
+  const queue = findQueue(server, trigger);
 
   if (!queue) {
     return undefined;
@@ -73,7 +73,7 @@ const getAll = () => queues;
 
 export default {
   init,
-  findQueueByRequest,
+  findQueue,
   addQueue,
   getQueue,
   removeQueue,
