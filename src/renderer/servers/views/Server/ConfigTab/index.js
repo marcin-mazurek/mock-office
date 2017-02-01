@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
 import FilePicker from '../../../../queues/addFromFile/FilePicker';
-import Queues from '../Queues';
+import Queues from '../../../../queues/views/Queues';
 
 const ConfigTab = ({ serverDetails }) => {
   const { port, type } = serverDetails;

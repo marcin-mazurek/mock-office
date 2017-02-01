@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getResponse } from '../../../../../responses/selectors';
+import { getResponse } from '../../selectors';
 
 const Response = ({ response }) => (
   <div>{JSON.stringify(response)}</div>

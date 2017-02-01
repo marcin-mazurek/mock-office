@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getQueues } from '../../../selectors';
-import Response from './Response';
+import { getServerQueues } from '../../selectors';
+import Response from '../../../responses/views/Response';
 
 const Queues = ({ queues }) => (
   <div>
@@ -37,7 +37,7 @@ Queues.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  queues: getQueues(state)
+  queues: getServerQueues(state)
 });
 
 export default connect(mapStateToProps)(Queues);

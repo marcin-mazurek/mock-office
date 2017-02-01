@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { getAll as getAllQueues } from '../queues/selectors';
 
 export const getAll = state => state.getIn(['servers', 'itemsById']);
 export const getAllAsList = createSelector(
@@ -32,12 +31,4 @@ export const getSelectedServerDetails = createSelector(
     name: all.get(serverId).name,
     port: all.get(serverId).port
   })
-);
-
-export const getQueues = createSelector(
-  getSelected,
-  getAll,
-  getAllQueues,
-  (selected, servers, queues) =>
-    servers.get(selected).get('queues').map(queueId => queues.get(queueId))
 );
