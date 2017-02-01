@@ -19,7 +19,7 @@ const Queues = ({ queues }) => (
                 {
                   queue.responses.map(response => (
                     <li key={response}>
-                      <Response responseId={response} />
+                      <Response responseId={response} queueId={queue.id} />
                     </li>
                   ))
                 }

@@ -7,6 +7,7 @@ import removeResponseAfterUseAgent from '../queues/removeResponseAfterUse/saga';
 import addScriptFromFileAgent from '../serverScripts/addFromFile/saga';
 import runScriptAgent from '../serverScripts/runScript/saga';
 import syncServers from '../app/syncServers/saga';
+import removeResponseAgent from '../responses/remove/saga';
 
 export default function* rootSaga() {
   yield [
@@ -17,6 +18,7 @@ export default function* rootSaga() {
     yield spawn(serverStopAgent),
     yield spawn(removeResponseAfterUseAgent),
     yield spawn(addScriptFromFileAgent),
-    yield spawn(runScriptAgent)
+    yield spawn(runScriptAgent),
+    yield spawn(removeResponseAgent)
   ];
 }

@@ -65,7 +65,8 @@ const addResponse = (queueId, response) => {
 
 const removeResponse = (queueId, responseId) => {
   const queue = getQueue(queueId);
-  queue.responses.filter(res => res.id !== responseId);
+  const queueIndex = queue.responses.findIndex(res => res.id === responseId);
+  queue.responses.splice(queueIndex, 1);
 };
 
 const getAll = () => queues;
