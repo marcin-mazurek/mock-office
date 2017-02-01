@@ -30,7 +30,7 @@ export default function* syncServers() {
 
     const responses = queue.responses;
 
-    for (let responseIndex = 0; i < responses.length; i += 1) {
+    for (let responseIndex = 0; responseIndex < responses.length; responseIndex += 1) {
       const response = responses[responseIndex];
       yield put(addResponse(response, response.id));
       yield put(addResponseToQueue(queue.id, response.id));
