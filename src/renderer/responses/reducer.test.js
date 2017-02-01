@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
-import { ADD } from './actions';
+import { ADD, REMOVE } from './actions';
 
 test(`${ADD} reducer`, () => {
   const state = reducer(fromJS({}), {
@@ -15,4 +15,15 @@ test(`${ADD} reducer`, () => {
       id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
     }
   });
+});
+
+test(`${REMOVE} reducer`, () => {
+  const state = reducer(fromJS({
+    'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==': {
+      body: { data: 'response for some-url-3' },
+      id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+    }
+  }), { type: 'responses/REMOVE', id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==' });
+
+  expect(state.toJS()).toEqual({});
 });

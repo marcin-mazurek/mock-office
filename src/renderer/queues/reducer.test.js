@@ -2,7 +2,8 @@ import { fromJS } from 'immutable';
 import reducer from './reducer';
 import {
   ADD_QUEUE,
-  ADD_RESPONSE
+  ADD_RESPONSE,
+  REMOVE_RESPONSE
 } from './actions';
 
 test(`${ADD_QUEUE} reducer`, () => {
@@ -39,6 +40,28 @@ test(`${ADD_RESPONSE} reducer`, () => {
       id: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
       request: { url: '/some-url-3' },
       responses: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
+    }
+  });
+});
+
+test(`${REMOVE_RESPONSE} reducer`, () => {
+  const state = reducer(fromJS({
+    'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
+      id: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
+      request: { url: '/some-url-3' },
+      responses: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
+    }
+  }), {
+    type: 'queues/REMOVE_RESPONSE',
+    queueId: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
+    responseId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+  });
+
+  expect(state.toJS()).toEqual({
+    'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
+      id: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
+      request: { url: '/some-url-3' },
+      responses: []
     }
   });
 });
