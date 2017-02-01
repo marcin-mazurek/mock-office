@@ -10,6 +10,7 @@
     "common-dev": "babel src/common --out-dir dist/common --watch --source-maps",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
+    "tdd": "jest --watch",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
