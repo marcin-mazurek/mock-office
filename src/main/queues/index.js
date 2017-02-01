@@ -36,10 +36,10 @@ const removeQueue = (id) => {
 };
 
 const findQueue = (server, request) =>
-  queues.find(q => q.server === server && deepEqual(request.url, q.request.url));
+  queues.find(q => q.server === server && deepEqual(request, q.request));
 
-const getResponse = (server, trigger) => {
-  const queue = findQueue(server, trigger);
+const getResponse = (server, request) => {
+  const queue = findQueue(server, request);
 
   if (!queue) {
     return undefined;

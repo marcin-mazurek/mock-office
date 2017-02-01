@@ -6,7 +6,7 @@ import Responses from '../../../responses/views/Responses';
 const Queue = ({ id, request, responsesIds }) => (
   <div className="queue">
     <div className="queue__request">
-      <div>{request.url}</div>
+      <div>{JSON.stringify(request)}</div>
     </div>
     <div className="queue__responses">
       <Responses responsesIds={responsesIds} queueId={id} />

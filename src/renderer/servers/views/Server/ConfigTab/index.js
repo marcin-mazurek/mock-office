@@ -28,6 +28,7 @@ const ConfigTab = ({ serverDetails }) => {
         </div>
       </div>
       <div className="server-config-tab__expectations server-config-tab-queues">
+        No panel because of not supported websocket server type
         <Queues />
       </div>
     </div>

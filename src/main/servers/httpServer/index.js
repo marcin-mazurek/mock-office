@@ -1,6 +1,10 @@
 import express from 'express';
 import queues from '../../queues';
 
+const sendDefaultResponse = (res) => {
+  res.status(404).end();
+};
+
 export default class HttpServer {
   constructor(config) {
     this.sockets = [];
@@ -10,6 +14,18 @@ export default class HttpServer {
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
+    this.triggerResponse = this.triggerResponse.bind(this);
+  }
+
+  triggerResponse(req, res) {
+    const matchedResponse = queues.getResponse(this.id, { url: req.url });
+
+    if (!matchedResponse) {
+      res.status(404).end();
+      return;
+    }
+
+    res.json(matchedResponse.body);
   }
 
   start(cb) {
@@ -21,18 +37,11 @@ export default class HttpServer {
 
     this.instance.get('*', (req, res) => {
       if (!this.isLive()) {
-        res.status(404).end();
+        sendDefaultResponse(res);
         return;
       }
 
-      const matchedResponse = queues.getResponse(this.id, req);
-
-      if (!matchedResponse) {
-        res.status(404).end();
-        return;
-      }
-
-      res.json(matchedResponse.body);
+      this.triggerResponse(req, res);
     });
   }
 

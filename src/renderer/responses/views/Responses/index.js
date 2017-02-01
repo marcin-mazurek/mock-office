@@ -5,7 +5,7 @@ import { init } from '../../remove/actions';
 
 const ResponseComponent = ({ response, remove, queueId, responseId }) => (
   <div className="response">
-    <div>{JSON.stringify(response.body)}</div>
+    <div>{JSON.stringify(response)}</div>
     <button onClick={() => remove(queueId, responseId)}>Remove</button>
   </div>
 );
