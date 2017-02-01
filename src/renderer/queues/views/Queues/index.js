@@ -1,35 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getServerQueues } from '../../selectors';
-import Response from '../../../responses/views/Response';
+import Responses from '../../../responses/views/Responses';
+
+const Queue = ({ id, request, responsesIds }) => (
+  <div className="queue">
+    <div className="queue__request">
+      <div>{request.url}</div>
+    </div>
+    <div className="queue__responses">
+      <Responses responsesIds={responsesIds} queueId={id} />
+    </div>
+  </div>
+);
+
+Queue.propTypes = {
+  id: React.PropTypes.string.isRequired,
+  request: React.PropTypes.shape().isRequired,
+  responsesIds: React.PropTypes.shape().isRequired
+};
 
 const Queues = ({ queues }) => (
-  <div>
-    <ul>
-      {
-        queues.map(queue => (
-          <li key={queue.id}>
-            <div>
-              <div>request</div>
-              <div>{JSON.stringify(queue.request)}</div>
-            </div>
-            <div>
-              <div>responses</div>
-              <ul>
-                {
-                  queue.responses.map(response => (
-                    <li key={response}>
-                      <Response responseId={response} queueId={queue.id} />
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+  <ul className="queues">
+    {
+      queues.map(queue => (
+        <li className="queues__item" key={queue.id}>
+          <Queue request={queue.request} responsesIds={queue.responses} id={queue.id} />
+        </li>
+      ))
+    }
+  </ul>
 );
 
 Queues.propTypes = {

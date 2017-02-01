@@ -1,0 +1,24 @@
+.queues {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.queues__item {
+  margin: 20px 0;
+}
+
+.queue {
+  display: flex;
+}
+
+.queue__request {
+  background: #BBB;
+  flex: none;
+  padding: 20px;
+}
+
+.queue__responses {
+  flex: none;
+}

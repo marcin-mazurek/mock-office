@@ -1,0 +1,16 @@
+.responses {
+  display: flex;
+  list-style: none;
+  margin-left: 20px;
+  padding: 0;
+}
+
+.responses__item {
+  margin-right: 10px;
+}
+
+.response {
+  background: #EEE;
+  flex: none;
+  padding: 20px;
+}
