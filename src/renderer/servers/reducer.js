@@ -26,9 +26,14 @@ const initialState = new Map({
 const addId = R.curry(
   (queueId, queues) => queues.push(queueId)
 );
+
 const addQueue = R.curry(
   (serverId, updater, currentState) => currentState.updateIn(['itemsById', serverId, 'queues'], updater)
 );
+
+const select = R.curry((id, currentState) => currentState.set('selected', id));
+const updateRunning = R.curry((updater, currentState) => currentState.set('running', updater));
+const addToRunning = R.curry((id, runningServers) => runningServers.add(id));
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -48,15 +53,10 @@ export default (state = initialState, action) => {
       )(state), state);
     }
     case SELECT: {
-      return R.invoker(2, 'set')('selected', action.id, state);
+      return select(action.id, state);
     }
     case START: {
-      return R.invoker(2, 'set')('running', R.pipe(
-        R.invoker(1, 'get')('running'),
-        R.invoker(1, 'add')(action.id)
-        )(state),
-        state
-      );
+      return updateRunning(addToRunning(action.id), state);
     }
     case STOP: {
       return R.invoker(2, 'set')('running',
