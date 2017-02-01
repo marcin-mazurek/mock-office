@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     case ADD: {
       const { responseId, response } = action;
 
-      return addResponse(responseId, extendWithId(responseId, response))(state);
+      return addResponse(responseId, extendWithId(responseId)(response))(state);
     }
     default: {
       return state;
