@@ -33,7 +33,7 @@ export default class WSMockServer {
 
   startReadingMessages() {
     this.ws.on('message', (message) => {
-      const response = queues.getResponse(this.id, message);
+      const response = queues.prepareResponse(this.id, message);
 
       if (response) {
         this.ws.send(response.message);

@@ -21,12 +21,7 @@ const api = {
 
     if (!serverToStart.isLive()) {
       return new Promise((resolve) => {
-        serverToStart.start(() => {
-          serverToStart.respond();
-          // eslint-disable-next-line no-console
-          console.log('Mockee server is running!');
-          resolve();
-        });
+        serverToStart.start(resolve);
       });
     }
 
@@ -39,11 +34,7 @@ const api = {
 
     if (serverToStop.isLive()) {
       return new Promise((resolve) => {
-        serverToStop.stop(() => {
-          // eslint-disable-next-line no-console
-          console.log('Mockee server is shut down!');
-          resolve();
-        });
+        serverToStop.stop(resolve);
       });
     }
 

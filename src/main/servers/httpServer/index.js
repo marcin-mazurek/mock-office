@@ -1,9 +1,14 @@
 import express from 'express';
+import R from 'ramda';
 import queues from '../../queues';
 
-const sendDefaultResponse = (res) => {
-  res.status(404).end();
-};
+const sendDefaultResponse = res => () => res.status(404).end();
+const sendResponse = R.curry((res, response) => res.json(response.body));
+const triggerResponse = R.curry((serverId, req, res) => (
+  queues.prepareResponse(serverId, { url: req.url })
+    .then(sendResponse(res))
+    .catch(sendDefaultResponse(res))
+));
 
 export default class HttpServer {
   constructor(config) {
@@ -14,34 +19,13 @@ export default class HttpServer {
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
-    this.triggerResponse = this.triggerResponse.bind(this);
-  }
-
-  triggerResponse(req, res) {
-    const matchedResponse = queues.getResponse(this.id, { url: req.url });
-
-    if (!matchedResponse) {
-      res.status(404).end();
-      return;
-    }
-
-    res.json(matchedResponse.body);
   }
 
   start(cb) {
-    this.httpServer = this.instance.listen(this.port, cb);
-  }
-
-  respond() {
-    this.httpServer.on('connection', socket => this.sockets.push(socket));
-
-    this.instance.get('*', (req, res) => {
-      if (!this.isLive()) {
-        sendDefaultResponse(res);
-        return;
-      }
-
-      this.triggerResponse(req, res);
+    this.httpServer = this.instance.listen(this.port, () => {
+      this.httpServer.on('connection', socket => this.sockets.push(socket));
+      this.instance.get('*', triggerResponse(this.id));
+      cb();
     });
   }
 

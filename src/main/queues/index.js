@@ -21,7 +21,7 @@ const createQueue = (server, request) => ({
   responses: []
 });
 
-const createResponse = response => Object.assign(response, { id: unique() });
+const createResponse = (response) => Object.assign(response, { id: unique() });
 
 const addQueue = (server, request) => {
   const q = createQueue(server, request);
@@ -38,21 +38,17 @@ const removeQueue = (id) => {
 const findQueue = (server, request) =>
   queues.find(q => q.server === server && deepEqual(request, q.request));
 
-const getResponse = (server, request) => {
+const prepareResponse = (server, request) => {
   const queue = findQueue(server, request);
 
-  if (!queue) {
-    return undefined;
-  }
-
-  if (!queue.responses.length) {
-    return undefined;
+  if (!queue || !queue.responses.length) {
+    return Promise.reject();
   }
 
   const response = queue.responses.shift();
   emitRemove(queue.id, response.id);
 
-  return response;
+  return Promise.resolve(response);
 };
 
 const addResponse = (queueId, response) => {
@@ -78,7 +74,7 @@ export default {
   getQueue,
   removeQueue,
   addResponse,
-  getResponse,
+  prepareResponse,
   getAll,
   removeResponse
 };
