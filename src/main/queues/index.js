@@ -21,7 +21,7 @@ const createQueue = (server, request) => ({
   responses: []
 });
 
-const createResponse = (response) => Object.assign(response, { id: unique() });
+const createResponse = response => Object.assign(response, { id: unique() });
 
 const addQueue = (server, request) => {
   const q = createQueue(server, request);
