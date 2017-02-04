@@ -14,7 +14,7 @@ const api = {
     const id = unique();
     const Server = serverTypes[type];
     servers.push(new Server({ name, port, id }));
-    return { name, port, type, id };
+    return id;
   },
   start(id) {
     const serverToStart = servers.find(server => server.id === id);
