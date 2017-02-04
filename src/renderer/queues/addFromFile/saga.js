@@ -1,11 +1,10 @@
-import { take, call, put, select } from 'redux-saga/effects';
+import { take, call, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { remote } from 'electron';
-import { addQueue, addResponse as addResponseToQueue } from '../actions';
 import { INIT } from './actions';
 import { getSelected } from '../../servers/selectors';
-import { add as addResponse } from '../../responses/actions';
-import { addQueue as addQueueToServer } from '../../servers/actions';
+import addQueueSaga from '../addQueue/saga';
+import addResponseSaga from '../../responses/add/saga';
 
 const readerChannel = reader => (
   eventChannel((emitter) => {
@@ -29,23 +28,16 @@ export default function* agent() {
 
         const rChannel = yield call(readerChannel, reader);
         reader.readAsText(file);
-        const queueToAdd = yield take(rChannel);
-
+        const expectation = yield take(rChannel);
         const queues = remote.require('./dist/main/queues').default;
-        const existedQueue = queues.findQueue(serverId, queueToAdd.request);
+        const queue = queues.findQueue(serverId);
+        let queueId = queue ? queue.id : undefined;
 
-        if (existedQueue) {
-          const responseId = queues.addResponse(existedQueue.id, queueToAdd.response);
-          yield put(addResponse(queueToAdd.response, responseId));
-          yield put(addResponseToQueue(existedQueue.id, responseId));
-        } else {
-          const newQueueId = queues.addQueue(serverId, queueToAdd.request);
-          yield put(addQueue(newQueueId, queueToAdd.request));
-          yield put(addQueueToServer(serverId, newQueueId));
-          const responseId = queues.addResponse(newQueueId, queueToAdd.response);
-          yield put(addResponse(queueToAdd.response, responseId));
-          yield put(addResponseToQueue(newQueueId, responseId));
+        if (!queueId) {
+          queueId = yield call(addQueueSaga, serverId);
         }
+
+        yield call(addResponseSaga, queueId, expectation.response);
       }
     } catch (parseError) {
       // eslint-disable-next-line no-console
