@@ -2,14 +2,14 @@ export const ADD = 'servers/ADD';
 export const SELECT = 'servers/SELECT';
 export const START = 'servers/START';
 export const STOP = 'servers/STOP';
-export const ADD_QUEUE = 'servers/ADD_QUEUE';
 
-export const add = (name, port, serverType, id) => ({
+export const add = (name, port, serverType, id, queue) => ({
   type: ADD,
   name,
   port,
   id,
-  serverType
+  serverType,
+  queue
 });
 
 export const select = id => ({
@@ -25,10 +25,4 @@ export const start = id => ({
 export const stop = id => ({
   type: STOP,
   id
-});
-
-export const addQueue = (serverId, queueId) => ({
-  type: ADD_QUEUE,
-  serverId,
-  queueId
 });

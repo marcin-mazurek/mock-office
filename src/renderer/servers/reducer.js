@@ -4,8 +4,7 @@ import {
   ADD,
   SELECT,
   START,
-  STOP,
-  ADD_QUEUE
+  STOP
 } from './actions';
 
 const Server = new Record({
@@ -22,10 +21,6 @@ const initialState = new Map({
   running: new Set()
 });
 
-const setServerQueue = R.curry(
-  (serverId, queueId, currentState) => currentState.setIn(['itemsById', serverId, 'queue'], queueId)
-);
-
 const select = R.invoker(2, 'set')('selected');
 const updateRunningServers = R.invoker(2, 'update')('running');
 const addToSet = R.invoker(1, 'add');
@@ -35,7 +30,7 @@ const changeObjPropName = (old, current) => R.over(
   R.lens(R.prop(old), R.assoc(current)),
   R.identity
 );
-const pickRequiredFields = R.pick(['name', 'port', 'id', 'serverType']);
+const pickRequiredFields = R.pick(['name', 'port', 'id', 'serverType', 'queue']);
 const constructServer = R.construct(Server);
 const createServer = R.pipe(
   pickRequiredFields,
@@ -56,11 +51,6 @@ export default (state = initialState, action) => {
     }
     case STOP: {
       return updateRunningServers(removeFromRunning(action.id))(state);
-    }
-    case ADD_QUEUE: {
-      const { serverId, queueId } = action;
-
-      return setServerQueue(serverId, queueId)(state);
     }
     default: {
       return state;

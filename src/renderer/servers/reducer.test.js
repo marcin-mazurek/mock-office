@@ -4,45 +4,8 @@ import {
   ADD,
   SELECT,
   START,
-  STOP,
-  ADD_QUEUE
+  STOP
 } from './actions';
-
-test(`${ADD_QUEUE} reducer`, () => {
-  const state = reducer(fromJS({
-    itemsById: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-        name: 'Server name',
-        port: 3000,
-        expectations: [],
-        type: 'http',
-        queues: []
-      }
-    },
-    selected: null,
-    running: ['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==']
-  }), {
-    type: 'servers/ADD_QUEUE',
-    serverId: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-    queueId: 'AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ=='
-  });
-
-  expect(state.toJS()).toEqual({
-    itemsById: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-        name: 'Server name',
-        port: 3000,
-        expectations: [],
-        type: 'http',
-        queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
-      }
-    },
-    selected: null,
-    running: ['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==']
-  });
-});
 
 test(`${SELECT} reducer`, () => {
   const state = reducer(fromJS({
@@ -109,30 +72,25 @@ test(`${START} reducer`, () => {
 });
 
 test(`${ADD} reducer`, () => {
-  const state = reducer(
-    fromJS({
-      itemsById: {},
-      selected: null,
-      running: []
-    }),
-    {
-      type: 'servers/ADD',
-      name: 'Server name',
-      port: 3000,
-      id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-      serverType: 'http'
-    }
-  );
-
+  const state = reducer(fromJS({
+    itemsById: {},
+    selected: null,
+    running: []
+  }), {
+    type: 'servers/ADD',
+    name: 'Server name',
+    port: 3000,
+    id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
+    serverType: 'http'
+  });
   expect(state.toJS()).toEqual({
     itemsById: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
+      'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==': {
+        id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
         name: 'Server name',
         port: 3000,
-        expectations: [],
         type: 'http',
-        queues: []
+        queue: ''
       }
     },
     selected: null,

@@ -7,16 +7,12 @@ import {
 } from './actions';
 
 test(`${ADD_QUEUE} reducer`, () => {
-  const state = reducer(fromJS({}), {
-    type: 'queues/ADD_QUEUE',
-    id: 'AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==',
-    request: { url: '/some-url-3' }
-  });
+  const state = reducer(fromJS({}),
+    { type: 'queues/ADD_QUEUE', id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
 
   expect(state.toJS()).toEqual({
-    'AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==': {
-      id: 'AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==',
-      request: { url: '/some-url-3' },
+    'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==': {
+      id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==',
       responses: []
     }
   });

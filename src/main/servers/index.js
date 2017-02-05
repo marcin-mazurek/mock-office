@@ -16,7 +16,7 @@ const api = {
     const queueId = queues.addQueue(id);
     const Server = serverTypes[type];
     servers.push(new Server({ name, port, id, queueId }));
-    return id;
+    return { serverId: id, queueId };
   },
   start(id) {
     const serverToStart = servers.find(server => server.id === id);
