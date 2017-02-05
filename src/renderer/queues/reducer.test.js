@@ -13,7 +13,7 @@ test(`${ADD_QUEUE} reducer`, () => {
   expect(state.toJS()).toEqual({
     'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==': {
       id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==',
-      responses: []
+      expectations: []
     }
   });
 });
@@ -23,19 +23,19 @@ test(`${ADD_RESPONSE} reducer`, () => {
     'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
       id: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
       request: { url: '/some-url-3' },
-      responses: []
+      expectations: []
     }
   }), {
     type: 'queues/ADD_RESPONSE',
     queueId: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
-    responseId: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
+    expectationId: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
   });
 
   expect(state.toJS()).toEqual({
     'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
       id: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
       request: { url: '/some-url-3' },
-      responses: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
+      expectations: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
     }
   });
 });
@@ -45,19 +45,19 @@ test(`${REMOVE_RESPONSE} reducer`, () => {
     'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
       id: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
       request: { url: '/some-url-3' },
-      responses: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
+      expectations: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
     }
   }), {
     type: 'queues/REMOVE_RESPONSE',
     queueId: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
-    responseId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+    expectationId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
   });
 
   expect(state.toJS()).toEqual({
     'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
       id: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
       request: { url: '/some-url-3' },
-      responses: []
+      expectations: []
     }
   });
 });

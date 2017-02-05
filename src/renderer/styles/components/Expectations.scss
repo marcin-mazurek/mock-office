@@ -1,4 +1,4 @@
-.responses {
+.expectations {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -7,11 +7,11 @@
   width: 100%;
 }
 
-.responses__item {
+.expectations__item {
   margin-bottom: 10px;
 }
 
-.response {
+.expectation {
   background: #EEE;
   flex: none;
   padding: 20px;

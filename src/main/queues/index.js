@@ -9,17 +9,17 @@ const init = (mW) => {
   mainWin = mW;
 };
 
-const emitRemove = (queueId, responseId) => {
-  mainWin.webContents.send(REMOVE_RESPONSE_AFTER_USE, { queueId, responseId });
+const emitRemove = (queueId, expectationId) => {
+  mainWin.webContents.send(REMOVE_RESPONSE_AFTER_USE, { queueId, expectationId });
 };
 
 const createQueue = serverId => ({
   id: unique(),
   serverId,
-  responses: []
+  expectations: []
 });
 
-const createResponse = response => Object.assign(response, { id: unique() });
+const createExpectation = expectation => Object.assign(expectation, { id: unique() });
 
 const addQueue = (serverId) => {
   const q = createQueue(serverId);
@@ -36,32 +36,32 @@ const removeQueue = (serverId) => {
 const getServerQueueId = serverId =>
   queues.find(q => q.serverId === serverId).id;
 
-const prepareResponse = (server) => {
+const prepareExpectation = (server) => {
   const queueId = getServerQueueId(server);
   const queue = getQueue(getServerQueueId(server));
 
-  if (!queue || !queue.responses.length) {
+  if (!queue || !queue.expectations.length) {
     return Promise.reject();
   }
 
-  const response = queue.responses.shift();
-  emitRemove(queueId, response.id);
+  const expectation = queue.expectations.shift();
+  emitRemove(queueId, expectation.id);
 
-  return Promise.resolve(response);
+  return Promise.resolve(expectation);
 };
 
-const addResponse = (queueId, response) => {
+const addExpectation = (queueId, expectation) => {
   const queue = getQueue(queueId);
-  const res = createResponse(response);
-  queue.responses.push(res);
+  const res = createExpectation(expectation);
+  queue.expectations.push(res);
 
   return res.id;
 };
 
-const removeResponse = (queueId, responseId) => {
+const removeExpectation = (queueId, expectationId) => {
   const queue = getQueue(queueId);
-  const queueIndex = queue.responses.findIndex(res => res.id === responseId);
-  queue.responses.splice(queueIndex, 1);
+  const queueIndex = queue.expectations.findIndex(res => res.id === expectationId);
+  queue.expectations.splice(queueIndex, 1);
 };
 
 const getAll = () => queues;
@@ -72,8 +72,8 @@ export default {
   addQueue,
   getQueue,
   removeQueue,
-  addResponse,
-  prepareResponse,
+  addExpectation,
+  prepareExpectation,
   getAll,
-  removeResponse
+  removeExpectation
 };

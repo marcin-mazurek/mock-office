@@ -2,12 +2,12 @@ import express from 'express';
 import R from 'ramda';
 import queues from '../../queues';
 
-const sendDefaultResponse = res => () => res.status(404).end();
-const sendResponse = R.curry((res, response) => res.json(response.body));
-const triggerResponse = R.curry((serverId, req, res) => (
-  queues.prepareResponse(serverId, { url: req.url })
-    .then(sendResponse(res))
-    .catch(sendDefaultResponse(res))
+const sendDefaultExpectation = res => () => res.status(404).end();
+const sendExpectation = R.curry((res, expectation) => res.json(expectation.body));
+const triggerExpectation = R.curry((serverId, req, res) => (
+  queues.prepareExpectation(serverId, { url: req.url })
+    .then(sendExpectation(res))
+    .catch(sendDefaultExpectation(res))
 ));
 
 export default class HttpServer {
@@ -25,7 +25,7 @@ export default class HttpServer {
   start(cb) {
     this.httpServer = this.instance.listen(this.port, () => {
       this.httpServer.on('connection', socket => this.sockets.push(socket));
-      this.instance.get('*', triggerResponse(this.id));
+      this.instance.get('*', triggerExpectation(this.id));
       cb();
     });
   }

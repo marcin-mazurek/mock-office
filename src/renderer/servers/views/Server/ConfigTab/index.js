@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
-import FilePicker from '../../../../responses/pickFile/FilePicker';
+import FilePicker from '../../../../expectations/pickFile/FilePicker';
 import Queue from '../../../../queues/views/Queue';
 
 const ConfigTab = ({ serverDetails }) => {

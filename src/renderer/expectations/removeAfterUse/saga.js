@@ -3,7 +3,7 @@ import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import { REMOVE_RESPONSE_AFTER_USE } from '../../../main/common/messageNames';
 import { remove } from '../actions';
-import { removeResponse } from '../../queues/actions';
+import { removeExpectation } from '../../queues/actions';
 
 export default function* agent() {
   const channel = () => (
@@ -16,9 +16,9 @@ export default function* agent() {
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const removeResponseChannel = yield call(channel);
-    const { queueId, responseId } = yield take(removeResponseChannel);
-    yield put(remove(responseId));
-    yield put(removeResponse(queueId, responseId));
+    const removeExpectationChannel = yield call(channel);
+    const { queueId, expectationId } = yield take(removeExpectationChannel);
+    yield put(remove(expectationId));
+    yield put(removeExpectation(queueId, expectationId));
   }
 }
