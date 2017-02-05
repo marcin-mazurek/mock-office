@@ -1,6 +1,6 @@
 {
   "name": "mockee",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "App for mocking API",
   "main": "dist/index.js",
   "scripts": {
