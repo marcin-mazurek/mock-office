@@ -16,7 +16,6 @@ export default class HttpServer {
     this.sockets = [];
     this.type = 'http';
     this.instance = express();
-    this.live = false;
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
