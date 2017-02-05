@@ -19,6 +19,7 @@ export default class HttpServer {
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
+    this.queueId = config.queueId;
   }
 
   start(cb) {

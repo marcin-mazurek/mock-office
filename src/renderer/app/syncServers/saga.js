@@ -12,6 +12,8 @@ export default function* syncServers() {
   for (let i = 0; i < servers.length; i += 1) {
     const server = servers[i];
     yield put(add(server.name, server.port, server.type, server.id));
+    yield put(addQueueToServer(server.id, server.queueId));
+    yield put(addQueue(server.queueId));
 
     if (server.isLive()) {
       yield put(start(server.id));
@@ -25,9 +27,6 @@ export default function* syncServers() {
 
   for (let i = 0; i < queues.length; i += 1) {
     const queue = queues[i];
-    yield put(addQueue(queue.id, queue.request));
-    yield put(addQueueToServer(queue.server, queue.id));
-
     const responses = queue.responses;
 
     for (let responseIndex = 0; responseIndex < responses.length; responseIndex += 1) {

@@ -55,7 +55,8 @@ ServerPanel.propTypes = {
   serverDetails: React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
-    port: React.PropTypes.number.isRequired
+    port: React.PropTypes.number.isRequired,
+    queue: React.PropTypes.string.isRequired
   })
 };
 

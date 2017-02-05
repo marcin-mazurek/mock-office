@@ -2,7 +2,8 @@ import { take, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import { REMOVE_RESPONSE_AFTER_USE } from '../../../common/messageNames';
-import { removeResponse } from '../actions';
+import { remove } from '../actions';
+import { removeResponse } from '../../queues/actions';
 
 export default function* agent() {
   const channel = () => (
@@ -17,6 +18,7 @@ export default function* agent() {
   while (true) {
     const removeResponseChannel = yield call(channel);
     const { queueId, responseId } = yield take(removeResponseChannel);
+    yield put(remove(responseId));
     yield put(removeResponse(queueId, responseId));
   }
 }

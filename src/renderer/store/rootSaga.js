@@ -1,9 +1,9 @@
 import { spawn } from 'redux-saga/effects';
-import addQueueFromFileAgent from '../queues/addFromFile/saga';
+import addQueueFromFileAgent from '../responses/pickFile/saga';
 import addServerAgent from '../servers/addServer/saga';
 import serverStartAgent from '../servers/startServer/saga';
 import serverStopAgent from '../servers/stopServer/saga';
-import removeResponseAfterUseAgent from '../queues/removeResponseAfterUse/saga';
+import removeResponseAfterUseAgent from '../responses/removeAfterUse/saga';
 import addScriptFromFileAgent from '../serverScripts/addFromFile/saga';
 import runScriptAgent from '../serverScripts/runScript/saga';
 import syncServers from '../app/syncServers/saga';

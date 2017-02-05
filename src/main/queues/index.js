@@ -1,5 +1,4 @@
 import unique from 'node-unique';
-import deepEqual from 'deep-equal';
 import { REMOVE_RESPONSE_AFTER_USE } from '../../common/messageNames';
 
 const queues = [];
@@ -14,39 +13,39 @@ const emitRemove = (queueId, responseId) => {
   mainWin.webContents.send(REMOVE_RESPONSE_AFTER_USE, { queueId, responseId });
 };
 
-const createQueue = (server, request) => ({
+const createQueue = serverId => ({
   id: unique(),
-  request,
-  server,
+  serverId,
   responses: []
 });
 
 const createResponse = response => Object.assign(response, { id: unique() });
 
-const addQueue = (server, request) => {
-  const q = createQueue(server, request);
+const addQueue = (serverId) => {
+  const q = createQueue(serverId);
   queues.push(q);
 
   return q.id;
 };
 
 const getQueue = id => queues.find(q => q.id === id);
-const removeQueue = (id) => {
-  queues.filter(queue => queue.id !== id);
+const removeQueue = (serverId) => {
+  queues.filter(queue => queue.serverId !== serverId);
 };
 
-const findQueue = (server, request) =>
-  queues.find(q => q.server === server && deepEqual(request, q.request));
+const getServerQueueId = serverId =>
+  queues.find(q => q.serverId === serverId).id;
 
-const prepareResponse = (server, request) => {
-  const queue = findQueue(server, request);
+const prepareResponse = (server) => {
+  const queueId = getServerQueueId(server);
+  const queue = getQueue(getServerQueueId(server));
 
   if (!queue || !queue.responses.length) {
     return Promise.reject();
   }
 
   const response = queue.responses.shift();
-  emitRemove(queue.id, response.id);
+  emitRemove(queueId, response.id);
 
   return Promise.resolve(response);
 };
@@ -69,7 +68,7 @@ const getAll = () => queues;
 
 export default {
   init,
-  findQueue,
+  getServerQueueId,
   addQueue,
   getQueue,
   removeQueue,

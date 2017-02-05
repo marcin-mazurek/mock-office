@@ -29,6 +29,8 @@ export const getSelectedServerDetails = createSelector(
   (serverId, all) => ({
     type: all.get(serverId).type,
     name: all.get(serverId).name,
-    port: all.get(serverId).port
+    port: all.get(serverId).port,
+    id: all.get(serverId).id,
+    queue: all.get(serverId).queue
   })
 );

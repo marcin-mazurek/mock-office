@@ -1,12 +1,14 @@
 .responses {
   display: flex;
+  flex-direction: column;
   list-style: none;
   margin-left: 20px;
   padding: 0;
+  width: 100%;
 }
 
 .responses__item {
-  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .response {

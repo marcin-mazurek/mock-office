@@ -1,6 +1,7 @@
 import unique from 'node-unique';
 import HttpServer from './httpServer';
 import WSMockServer from './wsServer';
+import queues from '../queues';
 
 const serverTypes = {
   http: HttpServer,
@@ -12,8 +13,9 @@ const servers = [];
 const api = {
   add(name, port, type) {
     const id = unique();
+    const queueId = queues.addQueue(id);
     const Server = serverTypes[type];
-    servers.push(new Server({ name, port, id }));
+    servers.push(new Server({ name, port, id, queueId }));
     return id;
   },
   start(id) {

@@ -10,7 +10,6 @@ const initialState = new Map();
 
 const Queue = new Record({
   id: '',
-  request: {},
   responses: new List()
 });
 
@@ -24,15 +23,15 @@ const updateResponses = R.curry(
   (queueId, updater, currentState) =>
     currentState.updateIn([queueId, 'responses'], updater)
 );
-const constructQueue = (queueId, request) => new Queue({ id: queueId, request });
+const constructQueue = queueId => new Queue({ id: queueId });
 const addToQueues = R.invoker(2, 'set');
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_QUEUE: {
-      const { request, id: queueId } = action;
+      const { id: queueId } = action;
 
-      return addToQueues(queueId, constructQueue(queueId, request))(state);
+      return addToQueues(queueId, constructQueue(queueId))(state);
     }
     case ADD_RESPONSE: {
       const { queueId, responseId } = action;

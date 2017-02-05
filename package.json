@@ -66,6 +66,7 @@
     "redux-immutable": "^3.0.8",
     "redux-saga": "^0.13.0",
     "reselect": "^2.5.4",
+    "source-map-support": "^0.4.11",
     "ws": "^1.1.1"
   },
   "jest": {

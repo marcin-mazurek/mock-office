@@ -1,4 +1,4 @@
-export const INIT = 'addQueueFromFile/INIT';
+export const INIT = 'pickResponseFile/INIT';
 
 export const init = files => ({
   type: INIT,

@@ -14,8 +14,7 @@ export const removeResponse = (queueId, responseId) => ({
   responseId
 });
 
-export const addQueue = (id, request) => ({
+export const addQueue = id => ({
   type: ADD_QUEUE,
-  id,
-  request
+  id
 });

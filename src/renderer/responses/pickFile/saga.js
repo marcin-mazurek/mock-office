@@ -3,8 +3,7 @@ import { eventChannel } from 'redux-saga';
 import { remote } from 'electron';
 import { INIT } from './actions';
 import { getSelected } from '../../servers/selectors';
-import addQueueSaga from '../addQueue/saga';
-import addResponseSaga from '../../responses/add/saga';
+import addResponseSaga from '../add/saga';
 
 const readerChannel = reader => (
   eventChannel((emitter) => {
@@ -30,13 +29,7 @@ export default function* agent() {
         reader.readAsText(file);
         const expectation = yield take(rChannel);
         const queues = remote.require('./dist/main/queues').default;
-        const queue = queues.findQueue(serverId);
-        let queueId = queue ? queue.id : undefined;
-
-        if (!queueId) {
-          queueId = yield call(addQueueSaga, serverId);
-        }
-
+        const queueId = queues.getServerQueueId(serverId);
         yield call(addResponseSaga, queueId, expectation.response);
       }
     } catch (parseError) {
