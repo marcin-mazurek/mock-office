@@ -57,6 +57,7 @@
     "classnames": "^2.2.5",
     "deep-equal": "^1.0.1",
     "express": "^4.14.0",
+    "fun-task": "^1.5.2",
     "immutable": "^3.8.1",
     "node-unique": "^1.0.0",
     "npm-watch": "^0.1.8",

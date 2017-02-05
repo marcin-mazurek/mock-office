@@ -4,10 +4,11 @@ import queues from '../../queues';
 
 const sendDefaultExpectation = res => () => res.status(404).end();
 const sendExpectation = R.curry((res, expectation) => res.json(expectation.body));
-const triggerExpectation = R.curry((serverId, req, res) => (
-  queues.prepareExpectation(serverId, { url: req.url })
-    .then(sendExpectation(res))
-    .catch(sendDefaultExpectation(res))
+const respond = R.curry((serverId, req, res) => (
+  queues.tryToFulfillExpectation(serverId, { url: req.url }, {
+    success: sendExpectation(res),
+    failure: sendDefaultExpectation(res)
+  })
 ));
 
 export default class HttpServer {
@@ -25,7 +26,7 @@ export default class HttpServer {
   start(cb) {
     this.httpServer = this.instance.listen(this.port, () => {
       this.httpServer.on('connection', socket => this.sockets.push(socket));
-      this.instance.get('*', triggerExpectation(this.id));
+      this.instance.get('*', respond(this.queueId));
       cb();
     });
   }

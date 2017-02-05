@@ -1,4 +1,6 @@
 import unique from 'node-unique';
+import Task from 'fun-task';
+import deepEqual from 'deep-equal';
 import { REMOVE_RESPONSE_AFTER_USE } from '../common/messageNames';
 
 const queues = [];
@@ -19,7 +21,10 @@ const createQueue = serverId => ({
   expectations: []
 });
 
-const createExpectation = expectation => Object.assign(expectation, { id: unique() });
+const createExpectation = expectation => Object.assign(expectation, {
+  id: unique(),
+  preparationTask: Task.of(expectation.response)
+});
 
 const addQueue = (serverId) => {
   const q = createQueue(serverId);
@@ -36,18 +41,25 @@ const removeQueue = (serverId) => {
 const getServerQueueId = serverId =>
   queues.find(q => q.serverId === serverId).id;
 
-const prepareExpectation = (server) => {
-  const queueId = getServerQueueId(server);
-  const queue = getQueue(getServerQueueId(server));
+const matchExpectation = (queue, requirements) =>
+  queue.expectations.findIndex(expectation => deepEqual(expectation.request, requirements));
 
-  if (!queue || !queue.expectations.length) {
-    return Promise.reject();
-  }
+const tryToFulfillExpectation = (queueId, requirements, taskCallbacks) => {
+  const queue = getQueue(queueId);
 
-  const expectation = queue.expectations.shift();
-  emitRemove(queueId, expectation.id);
+  const matchExpectationTask = Task.create((onSuccess, onFailure) => {
+    const expectationIndex = matchExpectation(queue, requirements);
 
-  return Promise.resolve(expectation);
+    if (expectationIndex >= 0) {
+      const expectation = queue.expectations.splice(expectationIndex, 1)[0];
+      onSuccess(expectation);
+      emitRemove(queueId, expectation.id);
+    } else {
+      onFailure();
+    }
+  });
+
+  matchExpectationTask.chain(expectation => expectation.preparationTask).run(taskCallbacks);
 };
 
 const addExpectation = (queueId, expectation) => {
@@ -73,7 +85,7 @@ export default {
   getQueue,
   removeQueue,
   addExpectation,
-  prepareExpectation,
+  tryToFulfillExpectation,
   getAll,
   removeExpectation
 };

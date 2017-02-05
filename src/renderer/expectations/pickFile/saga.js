@@ -27,7 +27,7 @@ export default function* agent() {
         const rChannel = yield call(readerChannel, reader);
         reader.readAsText(file);
         const expectation = yield take(rChannel);
-        yield call(addExpectationSaga, serverId, expectation.response);
+        yield call(addExpectationSaga, serverId, expectation);
       }
     } catch (parseError) {
       // eslint-disable-next-line no-console
