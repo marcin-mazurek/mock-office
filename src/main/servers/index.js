@@ -49,6 +49,11 @@ const api = {
   },
   getAll() {
     return servers;
+  },
+  addExpectation(serverId, expectation) {
+    const server = servers.find(srv => srv.id === serverId);
+
+    return server.addExpectation(expectation);
   }
 };
 

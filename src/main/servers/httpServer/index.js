@@ -36,6 +36,10 @@ export default class HttpServer {
     this.httpServer.close(cb);
   }
 
+  addExpectation(expectation) {
+    return queues.addExpectation(this.queueId, expectation);
+  }
+
   isLive() {
     return this.httpServer ? this.httpServer.listening : false;
   }
