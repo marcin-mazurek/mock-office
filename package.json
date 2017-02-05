@@ -6,15 +6,14 @@
   "scripts": {
     "electron-dev": "electron .",
     "renderer-dev": "webpack --watch",
-    "main-dev": "babel src --out-dir dist --ignore renderer --watch --source-maps",
+    "main-dev": "npm-watch",
     "main-build": "babel src --out-dir dist --ignore renderer --source-maps",
     "common-dev": "babel src/common --out-dir dist/common --watch --source-maps",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
     "tdd": "jest --watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "watch": "npm-watch"
+    "build-storybook": "build-storybook"
   },
   "watch": {
     "main-build": "src/main/**/*.js"
