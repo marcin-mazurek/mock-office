@@ -1,5 +1,5 @@
 import unique from 'node-unique';
-import { REMOVE_RESPONSE_AFTER_USE } from '../../common/messageNames';
+import { REMOVE_RESPONSE_AFTER_USE } from '../common/messageNames';
 
 const queues = [];
 

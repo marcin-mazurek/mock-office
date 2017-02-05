@@ -8,8 +8,8 @@ export default function* agent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const { name, port, serverType: type } = yield take(INIT);
-    const servers = remote.require('./dist/main/servers').default;
-    const queues = remote.require('./dist/main/queues').default;
+    const servers = remote.require('./main/servers').default;
+    const queues = remote.require('./main/queues').default;
     const serverId = servers.add(name, port, type);
     const queueId = queues.getServerQueueId(serverId);
 

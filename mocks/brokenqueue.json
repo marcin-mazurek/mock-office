@@ -1,0 +1,11 @@
+{
+  dsa
+  "request": {
+    "url": "/some-url-3"
+  },
+  "response": {
+    "body": {
+      "data": "response for some-url-3"
+    }
+  }
+}

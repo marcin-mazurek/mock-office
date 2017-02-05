@@ -8,7 +8,7 @@ export default function* agent() {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const { id } = yield take(INIT);
-    const remoteStop = remote.require('./dist/main/servers').default.stop;
+    const remoteStop = remote.require('./main/servers').default.stop;
     yield call(prepareForEffect(remoteStop), id);
     yield put(stop(id));
   }

@@ -6,7 +6,7 @@ import { addQueue, addResponse as addResponseToQueue } from '../../queues/action
 import { add as addResponse } from '../../responses/actions';
 
 export default function* syncServers() {
-  const serversApi = remote.require('./dist/main/servers').default;
+  const serversApi = remote.require('./main/servers').default;
   const servers = serversApi.getAll();
 
   for (let i = 0; i < servers.length; i += 1) {
@@ -22,7 +22,7 @@ export default function* syncServers() {
 
   yield put(push('/'));
 
-  const queuesApi = remote.require('./dist/main/queues').default;
+  const queuesApi = remote.require('./main/queues').default;
   const queues = queuesApi.getAll();
 
   for (let i = 0; i < queues.length; i += 1) {

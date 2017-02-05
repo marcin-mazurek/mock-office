@@ -1,7 +1,7 @@
 const path = require('path');
-const electron = require('electron-prebuilt');
-require('electron-reload')(path.resolve(__dirname, 'dist'), {
-  electron,
+const electronPrebuilt = require('electron-prebuilt');
+require('electron-reload')(path.resolve(__dirname), {
+  electron: electronPrebuilt,
   hardResetMethod: 'exit'
 });
 
@@ -11,4 +11,4 @@ if (process.env.NODE_ENV !== 'production') {
   require('source-map-support/register');
 }
 
-require('./dist/main');
+require('./main');

@@ -1,7 +1,7 @@
 import { take, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
-import { REMOVE_RESPONSE_AFTER_USE } from '../../../common/messageNames';
+import { REMOVE_RESPONSE_AFTER_USE } from '../../../main/common/messageNames';
 import { remove } from '../actions';
 import { removeResponse } from '../../queues/actions';
 

@@ -2,17 +2,22 @@
   "name": "mockee",
   "version": "1.0.0",
   "description": "App for mocking API",
-  "main": "main.js",
+  "main": "dist/index.js",
   "scripts": {
     "electron-dev": "electron .",
     "renderer-dev": "webpack --watch",
-    "main-dev": "babel src/main --out-dir dist/main --watch --source-maps",
+    "main-dev": "babel src --out-dir dist --ignore renderer --watch --source-maps",
+    "main-build": "babel src --out-dir dist --ignore renderer --source-maps",
     "common-dev": "babel src/common --out-dir dist/common --watch --source-maps",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
     "tdd": "jest --watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "main-build": "src/main/**/*.js"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -55,6 +60,7 @@
     "express": "^4.14.0",
     "immutable": "^3.8.1",
     "node-unique": "^1.0.0",
+    "npm-watch": "^0.1.8",
     "ramda": "^0.23.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
