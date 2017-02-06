@@ -1,7 +1,5 @@
 {
-  "requirements": {
-    "message": "message-1"
-  },
+  "instant": true,
   "taskPayload": {
     "message": "response for message-1"
   }

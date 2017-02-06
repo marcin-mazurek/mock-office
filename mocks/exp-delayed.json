@@ -3,7 +3,7 @@
   "requirements": {
     "url": "/some-url"
   },
-  "response": {
+  "taskPayload": {
     "body": {
       "data": "delayed response for some-url"
     }

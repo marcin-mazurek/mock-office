@@ -2,7 +2,7 @@
   "requirements": {
     "url": "/some-url"
   },
-  "response": {
+  "taskPayload": {
     "body": {
       "data": "response for some-url"
     }
