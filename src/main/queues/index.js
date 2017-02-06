@@ -33,7 +33,6 @@ const createExpectation = (expectation) => {
       });
       break;
     }
-    case 'request':
     default: {
       if (expectation.delay) {
         preparationTask = Task.create((onSuccess) => {
