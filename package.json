@@ -4,11 +4,13 @@
   "description": "App for mocking API",
   "main": "dist/index.js",
   "scripts": {
-    "electron-dev": "electron .",
-    "renderer-dev": "webpack --watch",
-    "main-dev": "npm-watch",
-    "main-build": "babel src --out-dir dist --ignore renderer --source-maps",
-    "common-dev": "babel src/common --out-dir dist/common --watch --source-maps",
+    "dev": "npm run start-electron & npm run dev-main & npm run dev-renderer",
+    "build": "npm run build-main & npm run build-renderer",
+    "start-electron": "electron .",
+    "dev-renderer": "webpack --watch",
+    "build-renderer": "webpack",
+    "dev-main": "npm-watch",
+    "build-main": "babel src --out-dir dist --ignore renderer --source-maps",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
     "tdd": "jest --watch",
@@ -16,7 +18,7 @@
     "build-storybook": "build-storybook"
   },
   "watch": {
-    "main-build": "src/main/**/*.js"
+    "build-main": "src/main/**/*.js"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
