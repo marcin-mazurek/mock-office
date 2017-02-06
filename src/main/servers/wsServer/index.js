@@ -8,6 +8,7 @@ export default class WSMockServer {
     this.name = config.name;
     this.id = config.id;
     this.listening = false;
+    this.queueId = config.queueId;
   }
 
   respond() {
@@ -19,7 +20,12 @@ export default class WSMockServer {
     this.instance.on('connection', (ws) => {
       this.ws = ws;
 
-      this.startReadingMessages();
+      this.ws.on('message', (message) => {
+        queues.tryToFulfillExpectation(this.queueId, { message }, {
+          success: expectation => this.ws.send(expectation.message),
+          failure: () => this.ws.send('Unknown message')
+        });
+      });
     });
   }
 
@@ -31,23 +37,15 @@ export default class WSMockServer {
     });
   }
 
-  startReadingMessages() {
-    this.ws.on('message', (message) => {
-      const expectation = queues.prepareExpectation(this.id, message);
-
-      if (expectation) {
-        this.ws.send(expectation.message);
-      } else {
-        this.ws.send('Unknown message');
-      }
-    });
-  }
-
   stop(cb) {
     this.instance.close(() => {
       this.listening = false;
       cb();
     });
+  }
+
+  addExpectation(expectation) {
+    return queues.addExpectation(this.queueId, expectation);
   }
 
   isLive() {
