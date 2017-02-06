@@ -21,10 +21,37 @@ const createQueue = serverId => ({
   expectations: []
 });
 
-const createExpectation = expectation => Object.assign(expectation, {
-  id: unique(),
-  preparationTask: Task.of(expectation.response)
-});
+const createExpectation = (expectation) => {
+  let preparationTask;
+
+  switch (expectation.trigger) {
+    case 'timeout': {
+      preparationTask = Task.create((onSuccess) => {
+        setTimeout(() => {
+          onSuccess(expectation.response);
+        }, expectation.timeout);
+      });
+      break;
+    }
+    case 'request':
+    default: {
+      if (expectation.delay) {
+        preparationTask = Task.create((onSuccess) => {
+          setTimeout(() => {
+            onSuccess(expectation.response);
+          }, expectation.delay || 0);
+        });
+      } else {
+        preparationTask = Task.of(expectation.response);
+      }
+    }
+  }
+
+  return Object.assign(expectation, {
+    id: unique(),
+    preparationTask
+  });
+};
 
 const addQueue = (serverId) => {
   const q = createQueue(serverId);
