@@ -1,4 +1,6 @@
 {
+  "type": "request",
+  "delay": 5000,
   "request": {
     "url": "/some-url-2"
   },
