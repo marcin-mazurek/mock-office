@@ -5,7 +5,7 @@ import queues from '../../queues';
 const sendDefaultExpectation = res => () => res.status(404).end();
 const sendExpectation = R.curry((res, expectation) => res.json(expectation.body));
 const respond = R.curry((serverId, req, res) => (
-  queues.tryToFulfillExpectation(serverId, { url: req.url }, {
+  queues.findAndRunTask(serverId, { url: req.url }, {
     success: sendExpectation(res),
     failure: sendDefaultExpectation(res)
   })

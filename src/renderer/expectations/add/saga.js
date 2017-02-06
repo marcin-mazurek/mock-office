@@ -8,6 +8,6 @@ export default function* addExpectation(serverId, expectation) {
   const servers = remote.require('./main/servers').default;
   const expectationId = servers.addExpectation(serverId, expectation);
   const { queue } = yield select(getSelectedServerDetails, serverId);
-  yield put(addExpectationAction(expectation.response, expectationId));
+  yield put(addExpectationAction(expectation.taskPayload, expectationId));
   yield put(addExpectationToQueueAction(queue, expectationId));
 }

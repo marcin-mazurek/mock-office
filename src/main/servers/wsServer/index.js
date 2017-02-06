@@ -21,7 +21,7 @@ export default class WSMockServer {
       this.ws = ws;
 
       this.ws.on('message', (message) => {
-        queues.tryToFulfillExpectation(this.queueId, { message }, {
+        queues.findAndRunTask(this.queueId, { message }, {
           success: expectation => this.ws.send(expectation.message),
           failure: () => this.ws.send('Unknown message')
         });
@@ -45,7 +45,15 @@ export default class WSMockServer {
   }
 
   addExpectation(expectation) {
-    return queues.addExpectation(this.queueId, expectation);
+    const expectationId = queues.addExpectation(this.queueId, expectation);
+
+    if (expectation.instant) {
+      queues.runTask(this.queueId, expectationId, {
+        success: exp => this.ws.send(exp.message),
+      });
+    }
+
+    return expectationId;
   }
 
   isLive() {
