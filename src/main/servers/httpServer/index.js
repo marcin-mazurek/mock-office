@@ -4,12 +4,14 @@ import queues from '../../queues';
 
 const sendDefaultExpectation = res => () => res.status(404).end();
 const sendExpectation = R.curry((res, expectation) => res.json(expectation.body));
-const respond = R.curry((serverId, req, res) => (
-  queues.findAndRunTask(serverId, { url: req.url }, {
-    success: sendExpectation(res),
-    failure: sendDefaultExpectation(res)
-  })
-));
+const respond = R.curry((queueId, req, res) => (
+  queues.tryRun(
+    queueId,
+    { url: req.url },
+    sendExpectation(res),
+    sendDefaultExpectation(res)
+  ))
+);
 
 export default class HttpServer {
   constructor(config) {

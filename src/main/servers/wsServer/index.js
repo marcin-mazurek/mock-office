@@ -1,5 +1,10 @@
 import { Server as WebSocketServer } from 'ws';
+import R from 'ramda';
 import queues from '../../queues';
+
+const respond = R.curry((queueId, ws, message) =>
+  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity)
+);
 
 export default class WSMockServer {
   constructor(config) {
@@ -20,12 +25,7 @@ export default class WSMockServer {
     this.instance.on('connection', (ws) => {
       this.ws = ws;
 
-      this.ws.on('message', (message) => {
-        queues.findAndRunTask(this.queueId, { message }, {
-          success: expectation => this.ws.send(expectation.message),
-          failure: () => this.ws.send('Unknown message')
-        });
-      });
+      this.ws.on('message', respond(this.queueId, this.ws));
     });
   }
 
@@ -44,13 +44,11 @@ export default class WSMockServer {
     });
   }
 
-  addExpectation(expectation) {
+  addExpectation(expectation, shouldRunImmediately) {
     const expectationId = queues.addExpectation(this.queueId, expectation);
 
-    if (expectation.instant) {
-      queues.runTask(this.queueId, expectationId, {
-        success: exp => this.ws.send(exp.message),
-      });
+    if (shouldRunImmediately && this.isLive()) {
+      queues.run(this.queueId, expectationId, exp => this.ws.send(exp.message));
     }
 
     return expectationId;

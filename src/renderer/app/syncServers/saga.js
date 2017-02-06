@@ -26,7 +26,7 @@ export default function* syncServers() {
 
   for (let i = 0; i < queues.length; i += 1) {
     const queue = queues[i];
-    const expectations = queue.expectations;
+    const expectations = queue.tasks;
 
     for (let expectationIndex = 0; expectationIndex < expectations.length; expectationIndex += 1) {
       const expectation = expectations[expectationIndex];

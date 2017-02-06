@@ -6,7 +6,7 @@ import { getSelectedServerDetails } from '../../servers/selectors';
 
 export default function* addExpectation(serverId, expectation) {
   const servers = remote.require('./main/servers').default;
-  const expectationId = servers.addExpectation(serverId, expectation);
+  const expectationId = servers.addExpectation(serverId, expectation, expectation.instant);
   const { queue } = yield select(getSelectedServerDetails, serverId);
   yield put(addExpectationAction(expectation.taskPayload, expectationId));
   yield put(addExpectationToQueueAction(queue, expectationId));

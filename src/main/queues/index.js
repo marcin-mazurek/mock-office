@@ -18,37 +18,49 @@ const emitRemove = (queueId, expectationId) => {
 const createQueue = serverId => ({
   id: unique(),
   serverId,
-  expectations: []
+  tasks: []
 });
 
-const createExpectation = (expectation) => {
-  let preparationTask;
+const createExpectation = (task) => {
+  let prepare;
+  let run;
 
-  switch (expectation.trigger) {
-    case 'timeout': {
-      preparationTask = Task.create((onSuccess) => {
-        setTimeout(() => {
-          onSuccess(expectation.taskPayload);
-        }, expectation.timeout);
-      });
-      break;
-    }
-    default: {
-      if (expectation.delay) {
-        preparationTask = Task.create((onSuccess) => {
-          setTimeout(() => {
-            onSuccess(expectation.taskPayload);
-          }, expectation.delay || 0);
-        });
-      } else {
-        preparationTask = Task.of(expectation.taskPayload);
-      }
-    }
+  if (task.delay) {
+    prepare = Task.create((onSuccess) => {
+      setTimeout(() => {
+        onSuccess(task.taskPayload);
+      }, task.delay || 0);
+    });
+  } else {
+    prepare = Task.of(task.taskPayload);
   }
 
-  return Object.assign(expectation, {
+  if (task.interval) {
+    run = (successCb) => {
+      setInterval(() => {
+        let intervalPrepare;
+
+        if (task.delay) {
+          intervalPrepare = Task.create((onSuccess) => {
+            setTimeout(() => {
+              onSuccess(task.taskPayload);
+            }, task.delay || 0);
+          });
+        } else {
+          intervalPrepare = Task.of(task.taskPayload);
+        }
+
+        intervalPrepare.run({ success: successCb });
+      }, task.interval);
+    };
+  } else {
+    run = successCb => prepare.run({ success: successCb });
+  }
+
+  return Object.assign(task, {
+    interval: task.interval,
     id: unique(),
-    preparationTask
+    run
   });
 };
 
@@ -67,51 +79,46 @@ const removeQueue = (serverId) => {
 const getServerQueueId = serverId =>
   queues.find(q => q.serverId === serverId).id;
 
-const matchExpectation = (queue, requirements) =>
-  queue.expectations.findIndex(expectation => deepEqual(expectation.requirements, requirements));
+const run = (queueId, taskId, successCb) => {
+  const queue = queues.find(q => q.id === queueId);
+  const taskIndex = queue.tasks.findIndex(exp => exp.id === taskId);
+  const task = queue.tasks[taskIndex];
 
-const findAndRunTask = (queueId, requirements, taskCallbacks) => {
-  const queue = getQueue(queueId);
+  if (!task.interval) {
+    queue.tasks.splice(taskIndex, 1);
+    emitRemove(queueId, taskId);
+  }
 
-  const matchExpectationTask = Task.create((onSuccess, onFailure) => {
-    const expectationIndex = matchExpectation(queue, requirements);
-
-    if (expectationIndex >= 0) {
-      const expectation = queue.expectations.splice(expectationIndex, 1)[0];
-      onSuccess(expectation);
-      emitRemove(queueId, expectation.id);
-    } else {
-      onFailure();
-    }
-  });
-
-  matchExpectationTask.chain(expectation => expectation.preparationTask).run(taskCallbacks);
+  task.run(successCb);
 };
 
-const addExpectation = (queueId, expectation) => {
+const tryRun = (queueId, requirements, successCb, failureCb) => {
   const queue = getQueue(queueId);
-  const res = createExpectation(expectation);
-  queue.expectations.push(res);
+  const taskIndex = queue.tasks.findIndex(task => deepEqual(task.requirements, requirements));
+  const task = queue.tasks[taskIndex];
+
+  if (taskIndex >= 0) {
+    run(queueId, task.id, successCb);
+  } else {
+    failureCb();
+  }
+};
+
+const addExpectation = (queueId, task) => {
+  const queue = getQueue(queueId);
+  const res = createExpectation(task);
+  queue.tasks.push(res);
 
   return res.id;
 };
 
-const removeExpectation = (queueId, expectationId) => {
+const removeExpectation = (queueId, taskId) => {
   const queue = getQueue(queueId);
-  const queueIndex = queue.expectations.findIndex(res => res.id === expectationId);
-  queue.expectations.splice(queueIndex, 1);
+  const queueIndex = queue.tasks.findIndex(res => res.id === taskId);
+  queue.tasks.splice(queueIndex, 1);
 };
 
 const getAll = () => queues;
-
-const runTask = (queueId, expectationId, taskCallbacks) => {
-  const queue = queues.find(q => q.id === queueId);
-  const expectationIndex = queue.expectations.findIndex(exp => exp.id === expectationId);
-  const expectation = queue.expectations.splice(expectationIndex, 1)[0];
-  emitRemove(queueId, expectationId);
-
-  expectation.preparationTask.run(taskCallbacks);
-};
 
 export default {
   init,
@@ -120,8 +127,8 @@ export default {
   getQueue,
   removeQueue,
   addExpectation,
-  findAndRunTask,
+  tryRun,
   getAll,
   removeExpectation,
-  runTask
+  run
 };
