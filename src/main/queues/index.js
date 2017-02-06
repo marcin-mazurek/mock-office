@@ -68,7 +68,7 @@ const getServerQueueId = serverId =>
   queues.find(q => q.serverId === serverId).id;
 
 const matchExpectation = (queue, requirements) =>
-  queue.expectations.findIndex(expectation => deepEqual(expectation.request, requirements));
+  queue.expectations.findIndex(expectation => deepEqual(expectation.requirements, requirements));
 
 const tryToFulfillExpectation = (queueId, requirements, taskCallbacks) => {
   const queue = getQueue(queueId);

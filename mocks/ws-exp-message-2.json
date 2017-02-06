@@ -1,0 +1,8 @@
+{
+  "requirements": {
+    "message": "message-2"
+  },
+  "response": {
+    "message": "response for message-2"
+  }
+}

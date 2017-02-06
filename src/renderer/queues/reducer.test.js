@@ -22,7 +22,7 @@ test(`${ADD_RESPONSE} reducer`, () => {
   const state = reducer(fromJS({
     'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
       id: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
-      request: { url: '/some-url-3' },
+      requirements: { url: '/some-url-3' },
       expectations: []
     }
   }), {
@@ -34,7 +34,7 @@ test(`${ADD_RESPONSE} reducer`, () => {
   expect(state.toJS()).toEqual({
     'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
       id: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
-      request: { url: '/some-url-3' },
+      requirements: { url: '/some-url-3' },
       expectations: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
     }
   });
@@ -44,7 +44,7 @@ test(`${REMOVE_RESPONSE} reducer`, () => {
   const state = reducer(fromJS({
     'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
       id: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
-      request: { url: '/some-url-3' },
+      requirements: { url: '/some-url-3' },
       expectations: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
     }
   }), {
@@ -56,7 +56,7 @@ test(`${REMOVE_RESPONSE} reducer`, () => {
   expect(state.toJS()).toEqual({
     'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
       id: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
-      request: { url: '/some-url-3' },
+      requirements: { url: '/some-url-3' },
       expectations: []
     }
   });

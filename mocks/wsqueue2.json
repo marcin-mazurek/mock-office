@@ -1,7 +1,0 @@
-{
-  "request": "message-2",
-  "response": {
-    "message": "response for message-2",
-    "body": "some data"
-  }
-}

@@ -1,6 +1,6 @@
 {
   "delay": 5000,
-  "request": {
+  "requirements": {
     "url": "/some-url"
   },
   "response": {

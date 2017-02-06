@@ -1,6 +1,6 @@
 [
   {
-    "request": {
+    "requirements": {
       "url": "/some-url-1"
     },
     "response": {
@@ -10,7 +10,7 @@
     }
   },
   {
-    "request": {
+    "requirements": {
       "url": "/some-url-1"
     },
     "response": {
@@ -20,7 +20,7 @@
     }
   },
   {
-    "request": {
+    "requirements": {
       "url": "/some-url-2"
     },
     "response": {
