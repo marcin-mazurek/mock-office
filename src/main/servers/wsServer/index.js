@@ -6,7 +6,8 @@ import fs from 'fs';
 import queues from '../../queues';
 
 const respond = R.curry((queueId, ws, message) =>
-  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity));
+  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity)
+);
 
 export default class WSMockServer {
   constructor(config) {
@@ -29,7 +30,6 @@ export default class WSMockServer {
     };
     const server = this.secure ? httpServer.createServer(options) : httpServer.createServer();
     const app = server.listen(this.port);
-
     this.instance = new WebSocketServer({ server: app });
     this.listening = true;
     this.instance.on('error', (err) => {
