@@ -10,11 +10,17 @@ class AddServerForm extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleChangePort = this.handleChangePort.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleSecureChange = this.handleSecureChange.bind(this);
+    this.handleKeyChange = this.handleKeyChange.bind(this);
+    this.handleCertChange = this.handleCertChange.bind(this);
 
     this.state = {
       name: 'Server name',
       port: 3000,
-      type: 'http'
+      type: 'http',
+      secure: 'no',
+      key: '',
+      cert: ''
     };
   }
 
@@ -33,6 +39,24 @@ class AddServerForm extends React.Component {
   handleTypeChange(e) {
     this.setState({
       type: e.currentTarget.value
+    });
+  }
+
+  handleSecureChange(e) {
+    this.setState({
+      secure: e.currentTarget.value
+    });
+  }
+
+  handleKeyChange(e) {
+    this.setState({
+      key: e.currentTarget.files[0].path
+    });
+  }
+
+  handleCertChange(e) {
+    this.setState({
+      cert: e.currentTarget.files[0].path
     });
   }
 
@@ -78,6 +102,46 @@ class AddServerForm extends React.Component {
               <option value="ws">ws</option>
             </select>
           </div>
+          <div className="add-server-form__field">
+            <label htmlFor="secure">
+              Secure: {' '}
+            </label>
+            <select
+              name="secure"
+              id="secure"
+              value={this.state.secure}
+              onChange={this.handleSecureChange}
+            >
+              <option value="yes">yes</option>
+              <option value="no">no</option>
+            </select>
+          </div>
+          {
+            this.state.secure === 'yes'
+              ? (
+                <div>
+                  <div className="add-server-form__field">
+                    <label
+                      className=""
+                      htmlFor="type"
+                    >
+                      Key: {' '}
+                    </label>
+                    <input type="file" onChange={this.handleKeyChange} />
+                  </div>
+                  <div className="add-server-form__field">
+                    <label
+                      className=""
+                      htmlFor="type"
+                    >
+                      Certificate: {' '}
+                    </label>
+                    <input type="file" onChange={this.handleCertChange} />
+                  </div>
+                </div>
+              )
+              : null
+          }
           <Button
             raised
             colored
