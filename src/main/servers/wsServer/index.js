@@ -1,19 +1,10 @@
 import { Server as WebSocketServer } from 'ws';
 import R from 'ramda';
-import https from 'https';
-import fs from 'fs';
-import path from 'path';
 import queues from '../../queues';
 
-const options = {
-  key: fs.readFileSync(path.resolve(__dirname, '../keys/localhost.key')),
-  cert: fs.readFileSync(path.resolve(__dirname, '../keys/localhost.cert'))
-};
-
-const respond = R.curry((queueId, ws, message) => {
-  console.log(message);
-  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity);
-});
+const respond = R.curry((queueId, ws, message) =>
+  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity)
+);
 
 export default class WSMockServer {
   constructor(config) {
@@ -25,30 +16,25 @@ export default class WSMockServer {
     this.queueId = config.queueId;
   }
 
-  start(cb) {
-    const app = https.createServer(options, (req, res) => res.send('Hello world')).listen(this.port);
-    this.instance = new WebSocketServer(
-      {
-        server: app
-      }
-    );
-
-    console.log('wss created');
-    this.listening = true;
+  respond() {
     this.instance.on('error', (err) => {
       // eslint-disable-next-line no-console
       console.error(err.message);
     });
 
     this.instance.on('connection', (ws) => {
-      console.log('connected');
       this.ws = ws;
-
-      this.ws.ping();
 
       this.ws.on('message', respond(this.queueId, this.ws));
     });
-    cb();
+  }
+
+  start(cb) {
+    this.instance = new WebSocketServer({ port: this.port }, () => {
+      this.listening = true;
+      this.respond();
+      cb();
+    });
   }
 
   stop(cb) {
