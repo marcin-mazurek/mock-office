@@ -18,9 +18,9 @@ class AddServerForm extends React.Component {
       name: 'Server name',
       port: 3000,
       type: 'http',
-      secure: 'no',
-      key: '',
-      cert: ''
+      isSecure: 'no',
+      keyPath: '',
+      cartPath: ''
     };
   }
 
@@ -44,25 +44,32 @@ class AddServerForm extends React.Component {
 
   handleSecureChange(e) {
     this.setState({
-      secure: e.currentTarget.value
+      isSecure: e.currentTarget.value
     });
   }
 
   handleKeyChange(e) {
     this.setState({
-      key: e.currentTarget.files[0].path
+      keyPath: e.currentTarget.files[0].path
     });
   }
 
   handleCertChange(e) {
     this.setState({
-      cert: e.currentTarget.files[0].path
+      cartPath: e.currentTarget.files[0].path
     });
   }
 
   submit(event) {
     event.preventDefault();
-    this.props.add(this.state.name, this.state.port, this.state.type);
+    this.props.add(
+      this.state.name,
+      this.state.port,
+      this.state.type,
+      this.state.isSecure === 'yes',
+      this.state.keyPath,
+      this.state.cartPath
+    );
   }
 
   render() {
@@ -109,7 +116,7 @@ class AddServerForm extends React.Component {
             <select
               name="secure"
               id="secure"
-              value={this.state.secure}
+              value={this.state.isSecure}
               onChange={this.handleSecureChange}
             >
               <option value="yes">yes</option>
@@ -117,7 +124,7 @@ class AddServerForm extends React.Component {
             </select>
           </div>
           {
-            this.state.secure === 'yes'
+            this.state.isSecure === 'yes'
               ? (
                 <div>
                   <div className="add-server-form__field">

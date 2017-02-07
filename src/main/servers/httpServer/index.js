@@ -1,5 +1,8 @@
 import express from 'express';
 import R from 'ramda';
+import https from 'https';
+import http from 'http';
+import fs from 'fs';
 import queues from '../../queues';
 
 const sendDefaultExpectation = res => () => res.status(404).end();
@@ -17,19 +20,33 @@ export default class HttpServer {
   constructor(config) {
     this.sockets = [];
     this.type = 'http';
-    this.instance = express();
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
     this.queueId = config.queueId;
+    this.isSecure = config.isSecure;
+    this.keyPath = config.keyPath;
+    this.certPath = config.certPath;
   }
 
   start(cb) {
-    this.httpServer = this.instance.listen(this.port, () => {
-      this.httpServer.on('connection', socket => this.sockets.push(socket));
-      this.instance.get('*', respond(this.queueId));
-      cb();
-    });
+    const httpServer = this.isSecure ? https : http;
+    this.app = express();
+    this.app.on('connection', socket => this.sockets.push(socket));
+    this.app.get('*', respond(this.queueId));
+
+    if (this.isSecure) {
+      const credentials = {
+        key: fs.readFileSync(this.keyPath),
+        cert: fs.readFileSync(this.certPath)
+      };
+
+      this.httpServer = httpServer.createServer(credentials, this.app);
+    } else {
+      this.httpServer = httpServer.createServer(this.app);
+    }
+
+    this.httpServer.listen(this.port, cb);
   }
 
   stop(cb) {

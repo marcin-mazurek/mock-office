@@ -17,18 +17,26 @@ export default class WSMockServer {
     this.id = config.id;
     this.listening = false;
     this.queueId = config.queueId;
-    this.secure = config.secure;
-    this.key = config.key;
-    this.cert = config.cert;
+    this.isSecure = config.isSecure;
+    this.keyPath = config.keyPath;
+    this.certPath = config.certPath;
   }
 
   start(cb) {
     const httpServer = this.secure ? https : http;
-    const options = {
-      key: fs.readFileSync(this.key),
-      cert: fs.readFileSync(this.cert)
-    };
-    const server = this.secure ? httpServer.createServer(options) : httpServer.createServer();
+    let server;
+
+    if (this.isSecure) {
+      const options = {
+        key: fs.readFileSync(this.keyPath),
+        cert: fs.readFileSync(this.certPath)
+      };
+
+      server = httpServer.createServer(options);
+    } else {
+      server = httpServer.createServer();
+    }
+
     const app = server.listen(this.port);
     this.instance = new WebSocketServer({ server: app });
     this.listening = true;

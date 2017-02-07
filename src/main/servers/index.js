@@ -11,11 +11,11 @@ const serverTypes = {
 const servers = [];
 
 const api = {
-  add(name, port, type) {
+  add(name, port, type, isSecure, keyPath, certPath) {
     const id = unique();
     const queueId = queues.addQueue(id);
     const Server = serverTypes[type];
-    servers.push(new Server({ name, port, id, queueId }));
+    servers.push(new Server({ name, port, id, queueId, isSecure, keyPath, certPath }));
     return { serverId: id, queueId };
   },
   start(id) {
