@@ -1,10 +1,12 @@
 import { Server as WebSocketServer } from 'ws';
 import R from 'ramda';
+import https from 'https';
+import http from 'http';
+import fs from 'fs';
 import queues from '../../queues';
 
 const respond = R.curry((queueId, ws, message) =>
-  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity)
-);
+  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity));
 
 export default class WSMockServer {
   constructor(config) {
@@ -14,9 +16,22 @@ export default class WSMockServer {
     this.id = config.id;
     this.listening = false;
     this.queueId = config.queueId;
+    this.secure = config.secure;
+    this.key = config.key;
+    this.cert = config.cert;
   }
 
-  respond() {
+  start(cb) {
+    const httpServer = this.secure ? https : http;
+    const options = {
+      key: fs.readFileSync(this.key),
+      cert: fs.readFileSync(this.cert)
+    };
+    const server = this.secure ? httpServer.createServer(options) : httpServer.createServer();
+    const app = server.listen(this.port);
+
+    this.instance = new WebSocketServer({ server: app });
+    this.listening = true;
     this.instance.on('error', (err) => {
       // eslint-disable-next-line no-console
       console.error(err.message);
@@ -24,17 +39,9 @@ export default class WSMockServer {
 
     this.instance.on('connection', (ws) => {
       this.ws = ws;
-
       this.ws.on('message', respond(this.queueId, this.ws));
     });
-  }
-
-  start(cb) {
-    this.instance = new WebSocketServer({ port: this.port }, () => {
-      this.listening = true;
-      this.respond();
-      cb();
-    });
+    cb();
   }
 
   stop(cb) {
