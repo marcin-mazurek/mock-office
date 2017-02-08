@@ -46,8 +46,17 @@ export default class WSMockServer {
     });
 
     this.instance.on('connection', (ws) => {
+      // support only one open socket
+      if (this.ws) {
+        ws.close();
+        return;
+      }
+
       this.ws = ws;
       this.ws.on('message', respond(this.queueId, this.ws));
+      this.ws.on('close', () => {
+        this.ws = undefined;
+      });
     });
     cb();
   }
@@ -61,8 +70,9 @@ export default class WSMockServer {
 
   addExpectation(expectation, shouldRunImmediately) {
     const expectationId = queues.addExpectation(this.queueId, expectation);
+    const isConnected = !!this.ws;
 
-    if (shouldRunImmediately && this.isLive()) {
+    if (shouldRunImmediately && this.isLive() && isConnected) {
       queues.run(this.queueId, expectationId, exp => this.ws.send(exp.message));
     }
 
