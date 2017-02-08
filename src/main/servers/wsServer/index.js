@@ -20,6 +20,7 @@ export default class WSMockServer {
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
+    this.tasksAwaitingForClient = [];
   }
 
   start(cb) {
@@ -37,15 +38,15 @@ export default class WSMockServer {
       server = httpServer.createServer();
     }
 
-    const app = server.listen(this.port);
-    this.instance = new WebSocketServer({ server: app });
+    this.httpServer = server.listen(this.port);
+    this.wsServer = new WebSocketServer({ server: this.httpServer });
     this.listening = true;
-    this.instance.on('error', (err) => {
+    this.wsServer.on('error', (err) => {
       // eslint-disable-next-line no-console
       console.error(err.message);
     });
 
-    this.instance.on('connection', (ws) => {
+    this.wsServer.on('connection', (ws) => {
       // support only one open socket
       if (this.ws) {
         ws.close();
@@ -53,27 +54,38 @@ export default class WSMockServer {
       }
 
       this.ws = ws;
-      this.ws.on('message', respond(this.queueId, this.ws));
-      this.ws.on('close', () => {
-        this.ws = undefined;
-      });
+      this.setupSocket(ws);
+      this.tasksAwaitingForClient.forEach(task =>
+        queues.run(this.queueId, task, exp => this.ws.send(exp.message))
+      );
     });
     cb();
   }
 
+  setupSocket(socket) {
+    socket.on('message', respond(this.queueId, this.ws));
+    socket.on('close', () => {
+      this.ws = undefined;
+    });
+  }
+
   stop(cb) {
-    this.instance.close(() => {
+    this.wsServer.close(() => {
       this.listening = false;
-      cb();
+      this.httpServer.close(cb);
     });
   }
 
   addExpectation(expectation, shouldRunImmediately) {
     const expectationId = queues.addExpectation(this.queueId, expectation);
-    const isConnected = !!this.ws;
+    const connected = !!this.ws;
 
-    if (shouldRunImmediately && this.isLive() && isConnected) {
-      queues.run(this.queueId, expectationId, exp => this.ws.send(exp.message));
+    if (shouldRunImmediately) {
+      if (connected) {
+        queues.run(this.queueId, expectationId, exp => this.ws.send(exp.message));
+      } else {
+        this.tasksAwaitingForClient.push(expectationId);
+      }
     }
 
     return expectationId;
