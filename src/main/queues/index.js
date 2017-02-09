@@ -1,6 +1,5 @@
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
-import R from 'ramda';
 import { REMOVE_RESPONSE_AFTER_USE } from '../common/messageNames';
 
 const queues = [];
@@ -79,17 +78,21 @@ const addExpectation = (queueId, task) => {
   return res.id;
 };
 
-const removeExpectation = R.curry((queueId, taskId) => {
+const stop = (queueId, taskId) => {
+  const currentTask = getQueue(queueId).tasks.find(task => task.id === taskId);
+  if (currentTask.stop) {
+    currentTask.stop();
+  }
+};
+
+const removeExpectation = (queueId, taskId) => {
   const queue = getQueue(queueId);
-  const queueIndex = queue.tasks.findIndex(res => res.id === taskId);
-  queue.tasks.splice(queueIndex, 1);
-});
+  stop(queueId, taskId);
+  const taskIndex = queue.tasks.findIndex(task => task.id === taskId);
+  queue.tasks.splice(taskIndex, 1);
+};
 
 const getAll = () => queues;
-
-const stop = (queueId, taskId) => {
-  getQueue(queueId).tasks.find(task => task.id === taskId).stop();
-};
 
 const stopPendingTasks = (queueId) => {
   const queue = getQueue(queueId);
@@ -113,7 +116,6 @@ const runTask = (queueId, taskId, serverCb) => {
 
   task.stop = task.run(serverCb, () => {
     removeExpectation(queueId, taskId);
-    queue.tasks.splice(taskIndex, 1);
     emitRemove(queueId, taskId);
   });
 };
