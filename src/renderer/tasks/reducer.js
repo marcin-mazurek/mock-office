@@ -11,14 +11,14 @@ const removeTask = R.invoker(1, 'remove');
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { taskId, task } = action;
+      const { taskId, taskPayload } = action;
 
-      return addTask(taskId, extendWithId(taskId)(task))(state);
+      return addTask(taskId, extendWithId(taskId)(taskPayload))(state);
     }
     case REMOVE: {
-      const { id } = action;
+      const { taskId } = action;
 
-      return removeTask(id)(state);
+      return removeTask(taskId)(state);
     }
     default: {
       return state;

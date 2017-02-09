@@ -1,13 +1,15 @@
 export const ADD = 'tasks/ADD';
 export const REMOVE = 'tasks/REMOVE';
 
-export const add = (task, taskId) => ({
+export const add = (queueId, taskId, taskPayload) => ({
   type: ADD,
-  task,
-  taskId
+  queueId,
+  taskId,
+  taskPayload
 });
 
-export const remove = id => ({
+export const remove = (queueId, taskId) => ({
   type: REMOVE,
-  id
+  queueId,
+  taskId
 });

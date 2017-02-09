@@ -26,22 +26,23 @@ const updateRunningServers = R.invoker(2, 'update')('running');
 const addToSet = R.invoker(1, 'add');
 const removeFromRunning = R.invoker(1, 'delete');
 const addServer = R.curry((id, server, currentState) => currentState.setIn(['itemsById', id], server));
-const changeObjPropName = (old, current) => R.over(
-  R.lens(R.prop(old), R.assoc(current)),
-  R.identity
-);
 const pickRequiredFields = R.pick(['name', 'port', 'id', 'serverType', 'queue']);
 const constructServer = R.construct(Server);
 const createServer = R.pipe(
   pickRequiredFields,
-  changeObjPropName('serverType', 'type'),
   constructServer
 );
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      return addServer(action.id, createServer(action))(state);
+      return addServer(action.id, createServer({
+        id: action.id,
+        name: action.name,
+        port: action.port,
+        type: action.serverType,
+        queue: action.queueId
+      }))(state);
     }
     case SELECT: {
       return select(action.id)(state);

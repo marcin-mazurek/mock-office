@@ -2,7 +2,6 @@ import { take, put } from 'redux-saga/effects';
 import { remote } from 'electron';
 import { INIT } from './actions';
 import { add } from '../actions';
-import { addQueue } from '../../queues/actions';
 
 export default function* agent() {
   // eslint-disable-next-line no-constant-condition
@@ -12,6 +11,5 @@ export default function* agent() {
     const { serverId, queueId } = servers.add(name, port, type, isSecure, keyPath, certPath);
 
     yield put(add(name, port, type, serverId, queueId));
-    yield put(addQueue(queueId));
   }
 }

@@ -3,13 +3,13 @@ export const SELECT = 'servers/SELECT';
 export const START = 'servers/START';
 export const STOP = 'servers/STOP';
 
-export const add = (name, port, serverType, id, queue) => ({
+export const add = (name, port, serverType, id, queueId) => ({
   type: ADD,
   name,
   port,
   id,
   serverType,
-  queue
+  queueId
 });
 
 export const select = id => ({

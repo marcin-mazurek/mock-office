@@ -1,14 +1,13 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
 import {
-  ADD_QUEUE,
-  ADD_RESPONSE,
-  REMOVE_RESPONSE
-} from './actions';
+  ADD as ADD_SERVER
+} from '../servers/actions';
+import { ADD as ADD_TASK, REMOVE as REMOVE_TASK } from '../tasks/actions';
 
-test(`${ADD_QUEUE} reducer`, () => {
+test(`${ADD_SERVER} reducer`, () => {
   const state = reducer(fromJS({}),
-    { type: 'queues/ADD_QUEUE', id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
+    { type: 'queues/ADD', id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
 
   expect(state.toJS()).toEqual({
     'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==': {
@@ -18,7 +17,7 @@ test(`${ADD_QUEUE} reducer`, () => {
   });
 });
 
-test(`${ADD_RESPONSE} reducer`, () => {
+test(`${ADD_TASK} reducer`, () => {
   const state = reducer(fromJS({
     'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
       id: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
@@ -40,7 +39,7 @@ test(`${ADD_RESPONSE} reducer`, () => {
   });
 });
 
-test(`${REMOVE_RESPONSE} reducer`, () => {
+test(`${REMOVE_TASK} reducer`, () => {
   const state = reducer(fromJS({
     'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
       id: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',

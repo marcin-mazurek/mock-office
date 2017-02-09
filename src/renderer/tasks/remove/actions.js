@@ -1,4 +1,4 @@
-export const INIT = 'removeTask/init';
+export const INIT = 'remove/init';
 
 export const init = (queueId, taskId) => ({
   type: INIT,

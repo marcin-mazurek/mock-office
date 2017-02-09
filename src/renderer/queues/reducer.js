@@ -1,10 +1,7 @@
 import { Map, Record, List } from 'immutable';
 import R from 'ramda';
-import {
-  ADD_QUEUE,
-  ADD_RESPONSE,
-  REMOVE_RESPONSE
-} from './actions';
+import { ADD as ADD_SERVER } from '../servers/actions';
+import { ADD as ADD_TASK, REMOVE as REMOVE_TASK } from '../tasks/actions';
 
 const initialState = new Map();
 
@@ -28,17 +25,17 @@ const addToQueues = R.invoker(2, 'set');
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ADD_QUEUE: {
-      const { id: queueId } = action;
+    case ADD_SERVER: {
+      const { queueId } = action;
 
       return addToQueues(queueId, constructQueue(queueId))(state);
     }
-    case ADD_RESPONSE: {
+    case ADD_TASK: {
       const { queueId, taskId } = action;
 
       return updateTasks(queueId, addTask(taskId))(state);
     }
-    case REMOVE_RESPONSE: {
+    case REMOVE_TASK: {
       const { queueId, taskId } = action;
 
       return updateTasks(queueId, removeTask(taskId))(state);

@@ -1,5 +1,5 @@
 // you can use this file to add your custom webpack plugins, loaders and anything you like.
-// This is just the basic way to add addional webpack configurations.
+// This is just the basic way to addTask addional webpack configurations.
 // For more information refer the docs: https://getstorybook.io/docs/configurations/custom-webpack-config
 
 // IMPORTANT

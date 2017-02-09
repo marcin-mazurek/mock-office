@@ -2,7 +2,6 @@ import { put } from 'redux-saga/effects';
 import { remote } from 'electron';
 import { push } from 'react-router-redux';
 import { add, start } from '../../servers/actions';
-import { addQueue, addTask as addTaskToQueue } from '../../queues/actions';
 import { add as addTask } from '../../tasks/actions';
 
 export default function* syncServers() {
@@ -12,7 +11,6 @@ export default function* syncServers() {
   for (let i = 0; i < servers.length; i += 1) {
     const server = servers[i];
     yield put(add(server.name, server.port, server.type, server.id, server.queueId));
-    yield put(addQueue(server.queueId));
 
     if (server.isLive()) {
       yield put(start(server.id));
@@ -30,8 +28,7 @@ export default function* syncServers() {
 
     for (let taskIndex = 0; taskIndex < tasks.length; taskIndex += 1) {
       const task = tasks[taskIndex];
-      yield put(addTask(task, task.id));
-      yield put(addTaskToQueue(queue.id, task.id));
+      yield put(addTask(queue.id, task.id, task.taskPayload));
     }
   }
 }
