@@ -1,5 +1,5 @@
 {
-  "delay": 5000,
+  "delay": 10000,
   "requirements": {
     "url": "/some-url"
   },
