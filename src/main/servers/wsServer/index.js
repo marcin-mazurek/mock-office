@@ -64,12 +64,16 @@ export default class WSMockServer {
 
   setupSocket(socket) {
     socket.on('message', respond(this.queueId, this.ws));
+
     socket.on('close', () => {
+      queues.tryStop(this.queueId);
       this.ws = undefined;
     });
   }
 
   stop(cb) {
+    this.tasksAwaitingForClient = queues.tryStop(this.queueId);
+
     this.wsServer.close(() => {
       this.listening = false;
       this.httpServer.close(cb);
