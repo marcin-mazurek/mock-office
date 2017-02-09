@@ -53,10 +53,10 @@ const stop = (id) => {
 const get = id => R.find(R.propEq('id', id))(state);
 const getAll = () => state;
 
-const addTask = (serverId, task, shouldRunImmediately) => {
+const addTask = (serverId, task) => {
   const server = state.find(srv => srv.id === serverId);
 
-  return server.addTask(task, shouldRunImmediately);
+  return server.addTask(task);
 };
 
 export default {

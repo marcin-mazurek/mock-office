@@ -1,13 +1,8 @@
 import { Server as WebSocketServer } from 'ws';
-import R from 'ramda';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import queues from '../../queues';
-
-const respond = R.curry((queueId, ws, message) =>
-  queues.runTaskWithRequirements(queueId, { message }, exp => ws.send(exp.message), R.identity)
-);
 
 export default class WSMockServer {
   constructor(config) {
@@ -20,7 +15,6 @@ export default class WSMockServer {
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
-    this.tasksToRun = [];
   }
 
   start(cb) {
@@ -55,24 +49,29 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      this.tasksToRun.forEach(task =>
-        queues.runTask(this.queueId, task, exp => this.ws.send(exp.message))
-      );
+      queues.openTunnel(this.queueId, exp => this.ws.send(exp.message));
     });
     cb();
   }
 
   setupSocket(socket) {
-    socket.on('message', respond(this.queueId, this.ws));
+    socket.on('message', message =>
+      queues.runReadyTasks(
+        this.queueId,
+        { message }
+      )
+    );
 
     socket.on('close', () => {
-      queues.stopPendingTasks(this.queueId);
+      queues.closeTunnel(this.queueId);
       this.ws = undefined;
     });
   }
 
   stop(cb) {
-    this.tasksToRun = queues.stopPendingTasks(this.queueId);
+    if (this.ws) {
+      this.ws.close();
+    }
 
     this.wsServer.close(() => {
       this.listening = false;
@@ -80,19 +79,8 @@ export default class WSMockServer {
     });
   }
 
-  addTask(task, shouldRunImmediately) {
-    const taskId = queues.addTask(this.queueId, task);
-    const connected = !!this.ws;
-
-    if (shouldRunImmediately) {
-      if (connected) {
-        queues.runTask(this.queueId, taskId, exp => this.ws.send(exp.message));
-      } else {
-        this.tasksToRun.push(taskId);
-      }
-    }
-
-    return taskId;
+  addTask(task) {
+    return queues.addTask(this.queueId, task);
   }
 
   isLive() {

@@ -1,21 +1,8 @@
 import express from 'express';
-import R from 'ramda';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import queues from '../../queues';
-
-const sendDefaultTask = res => () =>
-  res.status(404).send('Mockee: cannot find response for this request');
-const sendTask = R.curry((res, task) => res.json(task.body));
-const respond = R.curry((queueId, req, res) => (
-  queues.runTaskWithRequirements(
-    queueId,
-    { url: req.url },
-    sendTask(res),
-    sendDefaultTask(res)
-  ))
-);
 
 export default class HttpServer {
   constructor(config) {
@@ -33,7 +20,18 @@ export default class HttpServer {
   start(cb) {
     const httpServer = this.isSecure ? https : http;
     this.app = express();
-    this.app.get('*', respond(this.queueId));
+    this.app.get('*', (req, res) => {
+      queues.openTunnel(
+        this.queueId,
+        task => res.json(task.body)
+      );
+
+      queues.runReadyTasks(
+        this.queueId,
+        { url: req.url },
+        () => { queues.closeTunnel(this.queueId); }
+      );
+    });
 
     if (this.isSecure) {
       const credentials = {
@@ -51,7 +49,6 @@ export default class HttpServer {
   }
 
   stop(cb) {
-    this.tasksToRun = queues.stopPendingTasks(this.queueId);
     this.sockets.forEach(socket => socket.destroy());
     this.sockets.length = 0;
     this.httpServer.close(cb);

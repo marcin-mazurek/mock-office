@@ -20,21 +20,23 @@ const createQueue = serverId => ({
   tasks: []
 });
 
-const createTask = (task) => {
+const createTask = (queue, task) => {
   let run;
 
   if (task.interval) {
-    run = (cb) => {
-      const intervalId = setInterval(() => cb(task.taskPayload), task.interval);
+    run = () => {
+      const intervalId = setInterval(() =>
+        queue.tunnel(task.taskPayload), task.interval
+      );
 
       return () => {
         clearInterval(intervalId);
       };
     };
   } else if (task.delay) {
-    run = (cb, remove) => {
+    run = (remove) => {
       const timeoutId = setTimeout(() => {
-        cb(task.taskPayload);
+        queue.tunnel(task.taskPayload);
         remove();
       }, task.delay);
 
@@ -43,8 +45,8 @@ const createTask = (task) => {
       };
     };
   } else {
-    run = (cb, remove) => {
-      cb(task.taskPayload);
+    run = (remove) => {
+      queue.tunnel(task.taskPayload);
       remove();
     };
   }
@@ -67,47 +69,104 @@ const removeQueue = (serverId) => {
   queues.filter(queue => queue.serverId !== serverId);
 };
 
+const removeTask = (queueId, taskId) => {
+  const queue = getQueue(queueId);
+  const taskIndex = queue.tasks.findIndex(task => task.id === taskId);
+  const task = queue.tasks[taskIndex];
+
+  if (task.cancel) {
+    task.cancel();
+  }
+  queue.tasks.splice(taskIndex, 1);
+};
+
+const runReadyTasks = (queueId, requirements, cb) => {
+  const queue = getQueue(queueId);
+  const tasksToRun = [];
+
+  if (queue.tunnel) {
+    let blocked = false;
+    let taskIndex = 0;
+
+    // collect tasks
+    while (taskIndex < queue.tasks.length && !blocked) {
+      let shouldRun = false;
+      const task = queue.tasks[taskIndex];
+
+      if (task.run) { // is not run yet
+        if (task.requirements) { // should fulfill requirements
+          if (deepEqual(task.requirements, requirements)) {
+            shouldRun = true;
+          }
+        } else { // without requirements
+          shouldRun = true;
+        }
+      }
+
+      if (shouldRun) {
+        tasksToRun.push(task);
+      } else if (task.behaviours && task.behaviours.blocking) {
+        blocked = true;
+      }
+
+      taskIndex += 1;
+    }
+
+    // run tasks
+    let runTasks = 0;
+
+    if (tasksToRun.length > 0) {
+      tasksToRun.forEach((t) => {
+        const tToRun = t;
+
+        tToRun.cancel = tToRun.run(() => {
+          tToRun.cancel = undefined;
+          removeTask(queueId, tToRun.id);
+          emitRemove(queueId, tToRun.id);
+          runTasks += 1;
+
+          if (runTasks === tasksToRun.length && cb) {
+            cb();
+          }
+        });
+        tToRun.run = undefined;
+      });
+    } else if (cb) {
+      cb();
+    }
+  }
+};
+
 const getServerQueueId = serverId =>
   queues.find(q => q.serverId === serverId).id;
 
 const addTask = (queueId, task) => {
   const queue = getQueue(queueId);
-  const res = createTask(task);
+  const res = createTask(queue, task);
   queue.tasks.push(res);
+
+  if (queue.tunnel) {
+    runReadyTasks(queueId);
+  }
 
   return res.id;
 };
 
-const stop = (queueId, taskId) => {
-  const currentTask = getQueue(queueId).tasks.find(task => task.id === taskId);
-
-  if (currentTask.stop) {
-    currentTask.stop();
-  }
-};
-
-const removeTask = (queueId, taskId) => {
-  const queue = getQueue(queueId);
-  stop(queueId, taskId);
-  const taskIndex = queue.tasks.findIndex(task => task.id === taskId);
-  queue.tasks.splice(taskIndex, 1);
-};
-
 const getAll = () => queues;
 
-const stopPendingTasks = (queueId) => {
+const cancelPendingTasks = (queueId) => {
   const queue = getQueue(queueId);
-  const stoppedTasks = [];
-  queue.tasks.forEach((task) => {
-    if (task.stop) {
-      stop(queueId, task.id);
-      const stoppedTask = task;
-      stoppedTask.stop = undefined;
-      stoppedTasks.push(stoppedTask.id);
-    }
-  });
 
-  return stoppedTasks;
+  queue.tasks = queue.tasks.map((task) => {
+    const t = task;
+
+    if (t.cancel) {
+      t.cancel(queueId, task.id);
+      t.cancel = undefined;
+    }
+
+    return t;
+  });
 };
 
 const runTask = (queueId, taskId, serverCb) => {
@@ -115,22 +174,22 @@ const runTask = (queueId, taskId, serverCb) => {
   const taskIndex = queue.tasks.findIndex(exp => exp.id === taskId);
   const task = queue.tasks[taskIndex];
 
-  task.stop = task.run(serverCb, () => {
+  task.cancel = task.run(serverCb, () => {
     removeTask(queueId, taskId);
     emitRemove(queueId, taskId);
   });
 };
 
-const runTaskWithRequirements = (queueId, requirements, successCb, failureCb) => {
+const openTunnel = (queueId, tunnel) => {
   const queue = getQueue(queueId);
-  const taskIndex = queue.tasks.findIndex(task => deepEqual(task.requirements, requirements));
-  const task = queue.tasks[taskIndex];
+  queue.tunnel = tunnel;
+  runReadyTasks(queueId);
+};
 
-  if (taskIndex >= 0) {
-    runTask(queueId, task.id, successCb);
-  } else {
-    failureCb();
-  }
+const closeTunnel = (queueId) => {
+  const queue = getQueue(queueId);
+  cancelPendingTasks(queueId);
+  queue.tunnel = undefined;
 };
 
 export default {
@@ -140,9 +199,11 @@ export default {
   getQueue,
   removeQueue,
   addTask,
-  runTaskWithRequirements,
+  runReadyTasks,
   getAll,
   removeTask,
   runTask,
-  stopPendingTasks
+  cancelPendingTasks,
+  openTunnel,
+  closeTunnel
 };
