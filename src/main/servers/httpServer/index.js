@@ -5,15 +5,15 @@ import http from 'http';
 import fs from 'fs';
 import queues from '../../queues';
 
-const sendDefaultExpectation = res => () =>
+const sendDefaultTask = res => () =>
   res.status(404).send('Mockee: cannot find response for this request');
-const sendExpectation = R.curry((res, expectation) => res.json(expectation.body));
+const sendTask = R.curry((res, task) => res.json(task.body));
 const respond = R.curry((queueId, req, res) => (
   queues.runTaskWithRequirements(
     queueId,
     { url: req.url },
-    sendExpectation(res),
-    sendDefaultExpectation(res)
+    sendTask(res),
+    sendDefaultTask(res)
   ))
 );
 
@@ -57,8 +57,8 @@ export default class HttpServer {
     this.httpServer.close(cb);
   }
 
-  addExpectation(expectation) {
-    return queues.addExpectation(this.queueId, expectation);
+  addTask(task) {
+    return queues.addTask(this.queueId, task);
   }
 
   isLive() {

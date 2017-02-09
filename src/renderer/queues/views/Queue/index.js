@@ -1,23 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getQueueExpectations } from '../../selectors';
-import Expectations from '../../../expectations/views/Expectations';
+import { getQueueTasks } from '../../selectors';
+import Tasks from '../../../tasks/views/Tasks';
 
-const Queue = ({ expectations, id }) => (
+const Queue = ({ tasks, id }) => (
   <div className="queue">
-    <div className="queue__expectations">
-      <Expectations expectationsIds={expectations} queueId={id} />
+    <div className="queue__tasks">
+      <Tasks tasksIds={tasks} queueId={id} />
     </div>
   </div>
 );
 
 Queue.propTypes = {
-  expectations: React.PropTypes.shape().isRequired,
+  tasks: React.PropTypes.shape().isRequired,
   id: React.PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  expectations: getQueueExpectations(ownProps.id, state)
+  tasks: getQueueTasks(ownProps.id, state)
 });
 
 export default connect(mapStateToProps)(Queue);

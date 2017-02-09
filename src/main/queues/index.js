@@ -1,6 +1,6 @@
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
-import { REMOVE_RESPONSE_AFTER_USE } from '../common/messageNames';
+import { TASK_REMOVED } from '../common/messageNames';
 
 const queues = [];
 
@@ -10,8 +10,8 @@ const init = (mW) => {
   mainWin = mW;
 };
 
-const emitRemove = (queueId, expectationId) => {
-  mainWin.webContents.send(REMOVE_RESPONSE_AFTER_USE, { queueId, expectationId });
+const emitRemove = (queueId, taskId) => {
+  mainWin.webContents.send(TASK_REMOVED, { queueId, taskId });
 };
 
 const createQueue = serverId => ({
@@ -20,7 +20,7 @@ const createQueue = serverId => ({
   tasks: []
 });
 
-const createExpectation = (task) => {
+const createTask = (task) => {
   let run;
 
   if (task.interval) {
@@ -70,9 +70,9 @@ const removeQueue = (serverId) => {
 const getServerQueueId = serverId =>
   queues.find(q => q.serverId === serverId).id;
 
-const addExpectation = (queueId, task) => {
+const addTask = (queueId, task) => {
   const queue = getQueue(queueId);
-  const res = createExpectation(task);
+  const res = createTask(task);
   queue.tasks.push(res);
 
   return res.id;
@@ -86,7 +86,7 @@ const stop = (queueId, taskId) => {
   }
 };
 
-const removeExpectation = (queueId, taskId) => {
+const removeTask = (queueId, taskId) => {
   const queue = getQueue(queueId);
   stop(queueId, taskId);
   const taskIndex = queue.tasks.findIndex(task => task.id === taskId);
@@ -116,7 +116,7 @@ const runTask = (queueId, taskId, serverCb) => {
   const task = queue.tasks[taskIndex];
 
   task.stop = task.run(serverCb, () => {
-    removeExpectation(queueId, taskId);
+    removeTask(queueId, taskId);
     emitRemove(queueId, taskId);
   });
 };
@@ -139,10 +139,10 @@ export default {
   addQueue,
   getQueue,
   removeQueue,
-  addExpectation,
+  addTask,
   runTaskWithRequirements,
   getAll,
-  removeExpectation,
+  removeTask,
   runTask,
   stopPendingTasks
 };

@@ -80,19 +80,19 @@ export default class WSMockServer {
     });
   }
 
-  addExpectation(expectation, shouldRunImmediately) {
-    const expectationId = queues.addExpectation(this.queueId, expectation);
+  addTask(task, shouldRunImmediately) {
+    const taskId = queues.addTask(this.queueId, task);
     const connected = !!this.ws;
 
     if (shouldRunImmediately) {
       if (connected) {
-        queues.runTask(this.queueId, expectationId, exp => this.ws.send(exp.message));
+        queues.runTask(this.queueId, taskId, exp => this.ws.send(exp.message));
       } else {
-        this.tasksToRun.push(expectationId);
+        this.tasksToRun.push(taskId);
       }
     }
 
-    return expectationId;
+    return taskId;
   }
 
   isLive() {

@@ -14,7 +14,7 @@ test(`${SELECT} reducer`, () => {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
         port: 3000,
-        expectations: [],
+        tasks: [],
         type: 'http',
         queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
       }
@@ -29,7 +29,7 @@ test(`${SELECT} reducer`, () => {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
         port: 3000,
-        expectations: [],
+        tasks: [],
         type: 'http',
         queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
       }
@@ -46,7 +46,7 @@ test(`${START} reducer`, () => {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
         port: 3000,
-        expectations: [],
+        tasks: [],
         type: 'http',
         queues: []
       }
@@ -61,7 +61,7 @@ test(`${START} reducer`, () => {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
         port: 3000,
-        expectations: [],
+        tasks: [],
         type: 'http',
         queues: []
       }
@@ -106,7 +106,7 @@ test(`${STOP} reducer`, () => {
           id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
           name: 'Server name',
           port: 3000,
-          expectations: [],
+          tasks: [],
           type: 'http',
           queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
         }
@@ -122,7 +122,7 @@ test(`${STOP} reducer`, () => {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
         port: 3000,
-        expectations: [],
+        tasks: [],
         type: 'http',
         queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
       }

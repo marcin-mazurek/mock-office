@@ -46,10 +46,10 @@ const api = {
   getAll() {
     return servers;
   },
-  addExpectation(serverId, expectation, shouldRunImmediately) {
+  addTask(serverId, task, shouldRunImmediately) {
     const server = servers.find(srv => srv.id === serverId);
 
-    return server.addExpectation(expectation, shouldRunImmediately);
+    return server.addTask(task, shouldRunImmediately);
   }
 };
 

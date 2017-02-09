@@ -2,7 +2,7 @@ import { take, call, select } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { INIT } from './actions';
 import { getSelected } from '../../servers/selectors';
-import addExpectationSaga from '../add/saga';
+import addTaskSaga from '../add/saga';
 
 const readerChannel = reader => (
   eventChannel((emitter) => {
@@ -26,8 +26,8 @@ export default function* agent() {
 
         const rChannel = yield call(readerChannel, reader);
         reader.readAsText(file);
-        const expectation = yield take(rChannel);
-        yield call(addExpectationSaga, serverId, expectation);
+        const task = yield take(rChannel);
+        yield call(addTaskSaga, serverId, task);
       }
     } catch (parseError) {
       // eslint-disable-next-line no-console

@@ -1,13 +1,13 @@
 import { spawn } from 'redux-saga/effects';
-import addQueueFromFileAgent from '../expectations/pickFile/saga';
+import addQueueFromFileAgent from '../tasks/pickFile/saga';
 import addServerAgent from '../servers/addServer/saga';
 import serverStartAgent from '../servers/startServer/saga';
 import serverStopAgent from '../servers/stopServer/saga';
-import removeExpectationAfterUseAgent from '../expectations/removeAfterUse/saga';
+import removeTaskAfterUseAgent from '../tasks/removeAfterUse/saga';
 import addScriptFromFileAgent from '../serverScripts/addFromFile/saga';
 import runScriptAgent from '../serverScripts/runScript/saga';
 import syncServers from '../app/syncServers/saga';
-import removeExpectationAgent from '../expectations/remove/saga';
+import removeTaskAgent from '../tasks/remove/saga';
 
 export default function* rootSaga() {
   yield [
@@ -16,9 +16,9 @@ export default function* rootSaga() {
     yield spawn(addServerAgent),
     yield spawn(serverStartAgent),
     yield spawn(serverStopAgent),
-    yield spawn(removeExpectationAfterUseAgent),
+    yield spawn(removeTaskAfterUseAgent),
     yield spawn(addScriptFromFileAgent),
     yield spawn(runScriptAgent),
-    yield spawn(removeExpectationAgent)
+    yield spawn(removeTaskAgent)
   ];
 }

@@ -2,8 +2,8 @@ import { put } from 'redux-saga/effects';
 import { remote } from 'electron';
 import { push } from 'react-router-redux';
 import { add, start } from '../../servers/actions';
-import { addQueue, addExpectation as addExpectationToQueue } from '../../queues/actions';
-import { add as addExpectation } from '../../expectations/actions';
+import { addQueue, addTask as addTaskToQueue } from '../../queues/actions';
+import { add as addTask } from '../../tasks/actions';
 
 export default function* syncServers() {
   const serversApi = remote.require('./main/servers').default;
@@ -26,12 +26,12 @@ export default function* syncServers() {
 
   for (let i = 0; i < queues.length; i += 1) {
     const queue = queues[i];
-    const expectations = queue.tasks;
+    const tasks = queue.tasks;
 
-    for (let expectationIndex = 0; expectationIndex < expectations.length; expectationIndex += 1) {
-      const expectation = expectations[expectationIndex];
-      yield put(addExpectation(expectation, expectation.id));
-      yield put(addExpectationToQueue(queue.id, expectation.id));
+    for (let taskIndex = 0; taskIndex < tasks.length; taskIndex += 1) {
+      const task = tasks[taskIndex];
+      yield put(addTask(task, task.id));
+      yield put(addTaskToQueue(queue.id, task.id));
     }
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
-import FilePicker from '../../../../expectations/pickFile/FilePicker';
+import FilePicker from '../../../../tasks/pickFile/FilePicker';
 import Queue from '../../../../queues/views/Queue';
 
 const ConfigTab = ({ serverDetails }) => {
@@ -27,7 +27,7 @@ const ConfigTab = ({ serverDetails }) => {
           </div>
         </div>
       </div>
-      <div className="server-config-tab__expectations server-config-tab-queues">
+      <div className="server-config-tab__tasks server-config-tab-queues">
         <Queue id={queue} serverId={id} />
       </div>
     </div>

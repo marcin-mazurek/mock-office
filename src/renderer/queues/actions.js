@@ -2,16 +2,16 @@ export const ADD_RESPONSE = 'queues/ADD_RESPONSE';
 export const REMOVE_RESPONSE = 'queues/REMOVE_RESPONSE';
 export const ADD_QUEUE = 'queues/ADD_QUEUE';
 
-export const addExpectation = (queueId, expectationId) => ({
+export const addTask = (queueId, taskId) => ({
   type: ADD_RESPONSE,
   queueId,
-  expectationId
+  taskId
 });
 
-export const removeExpectation = (queueId, expectationId) => ({
+export const removeTask = (queueId, taskId) => ({
   type: REMOVE_RESPONSE,
   queueId,
-  expectationId
+  taskId
 });
 
 export const addQueue = id => ({

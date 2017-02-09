@@ -4,21 +4,21 @@ import { ADD, REMOVE } from './actions';
 
 const initialState = new Map();
 
-const addExpectation = R.invoker(2, 'set');
+const addTask = R.invoker(2, 'set');
 const extendWithId = id => R.assoc('id', id);
-const removeExpectation = R.invoker(1, 'remove');
+const removeTask = R.invoker(1, 'remove');
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { expectationId, expectation } = action;
+      const { taskId, task } = action;
 
-      return addExpectation(expectationId, extendWithId(expectationId)(expectation))(state);
+      return addTask(taskId, extendWithId(taskId)(task))(state);
     }
     case REMOVE: {
       const { id } = action;
 
-      return removeExpectation(id)(state);
+      return removeTask(id)(state);
     }
     default: {
       return state;

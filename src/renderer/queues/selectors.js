@@ -1,2 +1,2 @@
 export const getAll = state => state.get('queues');
-export const getQueueExpectations = (queueId, state) => state.getIn(['queues', queueId, 'expectations']);
+export const getQueueTasks = (queueId, state) => state.getIn(['queues', queueId, 'tasks']);

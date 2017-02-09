@@ -1,4 +1,4 @@
-.expectations {
+.tasks {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -7,12 +7,6 @@
   width: 100%;
 }
 
-.expectations__item {
+.tasks__item {
   margin-bottom: 10px;
-}
-
-.expectation {
-  background: #EEE;
-  flex: none;
-  padding: 20px;
 }
