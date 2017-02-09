@@ -1,5 +1,6 @@
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
+import R from 'ramda';
 import { REMOVE_RESPONSE_AFTER_USE } from '../common/messageNames';
 
 const queues = [];
@@ -26,15 +27,27 @@ const createExpectation = (task) => {
   if (task.interval) {
     run = (cb) => {
       const intervalId = setInterval(() => cb(task.taskPayload), task.interval);
-      return () => clearInterval(intervalId);
+
+      return () => {
+        clearInterval(intervalId);
+      };
     };
   } else if (task.delay) {
-    run = (cb) => {
-      const timeoutId = setTimeout(() => cb(task.taskPayload), task.delay);
-      return () => clearTimeout(timeoutId);
+    run = (cb, remove) => {
+      const timeoutId = setTimeout(() => {
+        cb(task.taskPayload);
+        remove();
+      }, task.delay);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
     };
   } else {
-    run = (cb) => { cb(task.taskPayload); };
+    run = (cb, remove) => {
+      cb(task.taskPayload);
+      remove();
+    };
   }
 
   return Object.assign(task, {
@@ -58,31 +71,6 @@ const removeQueue = (serverId) => {
 const getServerQueueId = serverId =>
   queues.find(q => q.serverId === serverId).id;
 
-const run = (queueId, taskId, successCb) => {
-  const queue = queues.find(q => q.id === queueId);
-  const taskIndex = queue.tasks.findIndex(exp => exp.id === taskId);
-  const task = queue.tasks[taskIndex];
-
-  if (!task.interval) {
-    queue.tasks.splice(taskIndex, 1);
-    emitRemove(queueId, taskId);
-  }
-
-  task.stop = task.run(successCb);
-};
-
-const tryRun = (queueId, requirements, successCb, failureCb) => {
-  const queue = getQueue(queueId);
-  const taskIndex = queue.tasks.findIndex(task => deepEqual(task.requirements, requirements));
-  const task = queue.tasks[taskIndex];
-
-  if (taskIndex >= 0) {
-    task.stop = run(queueId, task.id, successCb);
-  } else {
-    failureCb();
-  }
-};
-
 const addExpectation = (queueId, task) => {
   const queue = getQueue(queueId);
   const res = createExpectation(task);
@@ -91,11 +79,11 @@ const addExpectation = (queueId, task) => {
   return res.id;
 };
 
-const removeExpectation = (queueId, taskId) => {
+const removeExpectation = R.curry((queueId, taskId) => {
   const queue = getQueue(queueId);
   const queueIndex = queue.tasks.findIndex(res => res.id === taskId);
   queue.tasks.splice(queueIndex, 1);
-};
+});
 
 const getAll = () => queues;
 
@@ -103,17 +91,43 @@ const stop = (queueId, taskId) => {
   getQueue(queueId).tasks.find(task => task.id === taskId).stop();
 };
 
-const tryStop = (queueId) => {
+const stopPendingTasks = (queueId) => {
   const queue = getQueue(queueId);
   const stoppedTasks = [];
   queue.tasks.forEach((task) => {
     if (task.stop) {
       stop(queueId, task.id);
-      stoppedTasks.push(task.id);
+      const stoppedTask = task;
+      stoppedTask.stop = undefined;
+      stoppedTasks.push(stoppedTask.id);
     }
   });
 
   return stoppedTasks;
+};
+
+const runTask = (queueId, taskId, serverCb) => {
+  const queue = queues.find(q => q.id === queueId);
+  const taskIndex = queue.tasks.findIndex(exp => exp.id === taskId);
+  const task = queue.tasks[taskIndex];
+
+  task.stop = task.run(serverCb, () => {
+    removeExpectation(queueId, taskId);
+    queue.tasks.splice(taskIndex, 1);
+    emitRemove(queueId, taskId);
+  });
+};
+
+const runTaskWithRequirements = (queueId, requirements, successCb, failureCb) => {
+  const queue = getQueue(queueId);
+  const taskIndex = queue.tasks.findIndex(task => deepEqual(task.requirements, requirements));
+  const task = queue.tasks[taskIndex];
+
+  if (taskIndex >= 0) {
+    task.stop = runTask(queueId, task.id, successCb);
+  } else {
+    failureCb();
+  }
 };
 
 export default {
@@ -123,9 +137,9 @@ export default {
   getQueue,
   removeQueue,
   addExpectation,
-  tryRun,
+  runTaskWithRequirements,
   getAll,
   removeExpectation,
-  run,
-  tryStop
+  runTask,
+  stopPendingTasks
 };

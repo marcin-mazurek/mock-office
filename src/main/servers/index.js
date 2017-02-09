@@ -27,8 +27,6 @@ const api = {
       });
     }
 
-    // eslint-disable-next-line no-console
-    console.log('Mockee server is running!');
     return Promise.resolve();
   },
   stop(id) {
@@ -40,8 +38,6 @@ const api = {
       });
     }
 
-    // eslint-disable-next-line no-console
-    console.log('Mockee server is shut down!');
     return Promise.resolve();
   },
   get(id) {

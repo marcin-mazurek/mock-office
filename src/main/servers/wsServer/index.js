@@ -6,7 +6,7 @@ import fs from 'fs';
 import queues from '../../queues';
 
 const respond = R.curry((queueId, ws, message) =>
-  queues.tryRun(queueId, { message }, exp => ws.send(exp.message), R.identity)
+  queues.runTaskWithRequirements(queueId, { message }, exp => ws.send(exp.message), R.identity)
 );
 
 export default class WSMockServer {
@@ -20,7 +20,7 @@ export default class WSMockServer {
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
-    this.tasksAwaitingForClient = [];
+    this.tasksToRun = [];
   }
 
   start(cb) {
@@ -55,8 +55,8 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      this.tasksAwaitingForClient.forEach(task =>
-        queues.run(this.queueId, task, exp => this.ws.send(exp.message))
+      this.tasksToRun.forEach(task =>
+        queues.runTask(this.queueId, task, exp => this.ws.send(exp.message))
       );
     });
     cb();
@@ -66,13 +66,13 @@ export default class WSMockServer {
     socket.on('message', respond(this.queueId, this.ws));
 
     socket.on('close', () => {
-      queues.tryStop(this.queueId);
+      queues.stopPendingTasks(this.queueId);
       this.ws = undefined;
     });
   }
 
   stop(cb) {
-    this.tasksAwaitingForClient = queues.tryStop(this.queueId);
+    this.tasksToRun = queues.stopPendingTasks(this.queueId);
 
     this.wsServer.close(() => {
       this.listening = false;
@@ -86,9 +86,9 @@ export default class WSMockServer {
 
     if (shouldRunImmediately) {
       if (connected) {
-        queues.run(this.queueId, expectationId, exp => this.ws.send(exp.message));
+        queues.runTask(this.queueId, expectationId, exp => this.ws.send(exp.message));
       } else {
-        this.tasksAwaitingForClient.push(expectationId);
+        this.tasksToRun.push(expectationId);
       }
     }
 

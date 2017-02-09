@@ -5,10 +5,11 @@ import http from 'http';
 import fs from 'fs';
 import queues from '../../queues';
 
-const sendDefaultExpectation = res => () => res.status(404).end();
+const sendDefaultExpectation = res => () =>
+  res.status(404).send('Mockee: cannot find response for this request');
 const sendExpectation = R.curry((res, expectation) => res.json(expectation.body));
 const respond = R.curry((queueId, req, res) => (
-  queues.tryRun(
+  queues.runTaskWithRequirements(
     queueId,
     { url: req.url },
     sendExpectation(res),
@@ -32,7 +33,6 @@ export default class HttpServer {
   start(cb) {
     const httpServer = this.isSecure ? https : http;
     this.app = express();
-    this.app.on('connection', socket => this.sockets.push(socket));
     this.app.get('*', respond(this.queueId));
 
     if (this.isSecure) {
@@ -47,9 +47,11 @@ export default class HttpServer {
     }
 
     this.httpServer.listen(this.port, cb);
+    this.httpServer.on('connection', socket => this.sockets.push(socket));
   }
 
   stop(cb) {
+    this.tasksToRun = queues.stopPendingTasks(this.queueId);
     this.sockets.forEach(socket => socket.destroy());
     this.sockets.length = 0;
     this.httpServer.close(cb);
