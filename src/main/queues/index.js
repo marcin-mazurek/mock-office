@@ -80,6 +80,7 @@ const addExpectation = (queueId, task) => {
 
 const stop = (queueId, taskId) => {
   const currentTask = getQueue(queueId).tasks.find(task => task.id === taskId);
+
   if (currentTask.stop) {
     currentTask.stop();
   }
@@ -126,7 +127,7 @@ const runTaskWithRequirements = (queueId, requirements, successCb, failureCb) =>
   const task = queue.tasks[taskIndex];
 
   if (taskIndex >= 0) {
-    task.stop = runTask(queueId, task.id, successCb);
+    runTask(queueId, task.id, successCb);
   } else {
     failureCb();
   }
