@@ -1,0 +1,13 @@
+{
+  "behaviours": {
+    "blocking": true
+  },
+  "requirements": {
+    "url": "/another-url"
+  },
+  "taskPayload": {
+    "body": {
+      "data": "response for some-url"
+    }
+  }
+}

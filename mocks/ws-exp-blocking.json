@@ -1,0 +1,11 @@
+{
+  "behaviours": {
+    "blocking": true
+  },
+  "requirements": {
+    "message": "message-2"
+  },
+  "taskPayload": {
+    "message": "response for message-2"
+  }
+}
