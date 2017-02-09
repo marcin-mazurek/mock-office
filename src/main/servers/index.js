@@ -1,3 +1,5 @@
+import R from 'ramda';
+import Task from 'fun-task';
 import unique from 'node-unique';
 import HttpServer from './httpServer';
 import WSMockServer from './wsServer';
@@ -8,49 +10,60 @@ const serverTypes = {
   ws: WSMockServer
 };
 
-const servers = [];
+let state = [];
 
-const api = {
-  add(name, port, type, isSecure, keyPath, certPath) {
-    const id = unique();
-    const queueId = queues.addQueue(id);
-    const Server = serverTypes[type];
-    servers.push(new Server({ name, port, id, queueId, isSecure, keyPath, certPath }));
-    return { serverId: id, queueId };
-  },
-  start(id) {
-    const serverToStart = servers.find(server => server.id === id);
+const add = (name, port, type, isSecure, keyPath, certPath) => {
+  const id = unique();
+  const queueId = queues.addQueue(id);
+  const Server = serverTypes[type];
 
-    if (!serverToStart.isLive()) {
-      return new Promise((resolve) => {
-        serverToStart.start(resolve);
-      });
-    }
+  state = state.concat([
+    new Server({ name, port, id, queueId, isSecure, keyPath, certPath })
+  ]);
 
-    return Promise.resolve();
-  },
-  stop(id) {
-    const serverToStop = servers.find(server => server.id === id);
-
-    if (serverToStop.isLive()) {
-      return new Promise((resolve) => {
-        serverToStop.stop(resolve);
-      });
-    }
-
-    return Promise.resolve();
-  },
-  get(id) {
-    return servers.find(server => server.id === id);
-  },
-  getAll() {
-    return servers;
-  },
-  addTask(serverId, task, shouldRunImmediately) {
-    const server = servers.find(srv => srv.id === serverId);
-
-    return server.addTask(task, shouldRunImmediately);
-  }
+  return { serverId: id, queueId };
 };
 
-export default api;
+const start = id => R.compose(
+  // transform to promise for redux-saga call mechanism which by default wait for promise fulfill
+  task => task.toPromise(),
+  server => Task.create((onSuccess) => {
+    if (!server.isLive()) {
+      server.start(onSuccess);
+      return;
+    }
+
+    onSuccess();
+  }),
+  R.find(R.propEq('id', id))
+)(state);
+
+const stop = (id) => {
+  const serverToStop = state.find(server => server.id === id);
+
+  if (serverToStop.isLive()) {
+    return new Promise((resolve) => {
+      serverToStop.stop(resolve);
+    });
+  }
+
+  return Promise.resolve();
+};
+
+const get = id => R.find(R.propEq('id', id))(state);
+const getAll = () => state;
+
+const addTask = (serverId, task, shouldRunImmediately) => {
+  const server = state.find(srv => srv.id === serverId);
+
+  return server.addTask(task, shouldRunImmediately);
+};
+
+export default {
+  add,
+  start,
+  stop,
+  get,
+  getAll,
+  addTask
+};
