@@ -2,6 +2,6 @@
   "instant": true,
   "interval": 3000,
   "taskPayload": {
-    "message": "response for message-1"
+    "message": "interval message"
   }
 }
