@@ -34,10 +34,10 @@ const createTask = (queue, task) => {
       };
     };
   } else if (task.delay) {
-    run = (remove) => {
+    run = (end) => {
       const timeoutId = setTimeout(() => {
         queue.tunnel(task.taskPayload);
-        remove();
+        end();
       }, task.delay);
 
       return () => {
@@ -45,9 +45,9 @@ const createTask = (queue, task) => {
       };
     };
   } else {
-    run = (remove) => {
+    run = (end) => {
       queue.tunnel(task.taskPayload);
-      remove();
+      end();
     };
   }
 
@@ -137,9 +137,6 @@ const runReadyTasks = (queueId, requirements, cb) => {
   }
 };
 
-const getServerQueueId = serverId =>
-  queues.find(q => q.serverId === serverId).id;
-
 const addTask = (queueId, task) => {
   const queue = getQueue(queueId);
   const res = createTask(queue, task);
@@ -194,7 +191,6 @@ const closeTunnel = (queueId) => {
 
 export default {
   init,
-  getServerQueueId,
   addQueue,
   getQueue,
   removeQueue,
