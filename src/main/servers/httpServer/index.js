@@ -49,6 +49,7 @@ export default class HttpServer {
   }
 
   stop(cb) {
+    queues.closeTunnel(this.queueId);
     this.sockets.forEach(socket => socket.destroy());
     this.sockets.length = 0;
     this.httpServer.close(cb);

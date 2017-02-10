@@ -1,5 +1,6 @@
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
+import R from 'ramda';
 import { TASK_REMOVED } from '../common/messageNames';
 
 const queues = [];
@@ -8,10 +9,6 @@ let mainWin;
 
 const init = (mW) => {
   mainWin = mW;
-};
-
-const emitRemove = (queueId, taskId) => {
-  mainWin.webContents.send(TASK_REMOVED, { queueId, taskId });
 };
 
 const createQueue = serverId => ({
@@ -80,60 +77,75 @@ const removeTask = (queueId, taskId) => {
   queue.tasks.splice(taskIndex, 1);
 };
 
-const runReadyTasks = (queueId, requirements, cb) => {
-  const queue = getQueue(queueId);
-  const tasksToRun = [];
+const emitRemove = (queueId, taskId) => {
+  mainWin.webContents.send(TASK_REMOVED, { queueId, taskId });
+};
 
-  if (queue.tunnel) {
-    let blocked = false;
-    let taskIndex = 0;
+const runTask = (queueId, taskId, cb) => {
+  const queue = queues.find(q => q.id === queueId);
+  const task = queue.tasks.find(exp => exp.id === taskId);
 
-    // collect tasks
-    while (taskIndex < queue.tasks.length && !blocked) {
-      let shouldRun = false;
-      const task = queue.tasks[taskIndex];
+  task.cancel = task.run(() => {
+    task.run = undefined;
+    task.cancel = undefined;
+    removeTask(queueId, task.id);
+    emitRemove(queueId, task.id);
 
-      if (task.run) { // is not run yet
-        if (task.requirements) { // should fulfill requirements
-          if (deepEqual(task.requirements, requirements)) {
-            shouldRun = true;
-          }
-        } else { // without requirements
-          shouldRun = true;
-        }
-      }
-
-      if (shouldRun) {
-        tasksToRun.push(task);
-      } else if (task.behaviours && task.behaviours.blocking) {
-        blocked = true;
-      }
-
-      taskIndex += 1;
-    }
-
-    // run tasks
-    let runTasks = 0;
-
-    if (tasksToRun.length > 0) {
-      tasksToRun.forEach((t) => {
-        const tToRun = t;
-
-        tToRun.cancel = tToRun.run(() => {
-          tToRun.cancel = undefined;
-          removeTask(queueId, tToRun.id);
-          emitRemove(queueId, tToRun.id);
-          runTasks += 1;
-
-          if (runTasks === tasksToRun.length && cb) {
-            cb();
-          }
-        });
-        tToRun.run = undefined;
-      });
-    } else if (cb) {
+    if (cb) {
       cb();
     }
+  });
+};
+
+const runReadyTasks = (queueId, requirements, cb) => {
+  const queue = getQueue(queueId);
+
+  if (queue.tunnel) {
+    // collect phase
+    let blockingTaskFound = false;
+    const notBlockedTasks = R.takeWhile(
+      (task) => {
+        if (blockingTaskFound) {
+          return false;
+        }
+
+        blockingTaskFound = task.behaviours && task.behaviours.blocking;
+        return true;
+      },
+      queue.tasks
+    );
+
+    if (notBlockedTasks.length === 0) {
+      return;
+    }
+
+    const runnableTasks = notBlockedTasks.filter((task) => {
+      const running = !task.run;
+
+      if (running) {
+        return false;
+      }
+
+      // do not need
+      if (!task.requirements) {
+        return true;
+      }
+
+      // should fulfill requirements
+      return deepEqual(task.requirements, requirements);
+    });
+
+    if (runnableTasks.length === 0) {
+      return;
+    }
+
+    const firstRunnableTask = R.head(runnableTasks);
+    runTask(queueId, firstRunnableTask.id, () => {
+      if (cb) {
+        cb();
+      }
+      runReadyTasks(queueId);
+    });
   }
 };
 
@@ -163,17 +175,6 @@ const cancelPendingTasks = (queueId) => {
     }
 
     return t;
-  });
-};
-
-const runTask = (queueId, taskId, serverCb) => {
-  const queue = queues.find(q => q.id === queueId);
-  const taskIndex = queue.tasks.findIndex(exp => exp.id === taskId);
-  const task = queue.tasks[taskIndex];
-
-  task.cancel = task.run(serverCb, () => {
-    removeTask(queueId, taskId);
-    emitRemove(queueId, taskId);
   });
 };
 
