@@ -21,7 +21,7 @@ test(`${SELECT} reducer`, () => {
     },
     selected: null,
     running: ['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==']
-  }), { type: 'servers/SELECT', id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
+  }), { type: SELECT, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
     itemsById: {
@@ -53,7 +53,7 @@ test(`${START} reducer`, () => {
     },
     selected: null,
     running: new Set()
-  }), { type: 'servers/START', id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
+  }), { type: START, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
     itemsById: {
@@ -77,11 +77,12 @@ test(`${ADD} reducer`, () => {
     selected: null,
     running: []
   }), {
-    type: 'servers/ADD',
+    type: ADD,
     name: 'Server name',
     port: 3000,
     id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
-    serverType: 'http'
+    serverType: 'http',
+    queueId: '321u83h12uih'
   });
   expect(state.toJS()).toEqual({
     itemsById: {
@@ -90,7 +91,7 @@ test(`${ADD} reducer`, () => {
         name: 'Server name',
         port: 3000,
         type: 'http',
-        queue: ''
+        queue: '321u83h12uih'
       }
     },
     selected: null,
@@ -114,7 +115,7 @@ test(`${STOP} reducer`, () => {
       selected: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
       running: new Set(['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA=='])
     }
-  ), { type: 'servers/STOP', id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
+  ), { type: STOP, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
     itemsById: {

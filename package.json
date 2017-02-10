@@ -64,6 +64,7 @@
     "node-unique": "^1.0.0",
     "npm-watch": "^0.1.8",
     "ramda": "^0.23.0",
+    "ramda-fantasy": "^0.7.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-mdl": "^1.9.0",
