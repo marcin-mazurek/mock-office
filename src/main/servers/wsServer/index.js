@@ -55,12 +55,7 @@ export default class WSMockServer {
   }
 
   setupSocket(socket) {
-    socket.on('message', message =>
-      queues.runReadyTasks(
-        this.queueId,
-        { message }
-      )
-    );
+    socket.on('message', message => queues.runReadyTasks(this.queueId, { message }));
 
     socket.on('close', () => {
       queues.closeTunnel(this.queueId);
