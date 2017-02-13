@@ -21,10 +21,7 @@ export default class HttpServer {
     const httpServer = this.isSecure ? https : http;
     this.app = express();
     this.app.get('*', (req, res) => {
-      queues.openTunnel(
-        this.queueId,
-        task => res.json(task.body)
-      );
+      queues.openTunnel(this.queueId, task => res.json(task.body));
 
       queues.runReadyTasks(
         this.queueId,
