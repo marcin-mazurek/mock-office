@@ -45,13 +45,21 @@ export default class HttpServer {
     }
 
     this.httpServer.listen(this.port, cb);
-    this.httpServer.on('connection', socket => this.sockets.push(socket));
+    this.httpServer.on('connection', this.saveSocketRef);
+  }
+
+  saveSocketRef(socket) {
+    this.sockets.push(socket);
+  }
+
+  destroyOpenSockets() {
+    this.sockets.forEach(socket => socket.destroy());
+    this.sockets.length = 0;
   }
 
   stop(cb) {
     queues.closeTunnel(this.queueId);
-    this.sockets.forEach(socket => socket.destroy());
-    this.sockets.length = 0;
+    this.destroyOpenSockets();
     this.httpServer.close(cb);
   }
 
