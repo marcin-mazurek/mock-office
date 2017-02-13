@@ -62,9 +62,6 @@ const addQueue = (serverId) => {
 };
 
 const getQueue = id => queues.find(q => q.id === id);
-const removeQueue = (serverId) => {
-  queues.filter(queue => queue.serverId !== serverId);
-};
 
 const removeTask = (queueId, taskId) => {
   const queue = getQueue(queueId);
@@ -194,7 +191,6 @@ export default {
   init,
   addQueue,
   getQueue,
-  removeQueue,
   addTask,
   runReadyTasks,
   getAll,
