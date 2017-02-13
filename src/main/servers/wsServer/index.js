@@ -49,7 +49,7 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      queues.openTunnel(this.queueId, exp => this.ws.send(exp.message));
+      queues.openTunnel(this.queueId, task => this.ws.send(task.message));
     });
     cb();
   }
