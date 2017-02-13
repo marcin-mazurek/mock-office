@@ -178,7 +178,6 @@ const cancelPendingTasks = (queueId) => {
 const openTunnel = (queueId, tunnel) => {
   const queue = getQueue(queueId);
   queue.tunnel = tunnel;
-  runReadyTasks(queueId);
 };
 
 const closeTunnel = (queueId) => {
