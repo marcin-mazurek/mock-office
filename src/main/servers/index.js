@@ -1,5 +1,4 @@
 import R from 'ramda';
-import Task from 'fun-task';
 import unique from 'node-unique';
 import HttpServer from './httpServer';
 import WSMockServer from './wsServer';
@@ -25,15 +24,13 @@ const add = (name, port, type, isSecure, keyPath, certPath) => {
 };
 
 const start = id => R.compose(
-  // transform to promise for redux-saga call mechanism which by default wait for promise fulfill
-  task => task.toPromise(),
-  server => Task.create((onSuccess) => {
+  server => new Promise((resolve) => {
     if (!server.isLive()) {
-      server.start(onSuccess);
+      server.start(resolve);
       return;
     }
 
-    onSuccess();
+    resolve();
   }),
   R.find(R.propEq('id', id))
 )(state);
