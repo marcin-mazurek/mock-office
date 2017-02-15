@@ -15,6 +15,7 @@ export default class HttpServer {
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
+    this.saveSocketRef = this.saveSocketRef.bind(this);
   }
 
   start(cb) {
