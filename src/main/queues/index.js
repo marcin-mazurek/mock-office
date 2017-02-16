@@ -1,6 +1,7 @@
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
 import R from 'ramda';
+import Task from 'fun-task';
 import { TASK_REMOVED } from '../common/messageNames';
 
 const queues = [];
@@ -18,39 +19,42 @@ const createQueue = serverId => ({
 });
 
 const createTask = (queue, task) => {
-  let run;
+  let job;
+  const t = task;
 
-  if (task.interval) {
-    run = () => {
+  if (t.interval) {
+    job = Task.create(() => {
       const intervalId = setInterval(() =>
-        queue.tunnel(task.taskPayload), task.interval
+        queue.tunnel(t.taskPayload), t.interval
       );
 
       return () => {
+        t.cancel = undefined;
         clearInterval(intervalId);
       };
-    };
-  } else if (task.delay) {
-    run = (end) => {
+    });
+  } else if (t.delay) {
+    job = Task.create((onSuccess) => {
       const timeoutId = setTimeout(() => {
-        queue.tunnel(task.taskPayload);
-        end();
-      }, task.delay);
+        queue.tunnel(t.taskPayload);
+        onSuccess();
+      }, t.delay);
 
       return () => {
+        t.cancel = undefined;
         clearTimeout(timeoutId);
       };
-    };
+    });
   } else {
-    run = (end) => {
-      queue.tunnel(task.taskPayload);
-      end();
-    };
+    job = Task.create((onSuccess) => {
+      queue.tunnel(t.taskPayload);
+      onSuccess();
+    });
   }
 
-  return Object.assign(task, {
+  return Object.assign(t, {
     id: unique(),
-    run
+    job
   });
 };
 
@@ -71,6 +75,7 @@ const removeTask = (queueId, taskId) => {
   if (task.cancel) {
     task.cancel();
   }
+
   queue.tasks.splice(taskIndex, 1);
 };
 
@@ -78,19 +83,13 @@ const emitRemove = (queueId, taskId) => {
   mainWin.webContents.send(TASK_REMOVED, { queueId, taskId });
 };
 
-const runTask = (queueId, taskId, cb) => {
+const runTask = (queueId, taskId) => {
   const queue = queues.find(q => q.id === queueId);
   const task = queue.tasks.find(exp => exp.id === taskId);
 
-  task.cancel = task.run(() => {
-    task.run = undefined;
-    task.cancel = undefined;
+  return task.job.run(() => {
     removeTask(queueId, task.id);
     emitRemove(queueId, task.id);
-
-    if (cb) {
-      cb();
-    }
   });
 };
 
@@ -117,7 +116,7 @@ const runReadyTasks = (queueId, requirements, cb) => {
     }
 
     const runnableTasks = notBlockedTasks.filter((task) => {
-      const running = !task.run;
+      const running = task.cancel;
 
       if (running) {
         return false;
@@ -136,13 +135,14 @@ const runReadyTasks = (queueId, requirements, cb) => {
       return;
     }
 
-    const firstRunnableTask = R.head(runnableTasks);
-    runTask(queueId, firstRunnableTask.id, () => {
-      if (cb) {
-        cb();
-      }
-      runReadyTasks(queueId);
-    });
+    const firstRunnableTask = R.head(notBlockedTasks);
+
+    if (cb) {
+      firstRunnableTask.job.map(cb);
+    }
+
+    firstRunnableTask.job.map(() => runReadyTasks(queueId));
+    firstRunnableTask.cancel = runTask(queueId, firstRunnableTask.id);
   }
 };
 
@@ -163,15 +163,10 @@ const getAll = () => queues;
 const cancelPendingTasks = (queueId) => {
   const queue = getQueue(queueId);
 
-  queue.tasks = queue.tasks.map((task) => {
-    const t = task;
-
-    if (t.cancel) {
-      t.cancel(queueId, task.id);
-      t.cancel = undefined;
+  queue.tasks.forEach((task) => {
+    if (task.cancel) {
+      task.cancel();
     }
-
-    return t;
   });
 };
 
