@@ -3,9 +3,9 @@
     "blocking": true
   },
   "requirements": {
-    "message": "message-2"
+    "message": "message-1"
   },
   "taskPayload": {
-    "message": "response for message-2"
+    "message": "response for message-1"
   }
 }
