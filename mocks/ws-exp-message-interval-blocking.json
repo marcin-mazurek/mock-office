@@ -1,0 +1,10 @@
+{
+  "behaviours": {
+    "blocking": true
+  },
+  "instant": true,
+  "interval": 3000,
+  "taskPayload": {
+    "message": "interval message"
+  }
+}
