@@ -2,8 +2,16 @@ import unique from 'node-unique';
 import deepEqual from 'deep-equal';
 import R from 'ramda';
 import Task from 'fun-task';
+import { EventEmitter } from 'events';
 import { TASK_REMOVED } from '../common/messageNames';
 
+const events = {
+  TASK_REMOVED: 'TASK_REMOVED',
+  TASK_RUN: 'TASK_RUN',
+  TASK_ADDED: 'TASK_ADDED'
+};
+
+const emitter = new EventEmitter();
 const queues = [];
 
 let mainWin;
@@ -77,6 +85,7 @@ const removeTask = (queueId, taskId) => {
   }
 
   queue.tasks.splice(taskIndex, 1);
+  emitter.emit(events.TASK_REMOVED, queueId);
 };
 
 const emitRemove = (queueId, taskId) => {
@@ -87,7 +96,7 @@ const runTask = (queueId, taskId) => {
   const queue = queues.find(q => q.id === queueId);
   const task = queue.tasks.find(exp => exp.id === taskId);
 
-  return task.job.run(() => {
+  task.cancel = task.job.run(() => {
     removeTask(queueId, task.id);
     emitRemove(queueId, task.id);
   });
@@ -135,14 +144,14 @@ const runReadyTasks = (queueId, requirements, cb) => {
       return;
     }
 
-    const firstRunnableTask = R.head(notBlockedTasks);
+    const firstRunnableTask = R.head(runnableTasks);
 
     if (cb) {
       firstRunnableTask.job.map(cb);
     }
 
-    firstRunnableTask.job.map(() => runReadyTasks(queueId));
-    firstRunnableTask.cancel = runTask(queueId, firstRunnableTask.id);
+    runTask(queueId, firstRunnableTask.id);
+    emitter.emit(events.TASK_RUN, queueId);
   }
 };
 
@@ -151,9 +160,7 @@ const addTask = (queueId, task) => {
   const res = createTask(queue, task);
   queue.tasks.push(res);
 
-  if (queue.tunnel) {
-    runReadyTasks(queueId);
-  }
+  emitter.emit(events.TASK_ADDED, queueId);
 
   return res.id;
 };
@@ -180,6 +187,10 @@ const closeTunnel = (queueId) => {
   cancelPendingTasks(queueId);
   queue.tunnel = undefined;
 };
+
+emitter.on(events.TASK_REMOVED, queueId => runReadyTasks(queueId));
+emitter.on(events.TASK_RUN, queueId => runReadyTasks(queueId));
+emitter.on(events.TASK_ADDED, queueId => runReadyTasks(queueId));
 
 export default {
   init,
