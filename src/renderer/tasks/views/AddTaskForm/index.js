@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { init as initAddTask } from '../../add/actions';
-import { getSelected } from '../../../servers/selectors';
+import { getSelected, getSelectedServerDetails } from '../../../servers/selectors';
 
 class AddTaskForm extends React.Component {
   constructor(props) {
@@ -76,10 +76,16 @@ class AddTaskForm extends React.Component {
         <Link to="/server">Server details</Link>
         <form onSubmit={this.handleSubmit}>
           <fieldset>
-            <div>
-              <label htmlFor="interval">Interval:</label>
-              <input type="number" name="interval" onChange={this.handleIntervalChange} />
-            </div>
+            {
+              this.props.serverType === 'ws'
+                ? (
+                  <div>
+                    <label htmlFor="interval">Interval:</label>
+                    <input type="number" name="interval" onChange={this.handleIntervalChange} />
+                  </div>
+                )
+                : null
+            }
             <div>
               <label htmlFor="blocking">Blocking:</label>
               <input
@@ -120,11 +126,13 @@ class AddTaskForm extends React.Component {
 
 AddTaskForm.propTypes = {
   initAddTask: React.PropTypes.func.isRequired,
-  serverId: React.PropTypes.string.isRequired
+  serverId: React.PropTypes.string.isRequired,
+  serverType: React.PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-  serverId: getSelected(state)
+  serverId: getSelected(state),
+  serverType: getSelectedServerDetails(state).type
 });
 
 const mapDispatchToProps = {
