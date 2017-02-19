@@ -104,7 +104,7 @@ const runTask = (queueId, taskId) => {
 
 const runReadyTasks = (queueId, requirements, cb) => {
   const queue = getQueue(queueId);
-console.log(queue.tunnel);
+
   if (queue.tunnel) {
     // collect phase
     let blockingTaskFound = false;
