@@ -114,7 +114,7 @@ const runReadyTasks = (queueId, requirements, cb) => {
           return false;
         }
 
-        blockingTaskFound = task.behaviours && task.behaviours.blocking;
+        blockingTaskFound = task.behaviours;
         return true;
       },
       queue.tasks

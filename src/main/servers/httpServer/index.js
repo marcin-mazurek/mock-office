@@ -29,6 +29,8 @@ export default class HttpServer {
         { url: req.url },
         () => { queues.closeTunnel(this.queueId); }
       );
+
+      queues.closeTunnel(this.queueId);
     });
 
     if (this.isSecure) {

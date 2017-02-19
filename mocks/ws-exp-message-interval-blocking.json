@@ -1,7 +1,5 @@
 {
-  "behaviours": {
-    "blocking": true
-  },
+  "blocking": true,
   "instant": true,
   "interval": 3000,
   "taskPayload": {
