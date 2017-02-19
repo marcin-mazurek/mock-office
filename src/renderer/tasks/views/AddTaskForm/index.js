@@ -72,8 +72,8 @@ class AddTaskForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <Link to="/server">Server details</Link>
+      <div className="add-task-form">
+        <Link to="/server">&#8666; Server details</Link>
         <form onSubmit={this.handleSubmit}>
           <fieldset>
             {
@@ -101,16 +101,20 @@ class AddTaskForm extends React.Component {
             </div>
             <div>
               <label htmlFor="requirements">Requirements:</label>
-              <textarea
-                name="requirements"
-                cols="30"
-                rows="10"
-                onChange={this.handleRequirementsChange}
-              />
+              <div>
+                <textarea
+                  name="requirements"
+                  cols="30"
+                  rows="10"
+                  onChange={this.handleRequirementsChange}
+                />
+              </div>
             </div>
             <div>
               <label htmlFor="payload">Payload:</label>
-              <textarea name="payload" cols="30" rows="10" onChange={this.handlePayloadChange} />
+              <div>
+                <textarea name="payload" cols="30" rows="10" onChange={this.handlePayloadChange} />
+              </div>
             </div>
             <div>
               <button type="submit">
