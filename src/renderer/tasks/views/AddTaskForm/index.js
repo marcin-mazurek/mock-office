@@ -14,35 +14,54 @@ class AddTaskForm extends React.Component {
     this.handleRequirementsChange = this.handleRequirementsChange.bind(this);
     this.handlePayloadChange = this.handlePayloadChange.bind(this);
     this.handleDelayChange = this.handleDelayChange.bind(this);
+    this.state = {};
   }
 
   handleIntervalChange(event) {
     this.setState({
-      interval: event.target.value
+      interval: parseInt(event.target.value, 10)
     });
   }
 
   handleBlockingChange(event) {
     this.setState({
-      blocking: event.target.value
+      blocking: event.target.checked
     });
   }
 
   handleRequirementsChange(event) {
+    let requirements;
+
+    try {
+      requirements = JSON.parse(event.target.value);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error.message);
+    }
+
     this.setState({
-      requirements: event.target.value
+      requirements
     });
   }
 
   handlePayloadChange(event) {
+    let payload;
+
+    try {
+      payload = JSON.parse(event.target.value);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error.message);
+    }
+
     this.setState({
-      payload: event.target.value
+      taskPayload: payload
     });
   }
 
   handleDelayChange(event) {
     this.setState({
-      delay: event.target.value
+      delay: parseInt(event.target.value, 10)
     });
   }
 
@@ -63,7 +82,12 @@ class AddTaskForm extends React.Component {
             </div>
             <div>
               <label htmlFor="blocking">Blocking:</label>
-              <input type="checkbox" name="blocking" onChange={this.handleBlockingChange} />
+              <input
+                type="checkbox"
+                name="blocking"
+                onChange={this.handleBlockingChange}
+                value={this.state.blocking}
+              />
             </div>
             <div>
               <label htmlFor="delay">Delay:</label>

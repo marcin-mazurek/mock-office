@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chip } from 'react-mdl';
 import { Link } from 'react-router';
+import FilePicker from '../../../../tasks/pickFile/FilePicker';
 import Queue from '../../../../queues/views/Queue';
 
 const ConfigTab = ({ serverDetails }) => {
@@ -24,6 +25,11 @@ const ConfigTab = ({ serverDetails }) => {
         <div className="server-config-tab-details__row">
           <div className="server-config-tab-details__cell">
             <Link to="/add-task">Add task</Link>
+          </div>
+        </div>
+        <div className="server-config-tab-details__row">
+          <div className="server-config-tab-details__cell">
+            Add from file: <FilePicker />
           </div>
         </div>
       </div>

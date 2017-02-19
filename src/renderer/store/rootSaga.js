@@ -8,6 +8,7 @@ import addScriptFromFileAgent from '../serverScripts/addFromFile/saga';
 import runScriptAgent from '../serverScripts/runScript/saga';
 import syncServers from '../app/syncServers/saga';
 import removeTaskAgent from '../tasks/remove/saga';
+import addTaskAgent from '../tasks/add/saga';
 
 export default function* rootSaga() {
   yield [
@@ -19,6 +20,7 @@ export default function* rootSaga() {
     yield spawn(removeTaskAfterUseAgent),
     yield spawn(addScriptFromFileAgent),
     yield spawn(runScriptAgent),
-    yield spawn(removeTaskAgent)
+    yield spawn(removeTaskAgent),
+    yield spawn(addTaskAgent)
   ];
 }

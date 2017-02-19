@@ -1,8 +1,8 @@
-import { take, call, select } from 'redux-saga/effects';
+import { take, call, select, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { INIT } from './actions';
 import { getSelected } from '../../servers/selectors';
-import addTaskSaga from '../add/saga';
+import { init as initAddTask } from '../add/actions';
 
 const readerChannel = reader => (
   eventChannel((emitter) => {
@@ -27,7 +27,7 @@ export default function* agent() {
         const rChannel = yield call(readerChannel, reader);
         reader.readAsText(file);
         const task = yield take(rChannel);
-        yield call(addTaskSaga, serverId, task);
+        yield put(initAddTask(serverId, task));
       }
     } catch (parseError) {
       // eslint-disable-next-line no-console
