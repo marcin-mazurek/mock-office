@@ -2,7 +2,7 @@ import { take, call, select, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { INIT } from './actions';
 import { getSelected } from '../../servers/selectors';
-import { init as initAddTask } from '../add/actions';
+import { init as initAddTask } from '../addTask/actions';
 
 const readerChannel = reader => (
   eventChannel((emitter) => {

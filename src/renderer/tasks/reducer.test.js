@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
-import { ADD, REMOVE } from './actions';
+import { REMOVE } from './removeTask/actions';
+import { ADD } from './addTask/actions';
 
 test(`${ADD} reducer`, () => {
   const state = reducer(fromJS({}), {
@@ -11,7 +12,9 @@ test(`${ADD} reducer`, () => {
 
   expect(state.toJS()).toEqual({
     'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==': {
-      body: 'task for some-url-3',
+      taskPayload: {
+        body: 'task for some-url-3',
+      },
       id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
     }
   });

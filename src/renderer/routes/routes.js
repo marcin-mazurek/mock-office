@@ -4,7 +4,7 @@ import Main from '../layout/main';
 import Servers from '../servers/views/Servers';
 import AddServerPage from '../servers/views/AddServer';
 import ServerPage from '../servers/views/Server';
-import AddTaskPage from '../tasks/views/AddTask';
+import AddTaskPage from '../tasks/addTask/AddTask';
 
 const routes = (
   <Route component={Main}>

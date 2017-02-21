@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { init as initAddTask } from '../../add/actions';
+import { init as initAddTask } from '../actions';
 import { getSelected } from '../../../servers/selectors';
 
 class AddTaskForm extends React.Component {

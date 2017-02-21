@@ -2,7 +2,7 @@ import { put } from 'redux-saga/effects';
 import { remote } from 'electron';
 import { push } from 'react-router-redux';
 import { add, start } from '../../servers/actions';
-import { add as addTask } from '../../tasks/actions';
+import { add as addTask } from '../../tasks/addTask/actions';
 
 export default function* syncServers() {
   const serversApi = remote.require('./main/servers').default;

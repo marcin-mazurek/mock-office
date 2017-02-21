@@ -3,7 +3,8 @@ import reducer from './reducer';
 import {
   ADD as ADD_SERVER
 } from '../servers/actions';
-import { ADD as ADD_TASK, REMOVE as REMOVE_TASK } from '../tasks/actions';
+import { REMOVE as REMOVE_TASK } from '../tasks/removeTask/actions';
+import { ADD as ADD_TASK } from '../tasks/addTask/actions';
 
 test(`${ADD_SERVER} reducer`, () => {
   const state = reducer(fromJS({}),

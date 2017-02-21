@@ -1,7 +1,6 @@
 import { remote } from 'electron';
 import { take, put } from 'redux-saga/effects';
-import { INIT } from './actions';
-import { remove } from '../actions';
+import { INIT, remove } from './actions';
 
 export default function* removeTaskAgent() {
   // eslint-disable-next-line no-constant-condition

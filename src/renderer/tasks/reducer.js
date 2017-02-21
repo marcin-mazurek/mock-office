@@ -1,6 +1,7 @@
 import { Map } from 'immutable';
 import R from 'ramda';
-import { ADD, REMOVE } from './actions';
+import { REMOVE } from './removeTask/actions';
+import { ADD } from './addTask/actions';
 
 const initialState = new Map();
 
@@ -13,7 +14,7 @@ export default (state = initialState, action) => {
     case ADD: {
       const { taskId, taskPayload } = action;
 
-      return addTask(taskId, extendWithId(taskId)(taskPayload))(state);
+      return addTask(taskId, extendWithId(taskId)({ taskPayload }))(state);
     }
     case REMOVE: {
       const { taskId } = action;

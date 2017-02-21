@@ -1,15 +1,15 @@
+export const INIT = 'addTask/INIT';
 export const ADD = 'tasks/ADD';
-export const REMOVE = 'tasks/REMOVE';
+
+export const init = (serverId, task) => ({
+  type: INIT,
+  serverId,
+  task
+});
 
 export const add = (queueId, taskId, taskPayload) => ({
   type: ADD,
   queueId,
   taskId,
   taskPayload
-});
-
-export const remove = (queueId, taskId) => ({
-  type: REMOVE,
-  queueId,
-  taskId
 });

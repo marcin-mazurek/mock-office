@@ -1,7 +1,8 @@
 import { Map, Record, List } from 'immutable';
 import R from 'ramda';
 import { ADD as ADD_SERVER } from '../servers/actions';
-import { ADD as ADD_TASK, REMOVE as REMOVE_TASK } from '../tasks/actions';
+import { REMOVE as REMOVE_TASK } from '../tasks/removeTask/actions';
+import { ADD as ADD_TASK } from '../tasks/addTask/actions';
 
 const initialState = new Map();
 

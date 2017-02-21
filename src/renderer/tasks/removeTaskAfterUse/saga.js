@@ -2,7 +2,7 @@ import { take, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ipcRenderer } from 'electron';
 import { TASK_REMOVED } from '../../../main/common/messageNames';
-import { remove } from '../actions';
+import { remove } from '../removeTask/actions';
 
 export default function* removeTaskAfterUseAgent() {
   const channel = () => (
