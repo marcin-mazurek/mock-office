@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { init as initAddQueueFromFile } from '../actions';
+import { init as initAddQueueFromFile } from './actions';
 
 const mapDispatchToProps = {
   initAddQueueFromFile

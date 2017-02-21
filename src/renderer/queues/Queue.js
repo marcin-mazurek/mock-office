@@ -1,5 +1,5 @@
 import React from 'react';
-import Tasks from '../../../tasks/browseTasks/Tasks';
+import Tasks from '../tasks/browseTasks/Tasks';
 
 const Queue = ({ id }) => (
   <div className="queue">

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getTask } from '../../selectors';
-import { init } from '../../removeTask/actions';
-import { getQueueTaskIds } from '../../../queues/selectors';
+import { getTask } from '../selectors';
+import { init } from '../removeTask/actions';
+import { getQueueTaskIds } from '../../queues/selectors';
 
 const Tasks = ({ tasks, queueId, remove }) => (
   <ul className="tasks">

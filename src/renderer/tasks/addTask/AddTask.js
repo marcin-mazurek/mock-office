@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { getSelectedServerDetails } from '../../../servers/selectors';
-import Http from './httpForm';
-import Ws from './wsForm';
+import { getSelectedServerDetails } from '../../servers/selectors';
+import Http from './HttpForm';
+import Ws from './WsForm';
 
 const AddTaskForm = ({ serverType }) => (
   <div className="add-task">

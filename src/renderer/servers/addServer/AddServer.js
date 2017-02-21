@@ -1,5 +1,5 @@
 import React from 'react';
-import AddServerForm from '../../addServer/AddServerForm';
+import AddServerForm from './AddServerForm';
 
 const AddServer = () => (
   <div>

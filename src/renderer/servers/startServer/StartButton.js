@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-mdl';
-import init from '../actions';
-import { getSelected } from '../../selectors';
+import init from './actions';
+import { getSelected } from '../selectors';
 
 const StartButton = ({ serverId, start }) => (
   <Button

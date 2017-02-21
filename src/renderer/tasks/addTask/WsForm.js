@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { init as initAddTask } from '../actions';
-import { getSelected } from '../../../servers/selectors';
+import { init as initAddTask } from './actions';
+import { getSelected } from '../../servers/selectors';
 
-class AddTaskForm extends React.Component {
+class WsForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -109,7 +109,7 @@ class AddTaskForm extends React.Component {
   }
 }
 
-AddTaskForm.propTypes = {
+WsForm.propTypes = {
   initAddTask: React.PropTypes.func.isRequired,
   serverId: React.PropTypes.string.isRequired
 };
@@ -122,4 +122,4 @@ const mapDispatchToProps = {
   initAddTask
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTaskForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WsForm);

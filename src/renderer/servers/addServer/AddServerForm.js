@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Textfield, Button } from 'react-mdl';
-import init from '../actions';
+import init from './actions';
 
 class AddServerForm extends React.Component {
   constructor(props) {
