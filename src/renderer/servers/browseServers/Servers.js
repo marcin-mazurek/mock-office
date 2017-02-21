@@ -1,5 +1,5 @@
 import React from 'react';
-import ServerList from './ServerList';
+import ServerListConnect from './ServerList';
 
 const Servers = () => (
   <div>
@@ -10,7 +10,7 @@ const Servers = () => (
         </span>
       </div>
     </header>
-    <ServerList />
+    <ServerListConnect />
   </div>
 );
 

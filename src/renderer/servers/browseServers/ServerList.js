@@ -5,7 +5,7 @@ import { List, ListItem } from 'react-mdl';
 import { getServerList } from '../selectors';
 import { select as dispatchSelect } from '../actions';
 
-const ServerList = ({ servers, select, goToServerPage }) => (
+export const ServerList = ({ servers, select, goToServerPage }) => (
   <List>
     {
       servers.map(server => (

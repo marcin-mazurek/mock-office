@@ -5,7 +5,7 @@ import { getSelectedServerDetails } from '../../servers/selectors';
 import Http from './HttpForm';
 import Ws from './WsForm';
 
-const AddTaskForm = ({ serverType }) => (
+export const AddTask = ({ serverType }) => (
   <div className="add-task">
     <Link to="/server">&#8666; Server details</Link>
     {
@@ -16,7 +16,7 @@ const AddTaskForm = ({ serverType }) => (
   </div>
 );
 
-AddTaskForm.propTypes = {
+AddTask.propTypes = {
   serverType: React.PropTypes.string.isRequired
 };
 
@@ -24,4 +24,4 @@ const mapStateToProps = state => ({
   serverType: getSelectedServerDetails(state).type
 });
 
-export default connect(mapStateToProps)(AddTaskForm);
+export default connect(mapStateToProps)(AddTask);

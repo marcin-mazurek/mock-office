@@ -1,0 +1,12 @@
+exports[`test AddTask should render 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/server">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;

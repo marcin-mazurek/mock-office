@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Textfield, Button } from 'react-mdl';
 import init from './actions';
 
-class AddServerForm extends React.Component {
+export class AddServerForm extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);

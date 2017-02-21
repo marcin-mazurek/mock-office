@@ -6,7 +6,7 @@ const mapDispatchToProps = {
   initAddQueueFromFile
 };
 
-class FilePicker extends React.Component {
+export class FilePicker extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { init as initAddTask } from './actions';
 import { getSelected } from '../../servers/selectors';
 
-class HttpForm extends React.Component {
+export class HttpForm extends React.Component {
   constructor(props) {
     super(props);
 

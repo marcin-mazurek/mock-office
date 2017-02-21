@@ -1,0 +1,5 @@
+exports[`test FilePicker should render 1`] = `
+<input
+  onChange={[Function]}
+  type="file" />
+`;

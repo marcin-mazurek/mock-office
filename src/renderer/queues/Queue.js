@@ -1,10 +1,10 @@
 import React from 'react';
-import Tasks from '../tasks/browseTasks/Tasks';
+import TasksConnect from '../tasks/browseTasks/Tasks';
 
 const Queue = ({ id }) => (
   <div className="queue">
     <div className="queue__tasks">
-      <Tasks queueId={id} />
+      <TasksConnect queueId={id} />
     </div>
   </div>
 );

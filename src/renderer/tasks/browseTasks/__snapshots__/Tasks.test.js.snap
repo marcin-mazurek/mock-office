@@ -1,0 +1,4 @@
+exports[`test Tasks should render 1`] = `
+<ul
+  className="tasks" />
+`;

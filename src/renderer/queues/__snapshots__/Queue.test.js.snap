@@ -1,0 +1,10 @@
+exports[`test Queue should render 1`] = `
+<div
+  className="queue">
+  <div
+    className="queue__tasks">
+    <Connect(Component)
+      queueId="some-id" />
+  </div>
+</div>
+`;

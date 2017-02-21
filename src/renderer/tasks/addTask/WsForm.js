@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { init as initAddTask } from './actions';
 import { getSelected } from '../../servers/selectors';
 
-class WsForm extends React.Component {
+export class WsForm extends React.Component {
   constructor(props) {
     super(props);
 

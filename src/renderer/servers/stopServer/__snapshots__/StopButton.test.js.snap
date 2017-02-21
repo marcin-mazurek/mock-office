@@ -1,0 +1,14 @@
+exports[`test StopButton should render 1`] = `
+<Button
+  onClick={[Function]}
+  raised={true}
+  ripple={true}
+  style={
+    Object {
+      "backgroundColor": "#ff5959",
+      "color": "#FFF",
+    }
+  }>
+  Stop
+</Button>
+`;

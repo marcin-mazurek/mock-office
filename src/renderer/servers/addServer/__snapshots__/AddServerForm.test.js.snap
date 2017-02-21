@@ -1,0 +1,76 @@
+exports[`test AddServerForm should render 1`] = `
+<div
+  className="add-server-form">
+  <form
+    action="#">
+    <div
+      className="add-server-form__field">
+      <Textfield
+        floatingLabel={true}
+        label="Name"
+        onChange={[Function]}
+        value="Server name" />
+    </div>
+    <div
+      className="add-server-form__field">
+      <Textfield
+        floatingLabel={true}
+        label="Port"
+        onChange={[Function]}
+        value={3000} />
+    </div>
+    <div
+      className="add-server-form__field">
+      <label
+        className=""
+        htmlFor="type">
+        Type: 
+         
+      </label>
+      <select
+        id="type"
+        name="type"
+        onChange={[Function]}
+        value="http">
+        <option
+          value="http">
+          http
+        </option>
+        <option
+          value="ws">
+          ws
+        </option>
+      </select>
+    </div>
+    <div
+      className="add-server-form__field">
+      <label
+        htmlFor="secure">
+        Secure: 
+         
+      </label>
+      <select
+        id="secure"
+        name="secure"
+        onChange={[Function]}
+        value="no">
+        <option
+          value="yes">
+          yes
+        </option>
+        <option
+          value="no">
+          no
+        </option>
+      </select>
+    </div>
+    <Button
+      colored={true}
+      onClick={[Function]}
+      raised={true}
+      ripple={true}>
+      Create
+    </Button>
+  </form>
+</div>
+`;

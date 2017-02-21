@@ -1,0 +1,14 @@
+exports[`test StartButton should render 1`] = `
+<Button
+  onClick={[Function]}
+  raised={true}
+  ripple={true}
+  style={
+    Object {
+      "backgroundColor": "#02d77d",
+      "color": "#FFF",
+    }
+  }>
+  Start
+</Button>
+`;

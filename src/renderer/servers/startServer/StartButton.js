@@ -4,7 +4,7 @@ import { Button } from 'react-mdl';
 import init from './actions';
 import { getSelected } from '../selectors';
 
-const StartButton = ({ serverId, start }) => (
+export const StartButton = ({ serverId, start }) => (
   <Button
     raised
     ripple

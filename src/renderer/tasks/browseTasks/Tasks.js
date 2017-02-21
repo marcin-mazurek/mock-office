@@ -4,7 +4,7 @@ import { getTask } from '../selectors';
 import { init } from '../removeTask/actions';
 import { getQueueTaskIds } from '../../queues/selectors';
 
-const Tasks = ({ tasks, queueId, remove }) => (
+export const Tasks = ({ tasks, queueId, remove }) => (
   <ul className="tasks">
     {
       tasks.map(task => (

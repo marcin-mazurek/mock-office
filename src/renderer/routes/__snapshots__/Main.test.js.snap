@@ -1,0 +1,11 @@
+exports[`test Main should render 1`] = `
+<div
+  className="main">
+  <div
+    className="main__nav-bar">
+    <Component />
+  </div>
+  <div
+    className="main__content" />
+</div>
+`;

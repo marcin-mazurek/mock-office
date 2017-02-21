@@ -1,0 +1,15 @@
+exports[`test AddServer should render 1`] = `
+<div>
+  <header
+    className="mdl-layout__header">
+    <div
+      className="mdl-layout__header-row">
+      <span
+        className="mdl-layout-title">
+        Add server:
+      </span>
+    </div>
+  </header>
+  <Connect(AddServerForm) />
+</div>
+`;

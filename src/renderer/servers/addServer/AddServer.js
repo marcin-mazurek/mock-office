@@ -1,5 +1,5 @@
 import React from 'react';
-import AddServerForm from './AddServerForm';
+import AddServerFormConnect from './AddServerForm';
 
 const AddServer = () => (
   <div>
@@ -10,7 +10,7 @@ const AddServer = () => (
         </span>
       </div>
     </header>
-    <AddServerForm />
+    <AddServerFormConnect />
   </div>
 );
 
