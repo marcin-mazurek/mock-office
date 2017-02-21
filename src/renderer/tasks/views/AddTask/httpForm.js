@@ -22,17 +22,8 @@ class AddTaskForm extends React.Component {
   }
 
   handleRequirementsChange(event) {
-    let requirements;
-
-    try {
-      requirements = JSON.parse(event.target.value);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
-    }
-
     this.setState({
-      requirements
+      requirements: event.target.value
     });
   }
 
@@ -49,8 +40,32 @@ class AddTaskForm extends React.Component {
   }
 
   handleSubmit(event) {
+    const delay = parseInt(this.state.delay, 10);
+    let requirements;
+
+    try {
+      requirements = JSON.parse(this.state.requirements);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error.message);
+    }
+
+    let taskPayload;
+
+    try {
+      taskPayload = JSON.parse(this.state.taskPayload);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error.message);
+    }
+
     event.preventDefault();
-    this.props.initAddTask(this.props.serverId, this.state);
+    this.props.initAddTask(this.props.serverId, {
+      blocking: this.state.blocking,
+      delay,
+      requirements,
+      taskPayload
+    });
   }
 
   render() {
