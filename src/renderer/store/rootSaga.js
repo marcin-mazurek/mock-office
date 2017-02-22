@@ -1,6 +1,5 @@
 import { spawn } from 'redux-saga/effects';
 import addQueueFromFileAgent from '../tasks/addTaskFromFile/saga';
-import addServerAgent from '../servers/addServer/saga';
 import serverStartAgent from '../servers/startServer/saga';
 import serverStopAgent from '../servers/stopServer/saga';
 import removeTaskAfterUseAgent from '../tasks/removeTaskAfterUse/saga';
@@ -14,7 +13,6 @@ export default function* rootSaga() {
   yield [
     yield spawn(syncServers),
     yield spawn(addQueueFromFileAgent),
-    yield spawn(addServerAgent),
     yield spawn(serverStartAgent),
     yield spawn(serverStopAgent),
     yield spawn(removeTaskAfterUseAgent),
