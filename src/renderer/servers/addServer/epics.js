@@ -3,7 +3,7 @@ import { add } from '../actions';
 import { INIT } from './actions';
 
 export default action$ =>
-  action$.filter(action => action.type === INIT)
+  action$.ofType(INIT)
     .map((action) => {
       const { name, port, serverType: type, isSecure, keyPath, certPath } = action;
       const servers = remote.require('./main/servers').default;
