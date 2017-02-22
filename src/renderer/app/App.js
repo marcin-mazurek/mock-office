@@ -4,11 +4,10 @@ import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material';
-import configureStore from '../store';
+import store from '../store';
 import routes from '../routes';
 import removeTaskAfterUse from '../tasks/removeTaskAfterUse';
 
-const store = configureStore();
 removeTaskAfterUse(store);
 
 const history = syncHistoryWithStore(hashHistory, store, {
