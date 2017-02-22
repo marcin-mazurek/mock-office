@@ -6,13 +6,18 @@ import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material';
 import configureStore from '../store';
 import routes from '../routes';
+import removeTaskAfterUse from '../tasks/removeTaskAfterUse';
 
 const store = configureStore();
+removeTaskAfterUse(store);
+
 const history = syncHistoryWithStore(hashHistory, store, {
   selectLocationState(state) {
     return state.get('routing').toJS();
   }
 });
+
+store.dispatch({ type: 'app/INIT'});
 
 const App = () => (
   <div className="app">

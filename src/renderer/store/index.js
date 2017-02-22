@@ -13,16 +13,14 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 
 const DEBUG = process.env.NODE_ENV !== 'production';
 
-export default () => {
-  const initialState = fromJS({});
-  const sagaMiddleware = createSagaMiddleware();
-  const routerMiddleware = createRouterMiddleware(hashHistory);
-  const enhancer = compose(
-    applyMiddleware(sagaMiddleware, routerMiddleware, epicMiddleware),
-    (DEBUG && window.devToolsExtension) ? window.devToolsExtension() : f => f
-  );
-  const store = createStore(rootReducer, initialState, enhancer);
-  sagaMiddleware.run(rootSaga);
+const initialState = fromJS({});
+const sagaMiddleware = createSagaMiddleware();
+const routerMiddleware = createRouterMiddleware(hashHistory);
+const enhancer = compose(
+  applyMiddleware(sagaMiddleware, routerMiddleware, epicMiddleware),
+  (DEBUG && window.devToolsExtension) ? window.devToolsExtension() : f => f
+);
+const store = createStore(rootReducer, initialState, enhancer);
+sagaMiddleware.run(rootSaga);
 
-  return store;
-};
+export default store;
