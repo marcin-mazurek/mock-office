@@ -32,31 +32,38 @@ const createTask = (queue, task) => {
 
   if (t.interval) {
     job = Task.create(() => {
+      t.running = true;
       const intervalId = setInterval(() =>
         queue.tunnel(t.taskPayload), t.interval
       );
 
       return () => {
-        t.cancel = undefined;
+        t.running = false;
         clearInterval(intervalId);
       };
     });
   } else if (t.delay) {
     job = Task.create((onSuccess) => {
+      t.running = true;
       const timeoutId = setTimeout(() => {
         queue.tunnel(t.taskPayload);
         onSuccess();
       }, t.delay);
 
       return () => {
-        t.cancel = undefined;
+        t.running = false;
         clearTimeout(timeoutId);
       };
     });
   } else {
     job = Task.create((onSuccess) => {
+      t.running = true;
       queue.tunnel(t.taskPayload);
       onSuccess();
+
+      return () => {
+        t.running = false;
+      };
     });
   }
 
@@ -82,6 +89,7 @@ const removeTask = (queueId, taskId) => {
 
   if (task.cancel) {
     task.cancel();
+    task.cancel = undefined;
   }
 
   queue.tasks.splice(taskIndex, 1);
@@ -97,8 +105,12 @@ const runTask = (queueId, taskId) => {
   const task = queue.tasks.find(exp => exp.id === taskId);
 
   task.cancel = task.job.run(() => {
-    removeTask(queueId, task.id);
-    emitRemove(queueId, task.id);
+    task.running = false;
+
+    if (!task.infinite) {
+      removeTask(queueId, task.id);
+      emitRemove(queueId, task.id);
+    }
   });
 };
 
@@ -125,9 +137,7 @@ const runReadyTasks = (queueId, requirements, cb) => {
     }
 
     const runnableTasks = notBlockedTasks.filter((task) => {
-      const running = task.cancel;
-
-      if (running) {
+      if (task.running) {
         return false;
       }
 

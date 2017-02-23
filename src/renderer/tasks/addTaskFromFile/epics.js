@@ -5,21 +5,20 @@ import { init as initAddTask } from '../addTask/actions';
 
 export default (action$, store) =>
   action$.ofType(INIT)
-    .mergeMap((action) => {
+    .flatMap((action) => {
       try {
         const { files } = action;
         const file = files[0];
 
         if (file) {
-          const reader = new FileReader();
-          const serverId = getSelected(store.getState());
-          const readerPromise = new Promise((resolve) => {
+          const fileRead = new Promise((resolve) => {
+            const reader = new FileReader();
             reader.readAsText(file);
             reader.onload = e => resolve(JSON.parse(e.target.result));
           });
 
-          return Observable.fromPromise(readerPromise)
-            .map(task => initAddTask(serverId, task));
+          return Observable.fromPromise(fileRead)
+            .map(task => initAddTask(getSelected(store.getState()), task));
         }
       } catch (parseError) {
         // eslint-disable-next-line no-console
