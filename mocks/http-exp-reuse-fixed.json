@@ -2,7 +2,8 @@
   "requirements": {
     "url": "/some-url"
   },
-  "reuse": "infinite",
+  "reuse": "fixed",
+  "quantity": 3,
   "taskPayload": {
     "body": {
       "data": "response for some-url"
