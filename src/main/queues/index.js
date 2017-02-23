@@ -107,7 +107,16 @@ const runTask = (queueId, taskId) => {
   task.cancel = task.job.run(() => {
     task.running = false;
 
-    if (task.reuse !== 'infinite') {
+    if (task.reuse === 'infinite') {
+      R.identity(); // do nothing
+    } else if (task.reuse === 'fixed') {
+      task.quantity -= 1;
+
+      if (task.quantity === 0) {
+        removeTask(queueId, task.id);
+        emitRemove(queueId, task.id);
+      }
+    } else {
       removeTask(queueId, task.id);
       emitRemove(queueId, task.id);
     }
