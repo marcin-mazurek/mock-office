@@ -1,0 +1,11 @@
+{
+  "requirements": {
+    "url": "/some-url"
+  },
+  "infinite": true,
+  "taskPayload": {
+    "body": {
+      "data": "response for some-url"
+    }
+  }
+}
