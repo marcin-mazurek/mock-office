@@ -107,7 +107,7 @@ const runTask = (queueId, taskId) => {
   task.cancel = task.job.run(() => {
     task.running = false;
 
-    if (!task.infinite) {
+    if (task.reuse !== 'infinite') {
       removeTask(queueId, task.id);
       emitRemove(queueId, task.id);
     }
