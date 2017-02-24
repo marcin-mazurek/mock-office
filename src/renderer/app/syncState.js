@@ -1,8 +1,9 @@
+import { remote } from 'electron';
 import { push } from 'react-router-redux';
 import { add, start } from '../servers/actions';
 import { add as addTask } from '../tasks/addTask/actions';
 
-export default (remote, store) => {
+export default (store) => {
   const serversApi = remote.require('./main/servers').default;
   const servers = serversApi.getAll();
 
@@ -29,4 +30,4 @@ export default (remote, store) => {
       store.dispatch(addTask(queue.id, task.id, task.taskPayload));
     }
   }
-}
+};
