@@ -1,11 +1,14 @@
-import React from 'react';
 import { render } from 'react-dom';
-import App from './app/App';
 import syncTasks from './tasks/syncTasks';
 import syncState from './app/syncState';
-import store from './store';
+import configureStore from './store';
+import routes from './routes';
+import configureApp from './app';
+
+const store = configureStore();
+const App = configureApp(store, routes);
 
 syncTasks(store);
 syncState(store);
 
-render(<App />, document.querySelector('.js-main'));
+render(App, document.querySelector('.js-main'));

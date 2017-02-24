@@ -11,12 +11,12 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 
 const DEBUG = process.env.NODE_ENV !== 'production';
 
-const initialState = fromJS({});
-const routerMiddleware = createRouterMiddleware(hashHistory);
-const enhancer = compose(
-  applyMiddleware(routerMiddleware, epicMiddleware),
-  (DEBUG && window.devToolsExtension) ? window.devToolsExtension() : f => f
-);
-const store = createStore(rootReducer, initialState, enhancer);
-
-export default store;
+export default () => {
+  const initialState = fromJS({});
+  const routerMiddleware = createRouterMiddleware(hashHistory);
+  const enhancer = compose(
+    applyMiddleware(routerMiddleware, epicMiddleware),
+    (DEBUG && window.devToolsExtension) ? window.devToolsExtension() : f => f
+  );
+  return createStore(rootReducer, initialState, enhancer);
+};

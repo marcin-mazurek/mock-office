@@ -1,26 +1,15 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { Router, hashHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
 import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material';
-import store from '../store';
-import routes from '../routes';
 
-const history = syncHistoryWithStore(hashHistory, store, {
-  selectLocationState(state) {
-    return state.get('routing').toJS();
-  }
-});
-
-const App = () => (
+const App = ({ children }) => (
   <div className="app">
-    <Provider store={store}>
-      <Router history={history}>
-        {routes}
-      </Router>
-    </Provider>
+    { children }
   </div>
 );
+
+App.propTypes = {
+  children: React.PropTypes.node
+};
 
 export default App;
