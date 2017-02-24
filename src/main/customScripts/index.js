@@ -2,7 +2,7 @@ import { Script } from 'vm';
 import servers from '../servers';
 
 export default (serverId, script) => {
-  const server = servers.get(serverId);
+  const server = servers.find(serverId);
   const customScript = new Script(script);
 
   if (!server.listening) {

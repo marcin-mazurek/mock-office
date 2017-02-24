@@ -15,7 +15,7 @@ class Servers {
     this.add = this.add.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
-    this.get = this.get.bind(this);
+    this.find = this.find.bind(this);
     this.getAll = this.getAll.bind(this);
     this.addTask = this.addTask.bind(this);
   }
@@ -55,12 +55,12 @@ class Servers {
     return Promise.resolve();
   }
 
-  get(id) {
+  find(id) {
     return R.find(R.propEq('id', id))(this.servers);
   }
 
   getAll() {
-    return this.servers;
+    return [].concat(this.servers);
   }
 
   addTask(serverId, task) {
