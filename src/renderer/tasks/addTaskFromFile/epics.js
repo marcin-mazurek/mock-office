@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { INIT } from './actions';
-import { getSelected } from '../../servers/selectors';
+import { getSelectedServerDetails } from '../../servers/selectors';
 import { init as initAddTask } from '../addTask/actions';
 
 export default (action$, store) =>
@@ -18,7 +18,7 @@ export default (action$, store) =>
           });
 
           return Observable.fromPromise(fileRead)
-            .map(task => initAddTask(getSelected(store.getState()), task));
+            .map(task => initAddTask(getSelectedServerDetails(store.getState()).queue, task));
         }
       } catch (parseError) {
         // eslint-disable-next-line no-console

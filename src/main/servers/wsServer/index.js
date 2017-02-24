@@ -74,10 +74,6 @@ export default class WSMockServer {
     });
   }
 
-  addTask(task) {
-    return queues.addTask(this.queueId, task);
-  }
-
   isLive() {
     return this.listening;
   }

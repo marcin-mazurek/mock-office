@@ -63,10 +63,6 @@ export default class HttpServer {
     this.httpServer.close(cb);
   }
 
-  addTask(task) {
-    return queues.addTask(this.queueId, task);
-  }
-
   isLive() {
     return this.httpServer ? this.httpServer.listening : false;
   }

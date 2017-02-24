@@ -17,7 +17,6 @@ class Servers {
     this.stop = this.stop.bind(this);
     this.find = this.find.bind(this);
     this.getAll = this.getAll.bind(this);
-    this.addTask = this.addTask.bind(this);
   }
 
   add(name, port, type, isSecure, keyPath, certPath) {
@@ -61,11 +60,6 @@ class Servers {
 
   getAll() {
     return [].concat(this.servers);
-  }
-
-  addTask(serverId, task) {
-    const server = this.servers.find(srv => srv.id === serverId);
-    return server.addTask(task);
   }
 }
 
