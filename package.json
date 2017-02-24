@@ -18,7 +18,9 @@
     "build-storybook": "build-storybook"
   },
   "watch": {
-    "build-main": "src/main/**/*.js"
+    "build-main": {
+      "patterns": ["src/main/**/*.js", "!src/**/*.test.js"]
+    }
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
