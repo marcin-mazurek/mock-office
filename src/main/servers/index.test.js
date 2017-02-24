@@ -1,4 +1,3 @@
-import sinon from 'sinon';
 import serversHub from './index';
 import HttpServer from './httpServer';
 import WsServer from './wsServer';
@@ -6,7 +5,7 @@ import WsServer from './wsServer';
 test('servers.add should add server to state', () => {
   const serversCount = serversHub.getAll().length;
   serversHub.add('server name', 3000, 'http', false);
-  expect(serversHub.getAll().length).toEqual(serversCount + 1);
+  expect(serversHub.servers.length).toEqual(serversCount + 1);
 });
 
 test('serversHub.add should return id of added server and id of its queue', () => {
@@ -32,7 +31,7 @@ test('serversHub.add should throw error if we provide unknown server type', () =
 });
 
 test('serversHub.start should call server start if it is not running', () => {
-  const stubFn = sinon.spy();
+  const mockFn = jest.fn();
   const serverId = 'some-id';
 
   serversHub.servers = [
@@ -43,17 +42,17 @@ test('serversHub.start should call server start if it is not running', () => {
       },
       start(cb) {
         cb();
-        stubFn();
+        mockFn(0);
       }
     }
   ];
 
   serversHub.start(serverId);
-  expect(stubFn.called).toBeTruthy();
+  expect(mockFn.mock.calls.length).toEqual(1);
 });
 
 test('serversHub.start should not call server start if it is running', () => {
-  const stubFn = sinon.spy();
+  const mockFn = jest.fn();
   const serverId = 'some-id';
 
   serversHub.servers = [
@@ -64,17 +63,17 @@ test('serversHub.start should not call server start if it is running', () => {
       },
       start(cb) {
         cb();
-        stubFn();
+        mockFn();
       }
     }
   ];
 
   serversHub.start(serverId);
-  expect(stubFn.called).toBeFalsy();
+  expect(mockFn.mock.calls.length).toEqual(0);
 });
 
 test('serversHub.stop should call server stop if it is running', () => {
-  const stubFn = sinon.spy();
+  const mockFn = jest.fn();
   const serverId = 'some-id';
 
   serversHub.servers = [
@@ -85,17 +84,17 @@ test('serversHub.stop should call server stop if it is running', () => {
       },
       stop(cb) {
         cb();
-        stubFn();
+        mockFn();
       }
     }
   ];
 
   serversHub.stop(serverId);
-  expect(stubFn.called).toBeTruthy();
+  expect(mockFn.mock.calls.length).toEqual(1);
 });
 
 test('serversHub.stop should not call server stop if it is not running', () => {
-  const stubFn = sinon.spy();
+  const mockFn = jest.fn();
   const serverId = 'some-id';
 
   serversHub.servers = [
@@ -106,11 +105,11 @@ test('serversHub.stop should not call server stop if it is not running', () => {
       },
       stop(cb) {
         cb();
-        stubFn();
+        mockFn();
       }
     }
   ];
 
   serversHub.stop(serverId);
-  expect(stubFn.called).toBeFalsy();
+  expect(mockFn.mock.calls.length).toEqual(0);
 });
