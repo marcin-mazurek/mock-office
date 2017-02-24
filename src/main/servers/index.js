@@ -9,58 +9,64 @@ const serverTypes = {
   ws: WSMockServer
 };
 
-let state = [];
-
-const add = (name, port, type, isSecure, keyPath, certPath) => {
-  const id = unique();
-  const queueId = queues.addQueue(id);
-  const Server = serverTypes[type];
-
-  state = state.concat([
-    new Server({ name, port, id, queueId, isSecure, keyPath, certPath })
-  ]);
-
-  return { serverId: id, queueId };
-};
-
-const start = id => R.compose(
-  server => new Promise((resolve) => {
-    if (!server.isLive()) {
-      server.start(resolve);
-      return;
-    }
-
-    resolve();
-  }),
-  R.find(R.propEq('id', id))
-)(state);
-
-const stop = (id) => {
-  const serverToStop = state.find(server => server.id === id);
-
-  if (serverToStop.isLive()) {
-    return new Promise((resolve) => {
-      serverToStop.stop(resolve);
-    });
+class Servers {
+  constructor() {
+    this.servers = [];
+    this.add = this.add.bind(this);
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
+    this.get = this.get.bind(this);
+    this.getAll = this.getAll.bind(this);
+    this.addTask = this.addTask.bind(this);
   }
 
-  return Promise.resolve();
-};
+  add(name, port, type, isSecure, keyPath, certPath) {
+    const id = unique();
+    const queueId = queues.addQueue(id);
+    const Server = serverTypes[type];
+    this.servers.push(new Server({ name, port, id, queueId, isSecure, keyPath, certPath }));
 
-const get = id => R.find(R.propEq('id', id))(state);
-const getAll = () => state;
+    return { serverId: id, queueId };
+  }
 
-const addTask = (serverId, task) => {
-  const server = state.find(srv => srv.id === serverId);
+  start(id) {
+    return R.compose(
+      server => new Promise((resolve) => {
+        if (!server.isLive()) {
+          server.start(resolve);
+          return;
+        }
 
-  return server.addTask(task);
-};
+        resolve();
+      }),
+      R.find(R.propEq('id', id))
+    )(this.servers);
+  }
 
-export default {
-  add,
-  start,
-  stop,
-  get,
-  getAll,
-  addTask
-};
+  stop(id) {
+    const serverToStop = this.servers.find(server => server.id === id);
+
+    if (serverToStop.isLive()) {
+      return new Promise((resolve) => {
+        serverToStop.stop(resolve);
+      });
+    }
+
+    return Promise.resolve();
+  }
+
+  get(id) {
+    return R.find(R.propEq('id', id))(this.servers);
+  }
+
+  getAll() {
+    return this.servers;
+  }
+
+  addTask(serverId, task) {
+    const server = this.servers.find(srv => srv.id === serverId);
+    return server.addTask(task);
+  }
+}
+
+export default new Servers();
