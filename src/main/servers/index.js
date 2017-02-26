@@ -1,7 +1,7 @@
 import R from 'ramda';
 import unique from 'node-unique';
-import HttpServer from './httpServer';
-import WSMockServer from './wsServer';
+import HttpServer from './HttpServer';
+import WSMockServer from './WsServer';
 import queues from '../queues';
 
 const serverTypes = {

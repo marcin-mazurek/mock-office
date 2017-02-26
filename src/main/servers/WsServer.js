@@ -2,7 +2,7 @@ import { Server as WebSocketServer } from 'ws';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import queues from '../../queues';
+import queues from '../queues';
 
 export default class WSMockServer {
   constructor(config) {

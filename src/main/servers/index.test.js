@@ -1,6 +1,6 @@
 import serversHub from './index';
-import HttpServer from './httpServer';
-import WsServer from './wsServer';
+import HttpServer from './HttpServer';
+import WsServer from './WsServer';
 
 test('serversHub.add should add server to servers list', () => {
   const serversCount = serversHub.servers.length;
