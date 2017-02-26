@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
     case ADD: {
       const { taskId, taskPayload } = action;
 
-      return addTask(taskId, ({ taskPayload, id: taskId }))(state);
+      return addTask(taskId, { taskPayload, id: taskId })(state);
     }
     case REMOVE: {
       const { taskId } = action;
