@@ -1,0 +1,17 @@
+exports[`test addTaskEpic 1`] = `
+Array [
+  Object {
+    "queueId": "queueId",
+    "task": Object {
+      "taskPayload": "taskPayload",
+    },
+    "type": "addTask/INIT",
+  },
+  Object {
+    "queueId": "queue",
+    "taskId": "task id",
+    "taskPayload": "taskPayload",
+    "type": "tasks/ADD",
+  },
+]
+`;
