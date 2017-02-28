@@ -1,9 +1,9 @@
 import React from 'react';
-import NavBar from '../app/NavBar';
+import NavBar from '../navbar/NavBar';
 
 const Main = ({ children }) => (
   <div className="main">
-    <div className="main__nav-bar">
+    <div className="main__navbar">
       <NavBar />
     </div>
     <div className="main__content">

@@ -1,8 +1,6 @@
 exports[`test StartButton should render 1`] = `
-<Button
+<button
   onClick={[Function]}
-  raised={true}
-  ripple={true}
   style={
     Object {
       "backgroundColor": "#02d77d",
@@ -10,5 +8,5 @@ exports[`test StartButton should render 1`] = `
     }
   }>
   Start
-</Button>
+</button>
 `;

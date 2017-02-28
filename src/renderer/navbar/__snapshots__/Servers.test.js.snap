@@ -1,0 +1,4 @@
+exports[`test Servers should render 1`] = `
+<ul
+  className="servers-list" />
+`;

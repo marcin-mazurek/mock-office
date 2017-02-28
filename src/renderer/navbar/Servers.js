@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { List, ListItem } from 'react-mdl';
-import { getServerList } from '../selectors';
-import { select as dispatchSelect } from '../actions';
+import { getServerList } from '../servers/selectors';
+import { select as dispatchSelect } from '../servers/actions';
 
-export const ServerList = ({ servers, select, goToServerPage }) => (
-  <List>
+export const Servers = ({ servers, select, goToServerPage }) => (
+  <ul className="servers-list">
     {
       servers.map(server => (
-        <ListItem key={server.id}>
+        <li className="servers-list__item" key={server.id}>
           <a
             className="server-list__link"
             href=""
@@ -21,13 +20,13 @@ export const ServerList = ({ servers, select, goToServerPage }) => (
           >
             {server.name}
           </a>
-        </ListItem>
+        </li>
       ))
     }
-  </List>
+  </ul>
 );
 
-ServerList.propTypes = {
+Servers.propTypes = {
   servers: React.PropTypes.shape().isRequired,
   select: React.PropTypes.func.isRequired,
   goToServerPage: React.PropTypes.func.isRequired
@@ -39,7 +38,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   select: id => dispatchSelect(id),
-  goToServerPage: () => push('/server')
+  goToServerPage: () => push('/')
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ServerList);
+export default connect(mapStateToProps, mapDispatchToProps)(Servers);

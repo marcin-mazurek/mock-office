@@ -4,7 +4,7 @@ exports[`test AddTask should render 1`] = `
   <Link
     onlyActiveOnIndex={false}
     style={Object {}}
-    to="/server">
+    to="/">
     ⇚ Server details
   </Link>
   <Connect(WsForm) />

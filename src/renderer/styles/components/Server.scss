@@ -1,0 +1,43 @@
+.server {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.server-inspect {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.server-inspect__header {
+  flex: none;
+}
+
+.server-inspect__main {
+  flex: auto;
+}
+
+.server-inspect-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.server-inspect-details__row {
+  align-items: center;
+  display: flex;
+  margin: 10px 0;
+}
+
+.server-inspect-details__cell {
+  background: #EEE;
+  padding: 5px 10px;
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+

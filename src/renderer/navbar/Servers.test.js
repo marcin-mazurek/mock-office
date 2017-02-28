@@ -2,11 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { List } from 'immutable';
-import { ServerList } from './ServerList';
+import { Servers } from './Servers';
 
-test('ServerList should render', () => {
+test('Servers should render', () => {
   const wrapper = shallow(
-    <ServerList
+    <Servers
       servers={new List()}
       select={() => {}}
       goToServerPage={() => {}}
