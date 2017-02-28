@@ -4,10 +4,11 @@ import { TASK_REMOVED } from '../../main/common/messageNames';
 import { remove } from './removeTask/actions';
 
 export default (store) => {
-  Observable.bindCallback(
-    ipcRenderer.on.bind(ipcRenderer),
+  Observable.fromEvent(
+    ipcRenderer,
+    TASK_REMOVED,
     (event, args) => [args.queueId, args.taskId]
-  )(TASK_REMOVED)
+  )
     .subscribe(args => store.dispatch(remove(...args))
     );
 };
