@@ -18,7 +18,7 @@ export default (action$, store) =>
           });
 
           return Observable.fromPromise(fileRead)
-            .map(task => initAddTask(getSelectedServerDetails(store.getState()).queue, task));
+            .map(tasks => initAddTask(getSelectedServerDetails(store.getState()).queue, tasks));
         }
       } catch (parseError) {
         // eslint-disable-next-line no-console

@@ -46,8 +46,10 @@ test('addTaskEpic', () => {
     tasks: new Map()
   }));
 
-  store.dispatch(init('queueId', {
-    taskPayload: 'taskPayload'
-  }));
+  store.dispatch(init('queueId', [
+    {
+      taskPayload: 'taskPayload'
+    }
+  ]));
   expect(store.getActions()).toMatchSnapshot();
 });

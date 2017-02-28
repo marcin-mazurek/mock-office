@@ -1,11 +1,13 @@
-{
-  "requirements": {
-    "url": "/some-url"
-  },
-  "reuse": "infinite",
-  "taskPayload": {
-    "body": {
-      "data": "response for some-url"
+[
+  {
+    "requirements": {
+      "url": "/some-url"
+    },
+    "reuse": "infinite",
+    "taskPayload": {
+      "body": {
+        "data": "response for some-url"
+      }
     }
   }
-}
+]

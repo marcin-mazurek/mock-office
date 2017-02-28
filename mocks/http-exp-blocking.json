@@ -1,11 +1,14 @@
-{
-  "blocking": true,
-  "requirements": {
-    "url": "/another-url"
-  },
-  "taskPayload": {
-    "body": {
-      "data": "response for another-url"
+[
+  {
+    "blocking": true,
+    "requirements": {
+      "url": "/another-url"
+    },
+    "taskPayload": {
+      "body": {
+        "data": "response for another-url"
+      }
     }
   }
-}
+
+]
