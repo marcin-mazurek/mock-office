@@ -19,7 +19,10 @@
   },
   "watch": {
     "build-main": {
-      "patterns": ["src/main/**/*.js", "!src/**/*.test.js"]
+      "patterns": [
+        "src/main/**/*.js",
+        "!src/**/*.test.js"
+      ]
     }
   },
   "repository": "https://github.com/electron/electron-quick-start",
@@ -44,6 +47,7 @@
     "electron-devtools-installer": "^2.0.1",
     "electron-prebuilt": "^1.4.12",
     "electron-reload": "^1.0.3",
+    "es6-promise": "^4.0.5",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
@@ -70,7 +74,6 @@
     "ramda": "^0.23.0",
     "ramda-fantasy": "^0.7.0",
     "react": "^15.4.1",
-    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.1",
     "react-mdl": "^1.9.0",
     "react-redux": "^4.4.6",
