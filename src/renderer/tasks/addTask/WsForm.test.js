@@ -6,7 +6,7 @@ import { WsForm } from './WsForm';
 test('WsForm should render', () => {
   const props = {
     initAddTask: () => {},
-    serverId: 'some id'
+    queueId: 'some id'
   };
   const wrapper = shallow(<WsForm {...props} />);
   expect(toJson(wrapper)).toMatchSnapshot();

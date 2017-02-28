@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { init as initAddTask } from './actions';
-import { getSelected } from '../../servers/selectors';
+import { getSelectedServerDetails } from '../../servers/selectors';
 
 export class WsForm extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export class WsForm extends React.Component {
 
   handleIntervalChange(event) {
     this.setState({
-      interval: parseInt(event.target.value, 10)
+      interval: event.target.value
     });
   }
 
@@ -29,17 +29,8 @@ export class WsForm extends React.Component {
   }
 
   handleRequirementsChange(event) {
-    let requirements;
-
-    try {
-      requirements = JSON.parse(event.target.value);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
-    }
-
     this.setState({
-      requirements
+      requirements: event.target.value
     });
   }
 
@@ -51,13 +42,42 @@ export class WsForm extends React.Component {
 
   handleDelayChange(event) {
     this.setState({
-      delay: parseInt(event.target.value, 10)
+      delay: event.target.value
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.initAddTask(this.props.serverId, this.state);
+    const delay = parseInt(this.state.dely, 10);
+    const interval = parseInt(this.state.interval, 10);
+
+    let requirements;
+
+    try {
+      if (this.state.requirements) {
+        requirements = JSON.parse(this.state.requirements);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error.message);
+    }
+
+    let taskPayload;
+
+    try {
+      taskPayload = JSON.parse(this.state.taskPayload);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error.message);
+    }
+
+    this.props.initAddTask(this.props.queueId, {
+      requirements,
+      delay,
+      taskPayload,
+      blocking: this.state.blocking,
+      interval
+    });
   }
 
   render() {
@@ -111,11 +131,11 @@ export class WsForm extends React.Component {
 
 WsForm.propTypes = {
   initAddTask: React.PropTypes.func.isRequired,
-  serverId: React.PropTypes.string.isRequired
+  queueId: React.PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-  serverId: getSelected(state)
+  queueId: getSelectedServerDetails(state).queue
 });
 
 const mapDispatchToProps = {

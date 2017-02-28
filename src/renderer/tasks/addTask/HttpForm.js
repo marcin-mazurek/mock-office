@@ -40,6 +40,7 @@ export class HttpForm extends React.Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     const delay = parseInt(this.state.delay, 10);
     let requirements;
 
@@ -61,7 +62,6 @@ export class HttpForm extends React.Component {
       console.error(error.message);
     }
 
-    event.preventDefault();
     this.props.initAddTask(this.props.queueId, {
       blocking: this.state.blocking,
       delay,
