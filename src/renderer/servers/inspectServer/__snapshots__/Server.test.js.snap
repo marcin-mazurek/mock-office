@@ -18,34 +18,56 @@ exports[`test Server should render 1`] = `
     <main
       className="server-panel-main server-panel__main">
       <div
-        className="server-panel__tabs">
-        <Tabs
-          activeTab={0}
-          onChange={[Function]}
-          ripple={true}>
-          <Tab
-            style={Object {}}>
-            Config mode
-          </Tab>
-          <Tab
-            style={Object {}}>
-            Script mode
-          </Tab>
-        </Tabs>
-      </div>
-      <div
         className="server-panel__tab">
-        <Component
-          running={true}
-          serverDetails={
-            Object {
-              "id": "some id",
-              "name": "some id",
-              "port": 3000,
-              "queue": "some queue id",
-              "type": "some type",
-            }
-          } />
+        <div
+          className="server-config-tab">
+          <div
+            className="server-config-tab-details">
+            <div
+              className="server-config-tab-details__row">
+              <div
+                className="server-config-tab-details__cell">
+                <Chip>
+                  Port: 
+                  3000
+                </Chip>
+              </div>
+              <div
+                className="server-config-tab-details__cell">
+                <Chip>
+                  Type: 
+                  some type
+                </Chip>
+              </div>
+            </div>
+            <div
+              className="server-config-tab-details__row">
+              <div
+                className="server-config-tab-details__cell">
+                <Link
+                  onlyActiveOnIndex={false}
+                  style={Object {}}
+                  to="/add-task">
+                  Add task
+                </Link>
+              </div>
+            </div>
+            <div
+              className="server-config-tab-details__row">
+              <div
+                className="server-config-tab-details__cell">
+                Add from file: 
+                <Connect(FilePicker) />
+              </div>
+            </div>
+          </div>
+          <div
+            className="server-config-tab__tasks server-config-tab-queues">
+            <Component
+              id="some queue id"
+              serverId="some id" />
+          </div>
+        </div>
       </div>
     </main>
   </div>
