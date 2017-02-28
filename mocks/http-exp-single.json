@@ -1,10 +1,12 @@
-{
-  "requirements": {
-    "url": "/some-url"
-  },
-  "taskPayload": {
-    "body": {
-      "data": "response for some-url"
+[
+  {
+    "requirements": {
+      "url": "/some-url"
+    },
+    "taskPayload": {
+      "body": {
+        "data": "response for some-url"
+      }
     }
   }
-}
+]

@@ -1,9 +1,12 @@
-{
-  "blocking": true,
-  "requirements": {
-    "message": "message-1"
-  },
-  "taskPayload": {
-    "message": "response for message-1"
+[
+  {
+    "blocking": true,
+    "requirements": {
+      "message": "message-1"
+    },
+    "taskPayload": {
+      "message": "response for message-1"
+    }
   }
-}
+
+]

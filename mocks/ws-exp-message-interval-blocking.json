@@ -1,8 +1,11 @@
-{
-  "blocking": true,
-  "instant": true,
-  "interval": 3000,
-  "taskPayload": {
-    "message": "interval message"
+[
+  {
+    "blocking": true,
+    "instant": true,
+    "interval": 3000,
+    "taskPayload": {
+      "message": "interval message"
+    }
   }
-}
+
+]

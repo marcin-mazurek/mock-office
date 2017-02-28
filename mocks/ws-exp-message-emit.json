@@ -1,6 +1,9 @@
-{
-  "instant": true,
-  "taskPayload": {
-    "message": "single emit message"
+[
+  {
+    "instant": true,
+    "taskPayload": {
+      "message": "single emit message"
+    }
   }
-}
+
+]

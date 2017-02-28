@@ -1,9 +1,11 @@
-{
-  "delay": 2000,
-  "requirements": {
-    "message": "message-2"
-  },
-  "taskPayload": {
-    "message": "response for message-2"
+[
+  {
+    "delay": 2000,
+    "requirements": {
+      "message": "message-2"
+    },
+    "taskPayload": {
+      "message": "response for message-2"
+    }
   }
-}
+]
