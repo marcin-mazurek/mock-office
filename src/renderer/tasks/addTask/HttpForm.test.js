@@ -6,7 +6,7 @@ import { HttpForm } from './HttpForm';
 test('HttpForm should render', () => {
   const props = {
     initAddTask: () => {},
-    serverId: 'some id'
+    queueId: 'some id'
   };
   const wrapper = shallow(<HttpForm {...props} />);
   expect(toJson(wrapper)).toMatchSnapshot();

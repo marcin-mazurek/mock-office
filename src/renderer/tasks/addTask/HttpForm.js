@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { init as initAddTask } from './actions';
-import { getSelected } from '../../servers/selectors';
+import { getSelectedServerDetails } from '../../servers/selectors';
 
 export class HttpForm extends React.Component {
   constructor(props) {
@@ -44,7 +44,9 @@ export class HttpForm extends React.Component {
     let requirements;
 
     try {
-      requirements = JSON.parse(this.state.requirements);
+      if (this.state.requirements) {
+        requirements = JSON.parse(this.state.requirements);
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message);
@@ -60,7 +62,7 @@ export class HttpForm extends React.Component {
     }
 
     event.preventDefault();
-    this.props.initAddTask(this.props.serverId, {
+    this.props.initAddTask(this.props.queueId, {
       blocking: this.state.blocking,
       delay,
       requirements,
@@ -115,11 +117,11 @@ export class HttpForm extends React.Component {
 
 HttpForm.propTypes = {
   initAddTask: React.PropTypes.func.isRequired,
-  serverId: React.PropTypes.string.isRequired
+  queueId: React.PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-  serverId: getSelected(state)
+  queueId: getSelectedServerDetails(state).queue
 });
 
 const mapDispatchToProps = {
