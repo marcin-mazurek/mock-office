@@ -1,3 +1,18 @@
-@import 'settings/index';
-@import 'objects/index';
-@import 'components/index';
+// settings
+@import 'settings/fonts';
+
+// objects
+@import 'objects/app-container';
+
+// components
+@import 'components/Main';
+@import 'components/App';
+@import 'components/ServerList';
+@import 'components/NavBar';
+@import 'components/ServerPage';
+@import 'components/AddServerForm';
+@import 'components/ServerConfigTab';
+@import 'components/Queues';
+@import 'components/Tasks';
+@import 'components/AddTask';
+
