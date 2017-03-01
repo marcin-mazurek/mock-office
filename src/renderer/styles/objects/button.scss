@@ -1,3 +1,5 @@
 .button {
   @extend %button-reset;
+  border-radius: 4px;
+  cursor: pointer;
 }
