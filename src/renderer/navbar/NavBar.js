@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarServersConnect from './NavbarServers';
+import NavbarServersConnect from './NavBarServers';
 
 const NavBar = () => (
   <div className="navbar">

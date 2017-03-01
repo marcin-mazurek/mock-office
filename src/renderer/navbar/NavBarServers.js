@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { getServerList } from '../servers/selectors';
 import { select as dispatchSelect } from '../servers/actions';
 
-export const NavbarServers = ({ servers, select, goToServerPage }) => (
+export const NavBarServers = ({ servers, select, goToServerPage }) => (
   <div className="navbar-servers">
     <div className="navbar-servers-header">
       Servers: {' '}
@@ -35,7 +35,7 @@ export const NavbarServers = ({ servers, select, goToServerPage }) => (
   </div>
 );
 
-NavbarServers.propTypes = {
+NavBarServers.propTypes = {
   servers: React.PropTypes.shape().isRequired,
   select: React.PropTypes.func.isRequired,
   goToServerPage: React.PropTypes.func.isRequired
@@ -50,4 +50,4 @@ const mapDispatchToProps = {
   goToServerPage: () => push('/')
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavbarServers);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBarServers);
