@@ -2,22 +2,6 @@ $navbar-width: 160px;
 
 .navbar {
   background-color: #EEE;
-  padding: 10px;
   height: 100%;
   width: $navbar-width;
-}
-
-.navbar-servers-header {
-  display: flex;
-  align-items: center;
-}
-
-.navbar__add-server-button {
-  text-decoration: none;
-  text-align: center;
-  color: #FFF;
-  background-color: #BBB;
-  display: inline-block;
-  margin-left: auto;
-  padding: 1px 5px;
 }

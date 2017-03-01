@@ -1,17 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
-import ServersConnect from './Servers';
+import NavbarServersConnect from './NavbarServers';
 
 const NavBar = () => (
   <div className="navbar">
-    <div className="navbar__servers navbar-servers">
-      <div className="navbar-servers-header">
-        Servers: {' '}
-        <Link className="button navbar__add-server-button" to="/add-server">
-          +
-        </Link>
-      </div>
-      <ServersConnect />
+    <div className="navbar__servers">
+      <NavbarServersConnect />
     </div>
   </div>
 );

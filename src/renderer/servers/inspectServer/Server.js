@@ -58,7 +58,7 @@ const mapStateToProps = state => ({
 
 const ServerInspectConnect = connect(mapStateToProps)(ServerInspect);
 
-const Server = ({ selected }) => (
+export const Server = ({ selected }) => (
   selected ? <ServerInspectConnect /> : <div>Server is not selected</div>
 );
 
