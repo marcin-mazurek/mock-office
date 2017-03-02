@@ -61,7 +61,7 @@ exports[`test ServerInspect should render 1`] = `
     </div>
     <div
       className="server-inspect-queue">
-      <Component
+      <Queue
         id="some queue id"
         serverId="some id" />
     </div>

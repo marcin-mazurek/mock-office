@@ -26,7 +26,7 @@ exports[`test AddServerForm should render 1`] = `
           name="server-port"
           onChange={[Function]}
           type="text"
-          value="Server name" />
+          value={3000} />
       </label>
     </div>
     <div
