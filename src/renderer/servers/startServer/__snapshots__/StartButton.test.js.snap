@@ -4,7 +4,7 @@ exports[`test StartButton should render 1`] = `
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "#02d77d",
+      "backgroundColor": "#AAA",
       "color": "#FFF",
     }
   }>

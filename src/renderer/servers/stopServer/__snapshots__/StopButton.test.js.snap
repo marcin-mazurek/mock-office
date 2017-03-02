@@ -4,7 +4,7 @@ exports[`test StopButton should render 1`] = `
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "#ff5959",
+      "backgroundColor": "#AAA",
       "color": "#FFF",
     }
   }>
