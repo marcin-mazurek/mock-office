@@ -9,5 +9,5 @@ export default action$ =>
       Observable.fromPromise(remote.require('./main/servers').default.start(action.id)),
       Observable.of(action.id)
     ))
-    .take(2)
+    .skip(1)
     .map(start);
