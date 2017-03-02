@@ -7,6 +7,11 @@ import { isRunning, getSelectedServerDetails, getSelected } from '../selectors';
 import FilePickerConnect from '../../tasks/addTaskFromFile/FilePicker';
 import Queue from '../../queues/Queue';
 
+export const ServerNotSelected = () =>
+  <div className="server-not-selected">
+    Select server
+  </div>;
+
 export const ServerInspect = ({ running, serverDetails }) => {
   const { name, port, type, queue, id } = serverDetails;
 
@@ -52,7 +57,7 @@ ServerInspect.propTypes = {
 export const Server = ({ selected, running, serverDetails }) => (
   selected
     ? <ServerInspect running={running} serverDetails={serverDetails} />
-    : <div>Server is not selected</div>
+    : <ServerNotSelected />
 );
 
 Server.propTypes = {

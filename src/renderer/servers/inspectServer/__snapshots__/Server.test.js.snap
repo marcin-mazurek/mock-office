@@ -1,5 +1,77 @@
 exports[`test Server should render 1`] = `
-<div>
-  Server is not selected
+<Component
+  running={true}
+  serverDetails={
+    Object {
+      "id": "some id",
+      "name": "some id",
+      "port": 3000,
+      "queue": "some queue id",
+      "type": "some type",
+    }
+  } />
+`;
+
+exports[`test ServerInspect should render 1`] = `
+<div
+  className="server-inspect">
+  <header
+    className="server-inspect__header">
+    <Connect(Component) />
+     
+    some id
+  </header>
+  <main
+    className="server-inspect-main server-inspect__main">
+    <div
+      className="server-inspect-details">
+      <div
+        className="server-inspect-details__row">
+        <div
+          className="server-inspect-details__cell">
+          Port: 
+          3000
+        </div>
+        <div
+          className="server-inspect-details__cell">
+          Type: 
+          some type
+        </div>
+      </div>
+      <div
+        className="server-inspect-details__row">
+        <div
+          className="server-inspect-details__cell">
+          <Link
+            onlyActiveOnIndex={false}
+            style={Object {}}
+            to="/add-task">
+            Add task
+          </Link>
+        </div>
+      </div>
+      <div
+        className="server-inspect-details__row">
+        <div
+          className="server-inspect-details__cell">
+          Add from file: 
+          <Connect(FilePicker) />
+        </div>
+      </div>
+    </div>
+    <div
+      className="server-inspect-queue">
+      <Component
+        id="some queue id"
+        serverId="some id" />
+    </div>
+  </main>
+</div>
+`;
+
+exports[`test ServerNotSelected should render 1`] = `
+<div
+  className="server-not-selected">
+  Select server
 </div>
 `;

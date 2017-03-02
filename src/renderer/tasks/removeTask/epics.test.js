@@ -3,13 +3,8 @@ import configureMockStore from 'redux-mock-store';
 import 'rxjs';
 import { createEpicMiddleware } from 'redux-observable';
 import { init } from './actions';
-import removeTaskEpic from './epics';
 
-let store;
-const epicMiddleware = createEpicMiddleware(removeTaskEpic);
-const mockStore = configureMockStore([epicMiddleware]);
-
-jest.mock('electron', () => ({
+const mockedElectron = {
   remote: {
     require() {
       return {
@@ -19,7 +14,14 @@ jest.mock('electron', () => ({
       };
     }
   }
-}));
+};
+
+jest.mock('electron', () => mockedElectron);
+const removeTaskEpic = require('./epics').default;
+
+let store;
+const epicMiddleware = createEpicMiddleware(removeTaskEpic);
+const mockStore = configureMockStore([epicMiddleware]);
 
 test('removeTaskEpic', () => {
   store = mockStore(new Map());
