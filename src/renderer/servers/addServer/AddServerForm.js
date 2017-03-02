@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Textfield, Button } from 'react-mdl';
 import init from './actions';
 
 export class AddServerForm extends React.Component {
@@ -77,31 +76,36 @@ export class AddServerForm extends React.Component {
       <div className="add-server-form">
         <form action="#">
           <div className="add-server-form__field">
-            <Textfield
-              floatingLabel
-              onChange={this.handleNameChange}
-              label="Name"
-              value={this.state.name}
-            />
+            <label htmlFor="server-name">
+              Name: {' '}
+              <input
+                name="server-name"
+                type="text"
+                onChange={this.handleNameChange}
+                value={this.state.name}
+              />
+            </label>
           </div>
           <div className="add-server-form__field">
-            <Textfield
-              floatingLabel
-              onChange={this.handleChangePort}
-              label="Port"
-              value={this.state.port}
-            />
+            <label htmlFor="server-port">
+              Port: {' '}
+              <input
+                name="server-port"
+                type="text"
+                onChange={this.handleNameChange}
+                value={this.state.name}
+              />
+            </label>
           </div>
           <div className="add-server-form__field">
             <label
               className=""
-              htmlFor="type"
+              htmlFor="server-type"
             >
               Type: {' '}
             </label>
             <select
-              id="type"
-              name="type"
+              name="server-type"
               value={this.state.type}
               onChange={this.handleTypeChange}
             >
@@ -110,12 +114,11 @@ export class AddServerForm extends React.Component {
             </select>
           </div>
           <div className="add-server-form__field">
-            <label htmlFor="secure">
+            <label htmlFor="server-secure">
               Secure: {' '}
             </label>
             <select
-              name="secure"
-              id="secure"
+              name="server-secure"
               value={this.state.isSecure}
               onChange={this.handleSecureChange}
             >
@@ -130,33 +133,39 @@ export class AddServerForm extends React.Component {
                   <div className="add-server-form__field">
                     <label
                       className=""
-                      htmlFor="type"
+                      htmlFor="server-key"
                     >
                       Key: {' '}
                     </label>
-                    <input type="file" onChange={this.handleKeyChange} />
+                    <input
+                      type="file"
+                      onChange={this.handleKeyChange}
+                      name="server-key"
+                    />
                   </div>
                   <div className="add-server-form__field">
                     <label
                       className=""
-                      htmlFor="type"
+                      htmlFor="server-cert"
                     >
                       Certificate: {' '}
                     </label>
-                    <input type="file" onChange={this.handleCertChange} />
+                    <input
+                      type="file"
+                      onChange={this.handleCertChange}
+                      name="server-cert"
+                    />
                   </div>
                 </div>
               )
               : null
           }
-          <Button
-            raised
-            colored
-            ripple
+          <button
+            className="button add-server-form__submit-button"
             onClick={this.submit}
           >
             Create
-          </Button>
+          </button>
         </form>
       </div>
     );

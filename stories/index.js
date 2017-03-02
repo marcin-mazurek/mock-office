@@ -1,10 +1,3 @@
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import '../src/renderer/styles/main.scss';
-
-import NavBar from '../src/renderer/mainView/NavBar';
-
-storiesOf('NavBar', module)
-  .add('default', () => (
-    <NavBar />
-  ));
+import '../src/renderer/navbar/NavBarServers.story';
+import '../src/renderer/servers/inspectServer/Server.story';

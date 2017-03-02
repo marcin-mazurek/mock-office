@@ -1,75 +1,77 @@
 exports[`test Server should render 1`] = `
+<Component
+  running={true}
+  serverDetails={
+    Object {
+      "id": "some id",
+      "name": "some id",
+      "port": 3000,
+      "queue": "some queue id",
+      "type": "some type",
+    }
+  } />
+`;
+
+exports[`test ServerInspect should render 1`] = `
 <div
-  className="server-page">
-  <div
-    className="server-panel">
-    <header
-      className="server-panel__header mdl-layout__header">
+  className="server-inspect">
+  <header
+    className="server-inspect__header">
+    <Connect(Component) />
+     
+    some id
+  </header>
+  <main
+    className="server-inspect-main server-inspect__main">
+    <div
+      className="server-inspect-details">
       <div
-        className="mdl-layout__header-row">
-        <span
-          className="mdl-layout-title">
-          <Connect(Component) />
-           
-          some id
-        </span>
-      </div>
-    </header>
-    <main
-      className="server-panel-main server-panel__main">
-      <div
-        className="server-panel__tab">
+        className="server-inspect-details__row">
         <div
-          className="server-config-tab">
-          <div
-            className="server-config-tab-details">
-            <div
-              className="server-config-tab-details__row">
-              <div
-                className="server-config-tab-details__cell">
-                <Chip>
-                  Port: 
-                  3000
-                </Chip>
-              </div>
-              <div
-                className="server-config-tab-details__cell">
-                <Chip>
-                  Type: 
-                  some type
-                </Chip>
-              </div>
-            </div>
-            <div
-              className="server-config-tab-details__row">
-              <div
-                className="server-config-tab-details__cell">
-                <Link
-                  onlyActiveOnIndex={false}
-                  style={Object {}}
-                  to="/add-task">
-                  Add task
-                </Link>
-              </div>
-            </div>
-            <div
-              className="server-config-tab-details__row">
-              <div
-                className="server-config-tab-details__cell">
-                Add from file: 
-                <Connect(FilePicker) />
-              </div>
-            </div>
-          </div>
-          <div
-            className="server-config-tab__tasks server-config-tab-queues">
-            <Component
-              id="some queue id"
-              serverId="some id" />
-          </div>
+          className="server-inspect-details__cell">
+          Port: 
+          3000
+        </div>
+        <div
+          className="server-inspect-details__cell">
+          Type: 
+          some type
         </div>
       </div>
-    </main>
-  </div>
+      <div
+        className="server-inspect-details__row">
+        <div
+          className="server-inspect-details__cell">
+          <Link
+            onlyActiveOnIndex={false}
+            style={Object {}}
+            to="/add-task">
+            Add task
+          </Link>
+        </div>
+      </div>
+      <div
+        className="server-inspect-details__row">
+        <div
+          className="server-inspect-details__cell">
+          Add from file: 
+          <Connect(FilePicker) />
+        </div>
+      </div>
+    </div>
+    <div
+      className="server-inspect-queue">
+      <Component
+        id="some queue id"
+        serverId="some id" />
+    </div>
+  </main>
+</div>
+`;
+
+exports[`test ServerNotSelected should render 1`] = `
+<div
+  className="server-not-selected">
+  Select server
 </div>
 `;

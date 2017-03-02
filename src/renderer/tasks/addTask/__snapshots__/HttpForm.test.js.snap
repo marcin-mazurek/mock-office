@@ -1,59 +1,57 @@
 exports[`test HttpForm should render 1`] = `
 <form
   onSubmit={[Function]}>
-  <fieldset>
+  <div>
+    <label
+      htmlFor="blocking">
+      Blocking:
+    </label>
+    <input
+      name="blocking"
+      onChange={[Function]}
+      type="checkbox" />
+  </div>
+  <div>
+    <label
+      htmlFor="delay">
+      Delay:
+    </label>
+    <input
+      name="delay"
+      onChange={[Function]}
+      type="number" />
+  </div>
+  <div>
+    <label
+      htmlFor="requirements">
+      Requirements:
+    </label>
     <div>
-      <label
-        htmlFor="blocking">
-        Blocking:
-      </label>
-      <input
-        name="blocking"
+      <textarea
+        cols="30"
+        name="requirements"
         onChange={[Function]}
-        type="checkbox" />
+        rows="10" />
     </div>
+  </div>
+  <div>
+    <label
+      htmlFor="payload">
+      Payload:
+    </label>
     <div>
-      <label
-        htmlFor="delay">
-        Delay:
-      </label>
-      <input
-        name="delay"
+      <textarea
+        cols="30"
+        name="payload"
         onChange={[Function]}
-        type="number" />
+        rows="10" />
     </div>
-    <div>
-      <label
-        htmlFor="requirements">
-        Requirements:
-      </label>
-      <div>
-        <textarea
-          cols="30"
-          name="requirements"
-          onChange={[Function]}
-          rows="10" />
-      </div>
-    </div>
-    <div>
-      <label
-        htmlFor="payload">
-        Payload:
-      </label>
-      <div>
-        <textarea
-          cols="30"
-          name="payload"
-          onChange={[Function]}
-          rows="10" />
-      </div>
-    </div>
-    <div>
-      <button
-        type="submit">
-        Submit
-      </button>
-    </div>
-  </fieldset>
+  </div>
+  <div>
+    <button
+      type="submit">
+      Submit
+    </button>
+  </div>
 </form>
 `;

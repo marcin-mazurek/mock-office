@@ -7,7 +7,7 @@ import Ws from './WsForm';
 
 export const AddTask = ({ serverType }) => (
   <div className="add-task">
-    <Link to="/server">&#8666; Server details</Link>
+    <Link to="/">&#8666; Server details</Link>
     {
       serverType === 'http'
         ? <Http />

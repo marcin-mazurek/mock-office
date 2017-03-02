@@ -1,12 +1,7 @@
-.nav-bar {
-  background-color: #EEE;
-  border: 1px solid #DDD;
-  display: flex;
-  margin: 0;
-  list-style: none;
-  padding: 10px;
-}
+$navbar-width: 160px;
 
-.nav-bar__item {
-  margin-right: 20px;
+.navbar {
+  background-color: #EEE;
+  height: 100%;
+  width: $navbar-width;
 }

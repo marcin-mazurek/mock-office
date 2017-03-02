@@ -1,0 +1,19 @@
+exports[`test NavBarServers should render 1`] = `
+<div
+  className="navbar-servers">
+  <div
+    className="navbar-servers-header">
+    Servers: 
+     
+    <Link
+      className="button navbar-servers__add-server-button"
+      onlyActiveOnIndex={false}
+      style={Object {}}
+      to="/add-server">
+      +
+    </Link>
+  </div>
+  <ul
+    className="navbar-servers-list" />
+</div>
+`;

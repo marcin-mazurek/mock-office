@@ -2,7 +2,7 @@ exports[`test Main should render 1`] = `
 <div
   className="main">
   <div
-    className="main__nav-bar">
+    className="main__navbar">
     <Component />
   </div>
   <div

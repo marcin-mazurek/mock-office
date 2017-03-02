@@ -5,31 +5,40 @@ exports[`test AddServerForm should render 1`] = `
     action="#">
     <div
       className="add-server-form__field">
-      <Textfield
-        floatingLabel={true}
-        label="Name"
-        onChange={[Function]}
-        value="Server name" />
+      <label
+        htmlFor="server-name">
+        Name: 
+         
+        <input
+          name="server-name"
+          onChange={[Function]}
+          type="text"
+          value="Server name" />
+      </label>
     </div>
     <div
       className="add-server-form__field">
-      <Textfield
-        floatingLabel={true}
-        label="Port"
-        onChange={[Function]}
-        value={3000} />
+      <label
+        htmlFor="server-port">
+        Port: 
+         
+        <input
+          name="server-port"
+          onChange={[Function]}
+          type="text"
+          value="Server name" />
+      </label>
     </div>
     <div
       className="add-server-form__field">
       <label
         className=""
-        htmlFor="type">
+        htmlFor="server-type">
         Type: 
          
       </label>
       <select
-        id="type"
-        name="type"
+        name="server-type"
         onChange={[Function]}
         value="http">
         <option
@@ -45,13 +54,12 @@ exports[`test AddServerForm should render 1`] = `
     <div
       className="add-server-form__field">
       <label
-        htmlFor="secure">
+        htmlFor="server-secure">
         Secure: 
          
       </label>
       <select
-        id="secure"
-        name="secure"
+        name="server-secure"
         onChange={[Function]}
         value="no">
         <option
@@ -64,13 +72,11 @@ exports[`test AddServerForm should render 1`] = `
         </option>
       </select>
     </div>
-    <Button
-      colored={true}
-      onClick={[Function]}
-      raised={true}
-      ripple={true}>
+    <button
+      className="button add-server-form__submit-button"
+      onClick={[Function]}>
       Create
-    </Button>
+    </button>
   </form>
 </div>
 `;

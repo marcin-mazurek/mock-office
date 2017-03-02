@@ -73,43 +73,41 @@ export class HttpForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <fieldset>
+        <div>
+          <label htmlFor="blocking">Blocking:</label>
+          <input
+            type="checkbox"
+            name="blocking"
+            onChange={this.handleBlockingChange}
+            value={this.state.blocking}
+          />
+        </div>
+        <div>
+          <label htmlFor="delay">Delay:</label>
+          <input type="number" name="delay" onChange={this.handleDelayChange} />
+        </div>
+        <div>
+          <label htmlFor="requirements">Requirements:</label>
           <div>
-            <label htmlFor="blocking">Blocking:</label>
-            <input
-              type="checkbox"
-              name="blocking"
-              onChange={this.handleBlockingChange}
-              value={this.state.blocking}
+            <textarea
+              name="requirements"
+              cols="30"
+              rows="10"
+              onChange={this.handleRequirementsChange}
             />
           </div>
+        </div>
+        <div>
+          <label htmlFor="payload">Payload:</label>
           <div>
-            <label htmlFor="delay">Delay:</label>
-            <input type="number" name="delay" onChange={this.handleDelayChange} />
+            <textarea name="payload" cols="30" rows="10" onChange={this.handlePayloadChange} />
           </div>
-          <div>
-            <label htmlFor="requirements">Requirements:</label>
-            <div>
-              <textarea
-                name="requirements"
-                cols="30"
-                rows="10"
-                onChange={this.handleRequirementsChange}
-              />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="payload">Payload:</label>
-            <div>
-              <textarea name="payload" cols="30" rows="10" onChange={this.handlePayloadChange} />
-            </div>
-          </div>
-          <div>
-            <button type="submit">
-              Submit
-            </button>
-          </div>
-        </fieldset>
+        </div>
+        <div>
+          <button type="submit">
+            Submit
+          </button>
+        </div>
       </form>
     );
   }

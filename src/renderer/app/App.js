@@ -1,6 +1,4 @@
 import React from 'react';
-import 'react-mdl/extra/material.css';
-import 'react-mdl/extra/material';
 
 const App = ({ children }) => (
   <div className="app">
