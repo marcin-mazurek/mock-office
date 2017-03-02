@@ -92,8 +92,8 @@ export class AddServerForm extends React.Component {
               <input
                 name="server-port"
                 type="text"
-                onChange={this.handleNameChange}
-                value={this.state.name}
+                onChange={this.handleChangePort}
+                value={this.state.port}
               />
             </label>
           </div>
