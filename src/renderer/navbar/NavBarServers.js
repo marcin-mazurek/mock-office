@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
+import classnames from 'classnames';
 import { getServerList } from '../servers/selectors';
 import { select as dispatchSelect } from '../servers/actions';
 
@@ -15,21 +16,28 @@ export const NavBarServers = ({ servers, select, goToServerPage }) => (
     </div>
     <ul className="navbar-servers-list">
       {
-        servers.map(server => (
-          <li className="navbar-servers-list-item" key={server.id}>
-            <a
-              className="navbar-server-list__link"
-              href=""
-              onClick={(e) => {
-                e.preventDefault();
-                select(server.id);
-                goToServerPage();
-              }}
-            >
-              {server.name}
-            </a>
-          </li>
-        ))
+        servers.map((server) => {
+          const serverIndicatorClassNames = classnames(
+            'navbar-server__running-indicator',
+            { 'navbar-server__running-indicator--running': server.running }
+          );
+          return (
+            <li className="navbar-servers-list-item" key={server.id}>
+              <span className={serverIndicatorClassNames} />
+              <a
+                className="navbar-server-list__link"
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  select(server.id);
+                  goToServerPage();
+                }}
+              >
+                {server.name}
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
   </div>
