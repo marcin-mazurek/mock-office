@@ -10,30 +10,22 @@ export class FilePicker extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      value: ''
-    };
   }
 
   handleChange(e) {
     if (e.target.files.length) {
       this.props.initAddQueueFromFile(e.target.files);
     }
-
-    this.setState({
-      value: ''
-    });
   }
 
   render() {
     const { handleChange } = this;
-    const { value } = this.state;
 
     return (
       <input
         type="file"
         onChange={handleChange}
-        value={value}
+        value=""
       />
     );
   }
