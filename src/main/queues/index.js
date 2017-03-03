@@ -34,7 +34,10 @@ const createTask = (queue, task) => {
     job = Task.create(() => {
       t.running = true;
       const intervalId = setInterval(() =>
-        queue.tunnel(t.taskPayload), t.interval
+        queue.tunnel({
+          taskPayload: t.taskPayload,
+          headers: t.headers
+        }), t.interval
       );
 
       return () => {
@@ -46,7 +49,10 @@ const createTask = (queue, task) => {
     job = Task.create((onSuccess) => {
       t.running = true;
       const timeoutId = setTimeout(() => {
-        queue.tunnel(t.taskPayload);
+        queue.tunnel({
+          taskPayload: t.taskPayload,
+          headers: t.headers
+        });
         onSuccess();
       }, t.delay);
 
@@ -58,7 +64,10 @@ const createTask = (queue, task) => {
   } else {
     job = Task.create((onSuccess) => {
       t.running = true;
-      queue.tunnel(t.taskPayload);
+      queue.tunnel({
+        taskPayload: t.taskPayload,
+        headers: t.headers
+      });
       onSuccess();
 
       return () => {

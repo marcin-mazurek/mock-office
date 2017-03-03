@@ -4,6 +4,14 @@ import http from 'http';
 import fs from 'fs';
 import queues from '../queues';
 
+export const send = (req, res) => (task) => {
+  if (task.headers) {
+    res.set(task.headers);
+  }
+
+  res.json(task.taskPayload);
+};
+
 export default class HttpServer {
   constructor(config) {
     this.sockets = [];
@@ -22,7 +30,7 @@ export default class HttpServer {
     const httpServer = this.isSecure ? https : http;
     this.app = express();
     this.app.get('*', (req, res) => {
-      queues.openTunnel(this.queueId, task => res.json(task.body));
+      queues.openTunnel(this.queueId, send(req, res));
 
       queues.runReadyTasks(
         this.queueId,
