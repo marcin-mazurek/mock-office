@@ -4,33 +4,48 @@ import { getTask } from '../selectors';
 import { init } from '../removeTask/actions';
 import { getQueueTaskIds } from '../../queues/selectors';
 
-export const Tasks = ({ tasks, queueId, remove }) => (
+export const Task = ({ id, taskPayload, queueId, remove }) =>
+  <div className="task">
+    <div>{JSON.stringify(taskPayload)}</div>
+    <button onClick={() => remove(queueId, id)}>Remove</button>
+  </div>;
+
+Task.propTypes = {
+  id: React.PropTypes.string.isRequired,
+  taskPayload: React.PropTypes.shape({}).isRequired,
+  queueId: React.PropTypes.string.isRequired,
+  remove: React.PropTypes.func.isRequired
+};
+
+const taskMapStateToProps = (initialState, ownProps) => state => ({
+  taskPayload: getTask(state, ownProps).taskPayload
+});
+
+const taskMapDispatchToProps = {
+  remove: init
+};
+
+export const TaskConnect = connect(taskMapStateToProps, taskMapDispatchToProps)(Task);
+
+export const Tasks = ({ taskIds, queueId }) => (
   <ul className="tasks">
     {
-      tasks.map(task => (
-        <li className="tasks__item" key={task.id}>
-          <div className="task">
-            <div>{JSON.stringify(task.taskPayload)}</div>
-            <button onClick={() => remove(queueId, task.id)}>Remove</button>
-          </div>
+      taskIds.map(taskId =>
+        <li className="tasks__item" key={taskId}>
+          <TaskConnect queueId={queueId} id={taskId} />
         </li>
-      ))
+      )
     }
   </ul>
 );
 
 Tasks.propTypes = {
-  tasks: React.PropTypes.shape({}).isRequired,
-  queueId: React.PropTypes.string.isRequired,
-  remove: React.PropTypes.func.isRequired
+  taskIds: React.PropTypes.shape({}).isRequired,
+  queueId: React.PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  tasks: getQueueTaskIds(ownProps.queueId, state).map(taskId => getTask(state, taskId))
+  taskIds: getQueueTaskIds(ownProps.queueId, state)
 });
 
-const mapDispatchToProps = {
-  remove: init
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tasks);
+export default connect(mapStateToProps)(Tasks);

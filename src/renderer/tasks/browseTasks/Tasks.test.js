@@ -6,7 +6,7 @@ import { Tasks } from './Tasks';
 
 test('Tasks should render', () => {
   const props = {
-    tasks: new List(),
+    taskIds: new List(),
     queueId: 'some id',
     remove: () => {}
   };
