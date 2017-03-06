@@ -1,27 +1,28 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import { Provider } from 'react-redux';
-import { Map, Record } from 'immutable';
+import { Map } from 'immutable';
 import configureStore from 'redux-mock-store';
 import NavBarServersConnect from './NavBarServers';
+import NavBar from './NavBar';
+import { Server } from '../servers/reducer';
 
 const mockStore = configureStore();
 
 const state = new Map({
   servers: new Map({
     itemsById: new Map({
-      'some-id': new Record({
-        id: '',
-        name: 'New Server',
-        port: null,
-        type: '',
-        queue: ''
-      })({
+      'some-id': new Server({
+        name: 'Server 1',
         id: 'some-id'
+      }),
+      'another-id': new Server({
+        name: 'Server 2',
+        id: 'another-id'
       })
     }),
     selected: null,
-    running: new Set()
+    running: new Set(['another-id'])
   })
 });
 
@@ -30,6 +31,8 @@ const store = mockStore(state);
 storiesOf('NavBarServers', module)
   .add('single server', () => (
     <Provider store={store}>
-      <NavBarServersConnect />
+      <NavBar>
+        <NavBarServersConnect />
+      </NavBar>
     </Provider>
   ));

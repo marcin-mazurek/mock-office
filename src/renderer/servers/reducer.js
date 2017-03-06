@@ -7,7 +7,7 @@ import {
   STOP
 } from './actions';
 
-const Server = new Record({
+export const Server = new Record({
   id: '',
   name: 'New Server',
   port: null,
