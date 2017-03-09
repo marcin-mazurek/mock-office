@@ -3,14 +3,24 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import StartButtonConnect from '../startServer/StartButton';
 import StopButtonConnect from '../stopServer/StopButton';
-import { isRunning, getSelectedServerDetails, getSelected } from '../selectors';
+import { isRunning, getSelectedServerDetails, getSelected, getAllAsList } from '../selectors';
 import FilePickerConnect from '../../tasks/addTaskFromFile/FilePicker';
 import Queue from '../../queues/Queue';
 
-export const ServerNotSelected = () =>
-  <div className="server-not-selected">
-    Select server
+export const ServerPlaceholder = ({ serverExists }) =>
+  <div className="server-placeholder">
+    {serverExists ? 'Select server' : 'Add server'}
   </div>;
+
+ServerPlaceholder.propTypes = {
+  serverExists: React.PropTypes.bool.isRequired
+};
+
+const serverPlaceholderMapStateToProps = state => ({
+  serverExists: !getAllAsList(state).isEmpty()
+});
+
+const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
 
 export const ServerInspect = ({ running, serverDetails }) => {
   const { name, port, type, queue, id } = serverDetails;
@@ -57,7 +67,7 @@ ServerInspect.propTypes = {
 export const Server = ({ selected, running, serverDetails }) => (
   selected
     ? <ServerInspect running={running} serverDetails={serverDetails} />
-    : <ServerNotSelected />
+    : <ServerPlaceholderConnect />
 );
 
 Server.propTypes = {

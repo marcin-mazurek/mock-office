@@ -1,10 +1,15 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import { ServerNotSelected } from './Server';
+import { ServerPlaceholder } from './Server';
 
-storiesOf('ServerNotSelected', module)
-  .add('default', () => (
-    <div style={{ height: 500, width:500 }}>
-      <ServerNotSelected />
+storiesOf('ServerPlaceholder', module)
+  .add('server exists', () => (
+    <div style={{ height: 500, width: 500 }}>
+      <ServerPlaceholder serverExists />
+    </div>
+  ))
+  .add('any server exists', () => (
+    <div style={{ height: 500, width: 500 }}>
+      <ServerPlaceholder serverExists={false} />
     </div>
   ));

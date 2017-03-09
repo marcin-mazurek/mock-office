@@ -1,4 +1,4 @@
-exports[`test Server should render 1`] = `
+exports[`Server default snapshot 1`] = `
 <Component
   running={true}
   serverDetails={
@@ -12,7 +12,7 @@ exports[`test Server should render 1`] = `
   } />
 `;
 
-exports[`test ServerInspect should render 1`] = `
+exports[`ServerInspect default snapshot 1`] = `
 <div
   className="server-inspect">
   <header
@@ -61,7 +61,7 @@ exports[`test ServerInspect should render 1`] = `
     </div>
     <div
       className="server-inspect-queue">
-      <Component
+      <Queue
         id="some queue id"
         serverId="some id" />
     </div>
@@ -69,9 +69,16 @@ exports[`test ServerInspect should render 1`] = `
 </div>
 `;
 
-exports[`test ServerNotSelected should render 1`] = `
+exports[`ServerPlaceholder any servers exists snapshot 1`] = `
 <div
-  className="server-not-selected">
+  className="server-placeholder">
+  Add server
+</div>
+`;
+
+exports[`ServerPlaceholder some servers exist snapshot 1`] = `
+<div
+  className="server-placeholder">
   Select server
 </div>
 `;
