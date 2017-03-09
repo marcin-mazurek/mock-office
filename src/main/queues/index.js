@@ -5,6 +5,25 @@ import Task from 'fun-task';
 import { EventEmitter } from 'events';
 import { TASK_REMOVED } from '../common/messageNames';
 
+export const extractSubTree = (source, target, result) => {
+  const res = result;
+  const targetKeys = Object.keys(target);
+
+  targetKeys.forEach((key) => {
+    if (
+      typeof target[key] === 'object' &&
+      typeof source[key] === 'object' &&
+      !Array.isArray(source[key])
+    ) {
+      res[key] = {};
+      extractSubTree(source[key], target[key], res[key]);
+    } else {
+      res[key] = source[key];
+    }
+  });
+  return result;
+};
+
 const events = {
   TASK_REMOVED: 'TASK_REMOVED',
   TASK_RUN: 'TASK_RUN',
@@ -165,7 +184,7 @@ const runReadyTasks = (queueId, requirements, cb) => {
       }
 
       // should fulfill requirements
-      return deepEqual(task.requirements, requirements);
+      return deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}));
     });
 
     if (runnableTasks.length === 0) {
