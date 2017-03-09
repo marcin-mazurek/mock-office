@@ -170,6 +170,10 @@ const runReadyTasks = (queueId, requirements, cb) => {
     );
 
     if (notBlockedTasks.length === 0) {
+      if (cb) {
+        cb();
+      }
+
       return;
     }
 
@@ -188,6 +192,10 @@ const runReadyTasks = (queueId, requirements, cb) => {
     });
 
     if (runnableTasks.length === 0) {
+      if (cb) {
+        cb();
+      }
+
       return;
     }
 
