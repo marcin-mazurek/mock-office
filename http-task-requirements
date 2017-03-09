@@ -1,0 +1,8 @@
+We can filter responses by:
+
+<String> url
+<Array> headers
+<Object> payload
+
+
+
