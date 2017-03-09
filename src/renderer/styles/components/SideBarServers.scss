@@ -1,19 +1,17 @@
-.navbar-servers {
-  background-color: #DDD;
-}
 .navbar-servers-header {
-  font-size: 14px;
+  font-size: 16px;
   padding: 7px;
   display: flex;
   align-items: center;
-  background-color: #BBB;
+  font-family: $secondary-font-family;
+  border-bottom: 1px solid #BBB;
 }
 
 .navbar-servers__add-server-button {
   text-decoration: none;
   text-align: center;
   color: #FFF;
-  background-color: #999;
+  background-color: $secondary-color;
   display: inline-block;
   margin-left: auto;
   padding: 1px 5px;
@@ -33,14 +31,21 @@
 
 .navbar-servers-list-item {
   font-size: 13px;
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid #EEE;
   display: flex;
   align-items: center;
   padding: 0 7px;
+  letter-spacing: 1px;
+  color: #999;
 
   &:hover {
-    background-color: #CCC;
+    color: #000;
   }
+}
+
+.navbar-servers-list-item--selected {
+  background-color: #EEE;
+  color: #000;
 }
 
 .navbar-server__running-indicator {

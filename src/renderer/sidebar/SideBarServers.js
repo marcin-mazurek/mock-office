@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { getServerList } from '../servers/selectors';
+import { getServerList, getSelected } from '../servers/selectors';
 import { select as dispatchSelect } from '../servers/actions';
 
-export const NavBarServers = ({ servers, select, goToServerPage }) => (
+export const SideBarServers = ({ servers, select, goToServerPage, selected }) => (
   <div className="navbar-servers">
     <div className="navbar-servers-header">
       Servers: {' '}
@@ -21,8 +21,13 @@ export const NavBarServers = ({ servers, select, goToServerPage }) => (
             'navbar-server__running-indicator',
             { 'navbar-server__running-indicator--running': server.running }
           );
+          const serverListItemClassNames = classnames({
+            'navbar-servers-list-item': true,
+            'navbar-servers-list-item--selected': server.id === selected
+          });
+
           return (
-            <li className="navbar-servers-list-item" key={server.id}>
+            <li className={serverListItemClassNames} key={server.id}>
               <span className={serverIndicatorClassNames} />
               <a
                 className="navbar-server-list__link"
@@ -43,14 +48,16 @@ export const NavBarServers = ({ servers, select, goToServerPage }) => (
   </div>
 );
 
-NavBarServers.propTypes = {
+SideBarServers.propTypes = {
   servers: React.PropTypes.shape().isRequired,
   select: React.PropTypes.func.isRequired,
-  goToServerPage: React.PropTypes.func.isRequired
+  goToServerPage: React.PropTypes.func.isRequired,
+  selected: React.PropTypes.string
 };
 
 const mapStateToProps = state => ({
-  servers: getServerList(state)
+  servers: getServerList(state),
+  selected: getSelected(state)
 });
 
 const mapDispatchToProps = {
@@ -58,4 +65,4 @@ const mapDispatchToProps = {
   goToServerPage: () => push('/')
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBarServers);
+export default connect(mapStateToProps, mapDispatchToProps)(SideBarServers);

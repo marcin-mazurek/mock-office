@@ -3,8 +3,8 @@ import { storiesOf } from '@kadira/storybook';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';
 import configureStore from 'redux-mock-store';
-import NavBarServersConnect from './NavBarServers';
-import NavBar from './NavBar';
+import SideBarServersConnect from './SideBarServers';
+import SideBar from './SideBar';
 import { Server } from '../servers/reducer';
 
 const mockStore = configureStore();
@@ -28,11 +28,11 @@ const state = new Map({
 
 const store = mockStore(state);
 
-storiesOf('NavBarServers', module)
+storiesOf('SideBarServers', module)
   .add('single server', () => (
     <Provider store={store}>
-      <NavBar>
-        <NavBarServersConnect />
-      </NavBar>
+      <SideBar>
+        <SideBarServersConnect />
+      </SideBar>
     </Provider>
   ));

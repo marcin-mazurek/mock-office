@@ -1,7 +1,7 @@
 import React from 'react';
-import NavbarServersConnect from './NavBarServers';
+import NavbarServersConnect from './SideBarServers';
 
-const NavBar = () => (
+const SideBar = () => (
   <div className="navbar">
     <div className="navbar__servers">
       <NavbarServersConnect />
@@ -9,4 +9,4 @@ const NavBar = () => (
   </div>
 );
 
-export default NavBar;
+export default SideBar;

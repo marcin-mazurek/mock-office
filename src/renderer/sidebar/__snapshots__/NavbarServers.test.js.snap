@@ -1,4 +1,4 @@
-exports[`test NavBarServers should render 1`] = `
+exports[`test SideBarServers should render 1`] = `
 <div
   className="navbar-servers">
   <div
