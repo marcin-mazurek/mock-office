@@ -38,7 +38,10 @@ export default class HttpServer {
           url: req.url,
           headers: req.headers
         },
-        () => { queues.closeTunnel(this.queueId); }
+        () => {
+          queues.closeTunnel(this.queueId);
+          res.status(404).send('Response not found');
+        }
       );
     });
 
