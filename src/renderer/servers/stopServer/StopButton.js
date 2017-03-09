@@ -5,8 +5,8 @@ import { getSelected } from '../selectors';
 
 export const StopButton = ({ serverId, stop }) =>
   <button
-    className="button"
-    style={{ backgroundColor: '#AAA', color: '#FFF' }}
+    className="button server-stop-button"
+    style={{ backgroundColor: '#AAA', color: '#FFF', padding: '5px 10px' }}
     onClick={() => {
       stop(serverId);
     }}

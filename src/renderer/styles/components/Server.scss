@@ -14,6 +14,7 @@
 
 .server-inspect__header {
   flex: none;
+  font-size: 20px;
 }
 
 .server-inspect__main {
@@ -35,6 +36,8 @@
   background: #EEE;
   padding: 5px 10px;
   margin-right: 10px;
+  border-radius: 2px;
+  font-size: 14px;
 
   &:last-child {
     margin-right: 0;

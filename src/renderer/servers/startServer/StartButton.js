@@ -5,8 +5,7 @@ import { getSelected } from '../selectors';
 
 export const StartButton = ({ serverId, start }) =>
   <button
-    className="button"
-    style={{ backgroundColor: '#AAA', color: '#FFF' }}
+    className="server-start-button button"
     onClick={() => {
       start(serverId);
     }}

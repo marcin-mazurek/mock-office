@@ -28,10 +28,13 @@ export const ServerInspect = ({ running, serverDetails }) => {
   return (
     <div className="server-inspect">
       <header className="server-inspect__header">
-        { running ? <StopButtonConnect /> : <StartButtonConnect /> } {name}
+        {name}
       </header>
       <main className="server-inspect-main server-inspect__main">
         <div className="server-inspect-details">
+          <div className="server-inspect-details__row">
+            { running ? <StopButtonConnect /> : <StartButtonConnect /> }
+          </div>
           <div className="server-inspect-details__row">
             <div className="server-inspect-details__cell">
               Port: {port}
