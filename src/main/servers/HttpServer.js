@@ -34,7 +34,10 @@ export default class HttpServer {
 
       queues.runReadyTasks(
         this.queueId,
-        { url: req.url },
+        {
+          url: req.url,
+          headers: req.headers
+        },
         () => { queues.closeTunnel(this.queueId); }
       );
     });
