@@ -17,14 +17,16 @@ exports[`ServerInspect default snapshot 1`] = `
   className="server-inspect">
   <header
     className="server-inspect__header">
-    <Connect(Component) />
-     
     some id
   </header>
   <main
     className="server-inspect-main server-inspect__main">
     <div
       className="server-inspect-details">
+      <div
+        className="server-inspect-details__row">
+        <Connect(Component) />
+      </div>
       <div
         className="server-inspect-details__row">
         <div
@@ -61,7 +63,7 @@ exports[`ServerInspect default snapshot 1`] = `
     </div>
     <div
       className="server-inspect-queue">
-      <Queue
+      <Component
         id="some queue id"
         serverId="some id" />
     </div>

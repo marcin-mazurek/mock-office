@@ -1,11 +1,12 @@
 exports[`test StopButton should render 1`] = `
 <button
-  className="button"
+  className="button server-stop-button"
   onClick={[Function]}
   style={
     Object {
       "backgroundColor": "#AAA",
       "color": "#FFF",
+      "padding": "5px 10px",
     }
   }>
   Stop

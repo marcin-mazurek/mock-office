@@ -1,13 +1,7 @@
 exports[`test StartButton should render 1`] = `
 <button
-  className="button"
-  onClick={[Function]}
-  style={
-    Object {
-      "backgroundColor": "#AAA",
-      "color": "#FFF",
-    }
-  }>
+  className="server-start-button button"
+  onClick={[Function]}>
   Start
 </button>
 `;
