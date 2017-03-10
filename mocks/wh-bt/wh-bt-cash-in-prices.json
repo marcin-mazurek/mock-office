@@ -1,0 +1,29 @@
+[
+  {
+    "requirements": {
+      "url": "/bet/118295/cashInPrice"
+    },
+    "reuse": "infinite",
+    "taskPayload": {
+      "bets": [
+        {
+          "betId": "68204",
+          "betCashOutStatus": "Available",
+          "betCashInPrice": "110.55"
+        },
+        {
+          "betId": "10534",
+          "betCashOutStatus": "Suspended"
+        },
+        {
+          "betId": "10535",
+          "betCashOutStatus": "Suspended"
+        },
+        {
+          "betId": "20534",
+          "betCashOutStatus": "Suspended"
+        }
+      ]
+    }
+  }
+]
