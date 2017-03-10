@@ -5,6 +5,8 @@ import fs from 'fs';
 import queues from '../queues';
 
 export const send = (req, res) => (task) => {
+  res.set('Access-Allow-Control-Origin', req.headers.referer);
+
   if (task.headers) {
     res.set(task.headers);
   }
