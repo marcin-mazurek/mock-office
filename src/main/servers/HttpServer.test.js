@@ -9,10 +9,14 @@ describe('HttpServer', () => {
       }
     };
     const taskWithoutHeaders = {};
-    const req = {};
+    const req = {
+      headers: {
+        origin: ''
+      }
+    };
     const res = {
       set(headers) {
-        this.headers = headers;
+        this.headers = Object.assign({}, this.headers, headers);
       },
       headers: {},
       json() {
@@ -21,11 +25,9 @@ describe('HttpServer', () => {
     };
 
     send(Object.create(req), Object.create(res))(taskWithHeaders);
-    expect(mockFn.mock.calls[0][0]).toEqual({
-      'header name': 'header value'
-    });
+    expect(mockFn.mock.calls[0][0]['header name']).toEqual('header value');
 
     send(Object.create(req), Object.create(res))(taskWithoutHeaders);
-    expect(mockFn.mock.calls[1][0]).toEqual({});
+    expect(mockFn.mock.calls[1][0]['header name']).toEqual(undefined);
   });
 });
