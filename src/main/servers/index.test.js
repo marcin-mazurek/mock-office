@@ -9,7 +9,7 @@ test('serversHub.add should add server to servers list', () => {
 });
 
 test('serversHub.add should return id of added server and id of its queue', () => {
-  const addedServerDetails = serversHub.add('server name', 3000, 'http', false);
+  const addedServerDetails = serversHub.add('server name', undefined, 'http', false);
   expect(Object.keys(addedServerDetails)).toContain('serverId');
   expect(Object.keys(addedServerDetails)).toContain('queueId');
 });
