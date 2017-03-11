@@ -3,23 +3,17 @@ import deepEqual from 'deep-equal';
 import R from 'ramda';
 import Task from 'fun-task';
 import { EventEmitter } from 'events';
-import { TASK_REMOVED } from '../common/messageNames';
 import extractSubTree from '../utility/extractSubtree';
 
-const events = {
+export const events = {
   TASK_REMOVED: 'TASK_REMOVED',
   TASK_RUN: 'TASK_RUN',
-  TASK_ADDED: 'TASK_ADDED'
+  TASK_ADDED: 'TASK_ADDED',
+  TASK_REMOVED_AFTER_USE: 'TASK_REMOVED_AFTER_USE'
 };
 
-const emitter = new EventEmitter();
+export const emitter = new EventEmitter();
 const queues = [];
-
-let mainWin;
-
-const init = (mW) => {
-  mainWin = mW;
-};
 
 const createQueue = serverId => ({
   id: unique(),
@@ -106,10 +100,6 @@ const removeTask = (queueId, taskId) => {
   emitter.emit(events.TASK_REMOVED, queueId);
 };
 
-const emitRemove = (queueId, taskId) => {
-  mainWin.webContents.send(TASK_REMOVED, { queueId, taskId });
-};
-
 const runTask = (queueId, taskId) => {
   const queue = queues.find(q => q.id === queueId);
   const task = queue.tasks.find(exp => exp.id === taskId);
@@ -124,11 +114,11 @@ const runTask = (queueId, taskId) => {
 
       if (task.quantity === 0) {
         removeTask(queueId, task.id);
-        emitRemove(queueId, task.id);
+        emitter.emit(events.TASK_REMOVED_AFTER_USE, { queueId, taskId });
       }
     } else {
       removeTask(queueId, task.id);
-      emitRemove(queueId, task.id);
+      emitter.emit(events.TASK_REMOVED_AFTER_USE, { queueId, taskId });
     }
   });
 };
@@ -230,7 +220,6 @@ emitter.on(events.TASK_RUN, queueId => runReadyTasks(queueId));
 emitter.on(events.TASK_ADDED, queueId => runReadyTasks(queueId));
 
 export default {
-  init,
   addQueue,
   getQueue,
   addTask,
