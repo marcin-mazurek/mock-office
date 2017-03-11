@@ -3,7 +3,7 @@ import deepEqual from 'deep-equal';
 import R from 'ramda';
 import Task from 'fun-task';
 import { EventEmitter } from 'events';
-import extractSubTree from '../utility/extractSubtree';
+import extractSubTree from './extractSubtree';
 
 export const events = {
   TASK_REMOVED: 'TASK_REMOVED',
