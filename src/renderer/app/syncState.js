@@ -1,5 +1,4 @@
 import { remote } from 'electron';
-import { push } from 'react-router-redux';
 import { add, start } from '../servers/actions';
 import { add as addTask } from '../tasks/addTask/actions';
 
@@ -22,6 +21,4 @@ export default (store) => {
       store.dispatch(addTask(id, task.id, task.taskPayload));
     }
   }
-
-  store.dispatch(push('/'));
 };
