@@ -19,12 +19,13 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
       let newState = state;
-      newState = newState.setIn(['entities', action.id], new Server({
+      const server = new Server({
         id: action.id,
         name: action.name,
         port: action.port,
         type: action.serverType
-      }));
+      });
+      newState = newState.setIn(['entities', action.id], server);
       newState = newState.update('ids', ids => ids.add(action.id));
       return newState;
     }
