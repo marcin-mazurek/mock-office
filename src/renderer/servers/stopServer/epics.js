@@ -6,7 +6,9 @@ import { INIT } from './actions';
 export default action$ =>
   action$.ofType(INIT)
     .flatMap(action => Observable.concat(
-      Observable.fromPromise(remote.require('./main/servers').default.stop(action.id)),
+      Observable.fromPromise(
+        remote.require('./main/serversHub').default.stop(action.id)
+      ),
       Observable.of(action.id)
     ))
     .skip(1)

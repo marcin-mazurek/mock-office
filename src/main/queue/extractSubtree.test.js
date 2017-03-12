@@ -1,4 +1,4 @@
-import extractSubTree from '../utility/extractSubtree';
+import extractSubTree from './extractSubtree';
 
 describe('extractSubTree', () => {
   it('should trim shallow primitive values', () => {

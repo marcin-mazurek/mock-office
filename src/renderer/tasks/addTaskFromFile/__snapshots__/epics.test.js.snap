@@ -1,7 +1,8 @@
 exports[`test addTaskFromFileEpic 1`] = `
 Array [
   Object {
-    "files": Array [
+    "files": undefined,
+    "serverId": Array [
       Blob {
         Symbol(buffer): Object {
           "data": Array [

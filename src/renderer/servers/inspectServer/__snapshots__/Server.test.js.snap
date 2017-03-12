@@ -57,15 +57,15 @@ exports[`ServerInspect default snapshot 1`] = `
         <div
           className="server-inspect-details__cell">
           Add from file: 
-          <Connect(FilePicker) />
+          <Connect(FilePicker)
+            serverId="some id" />
         </div>
       </div>
     </div>
     <div
       className="server-inspect-queue">
       <Component
-        id="some queue id"
-        serverId="some id" />
+        id="some id" />
     </div>
   </main>
 </div>

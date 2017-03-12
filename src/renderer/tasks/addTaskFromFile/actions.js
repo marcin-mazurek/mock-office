@@ -1,6 +1,7 @@
 export const INIT = 'pickTaskFile/INIT';
 
-export const init = files => ({
+export const init = (serverId, files) => ({
   type: INIT,
+  serverId,
   files
 });

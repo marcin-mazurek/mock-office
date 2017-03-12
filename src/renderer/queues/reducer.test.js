@@ -8,7 +8,7 @@ import { ADD as ADD_TASK } from '../tasks/addTask/actions';
 
 test(`${ADD_SERVER} reducer`, () => {
   const state = reducer(fromJS({}),
-    { type: ADD_SERVER, queueId: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
+    { type: ADD_SERVER, id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
 
   expect(state.toJS()).toEqual({
     'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==': {
@@ -27,7 +27,7 @@ test(`${ADD_TASK} reducer`, () => {
     }
   }), {
     type: ADD_TASK,
-    queueId: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
+    serverId: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
     taskId: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
   });
 
@@ -48,7 +48,7 @@ test(`${REMOVE_TASK} reducer`, () => {
     }
   }), {
     type: REMOVE_TASK,
-    queueId: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
+    serverId: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
     taskId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
   });
 

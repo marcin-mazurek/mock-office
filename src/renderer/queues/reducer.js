@@ -18,28 +18,28 @@ const removeTask = R.curry(
     1)
 );
 const updateTasks = R.curry(
-  (queueId, updater, currentState) =>
-    currentState.updateIn([queueId, 'tasks'], updater)
+  (serverId, updater, currentState) =>
+    currentState.updateIn([serverId, 'tasks'], updater)
 );
-const constructQueue = queueId => new Queue({ id: queueId });
+const constructQueue = serverId => new Queue({ id: serverId });
 const addToQueues = R.invoker(2, 'set');
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_SERVER: {
-      const { queueId } = action;
+      const { id: serverId } = action;
 
-      return addToQueues(queueId, constructQueue(queueId))(state);
+      return addToQueues(serverId, constructQueue(serverId))(state);
     }
     case ADD_TASK: {
-      const { queueId, taskId } = action;
+      const { serverId, taskId } = action;
 
-      return updateTasks(queueId, addTask(taskId))(state);
+      return updateTasks(serverId, addTask(taskId))(state);
     }
     case REMOVE_TASK: {
-      const { queueId, taskId } = action;
+      const { serverId, taskId } = action;
 
-      return updateTasks(queueId, removeTask(taskId))(state);
+      return updateTasks(serverId, removeTask(taskId))(state);
     }
     default: {
       return state;

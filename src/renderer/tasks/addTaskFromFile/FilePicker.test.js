@@ -6,7 +6,7 @@ import { FilePicker } from './FilePicker';
 describe('FilePicker', () => {
   test('should render', () => {
     const props = {
-      initAddQueueFromFile: () => {}
+      intiAddTaskFromFile: () => {}
     };
 
     const wrapper = shallow(<FilePicker {...props} />);
@@ -17,7 +17,7 @@ describe('FilePicker', () => {
     const mockedHandleChange = jest.fn();
 
     const props = {
-      initAddQueueFromFile: mockedHandleChange
+      intiAddTaskFromFile: mockedHandleChange
     };
 
     const wrapper = mount(<FilePicker {...props} />);
@@ -44,7 +44,7 @@ describe('FilePicker', () => {
 
   test('should clean input value after file pick', () => {
     const props = {
-      initAddQueueFromFile: () => {}
+      intiAddTaskFromFile: () => {}
     };
     const wrapper = mount(<FilePicker {...props} />);
     const fileInput = wrapper.find('input');

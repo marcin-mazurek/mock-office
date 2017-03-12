@@ -1,15 +1,15 @@
 export const INIT = 'addTask/INIT';
 export const ADD = 'tasks/ADD';
 
-export const init = (queueId, tasks) => ({
+export const init = (serverId, tasks) => ({
   type: INIT,
-  queueId,
+  serverId,
   tasks
 });
 
-export const add = (queueId, taskId, taskPayload) => ({
+export const add = (serverId, taskId, taskPayload) => ({
   type: ADD,
-  queueId,
+  serverId,
   taskId,
   taskPayload
 });

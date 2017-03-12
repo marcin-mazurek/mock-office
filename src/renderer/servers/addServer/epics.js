@@ -6,9 +6,9 @@ export default action$ =>
   action$.ofType(INIT)
     .map((action) => {
       const { name, port, serverType: type, isSecure, keyPath, certPath } = action;
-      const servers = remote.require('./main/servers').default;
-      const { serverId, queueId } = servers.add(name, port, type, isSecure, keyPath, certPath);
+      const serversHub = remote.require('./main/serversHub').default;
+      const serverId = serversHub.add(name, port, type, isSecure, keyPath, certPath);
 
-      return [name, port, type, serverId, queueId];
+      return [name, port, type, serverId];
     }).map(serverConfig => add(...serverConfig)
   );

@@ -23,7 +23,7 @@ const serverPlaceholderMapStateToProps = state => ({
 const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
 
 export const ServerInspect = ({ running, serverDetails }) => {
-  const { name, port, type, queue, id } = serverDetails;
+  const { name, port, type, id } = serverDetails;
 
   return (
     <div className="server-inspect">
@@ -50,12 +50,12 @@ export const ServerInspect = ({ running, serverDetails }) => {
           </div>
           <div className="server-inspect-details__row">
             <div className="server-inspect-details__cell">
-              Add from file: <FilePickerConnect />
+              Add from file: <FilePickerConnect serverId={id} />
             </div>
           </div>
         </div>
         <div className="server-inspect-queue">
-          <Queue id={queue} serverId={id} />
+          <Queue id={id} />
         </div>
       </main>
     </div>

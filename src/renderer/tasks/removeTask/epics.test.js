@@ -9,7 +9,11 @@ const mockedElectron = {
     require() {
       return {
         default: {
-          removeTask() {}
+          find() {
+            return {
+              removeTask() {}
+            };
+          }
         }
       };
     }
@@ -26,6 +30,6 @@ const mockStore = configureMockStore([epicMiddleware]);
 test('removeTaskEpic', () => {
   store = mockStore(new Map());
 
-  store.dispatch(init('queue id', 'task id'));
+  store.dispatch(init('server id', 'task id'));
   expect(store.getActions()).toMatchSnapshot();
 });

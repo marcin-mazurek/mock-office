@@ -32,8 +32,7 @@ export const getSelectedServerDetails = createSelector(
         type: all.get(serverId).type,
         name: all.get(serverId).name,
         port: all.get(serverId).port,
-        id: all.get(serverId).id,
-        queue: all.get(serverId).queue
+        id: all.get(serverId).id
       };
     }
 

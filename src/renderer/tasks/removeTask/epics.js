@@ -4,9 +4,10 @@ import { INIT, remove } from './actions';
 const removeTaskEpic = action$ =>
   action$.ofType(INIT)
     .map((action) => {
-      const { queueId, taskId } = action;
-      remote.require('./main/queues').default.removeTask(queueId, taskId);
-      return [queueId, taskId];
+      const { serverId, taskId } = action;
+      const server = remote.require('./main/serversHub').default.find(serverId);
+      server.removeTask(taskId);
+      return [serverId, taskId];
     }).map(task => remove(...task));
 
 export default removeTaskEpic;

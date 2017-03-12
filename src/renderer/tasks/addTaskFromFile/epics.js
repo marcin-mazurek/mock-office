@@ -1,13 +1,12 @@
 import { Observable } from 'rxjs';
 import { INIT } from './actions';
-import { getSelectedServerDetails } from '../../servers/selectors';
 import { init as initAddTask } from '../addTask/actions';
 
-export default (action$, store) =>
+export default action$ =>
   action$.ofType(INIT)
     .flatMap((action) => {
       try {
-        const { files } = action;
+        const { serverId, files } = action;
         const file = files[0];
 
         if (file) {
@@ -18,7 +17,7 @@ export default (action$, store) =>
           });
 
           return Observable.fromPromise(fileRead)
-            .map(tasks => initAddTask(getSelectedServerDetails(store.getState()).queue, tasks));
+            .map(tasks => initAddTask(serverId, tasks));
         }
       } catch (parseError) {
         // eslint-disable-next-line no-console

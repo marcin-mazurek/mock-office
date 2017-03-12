@@ -2,19 +2,29 @@ import { Server as WebSocketServer } from 'ws';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import queues from '../queues';
+import { EventEmitter } from 'events';
+import Queue from '../queue';
 
 export default class WSMockServer {
   constructor(config) {
+    this.ee = new EventEmitter();
+    this.queue = new Queue({ ee: this.ee });
     this.type = 'ws';
     this.port = config.port || 3010;
     this.name = config.name;
     this.id = config.id;
     this.listening = false;
-    this.queueId = config.queueId;
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
+  }
+
+  addTask(task) {
+    return this.queue.addTask(task);
+  }
+
+  removeTask(taskId) {
+    this.queue.removeTask(taskId);
   }
 
   start(cb) {
@@ -49,16 +59,16 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      queues.openTunnel(this.queueId, task => this.ws.send(task.message));
+      this.queue.openConnection(task => this.ws.send(task.message));
     });
     cb();
   }
 
   setupSocket(socket) {
-    socket.on('message', message => queues.runReadyTasks(this.queueId, { message }));
+    socket.on('message', message => this.queue.runReadyTasks({ message }));
 
     socket.on('close', () => {
-      queues.closeTunnel(this.queueId);
+      this.queue.closeConnection();
       this.ws = undefined;
     });
   }
