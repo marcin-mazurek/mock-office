@@ -63,4 +63,9 @@ describe('servers reducer', () => {
       running: []
     });
   });
+
+  test('unknown action', () => {
+    const state = {};
+    expect(reducer(state, { type: 'unknown action type' })).toBe(state);
+  });
 });
