@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-export const getAll = state => state.getIn(['servers', 'itemsById']);
+export const getAll = state => state.getIn(['servers', 'entities']);
 export const getAllAsList = createSelector(
   getAll,
   servers => servers.toList()

@@ -32,7 +32,7 @@ const mockStore = configureMockStore([epicMiddleware]);
 test('addTaskEpic', () => {
   store = mockStore(new Map({
     servers: new Map({
-      itemsById: new Map({
+      entities: new Map({
         'server id': {
           type: 'server type',
           name: 'server name',

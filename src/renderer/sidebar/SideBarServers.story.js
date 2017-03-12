@@ -11,7 +11,7 @@ const mockStore = configureStore();
 
 const state = new Map({
   servers: new Map({
-    itemsById: new Map({
+    entities: new Map({
       'some-id': new Server({
         name: 'Server 1',
         id: 'some-id'

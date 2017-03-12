@@ -15,7 +15,7 @@ export const Server = new Record({
 });
 
 const initialState = new Map({
-  itemsById: new Map(),
+  entities: new Map(),
   selected: null,
   running: new Set()
 });
@@ -24,7 +24,7 @@ const select = R.invoker(2, 'set')('selected');
 const updateRunningServers = R.invoker(2, 'update')('running');
 const addToSet = R.invoker(1, 'add');
 const removeFromRunning = R.invoker(1, 'delete');
-const addServer = R.curry((id, server, currentState) => currentState.setIn(['itemsById', id], server));
+const addServer = R.curry((id, server, currentState) => currentState.setIn(['entities', id], server));
 const pickRequiredFields = R.pick(['name', 'port', 'id', 'type', 'queue']);
 const constructServer = R.construct(Server);
 const createServer = R.pipe(

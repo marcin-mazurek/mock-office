@@ -9,7 +9,7 @@ import {
 
 test(`${SELECT} reducer`, () => {
   const state = reducer(fromJS({
-    itemsById: {
+    entities: {
       'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
@@ -24,7 +24,7 @@ test(`${SELECT} reducer`, () => {
   }), { type: SELECT, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
-    itemsById: {
+    entities: {
       'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
@@ -41,7 +41,7 @@ test(`${SELECT} reducer`, () => {
 
 test(`${START} reducer`, () => {
   const state = reducer(fromJS({
-    itemsById: {
+    entities: {
       'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
@@ -56,7 +56,7 @@ test(`${START} reducer`, () => {
   }), { type: START, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
-    itemsById: {
+    entities: {
       'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
@@ -73,7 +73,7 @@ test(`${START} reducer`, () => {
 
 test(`${ADD} reducer`, () => {
   const state = reducer(fromJS({
-    itemsById: {},
+    entities: {},
     selected: null,
     running: []
   }), {
@@ -84,7 +84,7 @@ test(`${ADD} reducer`, () => {
     serverType: 'http'
   });
   expect(state.toJS()).toEqual({
-    itemsById: {
+    entities: {
       'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==': {
         id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
         name: 'Server name',
@@ -100,7 +100,7 @@ test(`${ADD} reducer`, () => {
 test(`${STOP} reducer`, () => {
   const state = reducer(fromJS(
     {
-      itemsById: {
+      entities: {
         'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
           id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
           name: 'Server name',
@@ -116,7 +116,7 @@ test(`${STOP} reducer`, () => {
   ), { type: STOP, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
-    itemsById: {
+    entities: {
       'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
         id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
         name: 'Server name',
