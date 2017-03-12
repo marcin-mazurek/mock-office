@@ -1,16 +1,15 @@
 import { Observable } from 'rxjs';
 import { remote } from 'electron';
-import { getSelectedServerDetails } from '../../servers/selectors';
 import { INIT, add } from './actions';
 
-const addTaskEpic = (action$, store) =>
+const addTaskEpic = action$ =>
   action$.ofType(INIT)
     .flatMap((action) => {
-      const { queueId, tasks } = action;
-      const { queue } = getSelectedServerDetails(store.getState());
+      const { serverId, tasks } = action;
       const tasksForAdd = tasks.map((task) => {
-        const taskId = remote.require('./main/queues').default.addTask(queueId, task);
-        return [queue, taskId, task.taskPayload];
+        const server = remote.require('./main/serversHub').default.find(serverId);
+        const taskId = server.addTask(task);
+        return [serverId, taskId, task.taskPayload];
       });
 
       return Observable.from(tasksForAdd);

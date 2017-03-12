@@ -11,8 +11,7 @@ export const Server = new Record({
   id: '',
   name: 'New Server',
   port: null,
-  type: '',
-  queue: ''
+  type: ''
 });
 
 const initialState = new Map({
@@ -40,8 +39,7 @@ export default (state = initialState, action) => {
         id: action.id,
         name: action.name,
         port: action.port,
-        type: action.serverType,
-        queue: action.queueId
+        type: action.serverType
       }))(state);
     }
     case SELECT: {

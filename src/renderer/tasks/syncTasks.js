@@ -7,7 +7,7 @@ export default (store) => {
   Observable.fromEvent(
     ipcRenderer,
     TASK_REMOVED,
-    (event, args) => [args.queueId, args.taskId]
+    (event, args) => [args.serverId, args.taskId]
   )
     .subscribe(args => store.dispatch(remove(...args))
     );

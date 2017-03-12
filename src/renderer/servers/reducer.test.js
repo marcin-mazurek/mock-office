@@ -81,8 +81,7 @@ test(`${ADD} reducer`, () => {
     name: 'Server name',
     port: 3000,
     id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
-    serverType: 'http',
-    queueId: '321u83h12uih'
+    serverType: 'http'
   });
   expect(state.toJS()).toEqual({
     itemsById: {
@@ -90,8 +89,7 @@ test(`${ADD} reducer`, () => {
         id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
         name: 'Server name',
         port: 3000,
-        type: 'http',
-        queue: '321u83h12uih'
+        type: 'http'
       }
     },
     selected: null,

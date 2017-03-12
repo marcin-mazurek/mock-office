@@ -1,7 +1,7 @@
 exports[`test addTaskEpic 1`] = `
 Array [
   Object {
-    "queueId": "queueId",
+    "serverId": "serverId",
     "tasks": Array [
       Object {
         "taskPayload": "taskPayload",
@@ -10,7 +10,7 @@ Array [
     "type": "addTask/INIT",
   },
   Object {
-    "queueId": "queue",
+    "serverId": "serverId",
     "taskId": "task id",
     "taskPayload": "taskPayload",
     "type": "tasks/ADD",

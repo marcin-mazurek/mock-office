@@ -1,14 +1,14 @@
 export const INIT = 'remove/init';
 export const REMOVE = 'tasks/REMOVE';
 
-export const init = (queueId, taskId) => ({
+export const init = (serverId, taskId) => ({
   type: INIT,
   taskId,
-  queueId
+  serverId
 });
 
-export const remove = (queueId, taskId) => ({
+export const remove = (serverId, taskId) => ({
   type: REMOVE,
-  queueId,
+  serverId,
   taskId
 });

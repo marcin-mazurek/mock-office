@@ -2,7 +2,8 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import queues from '../queues';
+import { EventEmitter } from 'events';
+import Queue from '../queue';
 
 export const send = (req, res) => (task) => {
   res.set('Access-Control-Allow-Origin', req.headers.origin);
@@ -16,32 +17,40 @@ export const send = (req, res) => (task) => {
 
 export default class HttpServer {
   constructor(config) {
+    this.ee = new EventEmitter();
+    this.queue = new Queue({ ee: this.ee });
     this.sockets = [];
     this.type = 'http';
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = config.id;
-    this.queueId = config.queueId;
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
     this.saveSocketRef = this.saveSocketRef.bind(this);
   }
 
+  addTask(task) {
+    return this.queue.addTask(task);
+  }
+
+  removeTask(taskId) {
+    this.queue.removeTask(taskId);
+  }
+
   start(cb) {
     const httpServer = this.isSecure ? https : http;
     this.app = express();
     this.app.get('*', (req, res) => {
-      queues.openTunnel(this.queueId, send(req, res));
+      this.queue.openTunnel(send(req, res));
 
-      queues.runReadyTasks(
-        this.queueId,
+      this.queue.runReadyTasks(
         {
           url: req.url,
           headers: req.headers
         },
         () => {
-          queues.closeTunnel(this.queueId);
+          this.queue.closeTunnel();
           res.status(404).send('Response not found');
         }
       );
@@ -72,7 +81,7 @@ export default class HttpServer {
   }
 
   stop(cb) {
-    queues.closeTunnel(this.queueId);
+    this.queue.closeTunnel();
     this.destroyOpenSockets();
     this.httpServer.close(cb);
   }

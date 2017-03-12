@@ -4,7 +4,7 @@ exports[`test Queue should render 1`] = `
   <div
     className="queue__tasks">
     <Connect(Component)
-      queueId="some-id" />
+      serverId="some-id" />
   </div>
 </div>
 `;

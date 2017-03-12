@@ -1,12 +1,12 @@
 exports[`test removeTaskEpic 1`] = `
 Array [
   Object {
-    "queueId": "queue id",
+    "serverId": "server id",
     "taskId": "task id",
     "type": "remove/init",
   },
   Object {
-    "queueId": "queue id",
+    "serverId": "server id",
     "taskId": "task id",
     "type": "tasks/REMOVE",
   },

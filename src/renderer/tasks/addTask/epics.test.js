@@ -9,8 +9,12 @@ const mockedElectron = {
     require() {
       return {
         default: {
-          addTask() {
-            return 'task id';
+          find() {
+            return {
+              addTask() {
+                return 'task id';
+              }
+            };
           }
         }
       };
@@ -33,8 +37,7 @@ test('addTaskEpic', () => {
           type: 'server type',
           name: 'server name',
           port: 3000,
-          id: 'server id',
-          queue: 'queue'
+          id: 'server id'
         }
       }),
       selected: 'server id',
@@ -43,7 +46,7 @@ test('addTaskEpic', () => {
     tasks: new Map()
   }));
 
-  store.dispatch(init('queueId', [
+  store.dispatch(init('serverId', [
     {
       taskPayload: 'taskPayload'
     }

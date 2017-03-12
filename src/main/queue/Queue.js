@@ -4,25 +4,23 @@ import { EventEmitter } from 'events';
 import R from 'ramda';
 import deepEqual from 'deep-equal';
 import extractSubTree from './extractSubtree';
-import { events as queuesEvents } from './index';
 
 export const events = {
   TASK_REMOVED: 'TASK_REMOVED',
   TASK_RUN: 'TASK_RUN',
-  TASK_ADDED: 'TASK_ADDED'
+  TASK_ADDED: 'TASK_ADDED',
+  TASK_REMOVED_AFTER_USE: 'TASK_REMOVED_AFTER_USE'
 };
 
 export default class Queue {
   constructor(args) {
-    this.id = args.id;
-    this.serverId = args.serverId;
-    this.queuesEmitter = args.emitter;
+    this.serverEE = args.ee;
     this.tasks = [];
-    this.emitter = new EventEmitter();
+    this.ee = new EventEmitter();
     this.runReadyTasks = this.runReadyTasks.bind(this);
-    this.emitter.on(events.TASK_REMOVED, this.runReadyTasks);
-    this.emitter.on(events.TASK_RUN, this.runReadyTasks);
-    this.emitter.on(events.TASK_ADDED, this.runReadyTasks);
+    this.ee.on(events.TASK_REMOVED, this.runReadyTasks);
+    this.ee.on(events.TASK_RUN, this.runReadyTasks);
+    this.ee.on(events.TASK_ADDED, this.runReadyTasks);
   }
 
   createTask(task) {
@@ -84,7 +82,7 @@ export default class Queue {
   addTask(taskConfig) {
     const task = this.createTask(taskConfig);
     this.tasks.push(task);
-    this.emitter.emit(events.TASK_ADDED);
+    this.ee.emit(events.TASK_ADDED);
 
     return task.id;
   }
@@ -102,14 +100,14 @@ export default class Queue {
 
         if (task.quantity === 0) {
           this.removeTask(task.id);
-          this.queuesEmitter.emit(
-            queuesEvents.TASK_REMOVED_AFTER_USE,
+          this.serverEE.emit(
+            events.TASK_REMOVED_AFTER_USE,
             { queueId: this.id, taskId }
           );
         }
       } else {
         this.removeTask(task.id);
-        this.queuesEmitter.emit(queuesEvents.TASK_REMOVED_AFTER_USE, { queueId: this.id, taskId });
+        this.serverEE.emit(events.TASK_REMOVED_AFTER_USE, { queueId: this.id, taskId });
       }
     });
   }
@@ -124,7 +122,7 @@ export default class Queue {
     }
 
     this.tasks.splice(taskIndex, 1);
-    this.emitter.emit(events.TASK_REMOVED);
+    this.ee.emit(events.TASK_REMOVED);
   }
 
   runReadyTasks(requirements, cb) {
@@ -180,7 +178,7 @@ export default class Queue {
       }
 
       this.runTask(firstRunnableTask.id);
-      this.emitter.emit(events.TASK_RUN);
+      this.ee.emit(events.TASK_RUN);
     }
   }
 
