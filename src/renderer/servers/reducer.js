@@ -1,11 +1,5 @@
 import { Record, Map, Set } from 'immutable';
-import R from 'ramda';
-import {
-  ADD,
-  SELECT,
-  START,
-  STOP
-} from './actions';
+import { ADD, SELECT, START, STOP } from './actions';
 
 export const Server = new Record({
   id: '',
@@ -21,11 +15,6 @@ const initialState = new Map({
   running: new Set()
 });
 
-const select = R.invoker(2, 'set')('selected');
-const updateRunningServers = R.invoker(2, 'update')('running');
-const addToSet = R.invoker(1, 'add');
-const removeFromRunning = R.invoker(1, 'delete');
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
@@ -40,13 +29,13 @@ export default (state = initialState, action) => {
       return newState;
     }
     case SELECT: {
-      return select(action.id)(state);
+      return state.set('selected', action.id);
     }
     case START: {
-      return updateRunningServers(addToSet(action.id))(state);
+      return state.update('running', running => running.add(action.id));
     }
     case STOP: {
-      return updateRunningServers(removeFromRunning(action.id))(state);
+      return state.update('running', running => running.delete(action.id));
     }
     default: {
       return state;
