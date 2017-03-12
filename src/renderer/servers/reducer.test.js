@@ -9,64 +9,20 @@ import {
 
 test(`${SELECT} reducer`, () => {
   const state = reducer(fromJS({
-    entities: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-        name: 'Server name',
-        port: 3000,
-        tasks: [],
-        type: 'http',
-        queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
-      }
-    },
     selected: null,
-    running: ['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==']
   }), { type: SELECT, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
-    entities: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-        name: 'Server name',
-        port: 3000,
-        tasks: [],
-        type: 'http',
-        queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
-      }
-    },
-    selected: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-    running: ['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==']
+    selected: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA=='
   });
 });
 
 test(`${START} reducer`, () => {
   const state = reducer(fromJS({
-    entities: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-        name: 'Server name',
-        port: 3000,
-        tasks: [],
-        type: 'http',
-        queues: []
-      }
-    },
-    selected: null,
     running: new Set()
   }), { type: START, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
-    entities: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-        name: 'Server name',
-        port: 3000,
-        tasks: [],
-        type: 'http',
-        queues: []
-      }
-    },
-    selected: null,
     running: ['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==']
   });
 });
@@ -74,8 +30,7 @@ test(`${START} reducer`, () => {
 test(`${ADD} reducer`, () => {
   const state = reducer(fromJS({
     entities: {},
-    selected: null,
-    running: []
+    ids: new Set()
   }), {
     type: ADD,
     name: 'Server name',
@@ -92,41 +47,18 @@ test(`${ADD} reducer`, () => {
         type: 'http'
       }
     },
-    selected: null,
-    running: []
+    ids: ['AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==']
   });
 });
 
 test(`${STOP} reducer`, () => {
   const state = reducer(fromJS(
     {
-      entities: {
-        'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-          id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-          name: 'Server name',
-          port: 3000,
-          tasks: [],
-          type: 'http',
-          queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
-        }
-      },
-      selected: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
       running: new Set(['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA=='])
     }
   ), { type: STOP, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
 
   expect(state.toJS()).toEqual({
-    entities: {
-      'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==': {
-        id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
-        name: 'Server name',
-        port: 3000,
-        tasks: [],
-        type: 'http',
-        queues: ['AVn5T+T4Hr9yIBIhRoyK6Hxhx13QiQ==']
-      }
-    },
-    selected: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==',
     running: []
   });
 });

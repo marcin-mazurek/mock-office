@@ -16,6 +16,7 @@ export const Server = new Record({
 
 const initialState = new Map({
   entities: new Map(),
+  ids: new Set(),
   selected: null,
   running: new Set()
 });
@@ -24,23 +25,19 @@ const select = R.invoker(2, 'set')('selected');
 const updateRunningServers = R.invoker(2, 'update')('running');
 const addToSet = R.invoker(1, 'add');
 const removeFromRunning = R.invoker(1, 'delete');
-const addServer = R.curry((id, server, currentState) => currentState.setIn(['entities', id], server));
-const pickRequiredFields = R.pick(['name', 'port', 'id', 'type', 'queue']);
-const constructServer = R.construct(Server);
-const createServer = R.pipe(
-  pickRequiredFields,
-  constructServer
-);
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      return addServer(action.id, createServer({
+      let newState = state;
+      newState = newState.setIn(['entities', action.id], new Server({
         id: action.id,
         name: action.name,
         port: action.port,
         type: action.serverType
-      }))(state);
+      }));
+      newState = newState.update('ids', ids => ids.add(action.id));
+      return newState;
     }
     case SELECT: {
       return select(action.id)(state);
