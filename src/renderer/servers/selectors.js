@@ -1,9 +1,11 @@
 import { createSelector } from 'reselect';
 
 export const getAll = state => state.getIn(['servers', 'entities']);
+const getIds = state => state.getIn(['servers', 'ids']);
 export const getAllAsList = createSelector(
+  getIds,
   getAll,
-  servers => servers.toList()
+  (ids, servers) => ids.map(id => servers.get(id))
 );
 export const getSelected = state => state.getIn(['servers', 'selected']);
 export const getRunning = state => state.getIn(['servers', 'running']);

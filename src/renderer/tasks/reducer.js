@@ -1,24 +1,23 @@
-import { Map } from 'immutable';
-import R from 'ramda';
+import { Map, Record } from 'immutable';
 import { REMOVE } from './removeTask/actions';
 import { ADD } from './addTask/actions';
 
 const initialState = new Map();
-
-const addTask = R.invoker(2, 'set');
-const removeTask = R.invoker(1, 'remove');
+const Task = new Record({
+  taskPayload: {},
+  id: ''
+});
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
       const { taskId, taskPayload } = action;
+      const task = new Task({ taskPayload, id: taskId });
 
-      return addTask(taskId, { taskPayload, id: taskId })(state);
+      return state.set(taskId, task);
     }
     case REMOVE: {
-      const { taskId } = action;
-
-      return removeTask(taskId)(state);
+      return state.remove(action.taskId);
     }
     default: {
       return state;
