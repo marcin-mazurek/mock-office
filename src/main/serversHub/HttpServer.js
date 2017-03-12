@@ -42,7 +42,7 @@ export default class HttpServer {
     const httpServer = this.isSecure ? https : http;
     this.app = express();
     this.app.get('*', (req, res) => {
-      this.queue.openTunnel(send(req, res));
+      this.queue.openConnection(send(req, res));
 
       this.queue.runReadyTasks(
         {
@@ -50,7 +50,7 @@ export default class HttpServer {
           headers: req.headers
         },
         () => {
-          this.queue.closeTunnel();
+          this.queue.closeConnection();
           res.status(404).send('Response not found');
         }
       );
@@ -81,7 +81,7 @@ export default class HttpServer {
   }
 
   stop(cb) {
-    this.queue.closeTunnel();
+    this.queue.closeConnection();
     this.destroyOpenSockets();
     this.httpServer.close(cb);
   }

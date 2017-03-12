@@ -190,11 +190,11 @@ export default class Queue {
     });
   }
 
-  openTunnel(tunnel) {
+  openConnection(tunnel) {
     this.tunnel = tunnel;
   }
 
-  closeTunnel() {
+  closeConnection() {
     this.cancelPendingTasks();
     this.tunnel = undefined;
   }
