@@ -1,3 +1,63 @@
+exports[`AddServer  should render 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer de 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer defa 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer defau 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer default  1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer default s 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer default sn 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer default snap 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`AddServer default snapshot 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
+exports[`test  should render 1`] = `
+<div>
+  <Connect(AddServerForm) />
+</div>
+`;
+
 exports[`test AddServer should render 1`] = `
 <div>
   <Connect(AddServerForm) />

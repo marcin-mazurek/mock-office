@@ -1,3 +1,168 @@
+exports[`StopButton StopButton should render 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton de 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton defa 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton defau 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton default  1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton default s 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton default sha 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton default sna 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton default snap 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton default snaps 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
+exports[`StopButton default snapshot 1`] = `
+<button
+  className="button server-stop-button"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#AAA",
+      "color": "#FFF",
+      "padding": "5px 10px",
+    }
+  }>
+  Stop
+</button>
+`;
+
 exports[`test StopButton should render 1`] = `
 <button
   className="button server-stop-button"
