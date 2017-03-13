@@ -27,9 +27,11 @@ let store;
 const epicMiddleware = createEpicMiddleware(removeTaskEpic);
 const mockStore = configureMockStore([epicMiddleware]);
 
-test('removeTaskEpic', () => {
-  store = mockStore(new Map());
+describe('removeTask epic', () => {
+  test('default snapshot', () => {
+    store = mockStore(new Map());
 
-  store.dispatch(init('server id', 'task id'));
-  expect(store.getActions()).toMatchSnapshot();
+    store.dispatch(init('server id', 'task id'));
+    expect(store.getActions()).toMatchSnapshot();
+  });
 });

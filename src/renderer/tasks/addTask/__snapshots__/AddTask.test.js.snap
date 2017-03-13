@@ -1,3 +1,133 @@
+exports[`AddTask AddTask should render 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask de 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask defau 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask default  1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask default 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask default s 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask default sna 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask default snap 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask default snaps 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
+exports[`AddTask default snapshot 1`] = `
+<div
+  className="add-task">
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/">
+    ⇚ Server details
+  </Link>
+  <Connect(WsForm) />
+</div>
+`;
+
 exports[`test AddTask should render 1`] = `
 <div
   className="add-task">
