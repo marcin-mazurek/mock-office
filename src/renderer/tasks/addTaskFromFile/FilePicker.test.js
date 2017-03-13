@@ -4,23 +4,23 @@ import toJson from 'enzyme-to-json';
 import { FilePicker } from './FilePicker';
 
 describe('FilePicker', () => {
-  test('should render', () => {
+  test('default snapshot', () => {
     const props = {
       intiAddTaskFromFile: () => {}
     };
 
-    const wrapper = shallow(<FilePicker {...props} />);
+    const wrapper = shallow(<FilePicker {...props} serverId={'server id'} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  test('should dispatch action if file has been selected', () => {
+  it('should dispatch action if file has been selected', () => {
     const mockedHandleChange = jest.fn();
 
     const props = {
       intiAddTaskFromFile: mockedHandleChange
     };
 
-    const wrapper = mount(<FilePicker {...props} />);
+    const wrapper = mount(<FilePicker {...props} serverId={'server id'} />);
     const fileInput = wrapper.find('input');
 
     fileInput.simulate('change', {
@@ -42,11 +42,11 @@ describe('FilePicker', () => {
     expect(mockedHandleChange.mock.calls.length).toEqual(1);
   });
 
-  test('should clean input value after file pick', () => {
+  it('should clean input value after file pick', () => {
     const props = {
       intiAddTaskFromFile: () => {}
     };
-    const wrapper = mount(<FilePicker {...props} />);
+    const wrapper = mount(<FilePicker {...props} serverId={'server id'} />);
     const fileInput = wrapper.find('input');
 
     fileInput.simulate('change', {

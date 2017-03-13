@@ -30,7 +30,7 @@ test('addTaskFromFileEpic', () => {
     tasks: new Map()
   }));
 
-  store.dispatch(init([
+  store.dispatch(init('server id', [
     new Blob(['{"payload": "task payload"}'])
   ]));
   expect(store.getActions()).toMatchSnapshot();

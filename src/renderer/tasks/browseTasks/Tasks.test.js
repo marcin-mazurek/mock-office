@@ -4,12 +4,14 @@ import toJson from 'enzyme-to-json';
 import { List } from 'immutable';
 import { Tasks } from './Tasks';
 
-test('Tasks should render', () => {
-  const props = {
-    taskIds: new List(),
-    queueId: 'some id',
-    remove: () => {}
-  };
-  const wrapper = shallow(<Tasks {...props} />);
-  expect(toJson(wrapper)).toMatchSnapshot();
+describe('Tasks', () => {
+  test('default snapshot', () => {
+    const props = {
+      taskIds: new List(),
+      queueId: 'some id',
+      remove: () => {}
+    };
+    const wrapper = shallow(<Tasks {...props} serverId={'server id'} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
 });
