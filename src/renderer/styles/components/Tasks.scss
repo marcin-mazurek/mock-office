@@ -1,9 +1,7 @@
 .tasks {
+  @extend %list-reset;
   display: flex;
   flex-direction: column;
-  list-style: none;
-  margin-left: 20px;
-  padding: 0;
   width: 100%;
 }
 
@@ -12,7 +10,7 @@
 }
 
 .task {
-  background: #EEE;
+  border: 2px solid #EEE;
   flex: none;
   padding: 20px;
 }

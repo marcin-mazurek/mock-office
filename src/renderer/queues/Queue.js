@@ -3,7 +3,7 @@ import TasksConnect from '../tasks/browseTasks/Tasks';
 
 const Queue = ({ id }) => (
   <div className="queue">
-    <div className="queue__tasks">
+    <div className="queue-tasks">
       <TasksConnect serverId={id} />
     </div>
   </div>

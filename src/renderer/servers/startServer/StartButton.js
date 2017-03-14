@@ -5,7 +5,7 @@ import { getSelected } from '../selectors';
 
 export const StartButton = ({ serverId, start }) =>
   <button
-    className="server-start-button button"
+    className="view-header__button server-start-button button"
     onClick={() => {
       start(serverId);
     }}

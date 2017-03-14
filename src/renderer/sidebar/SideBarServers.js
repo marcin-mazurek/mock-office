@@ -9,17 +9,18 @@ import { select as dispatchSelect } from '../servers/actions';
 export const SideBarServers = ({ servers, select, goToServerPage, selected }) => (
   <div className="navbar-servers">
     <div className="navbar-servers-header">
-      Servers: {' '}
-      <Link className="button navbar-servers__add-server-button" to="/add-server">
-        +
+      <i className="fa fa-server navbar-servers-header__icon" /> Servers:
+      <Link className="navbar-servers__add-server-button" to="/add-server">
+        <i className="fa fa-plus-circle" />
       </Link>
     </div>
     <ul className="navbar-servers-list">
       {
         servers.map((server) => {
           const serverIndicatorClassNames = classnames(
-            'navbar-server__running-indicator',
-            { 'navbar-server__running-indicator--running': server.running }
+            'fa fa-power-off',
+            'navbar-server__status-indicator',
+            { 'navbar-server__status-indicator--up': server.running }
           );
           const serverListItemClassNames = classnames({
             'navbar-servers-list-item': true,
@@ -28,7 +29,7 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected }) =>
 
           return (
             <li className={serverListItemClassNames} key={server.id}>
-              <span className={serverIndicatorClassNames} />
+              <i className={serverIndicatorClassNames} />
               <a
                 className="navbar-server-list__link"
                 href=""

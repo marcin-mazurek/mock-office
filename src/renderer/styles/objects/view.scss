@@ -1,0 +1,17 @@
+.view-header {
+  background-color: #555;
+  color: #FFFFFF;
+  padding: 0 10px;
+  font-size: 15px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: 500;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.view-header__button {
+  padding: 2px 8px;
+  margin-right: 10px;
+}

@@ -7,7 +7,9 @@ import { getQueueTaskIds } from '../../queues/selectors';
 export const Task = ({ id, taskPayload, serverId, remove }) =>
   <div className="task">
     <div>{JSON.stringify(taskPayload)}</div>
-    <button onClick={() => remove(serverId, id)}>Remove</button>
+    <button className="button" onClick={() => remove(serverId, id)}>
+      <i className="fa fa-times" />
+    </button>
   </div>;
 
 Task.propTypes = {

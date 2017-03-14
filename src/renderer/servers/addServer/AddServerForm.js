@@ -76,33 +76,32 @@ export class AddServerForm extends React.Component {
       <div className="add-server-form">
         <form action="#">
           <div className="add-server-form__field">
-            <label htmlFor="server-name">
-              Name: {' '}
-              <input
-                name="server-name"
-                type="text"
-                onChange={this.handleNameChange}
-                value={this.state.name}
-              />
+            <label className="add-server-form__label" htmlFor="server-name">
+              Name:
             </label>
+            <input
+              className="input input--text"
+              name="server-name"
+              type="text"
+              onChange={this.handleNameChange}
+              value={this.state.name}
+            />
           </div>
           <div className="add-server-form__field">
-            <label htmlFor="server-port">
-              Port: {' '}
-              <input
-                name="server-port"
-                type="text"
-                onChange={this.handleChangePort}
-                value={this.state.port}
-              />
+            <label className="add-server-form__label" htmlFor="server-port">
+              Port:
             </label>
+            <input
+              className="input input--text"
+              name="server-port"
+              type="text"
+              onChange={this.handleChangePort}
+              value={this.state.port}
+            />
           </div>
           <div className="add-server-form__field">
-            <label
-              className=""
-              htmlFor="server-type"
-            >
-              Type: {' '}
+            <label className="add-server-form__label" htmlFor="server-type">
+              Type:
             </label>
             <select
               name="server-type"
@@ -114,8 +113,8 @@ export class AddServerForm extends React.Component {
             </select>
           </div>
           <div className="add-server-form__field">
-            <label htmlFor="server-secure">
-              Secure: {' '}
+            <label className="add-server-form__label" htmlFor="server-secure">
+              Secure:
             </label>
             <select
               name="server-secure"
@@ -164,7 +163,7 @@ export class AddServerForm extends React.Component {
             className="button add-server-form__submit-button"
             onClick={this.submit}
           >
-            Create
+            <i className="fa fa-plus" /> Create
           </button>
         </form>
       </div>

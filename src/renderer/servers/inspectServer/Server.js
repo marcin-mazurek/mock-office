@@ -26,35 +26,35 @@ export const ServerInspect = ({ running, serverDetails }) => {
   const { name, port, type, id } = serverDetails;
 
   return (
-    <div className="server-inspect">
-      <header className="server-inspect__header">
+    <div className="inspect-server">
+      <div className="view-header">
+        { running ? <StopButtonConnect /> : <StartButtonConnect /> }
         {name}
-      </header>
-      <main className="server-inspect-main server-inspect__main">
-        <div className="server-inspect-details">
-          <div className="server-inspect-details__row">
-            { running ? <StopButtonConnect /> : <StartButtonConnect /> }
-          </div>
-          <div className="server-inspect-details__row">
-            <div className="server-inspect-details__cell">
-              Port: {port}
+      </div>
+      <div className="inspect-server-spec-bar">
+        <div className="inspect-server-spec-bar__cell">
+          Port:
+          <span className="inspect-server-spec-bar__value">{port}</span>
+        </div>
+        <div className="inspect-server-spec-bar__cell">
+          Type:
+          <span className="inspect-server-spec-bar__value">{type}</span>
+        </div>
+      </div>
+      <main className="inspect-server-main inspect-server__main">
+        <div className="inspect-server-details">
+          <div className="inspect-server-details__row">
+            <div className="inspect-server-details__cell">
+              <Link to="/add-task" className="button">
+                <i className="fa fa-plus" /> Add task
+              </Link>
             </div>
-            <div className="server-inspect-details__cell">
-              Type: {type}
-            </div>
-          </div>
-          <div className="server-inspect-details__row">
-            <div className="server-inspect-details__cell">
-              <Link to="/add-task">Add task</Link>
-            </div>
-          </div>
-          <div className="server-inspect-details__row">
-            <div className="server-inspect-details__cell">
+            <div className="inspect-server-details__cell">
               Add from file: <FilePickerConnect serverId={id} />
             </div>
           </div>
         </div>
-        <div className="server-inspect-queue">
+        <div className="inspect-server-queue">
           <Queue id={id} />
         </div>
       </main>

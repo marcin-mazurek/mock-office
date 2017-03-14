@@ -14,48 +14,51 @@ exports[`Server default snapshot 1`] = `
 
 exports[`ServerInspect default snapshot 1`] = `
 <div
-  className="server-inspect">
-  <header
-    className="server-inspect__header">
+  className="inspect-server">
+  <div
+    className="view-header">
+    <Connect(Component) />
     some id
-  </header>
-  <main
-    className="server-inspect-main server-inspect__main">
+  </div>
+  <div
+    className="inspect-server-spec-bar">
     <div
-      className="server-inspect-details">
+      className="inspect-server-spec-bar__cell">
+      Port:
+      <span
+        className="inspect-server-spec-bar__value">
+        3000
+      </span>
+    </div>
+    <div
+      className="inspect-server-spec-bar__cell">
+      Type:
+      <span
+        className="inspect-server-spec-bar__value">
+        some type
+      </span>
+    </div>
+  </div>
+  <main
+    className="inspect-server-main inspect-server__main">
+    <div
+      className="inspect-server-details">
       <div
-        className="server-inspect-details__row">
-        <Connect(Component) />
-      </div>
-      <div
-        className="server-inspect-details__row">
+        className="inspect-server-details__row">
         <div
-          className="server-inspect-details__cell">
-          Port: 
-          3000
-        </div>
-        <div
-          className="server-inspect-details__cell">
-          Type: 
-          some type
-        </div>
-      </div>
-      <div
-        className="server-inspect-details__row">
-        <div
-          className="server-inspect-details__cell">
+          className="inspect-server-details__cell">
           <Link
+            className="button"
             onlyActiveOnIndex={false}
             style={Object {}}
             to="/add-task">
-            Add task
+            <i
+              className="fa fa-plus" />
+             Add task
           </Link>
         </div>
-      </div>
-      <div
-        className="server-inspect-details__row">
         <div
-          className="server-inspect-details__cell">
+          className="inspect-server-details__cell">
           Add from file: 
           <Connect(FilePicker)
             serverId="some id" />
@@ -63,7 +66,7 @@ exports[`ServerInspect default snapshot 1`] = `
       </div>
     </div>
     <div
-      className="server-inspect-queue">
+      className="inspect-server-queue">
       <Component
         id="some id" />
     </div>

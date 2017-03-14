@@ -1,3 +1,6 @@
+// vendor
+@import '~font-awesome/css/font-awesome.css';
+
 // settings
 @import 'settings/reset';
 @import 'settings/fonts';
@@ -6,12 +9,14 @@
 // objects
 @import 'objects/resets';
 @import 'objects/button';
+@import 'objects/view';
+@import 'objects/input';
 
 // components
 @import 'components/Main';
 @import 'components/App';
 @import 'components/SideBar';
-@import 'components/Server';
+@import 'components/InspectServer';
 @import 'components/AddServerForm';
 @import 'components/Queues';
 @import 'components/Tasks';

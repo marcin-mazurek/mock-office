@@ -1,0 +1,52 @@
+.inspect-server {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.inspect-server__header {
+  flex: none;
+  font-size: 20px;
+}
+
+.inspect-server-spec-bar {
+  display: flex;
+  font-size: 12px;
+  border-bottom: 1px solid #EEE;
+  color: #BBB;
+  letter-spacing: 0.5px;
+}
+
+.inspect-server-spec-bar__cell {
+  padding: 4px 7px;
+  border-right: 1px solid #EEE;
+}
+
+.inspect-server-spec-bar__value {
+  color: #888;
+  font-weight: 500;
+  margin-left: 3px;
+}
+
+.inspect-server__main {
+  padding: 15px;
+  flex: auto;
+}
+
+.inspect-server-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.inspect-server-details__row {
+  align-items: center;
+  display: flex;
+  margin-bottom: 10px;
+  padding: 5px 0;
+}
+
+.inspect-server-details__cell {
+  margin-right: 10px;
+}
+
