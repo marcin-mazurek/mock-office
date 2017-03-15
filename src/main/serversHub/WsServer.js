@@ -59,7 +59,7 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      this.queue.openConnection(task => this.ws.send(task.message));
+      this.queue.openConnection(task => this.ws.send(task.taskPayload.message));
     });
     cb();
   }
