@@ -174,7 +174,7 @@ export default class Queue {
       const firstRunnableTask = R.head(runnableTasks);
 
       if (cb) {
-        firstRunnableTask.job.map(cb);
+        firstRunnableTask.job = firstRunnableTask.job.map(cb);
       }
 
       this.runTask(firstRunnableTask.id);
