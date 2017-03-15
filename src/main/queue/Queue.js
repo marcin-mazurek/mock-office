@@ -17,10 +17,10 @@ export default class Queue {
     this.serverEE = args.ee;
     this.tasks = [];
     this.ee = new EventEmitter();
-    this.runReadyTasks = this.runReadyTasks.bind(this);
-    this.ee.on(events.TASK_REMOVED, this.runReadyTasks);
-    this.ee.on(events.TASK_RUN, this.runReadyTasks);
-    this.ee.on(events.TASK_ADDED, this.runReadyTasks);
+    this.runReadyTask = this.runReadyTask.bind(this);
+    this.ee.on(events.TASK_REMOVED, this.runReadyTask);
+    this.ee.on(events.TASK_RUN, this.runReadyTask);
+    this.ee.on(events.TASK_ADDED, this.runReadyTask);
   }
 
   createTask(task) {
@@ -125,57 +125,44 @@ export default class Queue {
     this.ee.emit(events.TASK_REMOVED);
   }
 
-  runReadyTasks(requirements, cb) {
+  findReadyTask(requirements) {
+    for (let i = 0, len = this.tasks.length; i < len; i += 1) {
+      const task = this.tasks[i];
+
+      if (task.running) {
+        if (task.blocking) {
+          return undefined;
+        }
+      }
+
+      if (task.requirements) {
+        if (deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}))) {
+          return task;
+        }
+      } else {
+        return task;
+      }
+    }
+
+    return undefined;
+  }
+
+  runReadyTask(requirements, cb) {
     if (this.tunnel) {
-      let blockingTaskFound = false;
-      const notBlockedTasks = R.takeWhile(
-        (task) => {
-          if (blockingTaskFound) {
-            return false;
-          }
+      const readyTask = this.findReadyTask(requirements);
 
-          blockingTaskFound = task.behaviours;
-          return true;
-        },
-        this.tasks
-      );
-
-      if (notBlockedTasks.length === 0) {
+      if (!readyTask) {
         if (cb) {
           cb();
         }
-
-        return;
-      }
-
-      const runnableTasks = notBlockedTasks.filter((task) => {
-        if (task.running) {
-          return false;
-        }
-
-        if (!task.requirements) {
-          return true;
-        }
-
-        return deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}));
-      });
-
-      if (runnableTasks.length === 0) {
+      } else {
         if (cb) {
-          cb();
+          readyTask.job = readyTask.job.map(cb);
         }
 
-        return;
+        this.runTask(readyTask.id);
+        this.ee.emit(events.TASK_RUN);
       }
-
-      const firstRunnableTask = R.head(runnableTasks);
-
-      if (cb) {
-        firstRunnableTask.job = firstRunnableTask.job.map(cb);
-      }
-
-      this.runTask(firstRunnableTask.id);
-      this.ee.emit(events.TASK_RUN);
     }
   }
 

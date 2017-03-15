@@ -65,7 +65,7 @@ export default class WSMockServer {
   }
 
   setupSocket(socket) {
-    socket.on('message', message => this.queue.runReadyTasks({ message }));
+    socket.on('message', message => this.queue.runReadyTask({ message }));
 
     socket.on('close', () => {
       this.queue.closeConnection();

@@ -44,7 +44,7 @@ export default class HttpServer {
     this.app.get('*', (req, res) => {
       this.queue.openConnection(send(req, res));
 
-      this.queue.runReadyTasks(
+      this.queue.runReadyTask(
         {
           url: req.url,
           headers: req.headers
