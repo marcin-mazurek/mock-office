@@ -51,7 +51,6 @@ export default class HttpServer {
         },
         () => {
           this.queue.closeConnection();
-          res.status(404).send('Response not found');
         }
       );
     });
