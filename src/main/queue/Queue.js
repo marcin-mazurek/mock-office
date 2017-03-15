@@ -127,7 +127,6 @@ export default class Queue {
 
   runReadyTasks(requirements, cb) {
     if (this.tunnel) {
-      // collect phase
       let blockingTaskFound = false;
       const notBlockedTasks = R.takeWhile(
         (task) => {
@@ -154,12 +153,10 @@ export default class Queue {
           return false;
         }
 
-        // do not need
         if (!task.requirements) {
           return true;
         }
 
-        // should fulfill requirements
         return deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}));
       });
 
