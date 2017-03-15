@@ -133,9 +133,7 @@ export default class Queue {
         if (task.blocking) {
           return undefined;
         }
-      }
-
-      if (task.requirements) {
+      } else if (task.requirements) {
         if (deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}))) {
           return task;
         }
@@ -155,14 +153,16 @@ export default class Queue {
         if (cb) {
           cb();
         }
-      } else {
-        if (cb) {
-          readyTask.job = readyTask.job.map(cb);
-        }
 
-        this.runTask(readyTask.id);
-        this.ee.emit(events.TASK_RUN);
+        return;
       }
+
+      if (cb) {
+        readyTask.job = readyTask.job.map(cb);
+      }
+
+      this.runTask(readyTask.id);
+      this.ee.emit(events.TASK_RUN);
     }
   }
 
