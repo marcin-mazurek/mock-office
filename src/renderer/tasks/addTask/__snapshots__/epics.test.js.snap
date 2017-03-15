@@ -4,12 +4,16 @@ Array [
     "serverId": "serverId",
     "tasks": Array [
       Object {
+        "requirements": Object {
+          "url": "/some-path",
+        },
         "taskPayload": "taskPayload",
       },
     ],
     "type": "addTask/INIT",
   },
   Object {
+    "path": "/some-path",
     "serverId": "serverId",
     "taskId": "task id",
     "taskPayload": "taskPayload",

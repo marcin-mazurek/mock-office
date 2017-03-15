@@ -4,23 +4,23 @@ import { getTask } from '../selectors';
 import { init } from '../removeTask/actions';
 import { getQueueTaskIds } from '../../queues/selectors';
 
-export const Task = ({ id, taskPayload, serverId, remove }) =>
+export const Task = ({ id, path, serverId, remove }) =>
   <div className="task">
-    <div>{JSON.stringify(taskPayload)}</div>
-    <button className="button" onClick={() => remove(serverId, id)}>
+    <button className="task__remove-button" onClick={() => remove(serverId, id)}>
       <i className="fa fa-times" />
     </button>
+    <div>{path}</div>
   </div>;
 
 Task.propTypes = {
   id: React.PropTypes.string.isRequired,
-  taskPayload: React.PropTypes.shape({}).isRequired,
+  path: React.PropTypes.string.isRequired,
   serverId: React.PropTypes.string.isRequired,
   remove: React.PropTypes.func.isRequired
 };
 
 const taskMapStateToProps = (initialState, ownProps) => state => ({
-  taskPayload: getTask(state, ownProps).taskPayload
+  path: getTask(state, ownProps).path
 });
 
 const taskMapDispatchToProps = {
@@ -30,15 +30,20 @@ const taskMapDispatchToProps = {
 export const TaskConnect = connect(taskMapStateToProps, taskMapDispatchToProps)(Task);
 
 export const Tasks = ({ taskIds, serverId }) => (
-  <ul className="tasks">
-    {
-      taskIds.map(taskId =>
-        <li className="tasks__item" key={taskId}>
-          <TaskConnect serverId={serverId} id={taskId} />
-        </li>
-      )
-    }
-  </ul>
+  <div>
+    <div className="tasks__header">
+      <i className="fa fa-tasks" /> Tasks:
+    </div>
+    <ul className="tasks">
+      {
+        taskIds.map(taskId =>
+          <li className="tasks__item" key={taskId}>
+            <TaskConnect serverId={serverId} id={taskId} />
+          </li>
+        )
+      }
+    </ul>
+  </div>
 );
 
 Tasks.propTypes = {

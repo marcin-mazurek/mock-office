@@ -48,6 +48,9 @@ test('addTaskEpic', () => {
 
   store.dispatch(init('serverId', [
     {
+      requirements: {
+        url: '/some-path'
+      },
       taskPayload: 'taskPayload'
     }
   ]));

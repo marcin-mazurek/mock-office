@@ -1,4 +1,12 @@
 exports[`Tasks default snapshot 1`] = `
-<ul
-  className="tasks" />
+<div>
+  <div
+    className="tasks__header">
+    <i
+      className="fa fa-tasks" />
+     Tasks:
+  </div>
+  <ul
+    className="tasks" />
+</div>
 `;

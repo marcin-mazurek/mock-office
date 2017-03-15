@@ -5,20 +5,31 @@
   width: 100%;
 }
 
+.tasks__header {
+  margin: 10px 0;
+  font-weight: 500;
+}
+
 .tasks__item {
   margin-bottom: 10px;
 }
 
 .task {
-  border: 2px solid #EEE;
+  border: 1px solid #EEE;
   flex: none;
-  padding: 20px;
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .task-details__row {
   margin: 10px;
 }
 
-.task__button {
-  margin: 10px;
+.task__remove-button {
+  @extend %button-reset;
+  font-size: 16px;
+  color: #999;
+  margin-right: 10px;
 }
