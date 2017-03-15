@@ -50,7 +50,7 @@ export const ServerInspect = ({ running, serverDetails }) => {
               </Link>
             </div>
             <div className="inspect-server-details__cell">
-              Add from file: <FilePickerConnect serverId={id} />
+              <FilePickerConnect serverId={id} />
             </div>
           </div>
         </div>

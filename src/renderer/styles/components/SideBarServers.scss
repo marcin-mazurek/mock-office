@@ -1,4 +1,4 @@
-.navbar-servers-header {
+.sidebar-servers-header {
   color: #FFF;
   background-color: $primary-color;
   padding: 0 10px;
@@ -11,21 +11,21 @@
   line-height: 30px;
 }
 
-.navbar-servers-header__icon {
+.sidebar-servers-header__icon {
   margin-right: 10px;
 }
 
-.navbar-servers__add-server-button {
+.sidebar-servers__add-server-button {
   color: #FFF;
   margin-left: auto;
   font-size: 18px;
 }
 
-.navbar-servers-list {
+.sidebar-servers-list {
   @extend %list-reset;
 }
 
-.navbar-server-list__link {
+.sidebar-server-list__link {
   display: block;
   padding: 3px 5px;
   color: inherit;
@@ -33,7 +33,7 @@
   width: 100%;
 }
 
-.navbar-servers-list-item {
+.sidebar-servers-list-item {
   font-size: 13px;
   border-bottom: 1px solid #DDD;
   display: flex;
@@ -47,16 +47,16 @@
   }
 }
 
-.navbar-servers-list-item--selected {
+.sidebar-servers-list-item--selected {
   background-color: #e7e7e7;
 }
 
-.navbar-server__status-indicator {
+.sidebar-server__status-indicator {
   color: #CCC;
   padding: 0 7px 0 3px;
   transition: color .3s ease;
 }
 
-.navbar-server__status-indicator--up {
+.sidebar-server__status-indicator--up {
   color: #02d77d;
 }

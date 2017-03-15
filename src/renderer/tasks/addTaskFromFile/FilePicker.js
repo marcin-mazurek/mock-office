@@ -22,11 +22,17 @@ export class FilePicker extends React.Component {
     const { handleChange } = this;
 
     return (
-      <input
-        type="file"
-        onChange={handleChange}
-        value=""
-      />
+      <div className="file-picker">
+        <div className="file-picker__button button">
+          <i className="fa fa-upload" /> Upload
+        </div>
+        <input
+          className="file-picker__input"
+          type="file"
+          onChange={handleChange}
+          value=""
+        />
+      </div>
     );
   }
 }

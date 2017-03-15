@@ -1,6 +1,16 @@
 exports[`FilePicker default snapshot 1`] = `
-<input
-  onChange={[Function]}
-  type="file"
-  value="" />
+<div
+  className="file-picker">
+  <div
+    className="file-picker__button button">
+    <i
+      className="fa fa-upload" />
+     Upload
+  </div>
+  <input
+    className="file-picker__input"
+    onChange={[Function]}
+    type="file"
+    value="" />
+</div>
 `;

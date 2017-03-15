@@ -1,13 +1,13 @@
 exports[`test SideBarServers should render 1`] = `
 <div
-  className="navbar-servers">
+  className="sidebar-servers">
   <div
-    className="navbar-servers-header">
+    className="sidebar-servers-header">
     <i
-      className="fa fa-server navbar-servers-header__icon" />
+      className="fa fa-server sidebar-servers-header__icon" />
      Servers:
     <Link
-      className="navbar-servers__add-server-button"
+      className="sidebar-servers__add-server-button"
       onlyActiveOnIndex={false}
       style={Object {}}
       to="/add-server">
@@ -16,6 +16,6 @@ exports[`test SideBarServers should render 1`] = `
     </Link>
   </div>
   <ul
-    className="navbar-servers-list" />
+    className="sidebar-servers-list" />
 </div>
 `;

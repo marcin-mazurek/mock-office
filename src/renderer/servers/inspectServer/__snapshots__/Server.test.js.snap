@@ -59,7 +59,6 @@ exports[`ServerInspect default snapshot 1`] = `
         </div>
         <div
           className="inspect-server-details__cell">
-          Add from file: 
           <Connect(FilePicker)
             serverId="some id" />
         </div>

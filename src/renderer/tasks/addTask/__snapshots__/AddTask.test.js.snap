@@ -1,12 +1,22 @@
 exports[`AddTask default snapshot 1`] = `
 <div
   className="add-task">
-  <Link
-    onlyActiveOnIndex={false}
-    style={Object {}}
-    to="/">
-    ⇚ Server details
-  </Link>
-  <Connect(WsForm) />
+  <div
+    className="view-header">
+    Add task
+  </div>
+  <div
+    className="add-task__main">
+    <Link
+      className="add-task__back-button"
+      onlyActiveOnIndex={false}
+      style={Object {}}
+      to="/">
+      <i
+        className="fa fa-arrow-left" />
+       Server details
+    </Link>
+    <Connect(WsForm) />
+  </div>
 </div>
 `;

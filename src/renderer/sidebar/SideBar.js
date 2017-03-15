@@ -1,10 +1,10 @@
 import React from 'react';
-import NavbarServersConnect from './SideBarServers';
+import SideBarServersConnect from './SideBarServers';
 
 const SideBar = () => (
-  <div className="navbar">
-    <div className="navbar__servers">
-      <NavbarServersConnect />
+  <div className="sidebar">
+    <div className="sidebar__servers">
+      <SideBarServersConnect />
     </div>
   </div>
 );
