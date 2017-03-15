@@ -23,8 +23,8 @@ class ServersHub {
     const serverId = unique();
     const ServerConstructor = serverTypes[type];
     const server = new ServerConstructor({ name, port, isSecure, keyPath, certPath });
-    server.ee.on('TASK_REMOVED_AFTER_USE', taskId =>
-      this.ee.emit('TASK_REMOVED_AFTER_USE', { serverId, taskId })
+    server.ee.on('TASK_REMOVED_AFTER_USE', args =>
+      this.ee.emit('TASK_REMOVED_AFTER_USE', { serverId, taskId: args.taskId })
     );
     this.servers.push({
       id: serverId,
