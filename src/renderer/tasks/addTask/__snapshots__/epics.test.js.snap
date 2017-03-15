@@ -8,15 +8,16 @@ Array [
           "url": "/some-path",
         },
         "taskPayload": "taskPayload",
+        "title": "task title",
       },
     ],
     "type": "addTask/INIT",
   },
   Object {
-    "path": "/some-path",
     "serverId": "serverId",
     "taskId": "task id",
     "taskPayload": "taskPayload",
+    "title": "task title",
     "type": "tasks/ADD",
   },
 ]
