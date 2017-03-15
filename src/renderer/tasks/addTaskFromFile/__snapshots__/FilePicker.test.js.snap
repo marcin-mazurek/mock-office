@@ -5,7 +5,7 @@ exports[`FilePicker default snapshot 1`] = `
     className="file-picker__button button">
     <i
       className="fa fa-upload" />
-     Upload
+     Upload tasks
   </div>
   <input
     className="file-picker__input"

@@ -45,7 +45,7 @@ export const ServerInspect = ({ running, serverDetails }) => {
         <div className="inspect-server-details">
           <div className="inspect-server-details__row">
             <div className="inspect-server-details__cell">
-              <Link to="/add-task" className="button">
+              <Link to="/add-task" className="inspect-server__add-task-button button">
                 <i className="fa fa-plus" /> Add task
               </Link>
             </div>

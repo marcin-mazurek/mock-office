@@ -48,7 +48,7 @@ exports[`ServerInspect default snapshot 1`] = `
         <div
           className="inspect-server-details__cell">
           <Link
-            className="button"
+            className="inspect-server__add-task-button button"
             onlyActiveOnIndex={false}
             style={Object {}}
             to="/add-task">
