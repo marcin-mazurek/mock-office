@@ -1,5 +1,6 @@
 [
   {
+    "title": "interval message",
     "instant": true,
     "interval": 3000,
     "taskPayload": {

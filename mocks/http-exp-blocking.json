@@ -1,5 +1,6 @@
 [
   {
+    "title": "blocking response for /some-url",
     "blocking": true,
     "requirements": {
       "url": "/another-url"

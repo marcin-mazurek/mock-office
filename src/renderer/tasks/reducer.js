@@ -4,7 +4,7 @@ import { ADD } from './addTask/actions';
 
 const initialState = new Map();
 const Task = new Record({
-  path: '',
+  title: '',
   taskPayload: {},
   id: ''
 });
@@ -12,8 +12,8 @@ const Task = new Record({
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { taskId, taskPayload, path } = action;
-      const task = new Task({ taskPayload, id: taskId, path });
+      const { taskId, taskPayload, title } = action;
+      const task = new Task({ taskPayload, id: taskId, title });
 
       return state.set(taskId, task);
     }

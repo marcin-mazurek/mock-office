@@ -7,10 +7,10 @@ export const init = (serverId, tasks) => ({
   tasks
 });
 
-export const add = (serverId, taskId, taskPayload, path = 'all paths') => ({
+export const add = (serverId, taskId, taskPayload, title = 'untitled') => ({
   type: ADD,
   serverId,
   taskId,
   taskPayload,
-  path
+  title
 });

@@ -4,23 +4,23 @@ import { getTask } from '../selectors';
 import { init } from '../removeTask/actions';
 import { getQueueTaskIds } from '../../queues/selectors';
 
-export const Task = ({ id, path, serverId, remove }) =>
+export const Task = ({ id, title, serverId, remove }) =>
   <div className="task">
     <button className="task__remove-button" onClick={() => remove(serverId, id)}>
       <i className="fa fa-times" />
     </button>
-    <div>{path}</div>
+    <div>{title}</div>
   </div>;
 
 Task.propTypes = {
   id: React.PropTypes.string.isRequired,
-  path: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
   serverId: React.PropTypes.string.isRequired,
   remove: React.PropTypes.func.isRequired
 };
 
 const taskMapStateToProps = (initialState, ownProps) => state => ({
-  path: getTask(state, ownProps).path
+  title: getTask(state, ownProps).title
 });
 
 const taskMapDispatchToProps = {
