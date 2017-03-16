@@ -3,6 +3,7 @@ import Task from 'fun-task';
 import { EventEmitter } from 'events';
 import R from 'ramda';
 import deepEqual from 'deep-equal';
+import btoa from 'btoa';
 import extractSubTree from './extractSubtree';
 
 export const events = {
@@ -29,12 +30,20 @@ export default class Queue {
 
     if (t.interval) {
       job = Task.create(() => {
+        let gen;
         t.running = true;
-        const intervalId = setInterval(() =>
+        if (t.taskPayload === 'generator') {
+          gen = require(t.generatorPath);
+        }
+
+        const intervalId = setInterval(() => {
           this.tunnel({
-            taskPayload: t.taskPayload,
+            taskPayload: gen ? {
+              message: gen()
+              } : t.taskPayload,
             headers: t.headers
-          }), t.interval
+          });
+          }, t.interval
         );
 
         return () => {
@@ -129,16 +138,27 @@ export default class Queue {
     for (let i = 0, len = this.tasks.length; i < len; i += 1) {
       const task = this.tasks[i];
 
-      if (task.running) {
-        if (task.blocking) {
-          return undefined;
-        }
-      } else if (task.requirements) {
-        if (deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}))) {
+      if (task.running && task.blocking) {
+        return undefined;
+      } else if (!task.running) {
+        if (task.requirements) {
+          if (requirements) {
+            if (task.requirements.type === 'b64') {
+              requirements.message = btoa(requirements.message);
+              requirements.type = 'b64';
+            }
+            if (deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}))) {
+              console.log(task.title);
+              return task;
+            } else if (task.blocking) {
+              return undefined;
+            }
+          } else if (task.blocking) {
+            return undefined;
+          }
+        } else {
           return task;
         }
-      } else {
-        return task;
       }
     }
 

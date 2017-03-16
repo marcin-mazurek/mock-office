@@ -1,0 +1,53 @@
+[
+  {
+    "title": "begin of communication",
+    "instant": true,
+    "taskPayload": {
+      "message": "NAIxMDACQzhDNDA0OENFRjc0NzRBMC0wMDQ0MEJDQjAwMDAwMDAx",
+      "type": "b64"
+    }
+  },
+  {
+    "title": "response for subscription for score",
+    "requirements": {
+      "message": "FnNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvc2NvcmU=",
+      "type": "b64"
+    },
+    "taskPayload": {
+      "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvc2NvcmUhNmEwNwEwIC0gMA==",
+      "type": "b64"
+    }
+  },
+  {
+    "title": "response for subscription for time",
+    "requirements": {
+      "message": "FnNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZQ==",
+      "type": "b64"
+    },
+    "taskPayload": {
+      "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZSE2YTA5ATkyNw==",
+      "type": "b64"
+    }
+  },
+  {
+    "title": "emit seconds on interval",
+    "instant": true,
+    "interval": 1000,
+    "taskPayload": "generator",
+    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/timeTicker.js"
+  },
+  {
+    "title": "emit score on interval",
+    "instant": true,
+    "interval": 10000,
+    "taskPayload": "generator",
+    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/score.js"
+  },
+  {
+    "title": "emit ping on interval",
+    "instant": true,
+    "interval": 5000,
+    "taskPayload": "generator",
+    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/pinger.js"
+  }
+]

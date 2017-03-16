@@ -3,6 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import { EventEmitter } from 'events';
+import atob from 'atob';
 import Queue from '../queue';
 
 export default class WSMockServer {
@@ -59,7 +60,18 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      this.queue.openConnection(task => this.ws.send(task.taskPayload.message));
+      this.queue.openConnection(task => {
+        let message;
+
+        if (task.taskPayload.type === 'b64') {
+          message = atob(task.taskPayload.message);
+        } else {
+          message = task.taskPayload.message;
+        }
+
+        this.ws.send(message);
+      });
+      this.queue.runReadyTask();
     });
     cb();
   }

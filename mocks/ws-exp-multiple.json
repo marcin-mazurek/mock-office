@@ -1,0 +1,35 @@
+[
+  {
+    "requirements": {
+      "title": "response for /some-url",
+      "url": "/some-url"
+    },
+    "taskPayload": {
+      "body": {
+        "data": "response for some-url"
+      }
+    }
+  },
+  {
+    "requirements": {
+      "title": "response for /some-url",
+      "url": "/some-url"
+    },
+    "taskPayload": {
+      "body": {
+        "data": "response for some-url"
+      }
+    }
+  },
+  {
+    "requirements": {
+      "title": "response for /some-url",
+      "url": "/some-url"
+    },
+    "taskPayload": {
+      "body": {
+        "data": "response for some-url"
+      }
+    }
+  }
+]
