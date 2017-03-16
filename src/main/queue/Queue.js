@@ -4,6 +4,8 @@ import { EventEmitter } from 'events';
 import R from 'ramda';
 import deepEqual from 'deep-equal';
 import btoa from 'btoa';
+import fs from 'fs';
+import vm from 'vm';
 import extractSubTree from './extractSubtree';
 
 export const events = {
@@ -27,22 +29,23 @@ export default class Queue {
   createTask(task) {
     let job;
     const t = task;
+    let payloadGenerator;
+
+    if (t.taskPayload === 'generator') {
+      const scriptSrc = fs.readFileSync(t.generatorPath);
+      payloadGenerator = new vm.Script(scriptSrc).runInNewContext({});
+    }
 
     if (t.interval) {
       job = Task.create(() => {
-        let gen;
         t.running = true;
-        if (t.taskPayload === 'generator') {
-          gen = require(t.generatorPath);
-        }
 
-        const intervalId = setInterval(() => {
-          this.tunnel({
-            taskPayload: gen ? {
-              message: gen()
-              } : t.taskPayload,
-            headers: t.headers
-          });
+        const intervalId = setInterval(
+          () => {
+            this.tunnel({
+              taskPayload: payloadGenerator ? payloadGenerator() : t.taskPayload,
+              headers: t.headers
+            });
           }, t.interval
         );
 
@@ -56,7 +59,7 @@ export default class Queue {
         t.running = true;
         const timeoutId = setTimeout(() => {
           this.tunnel({
-            taskPayload: t.taskPayload,
+            taskPayload: payloadGenerator ? payloadGenerator() : t.taskPayload,
             headers: t.headers
           });
           onSuccess();
@@ -71,7 +74,7 @@ export default class Queue {
       job = Task.create((onSuccess) => {
         t.running = true;
         this.tunnel({
-          taskPayload: t.taskPayload,
+          taskPayload: payloadGenerator ? payloadGenerator() : t.taskPayload,
           headers: t.headers
         });
         onSuccess();
@@ -142,13 +145,13 @@ export default class Queue {
         return undefined;
       } else if (!task.running) {
         if (task.requirements) {
+          const req = requirements;
           if (requirements) {
             if (task.requirements.type === 'b64') {
-              requirements.message = btoa(requirements.message);
-              requirements.type = 'b64';
+              req.message = btoa(requirements.message);
+              req.type = 'b64';
             }
-            if (deepEqual(task.requirements, extractSubTree(requirements, task.requirements, {}))) {
-              console.log(task.title);
+            if (deepEqual(task.requirements, extractSubTree(req, task.requirements, {}))) {
               return task;
             } else if (task.blocking) {
               return undefined;
