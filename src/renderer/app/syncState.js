@@ -18,7 +18,7 @@ export default (store) => {
 
     for (let taskIndex = 0; taskIndex < tasks.length; taskIndex += 1) {
       const task = tasks[taskIndex];
-      store.dispatch(addTask(id, task.id, task.taskPayload, task.name));
+      store.dispatch(addTask(id, task.id, task.taskPayload, task.title));
     }
   }
 };
