@@ -4,6 +4,7 @@
       "title": "response for /some-url",
       "url": "/some-url"
     },
+    "blocking": "true",
     "taskPayload": {
       "body": {
         "data": "response for some-url"

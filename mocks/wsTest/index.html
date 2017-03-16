@@ -24,16 +24,9 @@
       showMessage(event.data);
     };
     ws.onopen = function() {
-      showMessage('server open');
-
       setTimeout(function() {
-        ws.send('message-1');
-        showMessage('Sending: message-1');
-      }, 1000);
-
-      setTimeout(function() {
-        ws.send('message-2');
-        showMessage('Sending: message-2');
+        ws.send('sportsbook/football/10757595/stats/score');
+        ws.send('sportsbook/football/10757595/stats/time');
       }, 5000);
     };
 

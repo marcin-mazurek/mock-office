@@ -19,6 +19,7 @@
     }
   },
   {
+    "blocking": true,
     "title": "response for subscription for time",
     "requirements": {
       "message": "FnNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZQ==",
@@ -34,20 +35,20 @@
     "instant": true,
     "interval": 1000,
     "taskPayload": "generator",
-    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/timeTicker.js"
+    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/timeTicker.js"
   },
   {
     "title": "emit score on interval",
     "instant": true,
     "interval": 10000,
     "taskPayload": "generator",
-    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/score.js"
+    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/score.js"
   },
   {
     "title": "emit ping on interval",
     "instant": true,
     "interval": 5000,
     "taskPayload": "generator",
-    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/pinger.js"
+    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/pinger.js"
   }
 ]
