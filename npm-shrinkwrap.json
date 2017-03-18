@@ -1,6 +1,6 @@
 {
   "name": "mockee",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "dependencies": {
     "@kadira/react-split-pane": {
       "version": "1.4.7",
@@ -179,6 +179,11 @@
       "from": "array-equal@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/array-equal/-/array-equal-1.0.0.tgz"
     },
+    "array-filter": {
+      "version": "0.0.1",
+      "from": "array-filter@>=0.0.0 <0.1.0",
+      "resolved": "https://registry.npmjs.org/array-filter/-/array-filter-0.0.1.tgz"
+    },
     "array-find-index": {
       "version": "1.0.2",
       "from": "array-find-index@>=1.0.1 <2.0.0",
@@ -193,6 +198,16 @@
       "version": "3.0.2",
       "from": "array-includes@>=3.0.2 <4.0.0",
       "resolved": "https://registry.npmjs.org/array-includes/-/array-includes-3.0.2.tgz"
+    },
+    "array-map": {
+      "version": "0.0.0",
+      "from": "array-map@>=0.0.0 <0.1.0",
+      "resolved": "https://registry.npmjs.org/array-map/-/array-map-0.0.0.tgz"
+    },
+    "array-reduce": {
+      "version": "0.0.0",
+      "from": "array-reduce@>=0.0.0 <0.1.0",
+      "resolved": "https://registry.npmjs.org/array-reduce/-/array-reduce-0.0.0.tgz"
     },
     "array-union": {
       "version": "1.0.2",
@@ -263,6 +278,11 @@
       "version": "0.4.0",
       "from": "asynckit@>=0.4.0 <0.5.0",
       "resolved": "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz"
+    },
+    "atob": {
+      "version": "2.0.3",
+      "from": "atob@>=2.0.3 <3.0.0",
+      "resolved": "https://registry.npmjs.org/atob/-/atob-2.0.3.tgz"
     },
     "autoprefixer": {
       "version": "6.7.6",
@@ -821,6 +841,11 @@
       "from": "bser@1.0.2",
       "resolved": "https://registry.npmjs.org/bser/-/bser-1.0.2.tgz"
     },
+    "btoa": {
+      "version": "1.1.2",
+      "from": "btoa@>=1.1.2 <2.0.0",
+      "resolved": "https://registry.npmjs.org/btoa/-/btoa-1.1.2.tgz"
+    },
     "buffer": {
       "version": "4.9.1",
       "from": "buffer@>=4.9.0 <5.0.0",
@@ -1224,6 +1249,11 @@
       "version": "0.4.1",
       "from": "currently-unhandled@>=0.4.1 <0.5.0",
       "resolved": "https://registry.npmjs.org/currently-unhandled/-/currently-unhandled-0.4.1.tgz"
+    },
+    "curry": {
+      "version": "1.2.0",
+      "from": "curry@>=1.2.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/curry/-/curry-1.2.0.tgz"
     },
     "d": {
       "version": "0.1.1",
@@ -1809,6 +1839,11 @@
       "version": "1.0.2",
       "from": "flatten@>=1.0.2 <2.0.0",
       "resolved": "https://registry.npmjs.org/flatten/-/flatten-1.0.2.tgz"
+    },
+    "font-awesome": {
+      "version": "4.7.0",
+      "from": "font-awesome@>=4.7.0 <5.0.0",
+      "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz"
     },
     "for-in": {
       "version": "1.0.2",
@@ -2686,6 +2721,11 @@
       "version": "0.5.1",
       "from": "json5@>=0.5.0 <0.6.0",
       "resolved": "https://registry.npmjs.org/json5/-/json5-0.5.1.tgz"
+    },
+    "json8": {
+      "version": "0.9.2",
+      "from": "json8@>=0.9.2 <0.10.0",
+      "resolved": "https://registry.npmjs.org/json8/-/json8-0.9.2.tgz"
     },
     "jsonfile": {
       "version": "2.4.0",
@@ -3962,6 +4002,10 @@
       "from": "react-stubber@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/react-stubber/-/react-stubber-1.0.0.tgz"
     },
+    "react-view-manager": {
+      "version": "0.1.0",
+      "from": "react-view-manager@latest"
+    },
     "read-all-stream": {
       "version": "3.1.0",
       "from": "read-all-stream@>=3.0.0 <4.0.0",
@@ -4296,6 +4340,21 @@
       "version": "0.2.2",
       "from": "shallowequal@>=0.2.0 <0.3.0",
       "resolved": "https://registry.npmjs.org/shallowequal/-/shallowequal-0.2.2.tgz"
+    },
+    "shebang-command": {
+      "version": "1.2.0",
+      "from": "shebang-command@>=1.2.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/shebang-command/-/shebang-command-1.2.0.tgz"
+    },
+    "shebang-regex": {
+      "version": "1.0.0",
+      "from": "shebang-regex@>=1.0.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/shebang-regex/-/shebang-regex-1.0.0.tgz"
+    },
+    "shell-quote": {
+      "version": "1.6.1",
+      "from": "shell-quote@>=1.6.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/shell-quote/-/shell-quote-1.6.1.tgz"
     },
     "shelljs": {
       "version": "0.7.6",

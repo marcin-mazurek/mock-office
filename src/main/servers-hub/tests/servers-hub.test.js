@@ -1,6 +1,6 @@
-import ServersHub from './ServersHub';
-import HttpServer from './HttpServer';
-import WsServer from './WsServer';
+import ServersHub from '../index';
+import HttpServer from '../../externals/http-server-doublr';
+import WsServer from '../../externals/ws-server-doublr';
 
 const serversHub = new ServersHub();
 

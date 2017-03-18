@@ -60,7 +60,7 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      this.queue.openConnection(task => {
+      this.queue.openConnection((task) => {
         let message;
 
         if (task.taskPayload.type === 'b64') {

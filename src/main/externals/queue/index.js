@@ -6,7 +6,25 @@ import deepEqual from 'deep-equal';
 import btoa from 'btoa';
 import fs from 'fs';
 import vm from 'vm';
-import extractSubTree from './extractSubtree';
+
+export const extractSubTree = (source, target, result) => {
+  const res = result;
+  const targetKeys = Object.keys(target);
+
+  targetKeys.forEach((key) => {
+    if (
+      typeof target[key] === 'object' &&
+      typeof source[key] === 'object' &&
+      !Array.isArray(source[key])
+    ) {
+      res[key] = {};
+      extractSubTree(source[key], target[key], res[key]);
+    } else {
+      res[key] = source[key];
+    }
+  });
+  return result;
+};
 
 export const events = {
   TASK_REMOVED: 'TASK_REMOVED',
@@ -46,13 +64,12 @@ export default class Queue {
               taskPayload: payloadGenerator ? payloadGenerator() : t.taskPayload,
               headers: t.headers
             });
-          }, t.interval
-        );
 
-        return () => {
-          t.running = false;
-          clearInterval(intervalId);
-        };
+            return () => {
+              t.running = false;
+              clearInterval(intervalId);
+            };
+          });
       });
     } else if (t.delay) {
       job = Task.create((onSuccess) => {

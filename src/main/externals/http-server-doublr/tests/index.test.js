@@ -1,4 +1,4 @@
-import { send } from './HttpServer';
+import { send } from '../index';
 
 describe('HttpServer', () => {
   test('send should send headers provide by user', () => {

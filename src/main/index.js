@@ -3,7 +3,7 @@ import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
 import { TASK_REMOVED } from './common/messageNames';
-import serversHub from './serversHub';
+import servers from './servers';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -25,7 +25,7 @@ function createWindow() {
   mainWindow.webContents.openDevTools();
 
   // queuesEventsEmitter
-  serversHub.ee.on('TASK_REMOVED_AFTER_USE',
+  servers.ee.on('TASK_REMOVED_AFTER_USE',
     args => mainWindow.webContents.send(TASK_REMOVED, args)
   );
 

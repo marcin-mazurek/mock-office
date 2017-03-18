@@ -1,7 +1,7 @@
 import unique from 'node-unique';
 import { EventEmitter } from 'events';
-import HttpServer from './HttpServer';
-import WSMockServer from './WsServer';
+import HttpServer from '../externals/http-server-doublr';
+import WSMockServer from '../externals/ws-server-doublr';
 
 const serverTypes = {
   http: HttpServer,

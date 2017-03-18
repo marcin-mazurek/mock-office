@@ -7,7 +7,7 @@ export default action$ =>
   action$.ofType(INIT)
     .flatMap(action => Observable.concat(
       Observable.fromPromise(
-        remote.require('./main/serversHub').default.start(action.id)
+        remote.require('./main/servers').default.start(action.id)
       ),
       Observable.of(action.id)
     ))
