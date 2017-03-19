@@ -1,7 +1,6 @@
-$sidebar-width: 200px;
-
 .sidebar {
-  border-right: 1px solid #EEE;
+  background-color: $sidebar-background-color;
+  color: $sidebar-font-color;
   height: 100%;
   width: $sidebar-width;
 }

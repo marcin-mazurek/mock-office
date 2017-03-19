@@ -1,0 +1,26 @@
+$color-1: #ECECEC;
+$color-2: #6C7A89;
+$color-3: #D2D7D3;
+$color-4: #EEEEEE;
+$color-5: #BDC3C7;
+$color-6: #ECF0F1;
+$color-7: #95A5A6;
+$color-8: #DADFE1;
+$color-9: #ABB7B7;
+$color-10: #F2F1EF;
+$color-11: #BFBFBF;
+
+$sidebar-background-color: #6C7A89;
+$sidebar-font-color: #ECF0F1;
+$sidebar-width: 200px;
+
+$sidebar-servers-header-border-bottom: 1px solid #606b78;
+$sidebar-servers-add-server-button-font-color: #93a6ba;
+$sidebar-servers-list-item-font-color: #93a6ba;
+$sidebar-servers-list-item-selected-background-color: #667280;
+$sidebar-server-status-indicator-font-color: #7a8896;
+$sidebar-server-status-indicator-up-font-color: #02d77d;
+
+body {
+  color: $color-2;
+}

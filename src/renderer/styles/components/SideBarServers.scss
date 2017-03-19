@@ -2,57 +2,81 @@
   display: flex;
   align-items: center;
   letter-spacing: 0.5px;
-  font-weight: bold;
+  font-weight: 500;
+  border-bottom: $sidebar-servers-header-border-bottom;
+  padding: 10px;
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 .sidebar-servers-header__icon {
   font-size: 18px;
-  color: $icons-color;
   margin-right: 10px;
 }
 
 .sidebar-servers__add-server-button {
-  color: $icons-color;
+  color: $sidebar-servers-add-server-button-font-color;
   margin-left: auto;
-  font-size: 18px;
+  font-size: 19px;
+
+  &:hover {
+    color: inherit;
+  }
+
 }
 
 .sidebar-servers-list {
-  padding: 15px;
   @extend %list-reset;
 }
 
-.sidebar-server-list__link {
+.sidebar-server-list__label {
+  @extend %button-reset;
+  cursor: pointer;
   display: block;
   padding: 3px 5px;
-  color: inherit;
   text-decoration: none;
   width: 100%;
-}
-
-.sidebar-servers-list-item {
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  padding: 3px 0;
-  letter-spacing: 1px;
-  color: #999;
+  color: $sidebar-servers-list-item-font-color;
 
   &:hover {
-    background-color: #DDD;
+    color: inherit;
   }
 }
 
+.sidebar-servers-list-item--selected .sidebar-server-list__label {
+  color: inherit;
+}
+
+.sidebar-servers-list-item {
+  padding: 3px 10px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  position: relative;
+}
+
 .sidebar-servers-list-item--selected {
-  background-color: #e7e7e7;
+  color: inherit;
+  background-color: $sidebar-servers-list-item-selected-background-color;
+
+  &:before {
+    content: ' ';
+    background-color: darken($sidebar-servers-list-item-selected-background-color, 5%);
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+  }
 }
 
 .sidebar-server__status-indicator {
-  color: #CCC;
+  color: $sidebar-server-status-indicator-font-color;
   padding: 0 7px 0 3px;
   transition: color .3s ease;
+  font-size: 18px;
 }
 
 .sidebar-server__status-indicator--up {
-  color: #02d77d;
+  color: $sidebar-server-status-indicator-up-font-color;
 }

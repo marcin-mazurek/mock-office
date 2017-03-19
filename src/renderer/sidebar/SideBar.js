@@ -1,11 +1,14 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import SideBarServersConnect from './SideBarServers';
 
 const SideBar = () => (
   <div className="sidebar">
-    <div className="sidebar__servers">
-      <SideBarServersConnect />
-    </div>
+    <Scrollbars>
+      <div className="sidebar__servers">
+        <SideBarServersConnect />
+      </div>
+    </Scrollbars>
   </div>
 );
 

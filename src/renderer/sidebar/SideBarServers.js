@@ -8,10 +8,10 @@ import { select as dispatchSelect } from '../servers/actions';
 
 export const SideBarServers = ({ servers, select, goToServerPage, selected }) => (
   <div className="sidebar-servers">
-    <div className="sidebar-servers__header view-header">
-      <i className="fa fa-server sidebar-servers-header__icon" /> Servers:
+    <div className="sidebar-servers__header">
+      <i className="fa fa-server sidebar-servers-header__icon" /> Servers
       <Link className="sidebar-servers__add-server-button" to="/add-server">
-        <i className="fa fa-plus-circle" />
+        <i className="fa fa-plus" />
       </Link>
     </div>
     <ul className="sidebar-servers-list">
@@ -30,8 +30,8 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected }) =>
           return (
             <li className={serverListItemClassNames} key={server.id}>
               <i className={serverIndicatorClassNames} />
-              <a
-                className="sidebar-server-list__link"
+              <button
+                className="sidebar-server-list__label"
                 href=""
                 onClick={(e) => {
                   e.preventDefault();
@@ -40,7 +40,7 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected }) =>
                 }}
               >
                 {server.name}
-              </a>
+              </button>
             </li>
           );
         })
