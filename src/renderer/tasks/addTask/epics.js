@@ -7,7 +7,7 @@ const addTaskEpic = action$ =>
     .flatMap((action) => {
       const { serverId, tasks } = action;
       const tasksForAdd = tasks.map((task) => {
-        const server = remote.require('./main/serversHub').default.find(serverId);
+        const server = remote.require('./main/servers').default.find(serverId);
         const taskId = server.addTask(task);
         return [serverId, taskId, task.taskPayload, task.title];
       });
