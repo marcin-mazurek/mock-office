@@ -1,26 +1,24 @@
-.sidebar-servers-header {
-  color: #FFF;
-  background-color: $primary-color;
-  padding: 0 10px;
+.sidebar-servers__header {
   display: flex;
   align-items: center;
   letter-spacing: 0.5px;
-  font-size: 15px;
-  font-weight: 500;
-  height: 40px;
+  font-weight: bold;
 }
 
 .sidebar-servers-header__icon {
+  font-size: 18px;
+  color: $icons-color;
   margin-right: 10px;
 }
 
 .sidebar-servers__add-server-button {
-  color: #FFF;
+  color: $icons-color;
   margin-left: auto;
   font-size: 18px;
 }
 
 .sidebar-servers-list {
+  padding: 15px;
   @extend %list-reset;
 }
 
@@ -34,15 +32,14 @@
 
 .sidebar-servers-list-item {
   font-size: 13px;
-  border-bottom: 1px solid #DDD;
   display: flex;
   align-items: center;
-  padding: 3px 9px;
+  padding: 3px 0;
   letter-spacing: 1px;
   color: #999;
 
   &:hover {
-    background-color: #e7e7e7;
+    background-color: #DDD;
   }
 }
 

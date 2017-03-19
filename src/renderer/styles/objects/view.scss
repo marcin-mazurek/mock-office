@@ -1,16 +1,10 @@
+$view-header-bottom-border-bottom: 1px solid #EEE;
+
 .view-header {
-  background-color: #555;
-  color: #FFFFFF;
-  padding: 0 10px;
-  font-size: 15px;
-  height: 40px;
-  font-weight: 500;
-  text-transform: uppercase;
+  height: 50px;
+  font-size: 18px;
+  padding: 0 15px;
   display: flex;
   align-items: center;
-}
-
-.view-header__button {
-  padding: 2px 8px;
-  margin-right: 10px;
+  border-bottom: $view-header-bottom-border-bottom;
 }

@@ -27,9 +27,11 @@ export const ServerInspect = ({ running, serverDetails }) => {
 
   return (
     <div className="inspect-server">
-      <div className="view-header">
-        { running ? <StopButtonConnect /> : <StartButtonConnect /> }
+      <div className="inspect-server__header view-header">
         {name}
+        <div className="inspect-server__toggle">
+          { running ? <StopButtonConnect /> : <StartButtonConnect /> }
+        </div>
       </div>
       <div className="inspect-server-spec-bar">
         <div className="inspect-server-spec-bar__cell">

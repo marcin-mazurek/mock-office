@@ -8,7 +8,7 @@ import { select as dispatchSelect } from '../servers/actions';
 
 export const SideBarServers = ({ servers, select, goToServerPage, selected }) => (
   <div className="sidebar-servers">
-    <div className="sidebar-servers-header">
+    <div className="sidebar-servers__header view-header">
       <i className="fa fa-server sidebar-servers-header__icon" /> Servers:
       <Link className="sidebar-servers__add-server-button" to="/add-server">
         <i className="fa fa-plus-circle" />
