@@ -3,7 +3,7 @@ import { add, start } from '../servers/actions';
 import { add as addTask } from '../tasks/addTask/actions';
 
 export default (store) => {
-  const servers = remote.require('./main/servers');
+  const servers = remote.require('./main/servers').default.servers;
 
   for (let i = 0; i < servers.length; i += 1) {
     const { instance, id } = servers[i];
