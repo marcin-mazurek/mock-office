@@ -1,8 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
-
-$primary-font-family: 'Fira Sans', sans-serif;
-
 html, body {
-  font-family: $primary-font-family;
+  font-family: $font-family;
   font-size: 16px;
+  color: $font-color;
 }

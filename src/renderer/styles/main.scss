@@ -3,8 +3,8 @@
 
 // settings
 @import 'settings/reset';
-@import 'settings/fonts';
 @import 'settings/default-theme';
+@import 'settings/fonts';
 
 // objects
 @import 'objects/resets';
@@ -24,5 +24,6 @@
 @import 'components/SideBarServers';
 @import 'components/ServerPlaceholder';
 @import 'components/StartButton';
+@import 'components/StopButton';
 @import 'components/FilePicker';
 

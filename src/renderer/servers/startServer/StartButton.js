@@ -5,12 +5,12 @@ import { getSelected } from '../selectors';
 
 export const StartButton = ({ serverId, start }) =>
   <button
-    className="view-header__button server-start-button button"
+    className="server-start-button button"
     onClick={() => {
       start(serverId);
     }}
   >
-    Start
+    <i className="fa fa-power-off" />
   </button>;
 
 StartButton.propTypes = {

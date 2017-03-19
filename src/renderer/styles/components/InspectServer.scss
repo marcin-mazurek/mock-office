@@ -7,30 +7,50 @@
 
 .inspect-server__header {
   flex: none;
-  font-size: 20px;
 }
 
-.inspect-server-spec-bar {
+.inspect-server-details__name {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.inspect-server-header {
+  display: flex;
+  padding: 10px 15px;
+  align-items: center;
+  border-bottom: $inspect-server-header-border-bottom;
+}
+
+.inspect-server-spec {
   display: flex;
   font-size: 12px;
-  border-bottom: 1px solid #EEE;
-  color: #BBB;
   letter-spacing: 0.5px;
 }
 
-.inspect-server__toggle {
-  margin-left: auto;
+.inspect-server-header__toggle {
+  margin-right: 10px;
 }
 
-.inspect-server-spec-bar__cell {
+.inspect-server-spec__item {
   padding: 4px 7px;
   border-right: 1px solid #EEE;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    border-right: none;
+  }
 }
 
-.inspect-server-spec-bar__value {
-  color: #888;
-  font-weight: 500;
+.inspect-server-spec__value {
   margin-left: 3px;
+}
+
+.inspect-server-spec__label {
+  color: $inspect-server-spec-label-font-color;
+  font-weight: 300;
 }
 
 .inspect-server__main {

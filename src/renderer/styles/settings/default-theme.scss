@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
+
 $color-1: #ECECEC;
 $color-2: #6C7A89;
 $color-3: #D2D7D3;
@@ -10,6 +12,9 @@ $color-9: #ABB7B7;
 $color-10: #F2F1EF;
 $color-11: #BFBFBF;
 
+$font-family: 'Fira Sans', sans-serif;
+$font-color: #6C7A89;
+
 $sidebar-background-color: #6C7A89;
 $sidebar-font-color: #ECF0F1;
 $sidebar-width: 200px;
@@ -21,6 +26,14 @@ $sidebar-servers-list-item-selected-background-color: #667280;
 $sidebar-server-status-indicator-font-color: #7a8896;
 $sidebar-server-status-indicator-up-font-color: #02d77d;
 
-body {
-  color: $color-2;
-}
+$inspect-server-header-border-bottom: 1px solid #edf0ee;
+$inspect-server-spec-label-font-color: #a7bdd4;
+
+$start-button-background-color: #FFF;
+$start-button-font-color: #02d77d;
+$start-button-border: 2px solid #02d77d;
+$start-button-default-border: 2px solid #edf0ee;
+
+$stop-button-background-color: #FFF;
+$stop-button-font-color: #EC644B;
+$stop-button-border: 2px solid #EC644B;

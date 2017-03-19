@@ -27,20 +27,22 @@ export const ServerInspect = ({ running, serverDetails }) => {
 
   return (
     <div className="inspect-server">
-      <div className="inspect-server__header view-header">
-        {name}
-        <div className="inspect-server__toggle">
+      <div className="inspect-server__header inspect-server-header">
+        <div className="inspect-server-header__toggle">
           { running ? <StopButtonConnect /> : <StartButtonConnect /> }
         </div>
-      </div>
-      <div className="inspect-server-spec-bar">
-        <div className="inspect-server-spec-bar__cell">
-          Port:
-          <span className="inspect-server-spec-bar__value">{port}</span>
-        </div>
-        <div className="inspect-server-spec-bar__cell">
-          Type:
-          <span className="inspect-server-spec-bar__value">{type}</span>
+        <div className="inspect-server-details">
+          <div className="inspect-server-details__name">{name}</div>
+          <div className="inspect-server-details__spec inspect-server-spec">
+            <div className="inspect-server-spec__item">
+              <span className="inspect-server-spec__label">Port:</span>
+              <span className="inspect-server-spec__value">{port}</span>
+            </div>
+            <div className="inspect-server-spec__item">
+              <span className="inspect-server-spec__label">Type:</span>
+              <span className="inspect-server-spec__value">{type}</span>
+            </div>
+          </div>
         </div>
       </div>
       <main className="inspect-server-main inspect-server__main">

@@ -5,13 +5,12 @@ import { getSelected } from '../selectors';
 
 export const StopButton = ({ serverId, stop }) =>
   <button
-    className="view-header__button button server-stop-button"
-    style={{ backgroundColor: '#AAA', color: '#FFF' }}
+    className="server-stop-button button"
     onClick={() => {
       stop(serverId);
     }}
   >
-    Stop
+    <i className="fa fa-power-off" />
   </button>;
 
 StopButton.propTypes = {

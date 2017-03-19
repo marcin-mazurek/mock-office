@@ -1,3 +1,20 @@
+$size: 50px;
+
 .server-start-button {
-  color: #FFF;
+  background-color: $start-button-background-color;
+  font-size: 23px;
+  border-radius: 100%;
+  cursor: pointer;
+  height: $size;
+  width: $size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: $start-button-border;
+  border: $start-button-default-border;
+
+  &:hover {
+    color: $start-button-font-color;
+    border: $start-button-border;
+  }
 }
