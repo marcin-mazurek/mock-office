@@ -2,8 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { Server, ServerPlaceholder, ServerInspect } from './Server';
-import StartButtonConnect from '../startServer/StartButton';
-import StopButtonConnect from '../stopServer/StopButton';
 
 describe('ServerPlaceholder', () => {
   test('some servers exist snapshot', () => {
@@ -49,35 +47,5 @@ describe('ServerInspect', () => {
     };
     const wrapper = shallow(<ServerInspect {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
-  });
-
-  it('should display stop button', () => {
-    const props = {
-      running: false,
-      serverDetails: {
-        name: 'some id',
-        type: 'some type',
-        port: 3000,
-        queue: 'some queue id',
-        id: 'some id'
-      }
-    };
-    const wrapper = shallow(<ServerInspect {...props} />);
-    expect(wrapper.find(StopButtonConnect)).toBeTruthy();
-  });
-
-  it('should display stop button', () => {
-    const props = {
-      running: true,
-      serverDetails: {
-        name: 'some id',
-        type: 'some type',
-        port: 3000,
-        queue: 'some queue id',
-        id: 'some id'
-      }
-    };
-    const wrapper = shallow(<ServerInspect {...props} />);
-    expect(wrapper.find(StartButtonConnect)).toBeTruthy();
   });
 });

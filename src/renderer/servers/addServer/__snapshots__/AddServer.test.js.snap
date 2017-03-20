@@ -1,7 +1,7 @@
 exports[`AddServer default snapshot 1`] = `
 <div>
   <div
-    className="view-header">
+    className="view-header add-server__header">
     Add server
   </div>
   <Connect(AddServerForm) />

@@ -31,7 +31,7 @@ describe('servers reducer', () => {
   test(`${ADD} action`, () => {
     const state = reducer(fromJS({
       entities: {},
-      ids: new Set()
+      ids: []
     }), {
       type: ADD,
       name: 'Server name',

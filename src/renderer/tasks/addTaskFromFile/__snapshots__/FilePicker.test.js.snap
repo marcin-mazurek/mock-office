@@ -1,14 +1,15 @@
 exports[`FilePicker default snapshot 1`] = `
 <div
   className="file-picker">
-  <div
-    className="file-picker__button button">
+  <label
+    className="file-picker__button button inspect-server-tasks-header__button"
+    htmlFor="file-picker__input">
     <i
       className="fa fa-upload" />
-     Upload tasks
-  </div>
+  </label>
   <input
     className="file-picker__input"
+    id="file-picker__input"
     onChange={[Function]}
     type="file"
     value="" />
