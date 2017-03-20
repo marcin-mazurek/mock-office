@@ -3,7 +3,7 @@
   align-items: center;
   letter-spacing: 0.5px;
   font-weight: 500;
-  border-bottom: $sidebar-servers-header-border-bottom;
+  border-bottom: 1px solid darken($sidebar-background-color, 5%);
   padding: 15px 20px;
   font-size: 18px;
   text-transform: uppercase;
@@ -19,7 +19,7 @@
   margin-left: auto;
 
   &:hover {
-    color: inherit;
+    color: $primary-color;
   }
 
 }
@@ -56,11 +56,11 @@
 
 .sidebar-servers-list-item--selected {
   color: inherit;
-  background-color: $sidebar-servers-list-item-selected-background-color;
+  background-color: darken($sidebar-background-color, 6%);
 
   &:before {
     content: ' ';
-    background-color: darken($sidebar-servers-list-item-selected-background-color, 5%);
+    background-color: darken($sidebar-background-color, 20%);
     position: absolute;
     left: 0;
     top: 0;

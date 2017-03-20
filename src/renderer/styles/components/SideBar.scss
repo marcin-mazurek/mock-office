@@ -1,6 +1,6 @@
 .sidebar {
   background-color: $sidebar-background-color;
-  color: $sidebar-font-color;
+  border-right: 3px solid darken($sidebar-background-color, 5%);
   height: 100%;
   width: $sidebar-width;
 }

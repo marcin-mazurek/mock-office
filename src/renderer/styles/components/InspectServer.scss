@@ -89,19 +89,22 @@ $size: 40px;
   justify-content: center;
   border: $start-button-border;
   border: $start-button-default-border;
-  transition: all .2s ease-in-out;
+  transition: all .1s ease-in-out;
 
   &:hover {
     color: $start-button-font-color;
     border: $start-button-border;
-    height: $size + 10;
-    width: $size + 10;
+    height: $size + 5;
+    width: $size + 5;
   }
 }
 
 .inspect-server-header-toggle.inspect-server-header-toggle--up {
   color: $stop-button-font-color;
-  border: $stop-button-border;
+
+  &:hover {
+    border: 2px solid $stop-button-font-color;
+  }
 }
 
 .inspect-server__tasks {
@@ -116,6 +119,12 @@ $size: 40px;
   display: flex;
   align-items: center;
   flex: none;
+}
+
+.inspect-server-tasks-header__button {
+  &:hover {
+    color: $primary-color;
+  }
 }
 
 .inspect-server-tasks-header__label {
