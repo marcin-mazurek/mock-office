@@ -1,22 +1,13 @@
 .tasks {
   @extend %list-reset;
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
 
-.tasks__header {
-  margin: 10px 0;
-  font-weight: 500;
-}
-
 .tasks__item {
-  margin-bottom: 10px;
+  border-bottom: 1px solid #EEE;
 }
 
 .task {
-  border: 1px solid #EEE;
-  flex: none;
   padding: 5px;
   width: 100%;
   display: flex;
@@ -29,7 +20,13 @@
 
 .task__remove-button {
   @extend %button-reset;
+  cursor: pointer;
   font-size: 16px;
-  color: #999;
+  color: $task-remove-button-font-color;
   margin-right: 10px;
+  transition: color .2s ease;
+
+  &:hover {
+    color: $task-remove-button-hover-font-color;
+  }
 }

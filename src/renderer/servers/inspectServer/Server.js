@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import StartButtonConnect from '../startServer/StartButton';
-import StopButtonConnect from '../stopServer/StopButton';
+import classnames from 'classnames';
+import { Scrollbars } from 'react-custom-scrollbars';
+import createStartAction from '../startServer/actions';
+import createStopAction from '../stopServer/actions';
 import { isRunning, getSelectedServerDetails, getSelected, getAllAsList } from '../selectors';
 import FilePickerConnect from '../../tasks/addTaskFromFile/FilePicker';
-import Queue from '../../queues/Queue';
+import TasksConnect from '../../tasks/browseTasks/Tasks';
 
 export const ServerPlaceholder = ({ serverExists }) =>
   <div className="server-placeholder">
@@ -20,6 +22,49 @@ const serverPlaceholderMapStateToProps = state => ({
   serverExists: !getAllAsList(state).isEmpty()
 });
 
+const ServerToggle = ({ toggled, serverId, stop, start }) => {
+  const classNames = classnames({
+    button: true,
+    'inspect-server-header-toggle': true,
+    'inspect-server-header-toggle--up': toggled
+  });
+
+  let handleClick;
+
+  if (toggled) {
+    handleClick = () => {
+      stop(serverId);
+    };
+  } else {
+    handleClick = () => {
+      start(serverId);
+    };
+  }
+
+  return (
+    <button
+      className={classNames}
+      onClick={handleClick}
+    >
+      <i className="fa fa-power-off" />
+    </button>
+  );
+};
+
+ServerToggle.propTypes = {
+  toggled: React.PropTypes.bool.isRequired,
+  serverId: React.PropTypes.string.isRequired,
+  stop: React.PropTypes.func.isRequired,
+  start: React.PropTypes.func.isRequired
+};
+
+const serverToggleMapDispatchToProps = {
+  start: createStartAction,
+  stop: createStopAction
+};
+
+const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
+
 const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
 
 export const ServerInspect = ({ running, serverDetails }) => {
@@ -29,7 +74,7 @@ export const ServerInspect = ({ running, serverDetails }) => {
     <div className="inspect-server">
       <div className="inspect-server__header inspect-server-header">
         <div className="inspect-server-header__toggle">
-          { running ? <StopButtonConnect /> : <StartButtonConnect /> }
+          <ServerToggleConnect toggled={running} serverId={id} />
         </div>
         <div className="inspect-server-details">
           <div className="inspect-server-details__name">{name}</div>
@@ -46,21 +91,24 @@ export const ServerInspect = ({ running, serverDetails }) => {
         </div>
       </div>
       <main className="inspect-server-main inspect-server__main">
-        <ul className="inspect-server-main-buttons">
-          <li className="inspect-server-main-buttons__item">
-            <Link
-              to="/add-task"
-              className="inspect-server__add-task-button button"
-            >
-              <i className="fa fa-plus" /> Add task
-            </Link>
-          </li>
-          <li className="inspect-server-main-buttons__item">
-            <FilePickerConnect serverId={id} />
-          </li>
-        </ul>
-        <div className="inspect-server-queue">
-          <Queue id={id} />
+        <div className="inspect-server-tasks-header">
+          <div className="inspect-server-tasks-header__label">
+            <i className="fa fa-tasks" />{' Tasks:'}
+          </div>
+          <Link
+            to="/add-task"
+            className="inspect-server__add-task-button button"
+          >
+            <i className="fa fa-plus" />
+          </Link>
+          <FilePickerConnect serverId={id} />
+        </div>
+        <div className="inspect-server__tasks">
+          <div className="inspect-server__tasks-scroll-container">
+            <Scrollbars>
+              <TasksConnect serverId={id} />
+            </Scrollbars>
+          </div>
         </div>
       </main>
     </div>

@@ -9,6 +9,10 @@
   flex: none;
 }
 
+.inspect-server-details {
+  margin-right: auto;
+}
+
 .inspect-server-details__name {
   font-size: 26px;
   font-weight: 500;
@@ -25,10 +29,6 @@
   display: flex;
   font-size: 12px;
   letter-spacing: 0.5px;
-}
-
-.inspect-server-header__toggle {
-  margin-right: 10px;
 }
 
 .inspect-server-spec__item {
@@ -62,31 +62,71 @@
   flex-direction: column;
 }
 
-.inspect-server-details__row {
-  align-items: center;
-  display: flex;
-}
-
-.inspect-server-details__cell {
-  margin-right: 10px;
-}
-
 .inspect-server__add-task-button {
   border: $inspect-server-add-task-button-border;
-}
-
-.inspect-server-main-buttons {
-  @extend %list-reset;
-  display: flex;
-  align-items: center;
-  margin: 15px;
-}
-
-.inspect-server-main-buttons__item {
   margin-right: 10px;
 }
 
-.inspect-server-queue {
-  margin: 0 15px 15px;
+$size: 40px;
+
+.inspect-server-header__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  margin-right: 10px;
+}
+
+.inspect-server-header-toggle {
+  background-color: $start-button-background-color;
+  font-size: 21px;
+  border-radius: 100%;
+  cursor: pointer;
+  height: $size;
+  width: $size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: $start-button-border;
+  border: $start-button-default-border;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    color: $start-button-font-color;
+    border: $start-button-border;
+    height: $size + 10;
+    width: $size + 10;
+  }
+}
+
+.inspect-server-header-toggle.inspect-server-header-toggle--up {
+  color: $stop-button-font-color;
+  border: $stop-button-border;
+}
+
+.inspect-server__tasks {
+  flex: auto;
+  position: relative;
+}
+
+.inspect-server-tasks-header {
+  background-color: $tasks-header-background-color;
+  padding: 10px 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.inspect-server-tasks-header__label {
+  margin-right: auto;
+}
+
+.inspect-server__tasks-scroll-container {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 

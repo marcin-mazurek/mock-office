@@ -16,57 +16,71 @@ exports[`ServerInspect default snapshot 1`] = `
 <div
   className="inspect-server">
   <div
-    className="view-header">
-    <Connect(Component) />
-    some id
-  </div>
-  <div
-    className="inspect-server-spec-bar">
+    className="inspect-server__header inspect-server-header">
     <div
-      className="inspect-server-spec-bar__cell">
-      Port:
-      <span
-        className="inspect-server-spec-bar__value">
-        3000
-      </span>
+      className="inspect-server-header__toggle">
+      <Connect(ServerToggle)
+        serverId="some id"
+        toggled={true} />
     </div>
     <div
-      className="inspect-server-spec-bar__cell">
-      Type:
-      <span
-        className="inspect-server-spec-bar__value">
-        some type
-      </span>
+      className="inspect-server-details">
+      <div
+        className="inspect-server-details__name">
+        some id
+      </div>
+      <div
+        className="inspect-server-details__spec inspect-server-spec">
+        <div
+          className="inspect-server-spec__item">
+          <span
+            className="inspect-server-spec__label">
+            Port:
+          </span>
+          <span
+            className="inspect-server-spec__value">
+            3000
+          </span>
+        </div>
+        <div
+          className="inspect-server-spec__item">
+          <span
+            className="inspect-server-spec__label">
+            Type:
+          </span>
+          <span
+            className="inspect-server-spec__value">
+            some type
+          </span>
+        </div>
+      </div>
     </div>
   </div>
   <main
     className="inspect-server-main inspect-server__main">
-    <div
-      className="inspect-server-details">
-      <div
-        className="inspect-server-details__row">
-        <div
-          className="inspect-server-details__cell">
-          <Link
-            className="inspect-server__add-task-button button"
-            onlyActiveOnIndex={false}
-            style={Object {}}
-            to="/add-task">
-            <i
-              className="fa fa-plus" />
-             Add task
-          </Link>
-        </div>
-        <div
-          className="inspect-server-details__cell">
-          <Connect(FilePicker)
-            serverId="some id" />
-        </div>
-      </div>
-    </div>
+    <ul
+      className="inspect-server-main-buttons">
+      <li
+        className="inspect-server-main-buttons__item">
+        <Link
+          className="inspect-server__add-task-button button"
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="/add-task">
+          <i
+            className="fa fa-plus" />
+           Add task
+        </Link>
+      </li>
+      <li
+        className="inspect-server-main-buttons__item">
+        <Connect(FilePicker)
+          serverId="some id" />
+      </li>
+    </ul>
     <div
       className="inspect-server-queue">
-      <Component
+      <Queue
         id="some id" />
     </div>
   </main>

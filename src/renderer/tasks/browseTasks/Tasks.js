@@ -30,20 +30,15 @@ const taskMapDispatchToProps = {
 export const TaskConnect = connect(taskMapStateToProps, taskMapDispatchToProps)(Task);
 
 export const Tasks = ({ taskIds, serverId }) => (
-  <div>
-    <div className="tasks__header">
-      <i className="fa fa-tasks" /> Tasks:
-    </div>
-    <ul className="tasks">
-      {
-        taskIds.map(taskId =>
-          <li className="tasks__item" key={taskId}>
-            <TaskConnect serverId={serverId} id={taskId} />
-          </li>
-        )
-      }
-    </ul>
-  </div>
+  <ul className="tasks">
+    {
+      taskIds.map(taskId =>
+        <li className="tasks__item" key={taskId}>
+          <TaskConnect serverId={serverId} id={taskId} />
+        </li>
+      )
+    }
+  </ul>
 );
 
 Tasks.propTypes = {

@@ -1,7 +1,0 @@
-exports[`StartButton default snapshot 1`] = `
-<button
-  className="view-header__button server-start-button button"
-  onClick={[Function]}>
-  Start
-</button>
-`;
