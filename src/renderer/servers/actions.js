@@ -2,6 +2,7 @@ export const ADD = 'servers/ADD';
 export const SELECT = 'servers/SELECT';
 export const START = 'servers/START';
 export const STOP = 'servers/STOP';
+export const REMOVE = 'servers/REMOVE';
 
 export const add = (name, port, serverType, id) => ({
   type: ADD,
@@ -23,5 +24,10 @@ export const start = id => ({
 
 export const stop = id => ({
   type: STOP,
+  id
+});
+
+export const remove = id => ({
+  type: REMOVE,
   id
 });

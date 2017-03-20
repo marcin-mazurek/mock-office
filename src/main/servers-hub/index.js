@@ -17,6 +17,7 @@ class ServersHub {
     this.stop = this.stop.bind(this);
     this.find = this.find.bind(this);
     this.getAll = this.getAll.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   add(name, port, type, isSecure, keyPath, certPath) {
@@ -70,6 +71,19 @@ class ServersHub {
 
   getAll() {
     return [].concat(this.servers);
+  }
+
+  remove(id) {
+    const index = this.servers.findIndex(server => server.id === id);
+
+    if (index >= 0) {
+      const promise = this.stop(id);
+
+      this.servers.splice(index, 1);
+      return promise;
+    }
+
+    return Promise.reject();
   }
 }
 

@@ -1,5 +1,5 @@
 import { Record, Map, List, Set } from 'immutable';
-import { ADD, SELECT, START, STOP } from './actions';
+import { ADD, SELECT, START, STOP, REMOVE } from './actions';
 
 export const Server = new Record({
   id: '',
@@ -37,6 +37,15 @@ export default (state = initialState, action) => {
     }
     case STOP: {
       return state.update('running', running => running.delete(action.id));
+    }
+    case REMOVE: {
+      let newState = state.update('ids', ids => ids.filter(id => id !== action.id));
+      newState = newState.deleteIn(['entities', action.id]);
+
+      if (state.get('selected') === action.id) {
+        newState = newState.set('selected', null);
+      }
+      return newState;
     }
     default: {
       return state;

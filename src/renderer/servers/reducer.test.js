@@ -4,7 +4,8 @@ import {
   ADD,
   SELECT,
   START,
-  STOP
+  STOP,
+  REMOVE
 } from './actions';
 
 describe('servers reducer', () => {
@@ -67,5 +68,28 @@ describe('servers reducer', () => {
   test('unknown action', () => {
     const state = {};
     expect(reducer(state, { type: 'unknown action type' })).toBe(state);
+  });
+
+  test(`${REMOVE} action`, () => {
+    const state = reducer(fromJS({
+      entities: {
+        'some id': {
+          id: 'some id',
+          name: 'Server name',
+          port: 3000,
+          type: 'http'
+        }
+      },
+      ids: ['some id'],
+      selected: 'some id'
+    }), {
+      type: REMOVE,
+      id: 'some id'
+    });
+    expect(state.toJS()).toEqual({
+      entities: {},
+      ids: [],
+      selected: null
+    });
   });
 });

@@ -1,0 +1,12 @@
+exports[`removeServerEpic success flow 1`] = `
+Array [
+  Object {
+    "id": "some id",
+    "type": "removeServer/INIT",
+  },
+  Object {
+    "id": "some id",
+    "type": "servers/REMOVE",
+  },
+]
+`;
