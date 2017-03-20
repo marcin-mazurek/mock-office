@@ -46,18 +46,19 @@ export const ServerInspect = ({ running, serverDetails }) => {
         </div>
       </div>
       <main className="inspect-server-main inspect-server__main">
-        <div className="inspect-server-details">
-          <div className="inspect-server-details__row">
-            <div className="inspect-server-details__cell">
-              <Link to="/add-task" className="inspect-server__add-task-button button">
-                <i className="fa fa-plus" /> Add task
-              </Link>
-            </div>
-            <div className="inspect-server-details__cell">
-              <FilePickerConnect serverId={id} />
-            </div>
-          </div>
-        </div>
+        <ul className="inspect-server-main-buttons">
+          <li className="inspect-server-main-buttons__item">
+            <Link
+              to="/add-task"
+              className="inspect-server__add-task-button button"
+            >
+              <i className="fa fa-plus" /> Add task
+            </Link>
+          </li>
+          <li className="inspect-server-main-buttons__item">
+            <FilePickerConnect serverId={id} />
+          </li>
+        </ul>
         <div className="inspect-server-queue">
           <Queue id={id} />
         </div>

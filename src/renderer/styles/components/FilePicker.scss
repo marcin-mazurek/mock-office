@@ -5,8 +5,7 @@
 }
 
 .file-picker__button {
-  background-color: #777;
-  color: #FFFFFF;
+  border: $file-picker-button-border;
 }
 
 .file-picker__input {

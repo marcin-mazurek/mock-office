@@ -4,7 +4,7 @@
   letter-spacing: 0.5px;
   font-weight: 500;
   border-bottom: $sidebar-servers-header-border-bottom;
-  padding: 10px;
+  padding: 15px 20px;
   font-size: 18px;
   text-transform: uppercase;
 }
@@ -17,7 +17,6 @@
 .sidebar-servers__add-server-button {
   color: $sidebar-servers-add-server-button-font-color;
   margin-left: auto;
-  font-size: 19px;
 
   &:hover {
     color: inherit;
@@ -48,7 +47,7 @@
 }
 
 .sidebar-servers-list-item {
-  padding: 3px 10px;
+  padding: 3px 20px;
   display: flex;
   align-items: center;
   font-size: 15px;
@@ -72,9 +71,9 @@
 
 .sidebar-server__status-indicator {
   color: $sidebar-server-status-indicator-font-color;
-  padding: 0 7px 0 3px;
   transition: color .3s ease;
   font-size: 18px;
+  margin-right: 5px;
 }
 
 .sidebar-server__status-indicator--up {

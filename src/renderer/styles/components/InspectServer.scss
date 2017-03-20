@@ -54,7 +54,6 @@
 }
 
 .inspect-server__main {
-  padding: 15px;
   flex: auto;
 }
 
@@ -66,8 +65,6 @@
 .inspect-server-details__row {
   align-items: center;
   display: flex;
-  margin-bottom: 10px;
-  padding: 5px 0;
 }
 
 .inspect-server-details__cell {
@@ -75,7 +72,21 @@
 }
 
 .inspect-server__add-task-button {
-  background-color: #777;
-  color: #FFFFFF;
+  border: $inspect-server-add-task-button-border;
+}
+
+.inspect-server-main-buttons {
+  @extend %list-reset;
+  display: flex;
+  align-items: center;
+  margin: 15px;
+}
+
+.inspect-server-main-buttons__item {
+  margin-right: 10px;
+}
+
+.inspect-server-queue {
+  margin: 0 15px 15px;
 }
 
