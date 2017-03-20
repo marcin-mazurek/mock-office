@@ -5,6 +5,7 @@ import stopServerEpic from '../servers/stopServer/epics';
 import addTaskEpic from '../tasks/addTask/epics';
 import removeTaskEpic from '../tasks/removeTask/epics';
 import addTaskFromFileEpic from '../tasks/addTaskFromFile/epics';
+import removeServerEpic from '../servers/removeServer/epics';
 
 export default combineEpics(
   addServerEpic,
@@ -12,5 +13,6 @@ export default combineEpics(
   stopServerEpic,
   addTaskEpic,
   removeTaskEpic,
-  addTaskFromFileEpic
+  addTaskFromFileEpic,
+  removeServerEpic
 );

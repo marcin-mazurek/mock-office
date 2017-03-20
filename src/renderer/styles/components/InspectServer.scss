@@ -139,3 +139,15 @@ $size: 40px;
   width: 100%;
 }
 
+.inspect-server__remove-button {
+  background-color: transparent;
+  font-size: 24px;
+  transition: color .2s ease;
+  cursor: pointer;
+  color: $inspect-server-remove-button-font-color;
+
+  &:hover {
+    color: $inspect-server-remove-button-hover-font-color;
+  }
+}
+

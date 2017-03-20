@@ -1,38 +1,42 @@
-import ServersHub from '../index';
-import HttpServer from '../../externals/http-server-doublr';
-import WsServer from '../../externals/ws-server-doublr';
-
-const serversHub = new ServersHub();
+import ServersHub from './index';
+import HttpServer from '../externals/http-server-doublr';
+import WsServer from '../externals/ws-server-doublr';
 
 describe('ServerHub', () => {
-  test('add should add server to servers list', () => {
+  it('add should add server to servers list', () => {
+    const serversHub = new ServersHub();
     const serversCount = serversHub.servers.length;
     serversHub.add('server name', 3000, 'http', false);
     expect(serversHub.servers.length).toEqual(serversCount + 1);
   });
 
-  test('add should return id of added server and id of its queue', () => {
+  it('add should return id of added server and id of its queue', () => {
+    const serversHub = new ServersHub();
     const serverId = serversHub.add('server name', 3000, 'http', false);
     expect(typeof serverId === 'string').toBeTruthy();
   });
 
-  test('add should add server of type Http if we provide http type', () => {
+  it('add should add server of type Http if we provide http type', () => {
+    const serversHub = new ServersHub();
     serversHub.add('server name', 3000, 'http', false);
     expect(serversHub.servers[serversHub.servers.length - 1].instance).toBeInstanceOf(HttpServer);
   });
 
-  test('add should add server of type Ws if we provide ws type', () => {
+  it('add should add server of type Ws if we provide ws type', () => {
+    const serversHub = new ServersHub();
     serversHub.add('server name', 3000, 'ws', false);
     expect(serversHub.servers[serversHub.servers.length - 1].instance).toBeInstanceOf(WsServer);
   });
 
-  test('add should throw error if we provide unknown server type', () => {
+  it('add should throw error if we provide unknown server type', () => {
+    const serversHub = new ServersHub();
     expect(() =>
       serversHub.add('server name', 3000, 'unknown server type', false)
     ).toThrow();
   });
 
-  test('start should call server start if it is not running', () => {
+  it('start should call server start if it is not running', () => {
+    const serversHub = new ServersHub();
     const mockFn = jest.fn();
     const serverId = 'some-id';
 
@@ -55,7 +59,8 @@ describe('ServerHub', () => {
     expect(mockFn.mock.calls.length).toEqual(1);
   });
 
-  test('start should not call server start if it is running', () => {
+  it('start should not call server start if it is running', () => {
+    const serversHub = new ServersHub();
     const mockFn = jest.fn();
     const serverId = 'some-id';
 
@@ -78,7 +83,8 @@ describe('ServerHub', () => {
     expect(mockFn.mock.calls.length).toEqual(0);
   });
 
-  test('stop should call server stop if it is running', () => {
+  it('stop should call server stop if it is running', () => {
+    const serversHub = new ServersHub();
     const mockFn = jest.fn();
     const serverId = 'some-id';
 
@@ -101,7 +107,8 @@ describe('ServerHub', () => {
     expect(mockFn.mock.calls.length).toEqual(1);
   });
 
-  test('stop should not call server stop if it is not running', () => {
+  it('stop should not call server stop if it is not running', () => {
+    const serversHub = new ServersHub();
     const mockFn = jest.fn();
     const serverId = 'some-id';
 
@@ -124,7 +131,8 @@ describe('ServerHub', () => {
     expect(mockFn.mock.calls.length).toEqual(0);
   });
 
-  test('find should return proper server', () => {
+  it('find should return proper server', () => {
+    const serversHub = new ServersHub();
     const server = {
       id: 'one id',
       instance: 'server instance'
@@ -136,7 +144,8 @@ describe('ServerHub', () => {
     expect(foundServer).toEqual('server instance');
   });
 
-  test('find should return undefined if doesnt find server', () => {
+  it('find should return undefined if doesnt find server', () => {
+    const serversHub = new ServersHub();
     const server = {
       id: 'one id',
       instance: 'server instance'
@@ -148,8 +157,72 @@ describe('ServerHub', () => {
     expect(foundServer).toBeUndefined();
   });
 
-  test('getAll should return new copy of all servers', () => {
+  it('getAll should return new copy of all servers', () => {
+    const serversHub = new ServersHub();
     expect(serversHub.getAll()).not.toBe(serversHub.servers);
     expect(serversHub.getAll()).toEqual(serversHub.servers);
+  });
+
+  it('remove should remove server with provided id', () => {
+    const serversHub = new ServersHub();
+
+    serversHub.servers = [
+      {
+        id: 'some id',
+        instance: {
+          isLive() {
+            return false;
+          }
+        }
+      },
+      {
+        id: 'another id',
+        instance: {
+          isLive() {
+            return false;
+          }
+        }
+      }
+    ];
+
+    serversHub.remove('some id');
+    expect(serversHub.servers.length).toEqual(1);
+    expect(serversHub.servers[0].id).toEqual('another id');
+  });
+
+  it('remove should do nothing when invalid id', () => {
+    const serversHub = new ServersHub();
+
+    serversHub.servers = [
+      {
+        id: 'some id'
+      }
+    ];
+
+    serversHub.remove('invalid id');
+    expect(serversHub.servers.length).toEqual(1);
+  });
+
+  it('remove should gracefully stop server before remove', () => {
+    const serversHub = new ServersHub();
+    const stopMockFn = jest.fn();
+
+    serversHub.servers = [
+      {
+        id: 'some id',
+        instance: {
+          isLive() {
+            return true;
+          },
+          stop(cb) {
+            stopMockFn();
+            cb();
+          }
+        }
+      }
+    ];
+
+    serversHub.remove('some id');
+    expect(stopMockFn).toHaveBeenCalled();
   });
 });

@@ -3,7 +3,7 @@ exports[`test Main should render 1`] = `
   className="main">
   <div
     className="main__navbar">
-    <SideBar />
+    <Component />
   </div>
   <div
     className="main__content" />
