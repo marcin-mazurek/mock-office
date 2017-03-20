@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import createStartAction from '../startServer/actions';
 import createStopAction from '../stopServer/actions';
-import { isRunning, getSelectedServerDetails, getSelected, getAllAsList } from '../selectors';
+import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../selectors';
 import FilePickerConnect from '../../tasks/addTaskFromFile/FilePicker';
 import TasksConnect from '../../tasks/browseTasks/Tasks';
 
@@ -19,7 +19,7 @@ ServerPlaceholder.propTypes = {
 };
 
 const serverPlaceholderMapStateToProps = state => ({
-  serverExists: !getAllAsList(state).isEmpty()
+  serverExists: !getAll(state).isEmpty()
 });
 
 const ServerToggle = ({ toggled, serverId, stop, start }) => {

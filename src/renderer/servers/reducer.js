@@ -1,4 +1,4 @@
-import { Record, Map, Set } from 'immutable';
+import { Record, Map, List, Set } from 'immutable';
 import { ADD, SELECT, START, STOP } from './actions';
 
 export const Server = new Record({
@@ -10,7 +10,7 @@ export const Server = new Record({
 
 const initialState = new Map({
   entities: new Map(),
-  ids: new Set(),
+  ids: new List(),
   selected: null,
   running: new Set()
 });
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
         type: action.serverType
       });
       newState = newState.setIn(['entities', action.id], server);
-      newState = newState.update('ids', ids => ids.add(action.id));
+      newState = newState.update('ids', ids => ids.push(action.id));
       return newState;
     }
     case SELECT: {
