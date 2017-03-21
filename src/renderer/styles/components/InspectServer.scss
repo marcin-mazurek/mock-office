@@ -100,9 +100,11 @@ $size: 40px;
 }
 
 .inspect-server-header-toggle.inspect-server-header-toggle--up {
-  color: $stop-button-font-color;
+  color: $start-button-font-color;
+  border: $start-button-border;
 
   &:hover {
+    color: $stop-button-font-color;
     border: 2px solid $stop-button-font-color;
   }
 }
