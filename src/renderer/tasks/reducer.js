@@ -11,7 +11,8 @@ const Task = new Record({
   reuse: null,
   quantity: null,
   delay: null,
-  instant: null
+  instant: null,
+  requirements: null
 });
 
 export default (state = initialState, action) => {

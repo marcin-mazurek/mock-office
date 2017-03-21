@@ -22,7 +22,8 @@ describe('tasks reducer', () => {
         quantity: null,
         title: '',
         delay: null,
-        instant: null
+        instant: null,
+        requirements: null
       }
     });
   });

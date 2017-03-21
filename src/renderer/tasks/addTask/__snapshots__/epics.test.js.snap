@@ -19,6 +19,9 @@ Array [
     "instant": undefined,
     "interval": undefined,
     "quantity": undefined,
+    "requirements": Object {
+      "url": "/some-path",
+    },
     "reuse": undefined,
     "serverId": "serverId",
     "taskPayload": "taskPayload",

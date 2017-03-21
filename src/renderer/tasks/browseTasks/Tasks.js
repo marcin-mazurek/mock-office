@@ -14,7 +14,8 @@ export const Task = (
     reuse,
     quantity,
     delay,
-    instant
+    instant,
+    requirements
   }) => {
   let quantityInfo = null;
 
@@ -30,6 +31,11 @@ export const Task = (
     <div className="task">
       <div className="task__title">{title}</div>
       <div className="task-spec">
+        {
+          requirements
+          ? <div className="task-spec__tag"><i className="fa fa-handshake-o" /></div>
+            : null
+        }
         {
           instant
             ? <div className="task-spec__tag"><i className="fa fa-bolt" /></div>
@@ -67,12 +73,15 @@ Task.propTypes = {
   reuse: React.PropTypes.string,
   quantity: React.PropTypes.number,
   delay: React.PropTypes.number,
-  instant: React.PropTypes.bool
+  instant: React.PropTypes.bool,
+  requirements: React.PropTypes.shape({})
 };
 
 const taskMapStateToProps = (initialState, ownProps) => (state) => {
-  const { title, interval, reuse, quantity, delay, instant } = getTask(state, ownProps);
-  return { title, interval, reuse, quantity, delay, instant };
+  const {
+    title, interval, reuse, quantity, delay, instant, requirements
+  } = getTask(state, ownProps);
+  return { title, interval, reuse, quantity, delay, instant, requirements };
 };
 
 const taskMapDispatchToProps = {

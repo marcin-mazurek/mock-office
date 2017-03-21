@@ -163,7 +163,7 @@ export class AddServerForm extends React.Component {
             className="button add-server-form__submit-button"
             onClick={this.submit}
           >
-            <i className="fa fa-plus" /> Create
+            <i className="fa fa-plus" />{' Create'}
           </button>
         </form>
       </div>

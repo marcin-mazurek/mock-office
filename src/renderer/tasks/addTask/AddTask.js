@@ -12,7 +12,7 @@ export const AddTask = ({ serverType }) => (
     </div>
     <div className="add-task__main">
       <Link to="/" className="add-task__back-button">
-        <i className="fa fa-arrow-left" /> Server details
+        <i className="fa fa-arrow-left" />{' Server details'}
       </Link>
       {
         serverType === 'http'
