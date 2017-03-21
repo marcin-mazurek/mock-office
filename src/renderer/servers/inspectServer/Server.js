@@ -8,7 +8,6 @@ import createStopAction from '../stopServer/actions';
 import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../selectors';
 import FilePickerConnect from '../../tasks/addTaskFromFile/FilePicker';
 import TasksConnect from '../../tasks/browseTasks/Tasks';
-import { init as createRemoveServerAction } from '../removeServer/actions';
 
 export const ServerPlaceholder = ({ serverExists }) =>
   <div className="server-placeholder">
@@ -68,7 +67,7 @@ const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(Server
 
 const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
 
-export const ServerInspect = ({ running, serverDetails, removeServer }) => {
+export const ServerInspect = ({ running, serverDetails }) => {
   const { name, port, type, id } = serverDetails;
 
   return (
@@ -90,9 +89,6 @@ export const ServerInspect = ({ running, serverDetails, removeServer }) => {
             </div>
           </div>
         </div>
-        <button className="inspect-server__remove-button button" onClick={() => removeServer(id)}>
-          <i className="fa fa-trash" />
-        </button>
       </div>
       <main className="inspect-server-main inspect-server__main">
         <div className="inspect-server-tasks-header">
@@ -121,19 +117,12 @@ export const ServerInspect = ({ running, serverDetails, removeServer }) => {
 
 ServerInspect.propTypes = {
   running: React.PropTypes.bool.isRequired,
-  serverDetails: React.PropTypes.shape({}),
-  removeServer: React.PropTypes.func.isRequired
+  serverDetails: React.PropTypes.shape({})
 };
-
-const serverInspectMapDispatchToProps = {
-  removeServer: createRemoveServerAction
-};
-
-export const ServerInspectConnect = connect(null, serverInspectMapDispatchToProps)(ServerInspect);
 
 export const Server = ({ selected, running, serverDetails }) => (
   selected
-    ? <ServerInspectConnect running={running} serverDetails={serverDetails} />
+    ? <ServerInspect running={running} serverDetails={serverDetails} />
     : <ServerPlaceholderConnect />
 );
 
