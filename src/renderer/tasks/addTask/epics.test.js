@@ -29,31 +29,33 @@ let store;
 const epicMiddleware = createEpicMiddleware(addTaskEpic);
 const mockStore = configureMockStore([epicMiddleware]);
 
-test('addTaskEpic', () => {
-  store = mockStore(new Map({
-    servers: new Map({
-      entities: new Map({
-        'server id': {
-          type: 'server type',
-          name: 'server name',
-          port: 3000,
-          id: 'server id'
-        }
+describe('addTaskEpic', () => {
+  test('success flow snapshot', () => {
+    store = mockStore(new Map({
+      servers: new Map({
+        entities: new Map({
+          'server id': {
+            type: 'server type',
+            name: 'server name',
+            port: 3000,
+            id: 'server id'
+          }
+        }),
+        selected: 'server id',
+        running: new Set()
       }),
-      selected: 'server id',
-      running: new Set()
-    }),
-    tasks: new Map()
-  }));
+      tasks: new Map()
+    }));
 
-  store.dispatch(init('serverId', [
-    {
-      title: 'task title',
-      requirements: {
-        url: '/some-path'
-      },
-      taskPayload: 'taskPayload'
-    }
-  ]));
-  expect(store.getActions()).toMatchSnapshot();
+    store.dispatch(init('serverId', [
+      {
+        title: 'task title',
+        requirements: {
+          url: '/some-path'
+        },
+        taskPayload: 'taskPayload'
+      }
+    ]));
+    expect(store.getActions()).toMatchSnapshot();
+  });
 });

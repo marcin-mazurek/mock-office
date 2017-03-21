@@ -8,14 +8,21 @@
 }
 
 .task {
-  padding: 5px;
+  padding: 5px 15px;
   width: 100%;
   display: flex;
   align-items: center;
 }
 
-.task-details__row {
-  margin: 10px;
+.task__title {
+  margin-right: 15px;
+  flex: none;
+}
+
+.task-spec {
+  display: flex;
+  align-items: center;
+  flex: none;
 }
 
 .task__remove-button {
@@ -23,10 +30,19 @@
   cursor: pointer;
   font-size: 16px;
   color: $task-remove-button-font-color;
-  margin-right: 10px;
+  margin-left: auto;
   transition: color .2s ease;
 
   &:hover {
     color: $task-remove-button-hover-font-color;
   }
+}
+
+.task-spec__tag {
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-right: 10px;
+  font-size: 12px;
+  background-color: $task-spec-tag-background-color;
+  color: darken($task-spec-tag-background-color, 40%);
 }

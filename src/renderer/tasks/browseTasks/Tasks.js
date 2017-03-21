@@ -4,24 +4,76 @@ import { getTask } from '../selectors';
 import { init } from '../removeTask/actions';
 import { getQueueTaskIds } from '../../queues/selectors';
 
-export const Task = ({ id, title, serverId, remove }) =>
-  <div className="task">
-    <button className="task__remove-button" onClick={() => remove(serverId, id)}>
-      <i className="fa fa-times" />
-    </button>
-    <div>{title}</div>
-  </div>;
+export const Task = (
+  {
+    id,
+    title,
+    serverId,
+    remove,
+    interval,
+    reuse,
+    quantity,
+    delay,
+    instant
+  }) => {
+  let quantityInfo = null;
+
+  if (reuse) {
+    if (reuse === 'infinite') {
+      quantityInfo = <i className="fa fa-repeat" />;
+    } else if (reuse === 'fixed') {
+      quantityInfo = <div>{quantity}<i className="fa fa-repeat" /></div>;
+    }
+  }
+
+  return (
+    <div className="task">
+      <div className="task__title">{title}</div>
+      <div className="task-spec">
+        {
+          instant
+            ? <div className="task-spec__tag"><i className="fa fa-bolt" /></div>
+            : null
+        }
+        {
+          delay
+            ? <div className="task-spec__tag"><i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}</div>
+            : null
+        }
+        {
+          interval
+            ? <div className="task-spec__tag"><i className="fa fa-history" />{' '}{interval / 1000}{'s'}</div>
+            : null
+        }
+        {
+          reuse
+            ? <div className="task-spec__tag">{quantityInfo}</div>
+            : null
+        }
+      </div>
+      <button className="task__remove-button" onClick={() => remove(serverId, id)}>
+        <i className="fa fa-times" />
+      </button>
+    </div>
+  );
+};
 
 Task.propTypes = {
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
   serverId: React.PropTypes.string.isRequired,
-  remove: React.PropTypes.func.isRequired
+  remove: React.PropTypes.func.isRequired,
+  interval: React.PropTypes.number,
+  reuse: React.PropTypes.string,
+  quantity: React.PropTypes.number,
+  delay: React.PropTypes.number,
+  instant: React.PropTypes.bool
 };
 
-const taskMapStateToProps = (initialState, ownProps) => state => ({
-  title: getTask(state, ownProps).title
-});
+const taskMapStateToProps = (initialState, ownProps) => (state) => {
+  const { title, interval, reuse, quantity, delay, instant } = getTask(state, ownProps);
+  return { title, interval, reuse, quantity, delay, instant };
+};
 
 const taskMapDispatchToProps = {
   remove: init

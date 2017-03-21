@@ -1,4 +1,4 @@
-exports[`test addTaskEpic 1`] = `
+exports[`addTaskEpic success flow snapshot 1`] = `
 Array [
   Object {
     "serverId": "serverId",
@@ -14,8 +14,13 @@ Array [
     "type": "addTask/INIT",
   },
   Object {
+    "delay": undefined,
+    "id": "task id",
+    "instant": undefined,
+    "interval": undefined,
+    "quantity": undefined,
+    "reuse": undefined,
     "serverId": "serverId",
-    "taskId": "task id",
     "taskPayload": "taskPayload",
     "title": "task title",
     "type": "tasks/ADD",

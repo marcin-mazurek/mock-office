@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
       return state.set(action.id, queue);
     }
     case ADD_TASK: {
-      return state.updateIn([action.serverId, 'tasks'], tasks => tasks.push(action.taskId));
+      return state.updateIn([action.serverId, 'tasks'], tasks => tasks.push(action.id));
     }
     case REMOVE_TASK: {
       return state.updateIn([action.serverId, 'tasks'], (tasks) => {

@@ -1,5 +1,5 @@
 exports[`Server default snapshot 1`] = `
-<Connect(Component)
+<Component
   running={true}
   serverDetails={
     Object {
@@ -55,12 +55,6 @@ exports[`ServerInspect default snapshot 1`] = `
         </div>
       </div>
     </div>
-    <button
-      className="inspect-server__remove-button button"
-      onClick={[Function]}>
-      <i
-        className="fa fa-trash" />
-    </button>
   </div>
   <main
     className="inspect-server-main inspect-server__main">

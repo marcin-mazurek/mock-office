@@ -6,16 +6,29 @@ const initialState = new Map();
 const Task = new Record({
   title: '',
   taskPayload: {},
-  id: ''
+  id: '',
+  interval: null,
+  reuse: null,
+  quantity: null,
+  delay: null,
+  instant: null
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { taskId, taskPayload, title } = action;
-      const task = new Task({ taskPayload, id: taskId, title });
+      const { id } = action;
+      const taskConfig = Object.keys(action).reduce((acc, next) => {
+        const cfg = acc;
+        if (action[next]) {
+          cfg[next] = action[next];
+        }
 
-      return state.set(taskId, task);
+        return cfg;
+      }, {});
+      const task = new Task(taskConfig);
+
+      return state.set(id, task);
     }
     case REMOVE: {
       return state.remove(action.taskId);

@@ -8,7 +8,7 @@ describe('tasks reducer', () => {
     const state = reducer(fromJS({}), {
       type: ADD,
       taskPayload: { body: 'task for some-url-3' },
-      taskId: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
+      id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
     });
 
     expect(state.toJS()).toEqual({
@@ -16,7 +16,13 @@ describe('tasks reducer', () => {
         taskPayload: {
           body: 'task for some-url-3',
         },
-        id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
+        id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
+        interval: null,
+        reuse: null,
+        quantity: null,
+        title: '',
+        delay: null,
+        instant: null
       }
     });
   });

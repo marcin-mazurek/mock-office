@@ -26,7 +26,7 @@ describe('queues reducer', () => {
     }), {
       type: ADD_TASK,
       serverId: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
-      taskId: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
+      id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
     });
 
     expect(state.toJS()).toEqual({
