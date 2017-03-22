@@ -29,7 +29,8 @@ export default (store) => {
           task.quantity,
           task.delay,
           task.instant,
-          task.requirements
+          task.requirements,
+          task.blocking
         )
       );
     }

@@ -20,7 +20,8 @@ const addTaskEpic = action$ =>
           task.quantity,
           task.delay,
           task.instant,
-          task.requirements
+          task.requirements,
+          task.blocking
         ];
       });
 

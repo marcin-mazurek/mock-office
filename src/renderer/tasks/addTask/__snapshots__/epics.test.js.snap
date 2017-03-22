@@ -14,6 +14,7 @@ Array [
     "type": "addTask/INIT",
   },
   Object {
+    "blocking": undefined,
     "delay": undefined,
     "id": "task id",
     "instant": undefined,

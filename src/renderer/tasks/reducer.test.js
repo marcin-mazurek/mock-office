@@ -23,7 +23,8 @@ describe('tasks reducer', () => {
         title: '',
         delay: null,
         instant: null,
-        requirements: null
+        requirements: null,
+        blocking: false
       }
     });
   });
