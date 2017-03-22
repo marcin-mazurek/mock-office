@@ -17,7 +17,6 @@ Array [
     "blocking": undefined,
     "delay": undefined,
     "id": "task id",
-    "instant": undefined,
     "interval": undefined,
     "quantity": undefined,
     "requirements": Object {

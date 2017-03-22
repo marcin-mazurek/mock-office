@@ -19,7 +19,6 @@ const addTaskEpic = action$ =>
           task.reuse,
           task.quantity,
           task.delay,
-          task.instant,
           task.requirements,
           task.blocking
         ];

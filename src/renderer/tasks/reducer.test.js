@@ -22,7 +22,6 @@ describe('tasks reducer', () => {
         quantity: null,
         title: '',
         delay: null,
-        instant: null,
         requirements: null,
         blocking: false
       }

@@ -28,7 +28,6 @@ export default (store) => {
           task.reuse,
           task.quantity,
           task.delay,
-          task.instant,
           task.requirements,
           task.blocking
         )

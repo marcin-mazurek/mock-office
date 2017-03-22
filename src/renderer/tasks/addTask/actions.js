@@ -7,7 +7,7 @@ export const init = (serverId, tasks) => ({
   tasks
 });
 
-export const add = (serverId, taskId, taskPayload, title = 'untitled', interval, reuse, quantity, delay, instant, requirements, blocking) => ({
+export const add = (serverId, taskId, taskPayload, title = 'untitled', interval, reuse, quantity, delay, requirements, blocking) => ({
   type: ADD,
   serverId,
   id: taskId,
@@ -17,7 +17,6 @@ export const add = (serverId, taskId, taskPayload, title = 'untitled', interval,
   reuse,
   quantity,
   delay,
-  instant,
   requirements,
   blocking
 });

@@ -11,7 +11,6 @@ const Task = new Record({
   reuse: null,
   quantity: null,
   delay: null,
-  instant: null,
   requirements: null,
   blocking: false
 });

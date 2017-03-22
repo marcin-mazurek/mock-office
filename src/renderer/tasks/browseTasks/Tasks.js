@@ -14,7 +14,6 @@ export const Task = (
     reuse,
     quantity,
     delay,
-    instant,
     requirements,
     blocking
   }) => {
@@ -40,11 +39,6 @@ export const Task = (
         {
           requirements
           ? <div className="task-spec__tag"><i className="fa fa-handshake-o" /></div>
-            : null
-        }
-        {
-          instant
-            ? <div className="task-spec__tag"><i className="fa fa-bolt" /></div>
             : null
         }
         {
@@ -79,16 +73,15 @@ Task.propTypes = {
   reuse: React.PropTypes.string,
   quantity: React.PropTypes.number,
   delay: React.PropTypes.number,
-  instant: React.PropTypes.bool,
   requirements: React.PropTypes.shape({}),
   blocking: React.PropTypes.bool
 };
 
 const taskMapStateToProps = (initialState, ownProps) => (state) => {
   const {
-    title, interval, reuse, quantity, delay, instant, requirements, blocking
+    title, interval, reuse, quantity, delay, requirements, blocking
   } = getTask(state, ownProps);
-  return { title, interval, reuse, quantity, delay, instant, requirements, blocking };
+  return { title, interval, reuse, quantity, delay, requirements, blocking };
 };
 
 const taskMapDispatchToProps = {
