@@ -1,6 +1,5 @@
 import unique from 'node-unique';
 import Task from 'fun-task';
-import { EventEmitter } from 'events';
 import R from 'ramda';
 import deepEqual from 'deep-equal';
 import btoa from 'btoa';
@@ -36,9 +35,8 @@ export const events = {
 
 export default class Queue {
   constructor(args) {
-    this.serverEE = args.ee;
     this.tasks = [];
-    this.ee = new EventEmitter();
+    this.ee = args.ee;
     this.runReadyTask = this.runReadyTask.bind(this);
     this.ee.on(events.TASK_REMOVED, this.runReadyTask);
     this.ee.on(events.TASK_RUN, this.runReadyTask);
@@ -130,14 +128,14 @@ export default class Queue {
 
         if (task.quantity === 0) {
           this.removeTask(task.id);
-          this.serverEE.emit(
+          this.ee.emit(
             events.TASK_REMOVED_AFTER_USE,
             { queueId: this.id, taskId }
           );
         }
       } else {
         this.removeTask(task.id);
-        this.serverEE.emit(events.TASK_REMOVED_AFTER_USE, { queueId: this.id, taskId });
+        this.ee.emit(events.TASK_REMOVED_AFTER_USE, { queueId: this.id, taskId });
       }
     });
   }
