@@ -1,4 +1,4 @@
-import { extractSubTree } from '../index';
+import { extractSubTree } from './index';
 
 describe('extractSubTree', () => {
   it('should trim shallow primitive values', () => {
@@ -12,7 +12,7 @@ describe('extractSubTree', () => {
       c: 'c',
       d: 'd'
     };
-    expect(extractSubTree(source, target, {})).toEqual({
+    expect(extractSubTree(source, target)).toEqual({
       a: 'a',
       b: 'b'
     });

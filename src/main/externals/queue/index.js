@@ -8,7 +8,7 @@ import fs from 'fs';
 import vm from 'vm';
 
 export const extractSubTree = (source, target, result) => {
-  const res = result;
+  const res = result || {};
   const targetKeys = Object.keys(target);
 
   targetKeys.forEach((key) => {
@@ -23,7 +23,8 @@ export const extractSubTree = (source, target, result) => {
       res[key] = source[key];
     }
   });
-  return result;
+
+  return res;
 };
 
 export const events = {
@@ -168,7 +169,7 @@ export default class Queue {
               req.message = btoa(requirements.message);
               req.type = 'b64';
             }
-            if (deepEqual(task.requirements, extractSubTree(req, task.requirements, {}))) {
+            if (deepEqual(task.requirements, extractSubTree(req, task.requirements))) {
               return task;
             } else if (task.blocking) {
               return undefined;
