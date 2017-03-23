@@ -64,12 +64,12 @@ export default class Queue {
               taskPayload: payloadGenerator ? payloadGenerator() : t.taskPayload,
               headers: t.headers
             });
-
-            return () => {
-              t.running = false;
-              clearInterval(intervalId);
-            };
           }, t.interval);
+
+        return () => {
+          t.running = false;
+          clearInterval(intervalId);
+        };
       });
     } else if (t.delay) {
       job = Task.create((onSuccess) => {
