@@ -6,6 +6,12 @@ import { EventEmitter } from 'events';
 import atob from 'atob';
 import Queue, { events as queueEvents } from '../queue';
 
+const events = {
+  clientConnected: 'CLIENT_CONNECTED',
+  receivedMessage: 'RECEIVED_MESSAGE',
+  readyForEmit: 'READY_FOR_EMIT'
+};
+
 export default class WSMockServer {
   constructor(config) {
     this.ee = new EventEmitter();
@@ -18,9 +24,17 @@ export default class WSMockServer {
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
-    this.ee.on(queueEvents.TASK_RUN, this.queue.runReadyTask);
+    this.ee.on(queueEvents.TASK_RUN, () => {
+      this.queue.runReadyTask({
+        event: events.READY_FOR_EMIT
+      });
+    });
     this.ee.on(queueEvents.TASK_ADDED, this.queue.runReadyTask);
-    this.ee.on(queueEvents.TASK_REMOVED, this.queue.runReadyTask);
+    this.ee.on(queueEvents.TASK_REMOVED, () => {
+      this.queue.runReadyTask({
+        event: events.READY_FOR_EMIT
+      });
+    });
   }
 
   addTask(task) {
@@ -74,7 +88,9 @@ export default class WSMockServer {
 
         this.ws.send(message);
       });
-      this.queue.runReadyTask();
+      this.queue.runReadyTask({
+        event: events.CLIENT_CONNECTED
+      });
     });
     cb();
   }

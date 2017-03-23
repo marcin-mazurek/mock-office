@@ -1,0 +1,24 @@
+[
+  {
+    "title": "interval blocking message",
+    "requirements": {
+      "event": "CLIENT_CONNECTED"
+    },
+    "blocking": true,
+    "instant": true,
+    "interval": 3000,
+    "taskPayload": {
+      "message": "interval message"
+    }
+  },
+  {
+    "requirements": {
+      "event": "READY_FOR_EMIT"
+    },
+    "title": "single emit message",
+    "instant": true,
+    "taskPayload": {
+      "message": "single emit message"
+    }
+  }
+]

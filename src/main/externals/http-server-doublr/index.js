@@ -15,6 +15,10 @@ export const send = (req, res) => (task) => {
   res.json(task.taskPayload);
 };
 
+const events = {
+  receivedRequest: 'RECEIVED_REQUEST'
+};
+
 export default class HttpServer {
   constructor(config) {
     this.ee = new EventEmitter();
@@ -43,9 +47,9 @@ export default class HttpServer {
     this.app = express();
     this.app.get('*', (req, res) => {
       this.queue.openConnection(send(req, res));
-
       this.queue.runReadyTask(
         {
+          event: events.RECEIVED_REQUEST,
           url: req.url,
           headers: req.headers
         },

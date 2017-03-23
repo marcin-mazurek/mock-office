@@ -190,7 +190,7 @@ export default class Queue {
           cb();
         }
 
-        return;
+        return undefined;
       }
 
       if (cb) {
@@ -199,7 +199,13 @@ export default class Queue {
 
       this.runTask(readyTask.id);
       this.ee.emit(events.TASK_RUN);
+
+      return {
+        id: readyTask.id
+      };
     }
+
+    return undefined;
   }
 
   cancelPendingTasks() {

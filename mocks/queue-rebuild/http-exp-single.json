@@ -2,6 +2,7 @@
   {
     "title": "response for /some-url",
     "requirements": {
+      "event": "RECEIVED_REQUEST",
       "url": "/some-url"
     },
     "taskPayload": {
