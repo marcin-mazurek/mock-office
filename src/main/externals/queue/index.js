@@ -69,7 +69,7 @@ export default class Queue {
               t.running = false;
               clearInterval(intervalId);
             };
-          });
+          }, t.interval);
       });
     } else if (t.delay) {
       job = Task.create((onSuccess) => {
