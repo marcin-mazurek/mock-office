@@ -2,7 +2,7 @@ import { BrowserWindow, app } from 'electron';
 import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
-import { TASK_REMOVED } from './common/messageNames';
+import { TASK_REMOVED, TASK_RUN } from './common/messageNames';
 import servers from './servers';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -25,6 +25,9 @@ function createWindow() {
   mainWindow.webContents.openDevTools();
 
   // queuesEventsEmitter
+  servers.ee.on('TASK_RUN',
+    args => mainWindow.webContents.send(TASK_RUN, args)
+  );
   servers.ee.on('TASK_REMOVED_AFTER_USE',
     args => mainWindow.webContents.send(TASK_REMOVED, args)
   );

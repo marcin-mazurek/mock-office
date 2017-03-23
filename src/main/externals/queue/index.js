@@ -119,6 +119,11 @@ export default class Queue {
   runTask(taskId) {
     const task = this.tasks.find(exp => exp.id === taskId);
 
+    this.serverEE.emit(
+      events.TASK_RUN,
+      { queueId: this.id, taskId }
+    );
+
     task.cancel = task.job.run(() => {
       task.running = false;
 
