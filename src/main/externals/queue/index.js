@@ -38,9 +38,6 @@ export default class Queue {
     this.tasks = [];
     this.ee = args.ee;
     this.runReadyTask = this.runReadyTask.bind(this);
-    this.ee.on(events.TASK_REMOVED, this.runReadyTask);
-    this.ee.on(events.TASK_RUN, this.runReadyTask);
-    this.ee.on(events.TASK_ADDED, this.runReadyTask);
   }
 
   createTask(task) {

@@ -4,7 +4,7 @@ import http from 'http';
 import fs from 'fs';
 import { EventEmitter } from 'events';
 import atob from 'atob';
-import Queue from '../queue';
+import Queue, { events as queueEvents } from '../queue';
 
 export default class WSMockServer {
   constructor(config) {
@@ -18,6 +18,9 @@ export default class WSMockServer {
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
+    this.ee.on(queueEvents.TASK_RUN, this.queue.runReadyTask);
+    this.ee.on(queueEvents.TASK_ADDED, this.queue.runReadyTask);
+    this.ee.on(queueEvents.TASK_REMOVED, this.queue.runReadyTask);
   }
 
   addTask(task) {
