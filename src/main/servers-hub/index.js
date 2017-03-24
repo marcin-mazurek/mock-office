@@ -1,7 +1,7 @@
 import unique from 'node-unique';
 import { EventEmitter } from 'events';
-import HttpServer from '../externals/http-server-doublr';
-import WSMockServer from '../externals/ws-server-doublr';
+import HttpServer from '../http-mock-server';
+import WSMockServer from '../ws-mock-server';
 
 const serverTypes = {
   http: HttpServer,
@@ -23,10 +23,7 @@ class ServersHub {
   add(name, port, type, isSecure, keyPath, certPath) {
     const serverId = unique();
     const ServerConstructor = serverTypes[type];
-    const server = new ServerConstructor({ name, port, isSecure, keyPath, certPath });
-    server.ee.on('TASK_REMOVED_AFTER_USE', args =>
-      this.ee.emit('TASK_REMOVED_AFTER_USE', { serverId, taskId: args.taskId })
-    );
+    const server = new ServerConstructor({ id: serverId, name, port, isSecure, keyPath, certPath });
     this.servers.push({
       id: serverId,
       instance: server

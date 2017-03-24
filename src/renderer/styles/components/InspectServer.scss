@@ -62,8 +62,8 @@
   flex-direction: column;
 }
 
-.inspect-server__add-task-button {
-  border: $inspect-server-add-task-button-border;
+.inspect-server__add-description-button {
+  border: $inspect-server-add-description-button-border;
   margin-right: 10px;
 }
 
@@ -109,13 +109,13 @@ $size: 40px;
   }
 }
 
-.inspect-server__tasks {
+.inspect-server__descriptions {
   flex: auto;
   position: relative;
 }
 
-.inspect-server-tasks-header {
-  background-color: $tasks-header-background-color;
+.inspect-server-descriptions-header {
+  background-color: $descriptions-header-background-color;
   padding: 10px 15px;
   font-weight: 500;
   display: flex;
@@ -123,17 +123,17 @@ $size: 40px;
   flex: none;
 }
 
-.inspect-server-tasks-header__button {
+.inspect-server-descriptions-header__button {
   &:hover {
     color: $primary-color;
   }
 }
 
-.inspect-server-tasks-header__label {
+.inspect-server-descriptions-header__label {
   margin-right: auto;
 }
 
-.inspect-server__tasks-scroll-container {
+.inspect-server__descriptions-scroll-container {
   height: 100%;
   position: absolute;
   left: 0;

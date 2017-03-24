@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddDescription default snapshot 1`] = `
+<div
+  className="add-description"
+>
+  <div
+    className="view-header"
+  >
+    Add description
+  </div>
+  <div
+    className="add-description__main"
+  >
+    <Link
+      className="add-description__back-button"
+      onlyActiveOnIndex={false}
+      style={Object {}}
+      to="/"
+    >
+      <i
+        className="fa fa-arrow-left"
+      />
+       Server details
+    </Link>
+    <Connect(WsForm) />
+  </div>
+</div>
+`;

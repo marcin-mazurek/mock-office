@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export const TASK_REMOVED = 'TASK_REMOVED';
+export const DESCRIPTION_REMOVED = 'DESCRIPTION_REMOVED';

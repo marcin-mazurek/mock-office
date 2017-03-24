@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addDescriptionFromFileEpic 1`] = `
+Array [
+  Object {
+    "files": Array [
+      Blob {
+        Symbol(impl): BlobImpl {
+          "_buffer": Object {
+            "data": Array [
+              123,
+              34,
+              112,
+              97,
+              121,
+              108,
+              111,
+              97,
+              100,
+              34,
+              58,
+              32,
+              34,
+              116,
+              97,
+              115,
+              107,
+              32,
+              112,
+              97,
+              121,
+              108,
+              111,
+              97,
+              100,
+              34,
+              125,
+            ],
+            "type": "Buffer",
+          },
+          "isClosed": false,
+          "type": "",
+          Symbol(wrapper): [Circular],
+        },
+      },
+    ],
+    "serverId": "server id",
+    "type": "pickDescriptionFile/INIT",
+  },
+]
+`;

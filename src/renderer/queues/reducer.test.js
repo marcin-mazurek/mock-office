@@ -3,8 +3,8 @@ import reducer from './reducer';
 import {
   ADD as ADD_SERVER
 } from '../servers/actions';
-import { REMOVE as REMOVE_TASK } from '../tasks/removeTask/actions';
-import { ADD as ADD_TASK } from '../tasks/addTask/actions';
+import { REMOVE as REMOVE_DESCRIPTION } from '../descriptions/removeDescription/actions';
+import { ADD as ADD_DESCRIPTION } from '../descriptions/addDescription/actions';
 
 describe('queues reducer', () => {
   test(`${ADD_SERVER} action`, () => {
@@ -13,43 +13,43 @@ describe('queues reducer', () => {
 
     expect(state.toJS()).toEqual({
       'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==': {
-        tasks: []
+        descriptions: []
       }
     });
   });
 
-  test(`${ADD_TASK} action`, () => {
+  test(`${ADD_DESCRIPTION} action`, () => {
     const state = reducer(fromJS({
       'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
-        tasks: []
+        descriptions: []
       }
     }), {
-      type: ADD_TASK,
+      type: ADD_DESCRIPTION,
       serverId: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
       id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
     });
 
     expect(state.toJS()).toEqual({
       'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
-        tasks: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
+        descriptions: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
       }
     });
   });
 
-  test(`${REMOVE_TASK} action`, () => {
+  test(`${REMOVE_DESCRIPTION} action`, () => {
     const state = reducer(fromJS({
       'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
-        tasks: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
+        descriptions: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
       }
     }), {
-      type: REMOVE_TASK,
+      type: REMOVE_DESCRIPTION,
       serverId: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
-      taskId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+      descriptionId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
     });
 
     expect(state.toJS()).toEqual({
       'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
-        tasks: []
+        descriptions: []
       }
     });
   });

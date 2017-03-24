@@ -51,7 +51,7 @@ describe('removeServerEpic', () => {
         ids: new List(['server id']),
         running: new Set()
       }),
-      tasks: new Map()
+      descriptions: new Map()
     }));
     store.dispatch(init('some id'));
 

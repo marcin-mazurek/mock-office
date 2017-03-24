@@ -1,11 +1,16 @@
-exports[`test Main should render 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main should render 1`] = `
 <div
-  className="main">
+  className="main"
+>
   <div
-    className="main__navbar">
+    className="main__navbar"
+  >
     <Component />
   </div>
   <div
-    className="main__content" />
+    className="main__content"
+  />
 </div>
 `;

@@ -1,13 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`AddServerForm default snapshot 1`] = `
 <div
-  className="add-server-form">
+  className="add-server-form"
+>
   <form
-    action="#">
+    action="#"
+  >
     <div
-      className="add-server-form__field">
+      className="add-server-form__field"
+    >
       <label
         className="add-server-form__label"
-        htmlFor="server-name">
+        htmlFor="server-name"
+      >
         Name:
       </label>
       <input
@@ -15,13 +21,16 @@ exports[`AddServerForm default snapshot 1`] = `
         name="server-name"
         onChange={[Function]}
         type="text"
-        value="Server name" />
+        value="Server name"
+      />
     </div>
     <div
-      className="add-server-form__field">
+      className="add-server-form__field"
+    >
       <label
         className="add-server-form__label"
-        htmlFor="server-port">
+        htmlFor="server-port"
+      >
         Port:
       </label>
       <input
@@ -29,55 +38,68 @@ exports[`AddServerForm default snapshot 1`] = `
         name="server-port"
         onChange={[Function]}
         type="text"
-        value={3000} />
+        value={3000}
+      />
     </div>
     <div
-      className="add-server-form__field">
+      className="add-server-form__field"
+    >
       <label
         className="add-server-form__label"
-        htmlFor="server-type">
+        htmlFor="server-type"
+      >
         Type:
       </label>
       <select
         name="server-type"
         onChange={[Function]}
-        value="http">
+        value="http"
+      >
         <option
-          value="http">
+          value="http"
+        >
           http
         </option>
         <option
-          value="ws">
+          value="ws"
+        >
           ws
         </option>
       </select>
     </div>
     <div
-      className="add-server-form__field">
+      className="add-server-form__field"
+    >
       <label
         className="add-server-form__label"
-        htmlFor="server-secure">
+        htmlFor="server-secure"
+      >
         Secure:
       </label>
       <select
         name="server-secure"
         onChange={[Function]}
-        value="no">
+        value="no"
+      >
         <option
-          value="yes">
+          value="yes"
+        >
           yes
         </option>
         <option
-          value="no">
+          value="no"
+        >
           no
         </option>
       </select>
     </div>
     <button
       className="button add-server-form__submit-button"
-      onClick={[Function]}>
+      onClick={[Function]}
+    >
       <i
-        className="fa fa-plus" />
+        className="fa fa-plus"
+      />
        Create
     </button>
   </form>

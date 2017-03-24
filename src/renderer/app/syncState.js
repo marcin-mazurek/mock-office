@@ -1,6 +1,6 @@
 import { remote } from 'electron';
 import { add, start } from '../servers/actions';
-import { add as addTask } from '../tasks/addTask/actions';
+import { add as addDescription } from '../descriptions/addDescription/actions';
 
 export default (store) => {
   const servers = remote.require('./main/servers').default.servers;
@@ -13,23 +13,23 @@ export default (store) => {
       store.dispatch(start(id));
     }
 
-    const queue = instance.queue;
-    const tasks = queue.tasks;
+    const scenario = instance.scenario;
+    const descriptions = scenario.descriptions;
 
-    for (let taskIndex = 0; taskIndex < tasks.length; taskIndex += 1) {
-      const task = tasks[taskIndex];
+    for (let descriptionIndex = 0; descriptionIndex < descriptions.length; descriptionIndex += 1) {
+      const description = descriptions[descriptionIndex];
       store.dispatch(
-        addTask(
+        addDescription(
           id,
-          task.id,
-          task.taskPayload,
-          task.title,
-          task.interval,
-          task.reuse,
-          task.quantity,
-          task.delay,
-          task.requirements,
-          task.blocking
+          description.id,
+          description.descriptionPayload,
+          description.title,
+          description.interval,
+          description.reuse,
+          description.quantity,
+          description.delay,
+          description.requirements,
+          description.blocking
         )
       );
     }

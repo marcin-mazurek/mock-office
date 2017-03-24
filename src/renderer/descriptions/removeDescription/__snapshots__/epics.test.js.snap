@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`removeDescription epic default snapshot 1`] = `
+Array [
+  Object {
+    "serverId": "server id",
+    "descriptionId": "description id",
+    "type": "remove/init",
+  },
+  Object {
+    "serverId": "server id",
+    "descriptionId": "description id",
+    "type": "descriptions/REMOVE",
+  },
+]
+`;

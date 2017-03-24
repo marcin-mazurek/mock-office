@@ -1,0 +1,48 @@
+.descriptions {
+  @extend %list-reset;
+  width: 100%;
+}
+
+.descriptions__item {
+  border-bottom: 1px solid #EEE;
+}
+
+.description {
+  padding: 5px 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.description__title {
+  margin-right: 15px;
+  flex: none;
+}
+
+.description-spec {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.description__remove-button {
+  @extend %button-reset;
+  cursor: pointer;
+  font-size: 16px;
+  color: $description-remove-button-font-color;
+  margin-left: auto;
+  transition: color .2s ease;
+
+  &:hover {
+    color: $description-remove-button-hover-font-color;
+  }
+}
+
+.description-spec__tag {
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-right: 10px;
+  font-size: 11px;
+  background-color: $description-spec-tag-background-color;
+  color: darken($description-spec-tag-background-color, 40%);
+}

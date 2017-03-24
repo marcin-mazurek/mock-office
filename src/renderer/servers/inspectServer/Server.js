@@ -6,8 +6,8 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import createStartAction from '../startServer/actions';
 import createStopAction from '../stopServer/actions';
 import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../selectors';
-import FilePickerConnect from '../../tasks/addTaskFromFile/FilePicker';
-import TasksConnect from '../../tasks/browseTasks/Tasks';
+import FilePickerConnect from '../../descriptions/addDescriptionFromFile/FilePicker';
+import DescriptionsConnect from '../../descriptions/browseDescriptions/Descriptions';
 
 export const ServerPlaceholder = ({ serverExists }) =>
   <div className="server-placeholder">
@@ -91,22 +91,22 @@ export const ServerInspect = ({ running, serverDetails }) => {
         </div>
       </div>
       <main className="inspect-server-main inspect-server__main">
-        <div className="inspect-server-tasks-header">
-          <div className="inspect-server-tasks-header__label">
-            <i className="fa fa-tasks" />{' Tasks:'}
+        <div className="inspect-server-descriptions-header">
+          <div className="inspect-server-descriptions-header__label">
+            <i className="fa fa-descriptions" />{' Descriptions:'}
           </div>
           <Link
-            to="/add-task"
-            className="inspect-server__add-task-button button inspect-server-tasks-header__button"
+            to="/add-description"
+            className="inspect-server__add-description-button button inspect-server-descriptions-header__button"
           >
             <i className="fa fa-plus" />
           </Link>
           <FilePickerConnect serverId={id} />
         </div>
-        <div className="inspect-server__tasks">
-          <div className="inspect-server__tasks-scroll-container">
+        <div className="inspect-server__descriptions">
+          <div className="inspect-server__descriptions-scroll-container">
             <Scrollbars>
-              <TasksConnect serverId={id} />
+              <DescriptionsConnect serverId={id} />
             </Scrollbars>
           </div>
         </div>

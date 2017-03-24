@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WsForm default snapshot 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div>
+    <label
+      htmlFor="interval"
+    >
+      Interval:
+    </label>
+    <input
+      name="interval"
+      onChange={[Function]}
+      type="number"
+    />
+  </div>
+  <div>
+    <label
+      htmlFor="blocking"
+    >
+      Blocking:
+    </label>
+    <input
+      name="blocking"
+      onChange={[Function]}
+      type="checkbox"
+    />
+  </div>
+  <div>
+    <label
+      htmlFor="delay"
+    >
+      Delay:
+    </label>
+    <input
+      name="delay"
+      onChange={[Function]}
+      type="number"
+    />
+  </div>
+  <div>
+    <label
+      htmlFor="requirements"
+    >
+      Requirements:
+    </label>
+    <div>
+      <textarea
+        cols="30"
+        name="requirements"
+        onChange={[Function]}
+        rows="10"
+      />
+    </div>
+  </div>
+  <div>
+    <label
+      htmlFor="payload"
+    >
+      Payload:
+    </label>
+    <div>
+      <textarea
+        cols="30"
+        name="payload"
+        onChange={[Function]}
+        rows="10"
+      />
+    </div>
+  </div>
+  <div>
+    <button
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+`;

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilePicker default snapshot 1`] = `
+<div
+  className="file-picker"
+>
+  <label
+    className="file-picker__button button inspect-server-descriptions-header__button"
+    htmlFor="file-picker__input"
+  >
+    <i
+      className="fa fa-upload"
+    />
+  </label>
+  <input
+    className="file-picker__input"
+    id="file-picker__input"
+    onChange={[Function]}
+    type="file"
+    value=""
+  />
+</div>
+`;

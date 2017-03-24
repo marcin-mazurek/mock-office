@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Server default snapshot 1`] = `
 <Component
   running={true}
@@ -9,47 +11,61 @@ exports[`Server default snapshot 1`] = `
       "queue": "some queue id",
       "type": "some type",
     }
-  } />
+  }
+/>
 `;
 
 exports[`ServerInspect default snapshot 1`] = `
 <div
-  className="inspect-server">
+  className="inspect-server"
+>
   <div
-    className="inspect-server__header inspect-server-header">
+    className="inspect-server__header inspect-server-header"
+  >
     <div
-      className="inspect-server-header__toggle">
+      className="inspect-server-header__toggle"
+    >
       <Connect(Component)
         serverId="some id"
-        toggled={true} />
+        toggled={true}
+      />
     </div>
     <div
-      className="inspect-server-details">
+      className="inspect-server-details"
+    >
       <div
-        className="inspect-server-details__name">
+        className="inspect-server-details__name"
+      >
         some id
       </div>
       <div
-        className="inspect-server-details__spec inspect-server-spec">
+        className="inspect-server-details__spec inspect-server-spec"
+      >
         <div
-          className="inspect-server-spec__item">
+          className="inspect-server-spec__item"
+        >
           <span
-            className="inspect-server-spec__label">
+            className="inspect-server-spec__label"
+          >
             Port:
           </span>
           <span
-            className="inspect-server-spec__value">
+            className="inspect-server-spec__value"
+          >
             3000
           </span>
         </div>
         <div
-          className="inspect-server-spec__item">
+          className="inspect-server-spec__item"
+        >
           <span
-            className="inspect-server-spec__label">
+            className="inspect-server-spec__label"
+          >
             Type:
           </span>
           <span
-            className="inspect-server-spec__value">
+            className="inspect-server-spec__value"
+          >
             some type
           </span>
         </div>
@@ -57,30 +73,39 @@ exports[`ServerInspect default snapshot 1`] = `
     </div>
   </div>
   <main
-    className="inspect-server-main inspect-server__main">
+    className="inspect-server-main inspect-server__main"
+  >
     <div
-      className="inspect-server-tasks-header">
+      className="inspect-server-descriptions-header"
+    >
       <div
-        className="inspect-server-tasks-header__label">
+        className="inspect-server-descriptions-header__label"
+      >
         <i
-          className="fa fa-tasks" />
-         Tasks:
+          className="fa fa-descriptions"
+        />
+         Descriptions:
       </div>
       <Link
-        className="inspect-server__add-task-button button inspect-server-tasks-header__button"
+        className="inspect-server__add-description-button button inspect-server-descriptions-header__button"
         onlyActiveOnIndex={false}
         style={Object {}}
-        to="/add-task">
+        to="/add-description"
+      >
         <i
-          className="fa fa-plus" />
+          className="fa fa-plus"
+        />
       </Link>
       <Connect(FilePicker)
-        serverId="some id" />
+        serverId="some id"
+      />
     </div>
     <div
-      className="inspect-server__tasks">
+      className="inspect-server__descriptions"
+    >
       <div
-        className="inspect-server__tasks-scroll-container">
+        className="inspect-server__descriptions-scroll-container"
+      >
         <Scrollbars
           autoHeight={false}
           autoHeightMax={200}
@@ -96,9 +121,11 @@ exports[`ServerInspect default snapshot 1`] = `
           renderView={[Function]}
           tagName="div"
           thumbMinSize={30}
-          universal={false}>
+          universal={false}
+        >
           <Connect(Component)
-            serverId="some id" />
+            serverId="some id"
+          />
         </Scrollbars>
       </div>
     </div>
@@ -108,14 +135,16 @@ exports[`ServerInspect default snapshot 1`] = `
 
 exports[`ServerPlaceholder any servers exists snapshot 1`] = `
 <div
-  className="server-placeholder">
+  className="server-placeholder"
+>
   Add server
 </div>
 `;
 
 exports[`ServerPlaceholder some servers exist snapshot 1`] = `
 <div
-  className="server-placeholder">
+  className="server-placeholder"
+>
   Select server
 </div>
 `;
