@@ -1,6 +1,7 @@
 import { Map, Record } from 'immutable';
-import { REMOVE } from './removeTask/actions';
 import { ADD } from './addTask/actions';
+import { RUN } from './runTask/actions';
+import { REMOVE } from './removeTask/actions';
 
 const initialState = new Map();
 const Task = new Record({
@@ -12,7 +13,8 @@ const Task = new Record({
   quantity: null,
   delay: null,
   requirements: null,
-  blocking: false
+  blocking: false,
+  running: false
 });
 
 export default (state = initialState, action) => {
@@ -30,6 +32,9 @@ export default (state = initialState, action) => {
       const task = new Task(taskConfig);
 
       return state.set(id, task);
+    }
+    case RUN: {
+      return state.setIn([action.taskId, 'running'], true);
     }
     case REMOVE: {
       return state.remove(action.taskId);

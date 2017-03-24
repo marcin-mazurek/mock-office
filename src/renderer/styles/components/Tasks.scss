@@ -14,6 +14,10 @@
   align-items: center;
 }
 
+.task--running {
+  background-color: $task-status-running-background-color;
+}
+
 .task__title {
   margin-right: 15px;
   flex: none;

@@ -1,0 +1,30 @@
+exports[`tasks reducer tasks/ADD action 1`] = `
+Object {
+  "AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==": Object {
+    "blocking": false,
+    "delay": null,
+    "id": "AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==",
+    "interval": null,
+    "quantity": null,
+    "requirements": null,
+    "reuse": null,
+    "running": false,
+    "taskPayload": Object {
+      "body": "task for some-url-3",
+    },
+    "title": "",
+  },
+}
+`;
+
+exports[`tasks reducer tasks/RUN action 1`] = `
+Object {
+  "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==": Object {
+    "id": "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==",
+    "running": true,
+    "taskPayload": Object {
+      "data": "task for some-url-3",
+    },
+  },
+}
+`;

@@ -1,22 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import { getTask } from '../selectors';
 import { init } from '../removeTask/actions';
 import { getQueueTaskIds } from '../../queues/selectors';
 
-export const Task = (
-  {
-    id,
-    title,
-    serverId,
-    remove,
-    interval,
-    reuse,
-    quantity,
-    delay,
-    requirements,
-    blocking
-  }) => {
+export const Task = ({
+                       id,
+                       title,
+                       serverId,
+                       remove,
+                       interval,
+                       reuse,
+                       quantity,
+                       delay,
+                       requirements,
+                       blocking,
+                       running
+                     }) => {
   let quantityInfo = null;
 
   if (reuse) {
@@ -27,8 +28,12 @@ export const Task = (
     }
   }
 
+  const taskClass = classnames('task', {
+    'task--running': running
+  });
+
   return (
-    <div className="task">
+    <div className={taskClass}>
       <div className="task__title">{title}</div>
       <div className="task-spec">
         {
@@ -38,7 +43,7 @@ export const Task = (
         }
         {
           requirements
-          ? <div className="task-spec__tag"><i className="fa fa-handshake-o" /></div>
+            ? <div className="task-spec__tag"><i className="fa fa-handshake-o" /></div>
             : null
         }
         {
@@ -74,14 +79,15 @@ Task.propTypes = {
   quantity: React.PropTypes.number,
   delay: React.PropTypes.number,
   requirements: React.PropTypes.shape({}),
-  blocking: React.PropTypes.bool
+  blocking: React.PropTypes.bool,
+  running: React.PropTypes.bool
 };
 
 const taskMapStateToProps = (initialState, ownProps) => (state) => {
   const {
-    title, interval, reuse, quantity, delay, requirements, blocking
+    title, interval, reuse, quantity, delay, requirements, blocking, running
   } = getTask(state, ownProps);
-  return { title, interval, reuse, quantity, delay, requirements, blocking };
+  return { title, interval, reuse, quantity, delay, requirements, blocking, running };
 };
 
 const taskMapDispatchToProps = {
