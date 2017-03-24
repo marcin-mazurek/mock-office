@@ -24,7 +24,7 @@ export const Task = ({
     if (reuse === 'infinite') {
       quantityInfo = <i className="fa fa-repeat" />;
     } else if (reuse === 'fixed') {
-      quantityInfo = <div>{quantity}<i className="fa fa-repeat" /></div>;
+      quantityInfo = <div>{quantity} <i className="fa fa-repeat" /></div>;
     }
   }
 

@@ -12,10 +12,12 @@
   width: 100%;
   display: flex;
   align-items: center;
+  transition: background-color 1s;
 }
 
 .task--running {
   background-color: $task-status-running-background-color;
+  transition: none;
 }
 
 .task__title {

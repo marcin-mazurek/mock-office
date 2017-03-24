@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
 import { REMOVE } from './removeTask/actions';
-import { RUN } from './runTask/actions';
+import { RUN, STOP } from './runTask/actions';
 import { ADD } from './addTask/actions';
 
 describe('tasks reducer', () => {
@@ -19,9 +19,22 @@ describe('tasks reducer', () => {
     const state = reducer(fromJS({
       'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==': {
         taskPayload: { data: 'task for some-url-3' },
-        id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+        id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==',
+        running: false
       }
     }), { type: RUN, taskId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==' });
+
+    expect(state.toJS()).toMatchSnapshot();
+  });
+
+  test(`${STOP} action`, () => {
+    const state = reducer(fromJS({
+      'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==': {
+        taskPayload: { data: 'task for some-url-3' },
+        id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==',
+        running: true
+      }
+    }), { type: STOP, taskId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==' });
 
     expect(state.toJS()).toMatchSnapshot();
   });

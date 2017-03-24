@@ -28,3 +28,15 @@ Object {
   },
 }
 `;
+
+exports[`tasks reducer tasks/STOP action 1`] = `
+Object {
+  "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==": Object {
+    "id": "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==",
+    "running": false,
+    "taskPayload": Object {
+      "data": "task for some-url-3",
+    },
+  },
+}
+`;

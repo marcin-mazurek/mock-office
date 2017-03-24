@@ -1,6 +1,6 @@
 import { Map, Record } from 'immutable';
 import { ADD } from './addTask/actions';
-import { RUN } from './runTask/actions';
+import { RUN, STOP } from './runTask/actions';
 import { REMOVE } from './removeTask/actions';
 
 const initialState = new Map();
@@ -35,6 +35,9 @@ export default (state = initialState, action) => {
     }
     case RUN: {
       return state.setIn([action.taskId, 'running'], true);
+    }
+    case STOP: {
+      return state.setIn([action.taskId, 'running'], false);
     }
     case REMOVE: {
       return state.remove(action.taskId);

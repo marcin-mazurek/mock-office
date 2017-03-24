@@ -29,6 +29,7 @@ export const extractSubTree = (source, target, result) => {
 export const events = {
   TASK_REMOVED: 'TASK_REMOVED',
   TASK_RUN: 'TASK_RUN',
+  TASK_STOPPED: 'TASK_STOPPED',
   TASK_ADDED: 'TASK_ADDED',
   TASK_REMOVED_AFTER_USE: 'TASK_REMOVED_AFTER_USE'
 };
@@ -126,6 +127,10 @@ export default class Queue {
 
     task.cancel = task.job.run(() => {
       task.running = false;
+      this.serverEE.emit(
+        events.TASK_STOPPED,
+        { queueId: this.id, taskId }
+      );
 
       if (task.reuse === 'infinite') {
         R.identity(); // do nothing

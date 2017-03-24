@@ -27,6 +27,9 @@ class ServersHub {
     server.ee.on('TASK_RUN', args =>
       this.ee.emit('TASK_RUN', { serverId, taskId: args.taskId })
     );
+    server.ee.on('TASK_STOPPED', args =>
+      this.ee.emit('TASK_STOPPED', { serverId, taskId: args.taskId })
+    );
     server.ee.on('TASK_REMOVED_AFTER_USE', args =>
       this.ee.emit('TASK_REMOVED_AFTER_USE', { serverId, taskId: args.taskId })
     );
