@@ -16,6 +16,7 @@ Object {
       "body": "task for some-url-3",
     },
     "title": "",
+    "willRemove": false,
   },
 }
 `;

@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { getTask } from '../selectors';
-import { init } from '../removeTask/actions';
+import { init, remove } from '../removeTask/actions';
 import { getQueueTaskIds } from '../../queues/selectors';
 
 export const Task = ({
                        id,
                        title,
                        serverId,
-                       remove,
+                       removeTask,
+                       removeTaskLabel,
                        interval,
                        reuse,
                        quantity,
@@ -18,7 +19,8 @@ export const Task = ({
                        blocking,
                        running,
                        runCount,
-                       lastDuration
+                       lastDuration,
+                       willRemove
                      }) => {
   let quantityInfo = null;
 
@@ -31,7 +33,8 @@ export const Task = ({
   }
 
   const taskClass = classnames('task', {
-    'task--running': running
+    'task--running': running,
+    'task--removed': willRemove
   });
 
   return (
@@ -80,7 +83,19 @@ export const Task = ({
             ) : null
         }
       </div>
-      <button className="task__remove-button" onClick={() => remove(serverId, id)}>
+      {
+        willRemove ?
+          (
+            <div className="task-status__tag">
+              <i className="fa fa-check" /> Finished
+            </div>
+          )
+          : null
+      }
+      <button
+        className="task__remove-button"
+        onClick={() => (willRemove ? removeTaskLabel(serverId, id) : removeTask(serverId, id))}
+      >
         <i className="fa fa-remove" />
       </button>
     </div>
@@ -91,7 +106,8 @@ Task.propTypes = {
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
   serverId: React.PropTypes.string.isRequired,
-  remove: React.PropTypes.func.isRequired,
+  removeTask: React.PropTypes.func.isRequired,
+  removeTaskLabel: React.PropTypes.func.isRequired,
   interval: React.PropTypes.number,
   reuse: React.PropTypes.string,
   quantity: React.PropTypes.number,
@@ -100,20 +116,42 @@ Task.propTypes = {
   blocking: React.PropTypes.bool,
   running: React.PropTypes.bool,
   runCount: React.PropTypes.number,
-  lastDuration: React.PropTypes.number
+  lastDuration: React.PropTypes.number,
+  willRemove: React.PropTypes.bool
 };
 
 const taskMapStateToProps = (initialState, ownProps) => (state) => {
   const {
-    title, interval, reuse, quantity, delay, requirements, blocking, running, runCount, lastDuration
+    title,
+    interval,
+    reuse,
+    quantity,
+    delay,
+    requirements,
+    blocking,
+    running,
+    runCount,
+    lastDuration,
+    willRemove
   } = getTask(state, ownProps);
   return {
-    title, interval, reuse, quantity, delay, requirements, blocking, running, runCount, lastDuration
+    title,
+    interval,
+    reuse,
+    quantity,
+    delay,
+    requirements,
+    blocking,
+    running,
+    runCount,
+    lastDuration,
+    willRemove
   };
 };
 
 const taskMapDispatchToProps = {
-  remove: init
+  removeTask: init,
+  removeTaskLabel: remove
 };
 
 export const TaskConnect = connect(taskMapStateToProps, taskMapDispatchToProps)(Task);

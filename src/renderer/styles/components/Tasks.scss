@@ -20,6 +20,11 @@
   transition: none;
 }
 
+.task--removed {
+  background-color: $task-status-removed-background-color;
+  transition: none;
+}
+
 .task__title {
   margin-right: 15px;
   flex: none;
