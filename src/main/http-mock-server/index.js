@@ -10,7 +10,6 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import { EventEmitter } from 'events';
 import Scenario from '../scenario';
 import scheduler from '../scheduler';
 
@@ -56,8 +55,6 @@ export default class HttpMockServer {
           url: req.url
         }
       );
-
-      console.log(description);
 
       if (description) {
         scheduler.schedule(send(req, res), description);
