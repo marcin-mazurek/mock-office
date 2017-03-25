@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getDescription } from '../selectors';
 import { init } from '../removeDescription/actions';
-import { getQueueDescriptionIds } from '../../queues/selectors';
+import { getQueueDescriptionIds } from '../../scenarios/selectors';
 
 export const Description = ({
                               id,

@@ -3,21 +3,22 @@
 exports[`addDescriptionEpic success flow snapshot 1`] = `
 Array [
   Object {
-    "serverId": "serverId",
     "descriptions": Array [
       Object {
+        "descriptionPayload": "descriptionPayload",
         "requirements": Object {
           "url": "/some-path",
         },
-        "descriptionPayload": "descriptionPayload",
         "title": "description title",
       },
     ],
+    "serverId": "serverId",
     "type": "addDescription/INIT",
   },
   Object {
     "blocking": undefined,
     "delay": undefined,
+    "descriptionPayload": "descriptionPayload",
     "id": "description id",
     "interval": undefined,
     "quantity": undefined,
@@ -26,7 +27,6 @@ Array [
     },
     "reuse": undefined,
     "serverId": "serverId",
-    "descriptionPayload": "descriptionPayload",
     "title": "description title",
     "type": "descriptions/ADD",
   },

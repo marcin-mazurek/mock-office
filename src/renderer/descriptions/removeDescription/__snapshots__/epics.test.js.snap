@@ -3,13 +3,13 @@
 exports[`removeDescription epic default snapshot 1`] = `
 Array [
   Object {
-    "serverId": "server id",
     "descriptionId": "description id",
+    "serverId": "server id",
     "type": "remove/init",
   },
   Object {
-    "serverId": "server id",
     "descriptionId": "description id",
+    "serverId": "server id",
     "type": "descriptions/REMOVE",
   },
 ]

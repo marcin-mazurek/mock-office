@@ -5,14 +5,14 @@ import { ADD as ADD_DESCRIPTION } from '../descriptions/addDescription/actions';
 
 const initialState = new Map();
 
-const Queue = new Record({
+const Scenario = new Record({
   descriptions: new List()
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_SERVER: {
-      const queue = new Queue();
+      const queue = new Scenario();
       return state.set(action.id, queue);
     }
     case ADD_DESCRIPTION: {

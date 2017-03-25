@@ -6,7 +6,7 @@ import {
 import { REMOVE as REMOVE_DESCRIPTION } from '../descriptions/removeDescription/actions';
 import { ADD as ADD_DESCRIPTION } from '../descriptions/addDescription/actions';
 
-describe('queues reducer', () => {
+describe('scenarios reducer', () => {
   test(`${ADD_SERVER} action`, () => {
     const state = reducer(fromJS({}),
       { type: ADD_SERVER, id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
