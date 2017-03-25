@@ -1,7 +1,7 @@
 [
   {
+    "title": "response for /some-url",
     "requirements": {
-      "title": "response for /some-url",
       "url": "/some-url"
     },
     "taskPayload": {
@@ -11,8 +11,8 @@
     }
   },
   {
+    "title": "response for /some-url",
     "requirements": {
-      "title": "response for /some-url",
       "url": "/some-url"
     },
     "taskPayload": {
@@ -22,8 +22,8 @@
     }
   },
   {
+    "title": "response for /some-url",
     "requirements": {
-      "title": "response for /some-url",
       "url": "/some-url"
     },
     "taskPayload": {
