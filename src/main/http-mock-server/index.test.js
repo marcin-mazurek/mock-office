@@ -2,7 +2,6 @@ import { Socket } from 'net';
 import HttpMockServer, { send } from './index';
 
 /* eslint-disable global-require */
-
 describe('send', () => {
   it('should send headers provide by user', () => {
     const mockFn = jest.fn();
