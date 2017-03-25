@@ -14,7 +14,10 @@ const Task = new Record({
   delay: null,
   requirements: null,
   blocking: false,
-  running: false
+  running: false,
+  runCount: 0,
+  lastRunTimestamp: null,
+  lastDuration: null
 });
 
 export default (state = initialState, action) => {
@@ -34,10 +37,20 @@ export default (state = initialState, action) => {
       return state.set(id, task);
     }
     case RUN: {
-      return state.setIn([action.taskId, 'running'], true);
+      const prevState = state.get(action.taskId);
+      return state.mergeIn([action.taskId], {
+        running: true,
+        runCount: prevState.get('runCount') + 1,
+        lastRunTimestamp: Date.now(),
+        lastDuration: null
+      });
     }
     case STOP: {
-      return state.setIn([action.taskId, 'running'], false);
+      const prevState = state.get(action.taskId);
+      return state.mergeIn([action.taskId], {
+        running: false,
+        lastDuration: Date.now() - prevState.get('lastRunTimestamp')
+      });
     }
     case REMOVE: {
       return state.remove(action.taskId);

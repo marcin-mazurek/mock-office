@@ -16,7 +16,9 @@ export const Task = ({
                        delay,
                        requirements,
                        blocking,
-                       running
+                       running,
+                       runCount,
+                       lastDuration
                      }) => {
   let quantityInfo = null;
 
@@ -61,9 +63,25 @@ export const Task = ({
             ? <div className="task-spec__tag">{quantityInfo}</div>
             : null
         }
+        {
+          runCount > 0 ?
+            (
+              <div className="task-status__tag" title="Run count">
+                <i className="fa fa-flash" /> {runCount}
+              </div>
+            ) : null
+        }
+        {
+          lastDuration ?
+            (
+              <div className="task-status__tag" title="Last duration">
+                <i className="fa fa-clock-o" /> {lastDuration}{'ms'}
+              </div>
+            ) : null
+        }
       </div>
       <button className="task__remove-button" onClick={() => remove(serverId, id)}>
-        <i className="fa fa-times" />
+        <i className="fa fa-remove" />
       </button>
     </div>
   );
@@ -80,14 +98,18 @@ Task.propTypes = {
   delay: React.PropTypes.number,
   requirements: React.PropTypes.shape({}),
   blocking: React.PropTypes.bool,
-  running: React.PropTypes.bool
+  running: React.PropTypes.bool,
+  runCount: React.PropTypes.number,
+  lastDuration: React.PropTypes.number
 };
 
 const taskMapStateToProps = (initialState, ownProps) => (state) => {
   const {
-    title, interval, reuse, quantity, delay, requirements, blocking, running
+    title, interval, reuse, quantity, delay, requirements, blocking, running, runCount, lastDuration
   } = getTask(state, ownProps);
-  return { title, interval, reuse, quantity, delay, requirements, blocking, running };
+  return {
+    title, interval, reuse, quantity, delay, requirements, blocking, running, runCount, lastDuration
+  };
 };
 
 const taskMapDispatchToProps = {

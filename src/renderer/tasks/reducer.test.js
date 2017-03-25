@@ -16,27 +16,39 @@ describe('tasks reducer', () => {
   });
 
   test(`${RUN} action`, () => {
+    const now = Date.now;
+    Date.now = jest.fn(() => 1482363367321);
     const state = reducer(fromJS({
       'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==': {
         taskPayload: { data: 'task for some-url-3' },
         id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==',
-        running: false
+        running: false,
+        runCount: 0,
+        lastRunTimestamp: null,
+        lastDuration: null
       }
     }), { type: RUN, taskId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==' });
 
     expect(state.toJS()).toMatchSnapshot();
+    Date.now = now;
   });
 
   test(`${STOP} action`, () => {
+    const now = Date.now;
+    Date.now = jest.fn(() => 1482363367321);
     const state = reducer(fromJS({
       'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==': {
         taskPayload: { data: 'task for some-url-3' },
         id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==',
-        running: true
+        running: true,
+        runCount: 1,
+        lastRunTimestamp: 1482363367071,
+        lastDuration: null
       }
     }), { type: STOP, taskId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==' });
 
     expect(state.toJS()).toMatchSnapshot();
+    Date.now = now;
   });
 
   test(`${REMOVE} action`, () => {

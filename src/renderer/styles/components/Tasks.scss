@@ -51,4 +51,15 @@
   font-size: 11px;
   background-color: $task-spec-tag-background-color;
   color: darken($task-spec-tag-background-color, 40%);
+  cursor: default;
+}
+
+.task-status__tag {
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-right: 10px;
+  font-size: 11px;
+  background-color: $task-status-tag-background-color;
+  color: darken($task-status-tag-background-color, 40%);
+  cursor: default;
 }
