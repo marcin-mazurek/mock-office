@@ -4,19 +4,18 @@ import { getDescription } from '../selectors';
 import { init } from '../removeDescription/actions';
 import { getQueueDescriptionIds } from '../../queues/selectors';
 
-export const Description = (
-  {
-    id,
-    title,
-    serverId,
-    remove,
-    interval,
-    reuse,
-    quantity,
-    delay,
-    requirements,
-    blocking
-  }) => {
+export const Description = ({
+                              id,
+                              title,
+                              serverId,
+                              remove,
+                              interval,
+                              reuse,
+                              quantity,
+                              delay,
+                              requirements,
+                              blocking
+                            }) => {
   let quantityInfo = null;
 
   if (reuse) {
@@ -38,17 +37,25 @@ export const Description = (
         }
         {
           requirements
-          ? <div className="description-spec__tag"><i className="fa fa-handshake-o" /></div>
+            ? <div className="description-spec__tag"><i className="fa fa-handshake-o" /></div>
             : null
         }
         {
           delay
-            ? <div className="description-spec__tag"><i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}</div>
+            ? (
+              <div className="description-spec__tag">
+                <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
+              </div>
+          )
             : null
         }
         {
           interval
-            ? <div className="description-spec__tag"><i className="fa fa-history" />{' '}{interval / 1000}{'s'}</div>
+            ? (
+              <div className="description-spec__tag">
+                <i className="fa fa-history" />{' '}{interval / 1000}{'s'}
+              </div>
+            )
             : null
         }
         {
@@ -88,7 +95,8 @@ const descriptionMapDispatchToProps = {
   remove: init
 };
 
-export const DescriptionConnect = connect(descriptionMapStateToProps, descriptionMapDispatchToProps)(Description);
+export const DescriptionConnect =
+  connect(descriptionMapStateToProps, descriptionMapDispatchToProps)(Description);
 
 export const Descriptions = ({ descriptionIds, serverId }) => (
   <ul className="descriptions">

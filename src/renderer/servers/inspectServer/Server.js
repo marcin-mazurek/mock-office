@@ -97,7 +97,8 @@ export const ServerInspect = ({ running, serverDetails }) => {
           </div>
           <Link
             to="/add-description"
-            className="inspect-server__add-description-button button inspect-server-descriptions-header__button"
+            className="inspect-server__add-description-button button
+            inspect-server-descriptions-header__button"
           >
             <i className="fa fa-plus" />
           </Link>

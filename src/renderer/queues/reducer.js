@@ -20,7 +20,8 @@ export default (state = initialState, action) => {
     }
     case REMOVE_DESCRIPTION: {
       return state.updateIn([action.serverId, 'descriptions'], (descriptions) => {
-        const descriptionIndex = descriptions.findIndex(descriptionId => descriptionId === action.descriptionId);
+        const descriptionIndex =
+          descriptions.findIndex(descriptionId => descriptionId === action.descriptionId);
         return descriptions.delete(descriptionIndex, 1);
       });
     }
