@@ -1,10 +1,10 @@
 /*
-Http-Mock-Server
-- is responsible for reacting on requests
-- after retrieved request server use scenario for searching instructions
-- use scenario for scheduling
-- if wants to dispose findDescription it calls scenario method
-*/
+ Http-Mock-Server
+ - is responsible for reacting on requests
+ - after retrieved request server use scenario for searching instructions
+ - use scenario for scheduling
+ - if wants to dispose findDescription it calls scenario method
+ */
 
 import express from 'express';
 import https from 'https';
@@ -35,6 +35,15 @@ export default class HttpMockServer {
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
     this.saveSocketRef = this.saveSocketRef.bind(this);
+    this.addDescription = this.addDescription.bind(this);
+    this.removeDescription = this.removeDescription.bind(this);
+    this.setupResponderMiddleware = this.setupResponderMiddleware.bind(this);
+    this.start = this.start.bind(this);
+    this.saveSocketRef = this.saveSocketRef.bind(this);
+    this.destroyOpenSockets = this.destroyOpenSockets.bind(this);
+    this.stop = this.stop.bind(this);
+    this.isLive = this.isLive.bind(this);
+    this.respond = this.respond.bind(this);
   }
 
   addDescription(task) {
@@ -45,21 +54,27 @@ export default class HttpMockServer {
     this.scenario.removeDescription(taskId);
   }
 
+  respond(req, res) {
+    const description = this.scenario.findDescription(
+      {
+        event: 'RECEIVED_REQUEST',
+        url: req.url
+      }
+    );
+
+    if (description) {
+      scheduler.schedule(send(req, res), description);
+    }
+  }
+
+  setupResponderMiddleware() {
+    this.responder = express();
+    this.responder.get('*', this.respond);
+  }
+
   start(cb) {
     const httpServer = this.isSecure ? https : http;
-    this.app = express();
-    this.app.get('*', (req, res) => {
-      const description = this.scenario.findDescription(
-        {
-          event: 'RECEIVED_REQUEST',
-          url: req.url
-        }
-      );
-
-      if (description) {
-        scheduler.schedule(send(req, res), description);
-      }
-    });
+    this.setupResponderMiddleware();
 
     if (this.isSecure) {
       const credentials = {
@@ -67,9 +82,9 @@ export default class HttpMockServer {
         cert: fs.readFileSync(this.certPath)
       };
 
-      this.httpServer = httpServer.createServer(credentials, this.app);
+      this.httpServer = httpServer.createServer(credentials, this.responder);
     } else {
-      this.httpServer = httpServer.createServer(this.app);
+      this.httpServer = httpServer.createServer(this.responder);
     }
 
     this.httpServer.listen(this.port, cb);
