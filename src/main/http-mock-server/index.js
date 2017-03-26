@@ -44,6 +44,22 @@ export default class HttpMockServer {
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
     this.respond = this.respond.bind(this);
+
+    const httpServer = this.isSecure ? https : http;
+    this.setupResponderMiddleware();
+
+    if (this.isSecure) {
+      const credentials = {
+        key: fs.readFileSync(this.keyPath),
+        cert: fs.readFileSync(this.certPath)
+      };
+
+      this.httpServer = httpServer.createServer(credentials, this.responder);
+    } else {
+      this.httpServer = httpServer.createServer(this.responder);
+    }
+
+    this.httpServer.on('connection', this.saveSocketRef);
   }
 
   addDescription(task) {
@@ -73,22 +89,7 @@ export default class HttpMockServer {
   }
 
   start(cb) {
-    const httpServer = this.isSecure ? https : http;
-    this.setupResponderMiddleware();
-
-    if (this.isSecure) {
-      const credentials = {
-        key: fs.readFileSync(this.keyPath),
-        cert: fs.readFileSync(this.certPath)
-      };
-
-      this.httpServer = httpServer.createServer(credentials, this.responder);
-    } else {
-      this.httpServer = httpServer.createServer(this.responder);
-    }
-
     this.httpServer.listen(this.port, cb);
-    this.httpServer.on('connection', this.saveSocketRef);
   }
 
   saveSocketRef(socket) {
@@ -107,6 +108,6 @@ export default class HttpMockServer {
   }
 
   isLive() {
-    return this.httpServer ? this.httpServer.listening : false;
+    return this.httpServer.listening;
   }
 }
