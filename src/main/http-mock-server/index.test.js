@@ -1,4 +1,3 @@
-import { Socket } from 'net';
 import HttpMockServer, { send } from './index';
 
 /* eslint-disable global-require */
@@ -35,90 +34,23 @@ describe('send', () => {
 });
 
 describe('HttpMockServer', () => {
-  describe('addDescription', () => {
-    it('should pass description to scenario', () => {
-      const scenarioAddDescriptionMock = jest.fn();
-      const server = new HttpMockServer({ id: 'some id' });
-      server.scenario = {
-        addDescription() {
-          scenarioAddDescriptionMock();
-        }
-      };
-      server.addDescription({});
-      expect(scenarioAddDescriptionMock).toHaveBeenCalled();
-    });
-  });
-
-  describe('removeDescription', () => {
-    it('should pass description to scenario', () => {
-      const scenarioRemoveDescriptionMock = jest.fn();
-      const server = new HttpMockServer({ id: 'some id' });
-      server.scenario = {
-        removeDescription() {
-          scenarioRemoveDescriptionMock();
-        }
-      };
-      server.removeDescription({});
-      expect(scenarioRemoveDescriptionMock).toHaveBeenCalled();
-    });
-  });
-
-  describe('saveSocketRef', () => {
-    it('should add socket to server sockets', () => {
-      const server = new HttpMockServer({ id: 'some id' });
-      const netSocket = new Socket();
-      server.saveSocketRef(netSocket);
-      expect(server.sockets).toHaveLength(1);
-      expect(server.sockets[0]).toBe(netSocket);
-    });
-  });
-
   describe('destroyOpenSockets', () => {
     it('should destroy and remove all saved sockets', () => {
-      const socketDestroyMock = jest.fn();
       const server = new HttpMockServer({ id: 'some id' });
       server.sockets = [
         {
-          destroy() {
-            socketDestroyMock();
-          }
+          destroy() {}
         },
         {
-          destroy() {
-            socketDestroyMock();
-          }
+          destroy() {}
         }
       ];
       server.destroyOpenSockets();
       expect(server.sockets).toHaveLength(0);
-      expect(socketDestroyMock).toHaveBeenCalledTimes(2);
     });
-  });
-
-  describe('isLive', () => {
-    const server = new HttpMockServer({ id: 'some id' });
-    expect(server.isLive()).toBeFalsy();
-    server.httpServer = { listening: true };
-    expect(server.isLive()).toBeTruthy();
   });
 
   describe('stop', () => {
-    it('should cancel schedulers', () => {
-      const cancelSchedulersMock = jest.fn();
-      const closeMock = jest.fn();
-      const nodeHttpServerMock = {
-        close: closeMock
-      };
-      const server = new HttpMockServer({ id: 'some id' });
-      server.scenario = {
-        cancelSchedulers: cancelSchedulersMock
-      };
-      server.httpServer = nodeHttpServerMock;
-      server.stop();
-      expect(cancelSchedulersMock).toBeCalled();
-      expect(closeMock).toBeCalled();
-    });
-
     it('should destroySockets', () => {
       const server = new HttpMockServer({ id: 'some id' });
       server.httpServer = {
@@ -131,19 +63,6 @@ describe('HttpMockServer', () => {
       server.destroyOpenSockets = destroyOpenSocketsMock;
       server.stop();
       expect(destroyOpenSocketsMock).toBeCalled();
-    });
-
-    it('should close server', () => {
-      const server = new HttpMockServer({ id: 'some id' });
-      const closeMock = jest.fn();
-      server.httpServer = {
-        close: closeMock
-      };
-      server.scenario = {
-        cancelSchedulers() {}
-      };
-      server.stop();
-      expect(closeMock).toBeCalled();
     });
 
     describe('setupResponderMiddleware', () => {
