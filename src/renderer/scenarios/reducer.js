@@ -1,28 +1,28 @@
 import { Map, Record, List } from 'immutable';
 import { ADD as ADD_SERVER } from '../servers/actions';
-import { REMOVE as REMOVE_DESCRIPTION } from '../descriptions/removeDescription/actions';
-import { ADD as ADD_DESCRIPTION } from '../descriptions/addDescription/actions';
+import { REMOVE as REMOVE_SCENE } from '../scenes/removeScene/actions';
+import { ADD as ADD_SCENE } from '../scenes/addScene/actions';
 
 const initialState = new Map();
 
 const Scenario = new Record({
-  descriptions: new List()
+  scenes: new List()
 });
 
-export default (state = initialState, action) => {
-  switch (action.type) {
+export default (state = initialState, scene) => {
+  switch (scene.type) {
     case ADD_SERVER: {
       const queue = new Scenario();
-      return state.set(action.id, queue);
+      return state.set(scene.id, queue);
     }
-    case ADD_DESCRIPTION: {
-      return state.updateIn([action.serverId, 'descriptions'], descriptions => descriptions.push(action.id));
+    case ADD_SCENE: {
+      return state.updateIn([scene.serverId, 'scenes'], scenes => scenes.push(scene.id));
     }
-    case REMOVE_DESCRIPTION: {
-      return state.updateIn([action.serverId, 'descriptions'], (descriptions) => {
-        const descriptionIndex =
-          descriptions.findIndex(descriptionId => descriptionId === action.descriptionId);
-        return descriptions.delete(descriptionIndex, 1);
+    case REMOVE_SCENE: {
+      return state.updateIn([scene.serverId, 'scenes'], (scenes) => {
+        const sceneIndex =
+          scenes.findIndex(sceneId => sceneId === scene.sceneId);
+        return scenes.delete(sceneIndex, 1);
       });
     }
     default: {

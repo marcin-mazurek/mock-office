@@ -9,7 +9,7 @@ import {
 } from './actions';
 
 describe('servers reducer', () => {
-  test(`${SELECT} action`, () => {
+  test(`${SELECT} scene`, () => {
     const state = reducer(fromJS({
       selected: null,
     }), { type: SELECT, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
@@ -19,7 +19,7 @@ describe('servers reducer', () => {
     });
   });
 
-  test(`${START} action`, () => {
+  test(`${START} scene`, () => {
     const state = reducer(fromJS({
       running: new Set()
     }), { type: START, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
@@ -29,7 +29,7 @@ describe('servers reducer', () => {
     });
   });
 
-  test(`${ADD} action`, () => {
+  test(`${ADD} scene`, () => {
     const state = reducer(fromJS({
       entities: {},
       ids: []
@@ -53,7 +53,7 @@ describe('servers reducer', () => {
     });
   });
 
-  test(`${STOP} action`, () => {
+  test(`${STOP} scene`, () => {
     const state = reducer(fromJS(
       {
         running: new Set(['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA=='])
@@ -65,12 +65,12 @@ describe('servers reducer', () => {
     });
   });
 
-  test('unknown action', () => {
+  test('unknown scene', () => {
     const state = {};
-    expect(reducer(state, { type: 'unknown action type' })).toBe(state);
+    expect(reducer(state, { type: 'unknown scene type' })).toBe(state);
   });
 
-  test(`${REMOVE} action`, () => {
+  test(`${REMOVE} scene`, () => {
     const state = reducer(fromJS({
       entities: {
         'some id': {

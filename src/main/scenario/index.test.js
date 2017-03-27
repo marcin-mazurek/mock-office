@@ -1,13 +1,4 @@
 /* eslint-disable global-require */
-jest.mock('../scheduler', () =>
-  (action) => {
-    action();
-
-    return () => {
-    };
-  }
-);
-
 const scenarioModule = require('./index');
 
 const Scenario = scenarioModule.default;
@@ -87,36 +78,36 @@ describe('extractSubTree', () => {
 
 describe('Scenario', () => {
   describe('constructor', () => {
-    it('should initialize list of descriptions', () => {
+    it('should initialize list of scenes', () => {
       const scenario = new Scenario({ id: 'scenario id' });
-      expect(scenario).toHaveProperty('descriptions');
+      expect(scenario).toHaveProperty('scenes');
     });
   });
 
-  describe('createDescription', () => {
+  describe('createScene', () => {
     it('should add random generated id', () => {
       const descConfig = {};
-      const desc = Scenario.createDescription(descConfig);
+      const desc = Scenario.createScene(descConfig);
 
       expect(desc).toHaveProperty('id');
       expect(typeof desc.id).toEqual('string');
     });
   });
 
-  describe('addDescription', () => {
-    it('should add description to scenario', () => {
+  describe('addScene', () => {
+    it('should add scene to scenario', () => {
       const scenario = new Scenario({ id: 'scenario id' });
-      scenario.addDescription({});
-      expect(scenario.descriptions).toHaveLength(1);
-      scenario.addDescription({});
-      expect(scenario.descriptions).toHaveLength(2);
+      scenario.addScene({});
+      expect(scenario.scenes).toHaveLength(1);
+      scenario.addScene({});
+      expect(scenario.scenes).toHaveLength(2);
     });
   });
 
-  describe('removeDescription', () => {
-    it('should remove description from scenario descriptions list', () => {
+  describe('removeScene', () => {
+    it('should remove scene from scenario scenes list', () => {
       const scenario = new Scenario({ id: 'scenario id' });
-      scenario.descriptions = [
+      scenario.scenes = [
         {
           id: 'some id'
         },
@@ -124,23 +115,23 @@ describe('Scenario', () => {
           id: 'some id2'
         }
       ];
-      scenario.removeDescription('some id');
-      expect(scenario.descriptions).toHaveLength(1);
+      scenario.removeScene('some id');
+      expect(scenario.scenes).toHaveLength(1);
     });
   });
 
-  describe('findDescription', () => {
-    it('should find description action if not yet scheduled', () => {
-      const mockAction = jest.fn();
+  describe('findScene', () => {
+    it('should find scene scene if not yet scheduled', () => {
+      const mockScene = jest.fn();
       const scenario = new Scenario({ id: 'scenario id' });
-      const description = {
+      const scene = {
         id: 'some id',
-        action: mockAction
+        scene: mockScene
       };
-      scenario.descriptions = [
-        description
+      scenario.scenes = [
+        scene
       ];
-      expect(scenario.findDescription()).toBe(description);
+      expect(scenario.findScene()).toBe(scene);
 
       const scenario2 = new Scenario({ id: 'scenario id' });
       const desc2 = {
@@ -149,101 +140,75 @@ describe('Scenario', () => {
           key: 'value'
         }
       };
-      scenario2.descriptions = [
+      scenario2.scenes = [
         desc2
       ];
-      expect(scenario2.findDescription({
+      expect(scenario2.findScene({
         key: 'value'
       })).toBe(desc2);
 
-      expect(scenario2.findDescription({
+      expect(scenario2.findScene({
         key: 'value2'
       })).toBe(undefined);
     });
   });
 
-  describe('cancelSchedulers', () => {
+  describe('cancelPendingScenes', () => {
     it('should cancel all active schedulers', () => {
       const mockDispose = jest.fn();
       const scenario = new Scenario({ id: 'scenario id' });
-      scenario.descriptions = [{
+      scenario.scenes = [{
         scheduled: true,
         dispose: mockDispose
       }];
-      scenario.cancelSchedulers();
+      scenario.cancelPendingScenes();
       expect(mockDispose).toHaveBeenCalled();
     });
   });
 
-  describe('schedule', () => {
-    it('should schedule action if not yet scheduled', () => {
-      const mockAction = jest.fn();
+  describe('attemptToRemoveScene', () => {
+    it('should remove scene if won\'t used anymore', () => {
       const scenario = new Scenario({ id: 'scenario id' });
-      scenario.descriptions = [
+      scenario.scenes = [
         {
           id: 'some id'
         }
       ];
-      scenario.schedule('some id', mockAction);
-      expect(mockAction).toHaveBeenCalled();
+      scenario.attemptToRemoveScene('some id');
+      expect(scenario.scenes).toHaveLength(0);
     });
 
-    it('should set dispose function if had scheduled', () => {
-      const mockAction = jest.fn();
+    it('should do anything if scene should be reused infinitely', () => {
       const scenario = new Scenario({ id: 'scenario id' });
-      scenario.descriptions = [
-        {
-          id: 'some id'
-        }
-      ];
-      scenario.schedule('some id', mockAction);
-      expect(typeof scenario.descriptions[0].dispose).toEqual('function');
-    });
-  });
-
-  describe('attemptToRemoveDescription', () => {
-    it('should remove description if won\'t used anymore', () => {
-      const scenario = new Scenario({ id: 'scenario id' });
-      scenario.descriptions = [
-        {
-          id: 'some id'
-        }
-      ];
-      scenario.attemptToRemoveDescription('some id');
-      expect(scenario.descriptions).toHaveLength(0);
-    });
-
-    it('should do anything if description should be reused infinitely', () => {
-      const scenario = new Scenario({ id: 'scenario id' });
-      scenario.descriptions = [
+      scenario.scenes = [
         {
           id: 'reuse infinite id',
           reuse: 'infinite'
         }
       ];
-      scenario.attemptToRemoveDescription('reuse infinite id');
-      expect(scenario.descriptions).toHaveLength(1);
+      scenario.attemptToRemoveScene('reuse infinite id');
+      expect(scenario.scenes).toHaveLength(1);
     });
 
-    it('should manage quantity if description should be reused certain number of times', () => {
+    it('should manage quantity if scene should be reused certain number of times', () => {
       const scenario = new Scenario({ id: 'scenario id' });
-      scenario.descriptions = [
+      scenario.scenes = [
         {
           id: 'reuse fixed id',
           reuse: 'fixed',
           quantity: 1
         }
       ];
-      scenario.attemptToRemoveDescription('reuse fixed id');
-      expect(scenario.descriptions).toHaveLength(1);
-      expect(scenario.descriptions[0].quantity).toEqual(0);
-      scenario.attemptToRemoveDescription('reuse fixed id');
-      expect(scenario.descriptions).toHaveLength(0);
+      scenario.attemptToRemoveScene('reuse fixed id');
+      expect(scenario.scenes).toHaveLength(1);
+      expect(scenario.scenes[0].quantity).toEqual(0);
+      scenario.attemptToRemoveScene('reuse fixed id');
+      expect(scenario.scenes).toHaveLength(0);
     });
   });
 
-  describe('onActionPlayed', () => {
-    it('should emit DESCRIPTION_REMOVED event if description is removed', () => {
+  describe('onScenePlayed', () => {
+    it('should emit SCENE_REMOVED event if scene is removed', () => {
       const emitMock = jest.fn();
       jest.resetModules();
 
@@ -258,10 +223,10 @@ describe('Scenario', () => {
 
       const Scenarioo = require('./index').default;
       const scenario = new Scenarioo({ id: 'scenario id' });
-      scenario.descriptions = [{
+      scenario.scenes = [{
         id: 'some id'
       }];
-      scenario.onActionPlayed('some id');
+      scenario.onScenePlayed('some id');
       expect(emitMock).toHaveBeenCalled();
     });
   });

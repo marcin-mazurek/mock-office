@@ -5,10 +5,10 @@ const initialState = fromJS({
   locationBeforeTransitions: null
 });
 
-export default (state = initialState, action) => {
-  if (action.type === LOCATION_CHANGE) {
+export default (state = initialState, scene) => {
+  if (scene.type === LOCATION_CHANGE) {
     return state.merge({
-      locationBeforeTransitions: action.payload
+      locationBeforeTransitions: scene.payload
     });
   }
 

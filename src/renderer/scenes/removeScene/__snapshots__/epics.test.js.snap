@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`removeScene epic default snapshot 1`] = `
+Array [
+  Object {
+    "sceneId": "scene id",
+    "serverId": "server id",
+    "type": "remove/init",
+  },
+  Object {
+    "sceneId": "scene id",
+    "serverId": "server id",
+    "type": "scenes/REMOVE",
+  },
+]
+`;

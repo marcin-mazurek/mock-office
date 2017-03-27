@@ -1,6 +1,6 @@
 import { remote } from 'electron';
 import { add, start } from '../servers/actions';
-import { add as addDescription } from '../descriptions/addDescription/actions';
+import { add as addScene } from '../scenes/addScene/actions';
 
 export default (store) => {
   const servers = remote.require('./main/servers').default.servers;
@@ -14,22 +14,22 @@ export default (store) => {
     }
 
     const scenario = instance.scenario;
-    const descriptions = scenario.descriptions;
+    const scenes = scenario.scenes;
 
-    for (let descriptionIndex = 0; descriptionIndex < descriptions.length; descriptionIndex += 1) {
-      const description = descriptions[descriptionIndex];
+    for (let sceneIndex = 0; sceneIndex < scenes.length; sceneIndex += 1) {
+      const scene = scenes[sceneIndex];
       store.dispatch(
-        addDescription(
+        addScene(
           id,
-          description.id,
-          description.descriptionPayload,
-          description.title,
-          description.interval,
-          description.reuse,
-          description.quantity,
-          description.delay,
-          description.requirements,
-          description.blocking
+          scene.id,
+          scene.scenePayload,
+          scene.title,
+          scene.interval,
+          scene.reuse,
+          scene.quantity,
+          scene.delay,
+          scene.requirements,
+          scene.blocking
         )
       );
     }

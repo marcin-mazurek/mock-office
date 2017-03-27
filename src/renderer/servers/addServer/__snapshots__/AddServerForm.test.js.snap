@@ -5,7 +5,7 @@ exports[`AddServerForm default snapshot 1`] = `
   className="add-server-form"
 >
   <form
-    action="#"
+    scene="#"
   >
     <div
       className="add-server-form__field"

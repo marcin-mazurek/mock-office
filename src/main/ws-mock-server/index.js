@@ -2,52 +2,22 @@ import { Server as WebSocketServer } from 'ws';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import { EventEmitter } from 'events';
 import atob from 'atob';
-import Queue, { events as queueEvents } from '../queue';
-
-const events = {
-  clientConnected: 'CLIENT_CONNECTED',
-  receivedMessage: 'RECEIVED_MESSAGE',
-  readyForEmit: 'READY_FOR_EMIT'
-};
+import Scenario from '../scenario';
 
 export default class WSMockServer {
   constructor(config) {
-    this.ee = new EventEmitter();
-    this.queue = new Queue({ ee: this.ee });
     this.type = 'ws';
     this.port = config.port || 3010;
     this.name = config.name;
     this.id = config.id;
+    this.scenario = new Scenario({ id: this.id });
     this.listening = false;
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
-    this.ee.on(queueEvents.TASK_RUN, () => {
-      this.queue.runReadyTask({
-        event: events.READY_FOR_EMIT
-      });
-    });
-    this.ee.on(queueEvents.TASK_ADDED, this.queue.runReadyTask);
-    this.ee.on(queueEvents.TASK_REMOVED, () => {
-      this.queue.runReadyTask({
-        event: events.READY_FOR_EMIT
-      });
-    });
-  }
 
-  addTask(task) {
-    return this.queue.addDescription(task);
-  }
-
-  removeTask(taskId) {
-    this.queue.removeDescription(taskId);
-  }
-
-  start(cb) {
     const httpServer = this.secure ? https : http;
-    let server;
 
     if (this.isSecure) {
       const options = {
@@ -55,14 +25,12 @@ export default class WSMockServer {
         cert: fs.readFileSync(this.certPath)
       };
 
-      server = httpServer.createServer(options);
+      this.httpServer = httpServer.createServer(options);
     } else {
-      server = httpServer.createServer();
+      this.httpServer = httpServer.createServer();
     }
 
-    this.httpServer = server.listen(this.port);
     this.wsServer = new WebSocketServer({ server: this.httpServer });
-    this.listening = true;
     this.wsServer.on('error', (err) => {
       // eslint-disable-next-line no-console
       console.error(err.message);
@@ -77,29 +45,111 @@ export default class WSMockServer {
 
       this.ws = ws;
       this.setupSocket(ws);
-      this.queue.openConnection((task) => {
-        let message;
 
-        if (task.taskPayload.type === 'b64') {
-          message = atob(task.taskPayload.message);
-        } else {
-          message = task.taskPayload.message;
+      const scene = this.scenario.findScene(
+        {
+          event: 'CLIENT_CONNECTED'
         }
+      );
 
-        this.ws.send(message);
-      });
-      this.queue.runReadyTask({
-        event: events.CLIENT_CONNECTED
-      });
+      if (scene) {
+        this.scenario.play(scene.id, () => {
+          let message;
+
+          if (scene.taskPayload.type === 'b64') {
+            message = atob(scene.taskPayload.message);
+          } else {
+            message = scene.taskPayload.message;
+          }
+
+          this.ws.send(message);
+        });
+      }
     });
+
+    // globalEvents.on('SCENE_PLAYED', () => {
+    //   const scene = this.scenario.findScene(
+    //     {
+    //       event: 'READY_FOR_EMIT'
+    //     }
+    //   );
+    //
+    //   if (scene) {
+    //     this.scenario.play(scene.id, () => {
+    //       let message;
+    //
+    //       if (scene.taskPayload.type === 'b64') {
+    //         message = atob(scene.taskPayload.message);
+    //       } else {
+    //         message = scene.taskPayload.message;
+    //       }
+    //
+    //       this.ws.send(message);
+    //     });
+    //   }
+    // });
+    //
+    // globalEvents.on('TASK_REMOVED', () => {
+    //   const scene = this.scenario.findScene(
+    //     {
+    //       event: 'READY_FOR_EMIT'
+    //     }
+    //   );
+    //
+    //   if (scene) {
+    //     this.scenario.play(scene.id, () => {
+    //       let message;
+    //
+    //       if (scene.taskPayload.type === 'b64') {
+    //         message = atob(scene.taskPayload.message);
+    //       } else {
+    //         message = scene.taskPayload.message;
+    //       }
+    //
+    //       this.ws.send(message);
+    //     });
+    //   }
+    // });
+  }
+
+  addScene(desc) {
+    return this.scenario.addScene(desc);
+  }
+
+  removeScene(taskId) {
+    this.scenario.removeScene(taskId);
+  }
+
+  start(cb) {
+    this.httpServer.listen(this.port);
     cb();
   }
 
   setupSocket(socket) {
-    socket.on('message', message => this.queue.runReadyTask({ message }));
+    socket.on('message', (message) => {
+      const scene = this.scenario.findScene(
+        {
+          event: 'RECEIVED_MESSAGE',
+          message
+        }
+      );
+
+      if (scene) {
+        this.scenario.play(scene.id, () => {
+          let msg;
+
+          if (scene.taskPayload.type === 'b64') {
+            msg = atob(scene.taskPayload.message);
+          } else {
+            msg = scene.taskPayload.message;
+          }
+
+          this.ws.send(msg);
+        }, scene);
+      }
+    });
 
     socket.on('close', () => {
-      this.queue.closeConnection();
       this.ws = undefined;
     });
   }
@@ -110,12 +160,11 @@ export default class WSMockServer {
     }
 
     this.wsServer.close(() => {
-      this.listening = false;
       this.httpServer.close(cb);
     });
   }
 
   isLive() {
-    return this.listening;
+    return this.httpServer.listening;
   }
 }

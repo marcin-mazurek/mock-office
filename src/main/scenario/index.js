@@ -1,23 +1,23 @@
 /*
-Scenario
-- has list of instructions
+ Scenario
+ - has list of instructions
 
-Descriptions
-- contains parameters for its scheduler
-- contains requirements for findDescription
-- contains scheduler config
+ Scenes
+ - contains parameters for its scheduler
+ - contains requirements for findScene
+ - contains scheduler config
 
-examples:
-1. http req
-2. queue find instructions and return scheduler
-3. server schedules sending response
-4. server send response and remove instruction from queue
-*/
+ examples:
+ 1. http req
+ 2. queue find instructions and return scheduler
+ 3. server schedules sending response
+ 4. server send response and remove instruction from queue
+ */
 
 import unique from 'node-unique';
 import deepEqual from 'deep-equal';
 import btoa from 'btoa';
-import scheduler from '../scheduler';
+import createSchedule from './schedulers';
 import globalEvents from '../globalEvents';
 
 export const extractSubTree = (source, target, result) => {
@@ -43,125 +43,124 @@ export const extractSubTree = (source, target, result) => {
 export default class Scenario {
   constructor(args) {
     this.id = args.id;
-    this.descriptions = [];
+    this.scenes = [];
     this.find = this.find.bind(this);
-    this.attemptToRemoveDescription = this.attemptToRemoveDescription.bind(this);
-    this.onActionPlayed = this.onActionPlayed.bind(this);
-
-    globalEvents.on('ACTION_PLAYED', this.onActionPlayed);
   }
 
-  onActionPlayed(descriptionId) {
-    const removed = this.attemptToRemoveDescription(descriptionId);
-
-    if (removed) {
-      globalEvents.emit(
-        'DESCRIPTION_REMOVED',
-        { serverId: this.id, descriptionId }
-      );
-    }
-  }
-
-  static createDescription(description) {
-    return Object.assign(description, {
+  static createScene(scene) {
+    return Object.assign(scene, {
       id: unique()
     });
   }
 
   find(id) {
-    return this.descriptions.find(desc => desc.id === id);
+    return this.scenes.find(desc => desc.id === id);
   }
 
-  attemptToRemoveDescription(id) {
-    const description = this.find(id);
-    let shouldBeRemoved = false;
+  addScene(sceneConfig) {
+    const scene = Scenario.createScene(sceneConfig);
+    this.scenes.push(scene);
 
-    // all scenarios get message and try to find it within theirs descriptions
-    // if we emit more specified messages it wont be necessary
-    if (description) {
-      if (description.reuse === 'fixed') {
-        if (description.quantity === 0) {
+    return scene.id;
+  }
+
+  removeScene(sceneId) {
+    const sceneIndex =
+      this.scenes.findIndex(scene => scene.id === sceneId);
+    const scene = this.scenes[sceneIndex];
+
+    if (scene.dispose) {
+      scene.dispose();
+      scene.dispose = undefined;
+    }
+
+    this.scenes.splice(sceneIndex, 1);
+  }
+
+  play(id, action) {
+    const scene = this.find(id);
+    const schedule = createSchedule(scene);
+
+    const sceneStop = schedule(
+      () => {
+        action();
+      },
+      () => {
+        globalEvents.emit('SCENE_START', { serverId: this.id, sceneId: scene.id });
+      },
+      () => {
+        globalEvents.emit('SCENE_END', { serverId: this.id, sceneId: scene.id });
+        scene.pending = false;
+
+        let shouldBeRemoved = false;
+
+        if (scene.reuse === 'fixed') {
+          if (scene.quantity === 0) {
+            shouldBeRemoved = true;
+          }
+          scene.quantity -= 1;
+        } else if (!scene.reuse) {
           shouldBeRemoved = true;
         }
-        description.quantity -= 1;
-      } else if (!description.reuse) {
-        shouldBeRemoved = true;
+
+        if (shouldBeRemoved) {
+          this.removeScene(scene.id);
+
+          globalEvents.emit(
+            'SCENE_REMOVED',
+            { serverId: this.id, sceneId: scene.id }
+          );
+        }
       }
+    );
 
-      if (shouldBeRemoved) {
-        this.removeDescription(description.id);
-      }
-    }
-
-    return shouldBeRemoved;
+    scene.stop = () => {
+      sceneStop();
+      globalEvents.emit('SCENE_CANCEL', { serverId: this.id, sceneId: scene.id });
+      scene.pending = false;
+    };
+    scene.pending = true;
   }
 
-  addDescription(descriptionConfig) {
-    const description = Scenario.createDescription(descriptionConfig);
-    this.descriptions.push(description);
-
-    return description.id;
-  }
-
-  removeDescription(descriptionId) {
-    const descriptionIndex =
-      this.descriptions.findIndex(description => description.id === descriptionId);
-    const description = this.descriptions[descriptionIndex];
-
-    if (description.dispose) {
-      description.dispose();
-      description.dispose = undefined;
-    }
-
-    this.descriptions.splice(descriptionIndex, 1);
-  }
-
-  schedule(id, action) {
-    const description = this.find(id);
-    description.dispose = scheduler(action, description.payload);
-    description.scheduled = true;
-    globalEvents.emit('ACTION_SCHEDULED', description.id);
-  }
-
-  findDescription(requirements) {
-    let descriptionToShedule;
-    const len = this.descriptions.length;
+  findScene(requirements) {
+    let sceneToPlay;
+    const len = this.scenes.length;
     let i = 0;
 
-    while (!descriptionToShedule && i < len) {
-      const description = this.descriptions[i];
+    while (!sceneToPlay && i < len) {
+      const scene = this.scenes[i];
 
-      if (!description.scheduled) {
-        if (description.requirements) {
+      if (!scene.scheduled) {
+        if (scene.requirements) {
           const req = requirements;
           if (requirements) {
-            if (description.requirements.type === 'b64') {
+            if (scene.requirements.type === 'b64') {
               req.message = btoa(requirements.message);
               req.type = 'b64';
             }
 
             if (
-              deepEqual(description.requirements, extractSubTree(req, description.requirements))
+              deepEqual(scene.requirements, extractSubTree(req, scene.requirements))
             ) {
-              descriptionToShedule = description;
+              sceneToPlay = scene;
             }
           }
         } else {
-          descriptionToShedule = description;
+          sceneToPlay = scene;
         }
       }
 
       i += 1;
     }
 
-    return descriptionToShedule || undefined;
+    return sceneToPlay;
   }
 
-  cancelSchedulers() {
-    const scheduledDescriptions = this.descriptions.filter(description => !!description.dispose);
-    scheduledDescriptions.forEach(description => description.dispose());
-    this.descriptions = scheduledDescriptions.map(description =>
-      Object.assign(description, { dispose: undefined })
+  cancelPendingScenes() {
+    const pendingScenes = this.scenes.filter(scene => !!scene.dispose);
+    pendingScenes.forEach(scene => scene.dispose());
+    this.scenes = pendingScenes.map(scene =>
+      Object.assign(scene, { dispose: undefined })
     );
   }
 }

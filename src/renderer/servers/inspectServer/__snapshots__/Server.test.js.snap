@@ -76,21 +76,21 @@ exports[`ServerInspect default snapshot 1`] = `
     className="inspect-server-main inspect-server__main"
   >
     <div
-      className="inspect-server-descriptions-header"
+      className="inspect-server-scenes-header"
     >
       <div
-        className="inspect-server-descriptions-header__label"
+        className="inspect-server-scenes-header__label"
       >
         <i
-          className="fa fa-descriptions"
+          className="fa fa-scenes"
         />
-         Descriptions:
+         Scenes:
       </div>
       <Link
-        className="inspect-server__add-description-button button inspect-server-descriptions-header__button"
+        className="inspect-server__add-scene-button button inspect-server-scenes-header__button"
         onlyActiveOnIndex={false}
         style={Object {}}
-        to="/add-description"
+        to="/add-scene"
       >
         <i
           className="fa fa-plus"
@@ -101,10 +101,10 @@ exports[`ServerInspect default snapshot 1`] = `
       />
     </div>
     <div
-      className="inspect-server__descriptions"
+      className="inspect-server__scenes"
     >
       <div
-        className="inspect-server__descriptions-scroll-container"
+        className="inspect-server__scenes-scroll-container"
       >
         <Scrollbars
           autoHeight={false}

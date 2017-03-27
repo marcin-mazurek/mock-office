@@ -1,0 +1,34 @@
+[
+  {
+    "title": "interval blocking message",
+    "requirements": {
+      "event": "CLIENT_CONNECTED"
+    },
+    "actions": [
+      {
+        "title": "welcome",
+        "type": "single",
+        "taskPayload": {
+          "message": "welcome message"
+        }
+      },
+      {
+        "title": "establishing",
+        "taskPayload": {
+          "message": "establishing in progress..."
+        },
+        "type": "periodic",
+        "repeat": 3,
+        "interval": 3000
+      },
+      {
+        "title": "establish complete",
+        "type": "single",
+        "delay": 10000,
+        "taskPayload": {
+          "message": "establishing complete"
+        }
+      }
+    ]
+  }
+]

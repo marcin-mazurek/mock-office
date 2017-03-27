@@ -15,34 +15,34 @@ const initialState = new Map({
   running: new Set()
 });
 
-export default (state = initialState, action) => {
-  switch (action.type) {
+export default (state = initialState, scene) => {
+  switch (scene.type) {
     case ADD: {
       let newState = state;
       const server = new Server({
-        id: action.id,
-        name: action.name,
-        port: action.port,
-        type: action.serverType
+        id: scene.id,
+        name: scene.name,
+        port: scene.port,
+        type: scene.serverType
       });
-      newState = newState.setIn(['entities', action.id], server);
-      newState = newState.update('ids', ids => ids.push(action.id));
+      newState = newState.setIn(['entities', scene.id], server);
+      newState = newState.update('ids', ids => ids.push(scene.id));
       return newState;
     }
     case SELECT: {
-      return state.set('selected', action.id);
+      return state.set('selected', scene.id);
     }
     case START: {
-      return state.update('running', running => running.add(action.id));
+      return state.update('running', running => running.add(scene.id));
     }
     case STOP: {
-      return state.update('running', running => running.delete(action.id));
+      return state.update('running', running => running.delete(scene.id));
     }
     case REMOVE: {
-      let newState = state.update('ids', ids => ids.filter(id => id !== action.id));
-      newState = newState.deleteIn(['entities', action.id]);
+      let newState = state.update('ids', ids => ids.filter(id => id !== scene.id));
+      newState = newState.deleteIn(['entities', scene.id]);
 
-      if (state.get('selected') === action.id) {
+      if (state.get('selected') === scene.id) {
         newState = newState.set('selected', null);
       }
       return newState;

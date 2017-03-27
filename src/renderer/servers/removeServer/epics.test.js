@@ -51,12 +51,12 @@ describe('removeServerEpic', () => {
         ids: new List(['server id']),
         running: new Set()
       }),
-      descriptions: new Map()
+      scenes: new Map()
     }));
     store.dispatch(init('some id'));
 
     removePromise.then(() => {
-      expect(store.getActions()).toMatchSnapshot();
+      expect(store.getScenes()).toMatchSnapshot();
       done();
     });
   });

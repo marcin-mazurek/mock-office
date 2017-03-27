@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
-import createStartAction from '../startServer/actions';
-import createStopAction from '../stopServer/actions';
+import createStartScene from '../startServer/actions';
+import createStopScene from '../stopServer/actions';
 import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../selectors';
-import FilePickerConnect from '../../descriptions/addDescriptionFromFile/FilePicker';
-import DescriptionsConnect from '../../descriptions/browseDescriptions/Descriptions';
+import FilePickerConnect from '../../scenes/addSceneFromFile/FilePicker';
+import ScenesConnect from '../../scenes/browseScenes/Scenes';
 
 export const ServerPlaceholder = ({ serverExists }) =>
   <div className="server-placeholder">
@@ -59,8 +59,8 @@ ServerToggle.propTypes = {
 };
 
 const serverToggleMapDispatchToProps = {
-  start: createStartAction,
-  stop: createStopAction
+  start: createStartScene,
+  stop: createStopScene
 };
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
@@ -91,23 +91,23 @@ export const ServerInspect = ({ running, serverDetails }) => {
         </div>
       </div>
       <main className="inspect-server-main inspect-server__main">
-        <div className="inspect-server-descriptions-header">
-          <div className="inspect-server-descriptions-header__label">
-            <i className="fa fa-descriptions" />{' Descriptions:'}
+        <div className="inspect-server-scenes-header">
+          <div className="inspect-server-scenes-header__label">
+            <i className="fa fa-scenes" />{' Scenes:'}
           </div>
           <Link
-            to="/add-description"
-            className="inspect-server__add-description-button button
-            inspect-server-descriptions-header__button"
+            to="/add-scene"
+            className="inspect-server__add-scene-button button
+            inspect-server-scenes-header__button"
           >
             <i className="fa fa-plus" />
           </Link>
           <FilePickerConnect serverId={id} />
         </div>
-        <div className="inspect-server__descriptions">
-          <div className="inspect-server__descriptions-scroll-container">
+        <div className="inspect-server__scenes">
+          <div className="inspect-server__scenes-scroll-container">
             <Scrollbars>
-              <DescriptionsConnect serverId={id} />
+              <ScenesConnect serverId={id} />
             </Scrollbars>
           </div>
         </div>

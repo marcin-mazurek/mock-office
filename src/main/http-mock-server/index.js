@@ -3,7 +3,7 @@
  - is responsible for reacting on requests
  - after retrieved request server use scenario for searching instructions
  - use scenario for scheduling
- - if wants to dispose findDescription it calls scenario method
+ - if wants to dispose findScene it calls scenario method
  */
 
 import express from 'express';
@@ -11,7 +11,6 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import Scenario from '../scenario';
-import scheduler from '../scheduler';
 
 export const send = (req, res) => (task) => {
   res.set('Access-Control-Allow-Origin', req.headers.origin);
@@ -35,9 +34,8 @@ export default class HttpMockServer {
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
     this.saveSocketRef = this.saveSocketRef.bind(this);
-    this.addDescription = this.addDescription.bind(this);
-    this.removeDescription = this.removeDescription.bind(this);
-    this.setupResponderMiddleware = this.setupResponderMiddleware.bind(this);
+    this.addScene = this.addScene.bind(this);
+    this.removeScene = this.removeScene.bind(this);
     this.start = this.start.bind(this);
     this.saveSocketRef = this.saveSocketRef.bind(this);
     this.destroyOpenSockets = this.destroyOpenSockets.bind(this);
@@ -46,7 +44,8 @@ export default class HttpMockServer {
     this.respond = this.respond.bind(this);
 
     const httpServer = this.isSecure ? https : http;
-    this.setupResponderMiddleware();
+    const app = express();
+    app.get('*', this.respond);
 
     if (this.isSecure) {
       const credentials = {
@@ -54,38 +53,35 @@ export default class HttpMockServer {
         cert: fs.readFileSync(this.certPath)
       };
 
-      this.httpServer = httpServer.createServer(credentials, this.responder);
+      this.httpServer = httpServer.createServer(credentials, app);
     } else {
-      this.httpServer = httpServer.createServer(this.responder);
+      this.httpServer = httpServer.createServer(app);
     }
 
     this.httpServer.on('connection', this.saveSocketRef);
   }
 
-  addDescription(task) {
-    return this.scenario.addDescription(task);
+  addScene(task) {
+    return this.scenario.addScene(task);
   }
 
-  removeDescription(taskId) {
-    this.scenario.removeDescription(taskId);
+  removeScene(taskId) {
+    this.scenario.removeScene(taskId);
   }
 
   respond(req, res) {
-    const description = this.scenario.findDescription(
+    const scene = this.scenario.findScene(
       {
         event: 'RECEIVED_REQUEST',
         url: req.url
       }
     );
 
-    if (description) {
-      scheduler.schedule(send(req, res), description);
+    if (scene) {
+      this.scenario.play(scene.id, () => {
+        send(req, res)(scene);
+      });
     }
-  }
-
-  setupResponderMiddleware() {
-    this.responder = express();
-    this.responder.get('*', this.respond);
   }
 
   start(cb) {
@@ -102,7 +98,7 @@ export default class HttpMockServer {
   }
 
   stop(cb) {
-    this.scenario.cancelSchedulers();
+    this.scenario.cancelPendingScenes();
     this.destroyOpenSockets();
     this.httpServer.close(cb);
   }

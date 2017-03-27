@@ -64,36 +64,5 @@ describe('HttpMockServer', () => {
       server.stop();
       expect(destroyOpenSocketsMock).toBeCalled();
     });
-
-    describe('setupResponderMiddleware', () => {
-      it('should add responder to server', () => {
-        const server = new HttpMockServer({ id: 'some id' });
-        server.setupResponderMiddleware();
-        expect(server).toHaveProperty('responder');
-      });
-    });
-
-    describe('respond', () => {
-      it('should schedule response if found description', () => {
-        jest.resetModules();
-        const scheduleMock = jest.fn();
-        jest.mock('../scheduler', () => ({
-          schedule: scheduleMock
-        }));
-        jest.mock('../scenario', () =>
-          () => ({
-            findDescription() {
-              return {};
-            }
-          })
-        );
-        const HttpServer = require('./index').default;
-        const server = new HttpServer({ id: 'some id' });
-        server.respond({
-          url: '/url'
-        });
-        expect(scheduleMock).toHaveBeenCalled();
-      });
-    });
   });
 });

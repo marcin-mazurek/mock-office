@@ -3,53 +3,53 @@ import reducer from './reducer';
 import {
   ADD as ADD_SERVER
 } from '../servers/actions';
-import { REMOVE as REMOVE_DESCRIPTION } from '../descriptions/removeDescription/actions';
-import { ADD as ADD_DESCRIPTION } from '../descriptions/addDescription/actions';
+import { REMOVE as REMOVE_SCENE } from '../scenes/removeScene/actions';
+import { ADD as ADD_SCENE } from '../scenes/addScene/actions';
 
 describe('scenarios reducer', () => {
-  test(`${ADD_SERVER} action`, () => {
+  test(`${ADD_SERVER} scene`, () => {
     const state = reducer(fromJS({}),
       { type: ADD_SERVER, id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
 
     expect(state.toJS()).toEqual({
       'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==': {
-        descriptions: []
+        scenes: []
       }
     });
   });
 
-  test(`${ADD_DESCRIPTION} action`, () => {
+  test(`${ADD_SCENE} scene`, () => {
     const state = reducer(fromJS({
       'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
-        descriptions: []
+        scenes: []
       }
     }), {
-      type: ADD_DESCRIPTION,
+      type: ADD_SCENE,
       serverId: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
       id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
     });
 
     expect(state.toJS()).toEqual({
       'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
-        descriptions: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
+        scenes: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
       }
     });
   });
 
-  test(`${REMOVE_DESCRIPTION} action`, () => {
+  test(`${REMOVE_SCENE} scene`, () => {
     const state = reducer(fromJS({
       'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
-        descriptions: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
+        scenes: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
       }
     }), {
-      type: REMOVE_DESCRIPTION,
+      type: REMOVE_SCENE,
       serverId: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
-      descriptionId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+      sceneId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
     });
 
     expect(state.toJS()).toEqual({
       'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
-        descriptions: []
+        scenes: []
       }
     });
   });
