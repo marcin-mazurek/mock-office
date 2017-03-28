@@ -66,50 +66,6 @@ export default class WSMockServer {
         });
       }
     });
-
-    // globalEvents.on('SCENE_PLAYED', () => {
-    //   const scene = this.scenario.findScene(
-    //     {
-    //       event: 'READY_FOR_EMIT'
-    //     }
-    //   );
-    //
-    //   if (scene) {
-    //     this.scenario.play(scene.id, () => {
-    //       let message;
-    //
-    //       if (scene.taskPayload.type === 'b64') {
-    //         message = atob(scene.taskPayload.message);
-    //       } else {
-    //         message = scene.taskPayload.message;
-    //       }
-    //
-    //       this.ws.send(message);
-    //     });
-    //   }
-    // });
-    //
-    // globalEvents.on('TASK_REMOVED', () => {
-    //   const scene = this.scenario.findScene(
-    //     {
-    //       event: 'READY_FOR_EMIT'
-    //     }
-    //   );
-    //
-    //   if (scene) {
-    //     this.scenario.play(scene.id, () => {
-    //       let message;
-    //
-    //       if (scene.taskPayload.type === 'b64') {
-    //         message = atob(scene.taskPayload.message);
-    //       } else {
-    //         message = scene.taskPayload.message;
-    //       }
-    //
-    //       this.ws.send(message);
-    //     });
-    //   }
-    // });
   }
 
   addScene(desc) {
