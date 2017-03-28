@@ -1,7 +1,9 @@
 const path = require('path');
-const electronPrebuilt = require('electron-prebuilt');
+
+const electronExecutablePath = path.resolve(__dirname, '../node_modules/.bin/electron');
+
 require('electron-reload')(path.resolve(__dirname), {
-  electron: electronPrebuilt,
+  electron: electronExecutablePath,
   hardResetMethod: 'exit'
 });
 

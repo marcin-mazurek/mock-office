@@ -45,7 +45,6 @@
     "css-loader": "^0.26.1",
     "electron": "^1.4.12",
     "electron-devtools-installer": "^2.0.1",
-    "electron-prebuilt": "^1.4.13",
     "electron-reload": "^1.0.3",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
