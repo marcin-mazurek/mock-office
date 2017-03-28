@@ -90,7 +90,15 @@ export const ServerInspect = ({ running, serverDetails, removeServer }) => {
             </div>
           </div>
         </div>
-        <button className="inspect-server__remove-button button" onClick={() => removeServer(id)}>
+        <button
+          className="inspect-server__remove-button button"
+          onClick={() => (
+            confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
+              ? removeServer(id)
+              : false
+            )
+          }
+        >
           <i className="fa fa-trash" />
         </button>
       </div>
