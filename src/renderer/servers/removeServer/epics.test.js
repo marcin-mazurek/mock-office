@@ -56,7 +56,7 @@ describe('removeServerEpic', () => {
     store.dispatch(init('some id'));
 
     removePromise.then(() => {
-      expect(store.getScenes()).toMatchSnapshot();
+      expect(store.getActions()).toMatchSnapshot();
       done();
     });
   });

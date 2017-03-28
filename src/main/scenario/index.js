@@ -69,10 +69,14 @@ export default class Scenario {
       this.scenes.findIndex(scene => scene.id === sceneId);
     const scene = this.scenes[sceneIndex];
 
-    if (scene.dispose) {
-      scene.dispose();
-      scene.dispose = undefined;
-    }
+    scene.parts.forEach((part) => {
+      /* eslint-disable no-param-reassign */
+      if (part.pending) {
+        part.stop();
+        part.pending = false;
+      }
+      /* eslint-enable no-param-reassign */
+    });
 
     this.scenes.splice(sceneIndex, 1);
   }
@@ -80,56 +84,62 @@ export default class Scenario {
   play(id, action) {
     const scene = this.find(id);
     const schedule = createSchedule(scene);
+    let finishedPartsCount = 0;
 
-    const sceneStop = schedule(
-      () => {
-        action();
-      },
-      () => {
-        globalEvents.emit('SCENE_START', { serverId: this.id, sceneId: scene.id });
-      },
-      () => {
-        globalEvents.emit('SCENE_END', { serverId: this.id, sceneId: scene.id });
-        scene.pending = false;
+    scene.parts.forEach((part) => {
+      /* eslint-disable no-param-reassign */
+      const partStop = schedule(
+        () => {
+          action(part);
+        },
+        () => {},
+        () => {
+          part.pending = false;
+          finishedPartsCount += 1;
 
-        let shouldBeRemoved = false;
-
-        if (scene.reuse === 'fixed') {
-          if (scene.quantity === 0) {
-            shouldBeRemoved = true;
+          if (finishedPartsCount === scene.parts.length) {
+            globalEvents.emit('SCENE_END', { serverId: this.id, sceneId: scene.id });
+            this.attemptToRemoveScene(scene);
           }
-          scene.quantity -= 1;
-        } else if (!scene.reuse) {
-          shouldBeRemoved = true;
         }
+      );
 
-        if (shouldBeRemoved) {
-          this.removeScene(scene.id);
+      part.stop = () => {
+        partStop();
+        globalEvents.emit('SCENE_CANCEL', { serverId: this.id, sceneId: scene.id });
+        part.pending = false;
+      };
+      scene.pending = true;
+      /* eslint-enable no-param-reassign */
+    });
 
-          globalEvents.emit(
-            'SCENE_REMOVED',
-            { serverId: this.id, sceneId: scene.id }
-          );
-        }
-      }
-    );
-
-    scene.stop = () => {
-      sceneStop();
-      globalEvents.emit('SCENE_CANCEL', { serverId: this.id, sceneId: scene.id });
-      scene.pending = false;
-    };
     scene.pending = true;
+    globalEvents.emit('SCENE_START', { serverId: this.id, sceneId: scene.id });
+  }
+
+  attemptToRemoveScene(id) {
+    const scene = this.find(id);
+    /* eslint-disable no-param-reassign */
+    let shouldBeRemoved;
+
+    if (scene.reuse === 'fixed') {
+      if (scene.quantity === 0) {
+        shouldBeRemoved = true;
+      }
+      scene.quantity -= 1;
+    } else if (!scene.reuse) {
+      shouldBeRemoved = true;
+    }
+
+    if (shouldBeRemoved) {
+      this.removeScene(scene.id);
+      globalEvents.emit('SCENE_REMOVED', { serverId: this.id, sceneId: scene.id });
+    }
+    /* eslint-enable no-param-reassign */
   }
 
   findScene(requirements) {
-    let sceneToPlay;
-    const len = this.scenes.length;
-    let i = 0;
-
-    while (!sceneToPlay && i < len) {
-      const scene = this.scenes[i];
-
+    return this.scenes.find((scene) => {
       if (!scene.scheduled) {
         if (scene.requirements) {
           const req = requirements;
@@ -142,18 +152,16 @@ export default class Scenario {
             if (
               deepEqual(scene.requirements, extractSubTree(req, scene.requirements))
             ) {
-              sceneToPlay = scene;
+              return true;
             }
           }
         } else {
-          sceneToPlay = scene;
+          return true;
         }
       }
 
-      i += 1;
-    }
-
-    return sceneToPlay;
+      return false;
+    });
   }
 
   cancelPendingScenes() {

@@ -11,8 +11,12 @@ const mockedElectron = {
         default: {
           find() {
             return {
-              addScene() {
-                return 'scene id';
+              getScenario() {
+                return {
+                  addScene() {
+                    return 'scene id';
+                  }
+                };
               }
             };
           }
@@ -56,6 +60,6 @@ describe('addSceneEpic', () => {
         scenePayload: 'scenePayload'
       }
     ]));
-    expect(store.getScenes()).toMatchSnapshot();
+    expect(store.getActions()).toMatchSnapshot();
   });
 });

@@ -4,7 +4,7 @@
     "requirements": {
       "event": "CLIENT_CONNECTED"
     },
-    "actions": [
+    "parts": [
       {
         "title": "welcome",
         "type": "single",

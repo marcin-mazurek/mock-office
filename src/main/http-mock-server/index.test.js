@@ -1,8 +1,61 @@
+import express from 'express';
+import request from 'request';
 import HttpMockServer, { send } from './index';
 
 /* eslint-disable global-require */
 describe('send', () => {
-  it('should send headers provide by user', () => {
+  it('should enable CORS', (done) => {
+    const app = express();
+    app.get('*', (req, res, next) => {
+      send(req, res)({
+        taskPayload: {
+          key: 'value'
+        }
+      });
+      next();
+    });
+
+    const server = app.listen(3005, () => {
+      request.defaults({
+        headers: {
+          origin: 'origin.com'
+        }
+      }).get('http://127.0.0.1:3005', (error, response) => {
+        server.close();
+        expect(response.headers['access-control-allow-origin']).toEqual('origin.com');
+        done();
+      });
+    });
+  });
+
+  it('should add custom headers to response', (done) => {
+    const app = express();
+    app.get('*', (req, res, next) => {
+      send(req, res)({
+        headers: {
+          'custom-header-name': 'custom header value'
+        },
+        taskPayload: {
+          key: 'value'
+        }
+      });
+      next();
+    });
+
+    const server = app.listen(3005, () => {
+      request.defaults({
+        headers: {
+          origin: 'origin.com'
+        }
+      }).get('http://127.0.0.1:3005', (error, response) => {
+        server.close();
+        expect(response.headers['access-control-allow-origin']).toEqual('origin.com');
+        done();
+      });
+    });
+  });
+
+  it('should send headers provided by user', () => {
     const mockFn = jest.fn();
     const taskWithHeaders = {
       headers: {
@@ -39,30 +92,16 @@ describe('HttpMockServer', () => {
       const server = new HttpMockServer({ id: 'some id' });
       server.sockets = [
         {
-          destroy() {}
+          destroy() {
+          }
         },
         {
-          destroy() {}
+          destroy() {
+          }
         }
       ];
       server.destroyOpenSockets();
       expect(server.sockets).toHaveLength(0);
-    });
-  });
-
-  describe('stop', () => {
-    it('should destroySockets', () => {
-      const server = new HttpMockServer({ id: 'some id' });
-      server.httpServer = {
-        close() {}
-      };
-      server.scenario = {
-        cancelSchedulers() {}
-      };
-      const destroyOpenSocketsMock = jest.fn();
-      server.destroyOpenSockets = destroyOpenSocketsMock;
-      server.stop();
-      expect(destroyOpenSocketsMock).toBeCalled();
     });
   });
 });

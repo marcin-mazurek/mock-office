@@ -109,10 +109,12 @@ describe('Scenario', () => {
       const scenario = new Scenario({ id: 'scenario id' });
       scenario.scenes = [
         {
-          id: 'some id'
+          id: 'some id',
+          parts: []
         },
         {
-          id: 'some id2'
+          id: 'some id2',
+          parts: []
         }
       ];
       scenario.removeScene('some id');
@@ -171,7 +173,8 @@ describe('Scenario', () => {
       const scenario = new Scenario({ id: 'scenario id' });
       scenario.scenes = [
         {
-          id: 'some id'
+          id: 'some id',
+          parts: []
         }
       ];
       scenario.attemptToRemoveScene('some id');
@@ -196,7 +199,8 @@ describe('Scenario', () => {
         {
           id: 'reuse fixed id',
           reuse: 'fixed',
-          quantity: 1
+          quantity: 1,
+          parts: []
         }
       ];
       scenario.attemptToRemoveScene('reuse fixed id');
@@ -204,30 +208,6 @@ describe('Scenario', () => {
       expect(scenario.scenes[0].quantity).toEqual(0);
       scenario.attemptToRemoveScene('reuse fixed id');
       expect(scenario.scenes).toHaveLength(0);
-    });
-  });
-
-  describe('onScenePlayed', () => {
-    it('should emit SCENE_REMOVED event if scene is removed', () => {
-      const emitMock = jest.fn();
-      jest.resetModules();
-
-      jest.mock('../globalEvents', () => ({
-        on() {
-
-        },
-        emit() {
-          emitMock();
-        }
-      }));
-
-      const Scenarioo = require('./index').default;
-      const scenario = new Scenarioo({ id: 'scenario id' });
-      scenario.scenes = [{
-        id: 'some id'
-      }];
-      scenario.onScenePlayed('some id');
-      expect(emitMock).toHaveBeenCalled();
     });
   });
 });

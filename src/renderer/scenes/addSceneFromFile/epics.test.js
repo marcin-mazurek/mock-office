@@ -10,7 +10,7 @@ const epicMiddleware = createEpicMiddleware(addSceneFromFileEpic);
 const mockStore = configureMockStore([epicMiddleware]);
 
 afterEach(() => {
-  store.clearScenes();
+  store.clearActions();
 });
 
 test('addSceneFromFileEpic', () => {
@@ -33,5 +33,5 @@ test('addSceneFromFileEpic', () => {
   store.dispatch(init('server id', [
     new Blob(['{"payload": "scene payload"}'])
   ]));
-  expect(store.getScenes()).toMatchSnapshot();
+  expect(store.getActions()).toMatchSnapshot();
 });

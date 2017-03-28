@@ -8,7 +8,8 @@ const addSceneEpic = action$ =>
       const { serverId, scenes } = action;
       const scenesForAdd = scenes.map((scene) => {
         const server = remote.require('./main/servers').default.find(serverId);
-        const sceneId = server.addScene(scene);
+        const scenario = server.getScenario();
+        const sceneId = scenario.addScene(scene);
 
         return [
           serverId,

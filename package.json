@@ -59,6 +59,7 @@
     "postcss-loader": "^1.2.1",
     "react-addons-test-utils": "^15.4.2",
     "redux-mock-store": "^1.2.1",
+    "request": "^2.81.0",
     "sass-loader": "^4.1.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3"
@@ -103,7 +104,7 @@
       "\\.(png|jpg|svg)$": "<rootDir>/jest/webpackAssetsMock.js",
       "\\.(css|scss)$": "<rootDir>/jest/stylesMock.js"
     },
-    "testPathDirs": [
+    "roots": [
       "<rootDir>/src"
     ]
   }

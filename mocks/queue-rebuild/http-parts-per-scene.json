@@ -1,0 +1,19 @@
+[
+  {
+    "title": "request for some-url",
+    "requirements": {
+      "event": "RECEIVED_REQUEST"
+    },
+    "parts": [
+      {
+        "title": "response for /some-url request",
+        "type": "single",
+        "taskPayload": {
+          "body": {
+            "data": "response for some-url"
+          }
+        }
+      }
+    ]
+  }
+]

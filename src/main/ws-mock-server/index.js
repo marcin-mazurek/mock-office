@@ -53,13 +53,13 @@ export default class WSMockServer {
       );
 
       if (scene) {
-        this.scenario.play(scene.id, () => {
+        this.scenario.play(scene.id, (part) => {
           let message;
 
-          if (scene.taskPayload.type === 'b64') {
-            message = atob(scene.taskPayload.message);
+          if (part.taskPayload.type === 'b64') {
+            message = atob(part.taskPayload.message);
           } else {
-            message = scene.taskPayload.message;
+            message = part.taskPayload.message;
           }
 
           this.ws.send(message);

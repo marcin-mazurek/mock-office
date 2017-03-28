@@ -5,10 +5,10 @@ Utility module for choosing proper rxjs scheduler
 import { Scheduler } from 'rxjs';
 
 export default () =>
-  (scene, onStart, onFinish) => Scheduler.asap.schedule(
+  (action, onStart, onFinish) => Scheduler.asap.schedule(
     () => {
       onStart();
-      scene();
+      action();
       onFinish();
       return () => {};
     }

@@ -11,7 +11,11 @@ const mockedElectron = {
         default: {
           find() {
             return {
-              removeScene() {}
+              getScenario() {
+                return {
+                  removeScene() {}
+                };
+              }
             };
           }
         }
@@ -32,6 +36,6 @@ describe('removeScene epic', () => {
     store = mockStore(new Map());
 
     store.dispatch(init('server id', 'scene id'));
-    expect(store.getScenes()).toMatchSnapshot();
+    expect(store.getActions()).toMatchSnapshot();
   });
 });

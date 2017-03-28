@@ -12,14 +12,16 @@ import http from 'http';
 import fs from 'fs';
 import Scenario from '../scenario';
 
-export const send = (req, res) => (task) => {
-  res.set('Access-Control-Allow-Origin', req.headers.origin);
-
-  if (task.headers) {
-    res.set(task.headers);
+export const send = (req, res) => (args) => {
+  if (req.headers.origin) {
+    res.set('Access-Control-Allow-Origin', req.headers.origin);
   }
 
-  res.json(task.taskPayload);
+  if (args.headers) {
+    res.set(args.headers);
+  }
+
+  res.json(args.taskPayload);
 };
 
 export default class HttpMockServer {
@@ -34,14 +36,13 @@ export default class HttpMockServer {
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
     this.saveSocketRef = this.saveSocketRef.bind(this);
-    this.addScene = this.addScene.bind(this);
-    this.removeScene = this.removeScene.bind(this);
     this.start = this.start.bind(this);
     this.saveSocketRef = this.saveSocketRef.bind(this);
     this.destroyOpenSockets = this.destroyOpenSockets.bind(this);
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
     this.respond = this.respond.bind(this);
+    this.getScenario = this.getScenario.bind(this);
 
     const httpServer = this.isSecure ? https : http;
     const app = express();
@@ -61,12 +62,8 @@ export default class HttpMockServer {
     this.httpServer.on('connection', this.saveSocketRef);
   }
 
-  addScene(task) {
-    return this.scenario.addScene(task);
-  }
-
-  removeScene(taskId) {
-    this.scenario.removeScene(taskId);
+  getScenario() {
+    return this.scenario;
   }
 
   respond(req, res) {
@@ -78,9 +75,7 @@ export default class HttpMockServer {
     );
 
     if (scene) {
-      this.scenario.play(scene.id, () => {
-        send(req, res)(scene);
-      });
+      this.scenario.play(scene.id, send(req, res));
     }
   }
 
