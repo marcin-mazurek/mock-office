@@ -7,7 +7,7 @@ export default (store) => {
 
   for (let i = 0; i < servers.length; i += 1) {
     const { instance, id } = servers[i];
-    store.dispatch(add(instance.name, instance.port, instance.type, id));
+    store.dispatch(add(instance.name, instance.port, instance.type, id, instance.isSecure));
 
     if (instance.isLive()) {
       store.dispatch(start(id));
