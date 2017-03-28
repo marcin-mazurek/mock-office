@@ -1,7 +1,7 @@
 import { remote } from 'electron';
-import { INIT, remove } from './actions';
+import { FINISH, INIT, remove } from './actions';
 
-const removeTaskEpic = action$ =>
+export const removeTaskEpic = action$ =>
   action$.ofType(INIT)
     .map((action) => {
       const { serverId, taskId } = action;
@@ -10,4 +10,7 @@ const removeTaskEpic = action$ =>
       return [serverId, taskId];
     }).map(task => remove(...task));
 
-export default removeTaskEpic;
+export const finishTaskEpic = action$ =>
+  action$.ofType(FINISH)
+    .delay(5000)
+    .map(({ serverId, taskId }) => remove(serverId, taskId));

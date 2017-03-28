@@ -1,0 +1,52 @@
+exports[`tasks reducer tasks/ADD action 1`] = `
+Object {
+  "AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==": Object {
+    "blocking": false,
+    "delay": null,
+    "finished": false,
+    "id": "AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==",
+    "interval": null,
+    "lastDuration": null,
+    "lastRunTimestamp": null,
+    "quantity": null,
+    "requirements": null,
+    "reuse": null,
+    "runCount": 0,
+    "running": false,
+    "taskPayload": Object {
+      "body": "task for some-url-3",
+    },
+    "title": "",
+  },
+}
+`;
+
+exports[`tasks reducer tasks/RUN action 1`] = `
+Object {
+  "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==": Object {
+    "id": "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==",
+    "lastDuration": null,
+    "lastRunTimestamp": 1482363367321,
+    "runCount": 1,
+    "running": true,
+    "taskPayload": Object {
+      "data": "task for some-url-3",
+    },
+  },
+}
+`;
+
+exports[`tasks reducer tasks/STOP action 1`] = `
+Object {
+  "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==": Object {
+    "id": "AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==",
+    "lastDuration": 250,
+    "lastRunTimestamp": 1482363367071,
+    "runCount": 1,
+    "running": false,
+    "taskPayload": Object {
+      "data": "task for some-url-3",
+    },
+  },
+}
+`;
