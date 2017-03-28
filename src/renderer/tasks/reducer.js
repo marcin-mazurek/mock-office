@@ -1,7 +1,7 @@
 import { Map, Record } from 'immutable';
 import { ADD } from './addTask/actions';
 import { RUN, STOP } from './runTask/actions';
-import { WILL_REMOVE, REMOVE } from './removeTask/actions';
+import { FINISH, REMOVE } from './removeTask/actions';
 
 const initialState = new Map();
 const Task = new Record({
@@ -18,7 +18,7 @@ const Task = new Record({
   runCount: 0,
   lastRunTimestamp: null,
   lastDuration: null,
-  willRemove: false
+  finished: false
 });
 
 export default (state = initialState, action) => {
@@ -53,8 +53,8 @@ export default (state = initialState, action) => {
         lastDuration: Date.now() - prevState.get('lastRunTimestamp')
       });
     }
-    case WILL_REMOVE: {
-      return state.setIn([action.taskId, 'willRemove'], true);
+    case FINISH: {
+      return state.setIn([action.taskId, 'finished'], true);
     }
     case REMOVE: {
       return state.remove(action.taskId);

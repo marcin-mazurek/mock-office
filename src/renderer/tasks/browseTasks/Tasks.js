@@ -20,7 +20,7 @@ export const Task = ({
                        running,
                        runCount,
                        lastDuration,
-                       willRemove
+                       finished
                      }) => {
   let quantityInfo = null;
 
@@ -34,7 +34,7 @@ export const Task = ({
 
   const taskClass = classnames('task', {
     'task--running': running,
-    'task--removed': willRemove
+    'task--finished': finished
   });
 
   return (
@@ -84,7 +84,7 @@ export const Task = ({
         }
       </div>
       {
-        willRemove ?
+        finished ?
           (
             <div className="task-status__tag">
               <i className="fa fa-check" /> Finished
@@ -94,7 +94,7 @@ export const Task = ({
       }
       <button
         className="task__remove-button"
-        onClick={() => (willRemove ? removeTaskLabel(serverId, id) : removeTask(serverId, id))}
+        onClick={() => (finished ? removeTaskLabel(serverId, id) : removeTask(serverId, id))}
       >
         <i className="fa fa-remove" />
       </button>
@@ -117,7 +117,7 @@ Task.propTypes = {
   running: React.PropTypes.bool,
   runCount: React.PropTypes.number,
   lastDuration: React.PropTypes.number,
-  willRemove: React.PropTypes.bool
+  finished: React.PropTypes.bool
 };
 
 const taskMapStateToProps = (initialState, ownProps) => (state) => {
@@ -132,7 +132,7 @@ const taskMapStateToProps = (initialState, ownProps) => (state) => {
     running,
     runCount,
     lastDuration,
-    willRemove
+    finished
   } = getTask(state, ownProps);
   return {
     title,
@@ -145,7 +145,7 @@ const taskMapStateToProps = (initialState, ownProps) => (state) => {
     running,
     runCount,
     lastDuration,
-    willRemove
+    finished
   };
 };
 

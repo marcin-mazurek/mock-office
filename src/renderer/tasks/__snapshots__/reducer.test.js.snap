@@ -3,6 +3,7 @@ Object {
   "AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==": Object {
     "blocking": false,
     "delay": null,
+    "finished": false,
     "id": "AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==",
     "interval": null,
     "lastDuration": null,
@@ -16,7 +17,6 @@ Object {
       "body": "task for some-url-3",
     },
     "title": "",
-    "willRemove": false,
   },
 }
 `;

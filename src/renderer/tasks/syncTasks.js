@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ipcRenderer } from 'electron';
 import { TASK_REMOVED, TASK_RUN, TASK_STOPPED } from '../../main/common/messageNames';
-import { willRemove, remove } from './removeTask/actions';
+import { finish } from './removeTask/actions';
 import { run, stop } from './runTask/actions';
 
 const eventArgs2ActionPayload = (event, args) => [args.serverId, args.taskId];
@@ -14,9 +14,5 @@ export default (store) => {
     .subscribe(args => store.dispatch(stop(...args)));
 
   Observable.fromEvent(ipcRenderer, TASK_REMOVED, eventArgs2ActionPayload)
-    .subscribe(args => store.dispatch(willRemove(...args)));
-
-  Observable.fromEvent(ipcRenderer, TASK_REMOVED, eventArgs2ActionPayload)
-    .delay(5000)
-    .subscribe(args => store.dispatch(remove(...args)));
+    .subscribe(args => store.dispatch(finish(...args)));
 };

@@ -20,9 +20,9 @@
   transition: none;
 }
 
-.task--removed {
-  background-color: $task-status-removed-background-color;
-  transition: none;
+.task--finished {
+  color: lighten($font-color, 30%);
+  background-color: inherit;
 }
 
 .task__title {

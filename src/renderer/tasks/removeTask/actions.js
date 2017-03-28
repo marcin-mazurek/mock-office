@@ -1,5 +1,5 @@
 export const INIT = 'remove/init';
-export const WILL_REMOVE = 'tasks/WILL_REMOVE';
+export const FINISH = 'tasks/FINISH';
 export const REMOVE = 'tasks/REMOVE';
 
 export const init = (serverId, taskId) => ({
@@ -8,8 +8,8 @@ export const init = (serverId, taskId) => ({
   serverId
 });
 
-export const willRemove = (serverId, taskId) => ({
-  type: WILL_REMOVE,
+export const finish = (serverId, taskId) => ({
+  type: FINISH,
   serverId,
   taskId
 });
