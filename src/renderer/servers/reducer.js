@@ -5,7 +5,8 @@ export const Server = new Record({
   id: '',
   name: 'New Server',
   port: null,
-  type: ''
+  type: '',
+  secure: false
 });
 
 const initialState = new Map({
@@ -23,7 +24,8 @@ export default (state = initialState, action) => {
         id: action.id,
         name: action.name,
         port: action.port,
-        type: action.serverType
+        type: action.serverType,
+        secure: action.secure
       });
       newState = newState.setIn(['entities', action.id], server);
       newState = newState.update('ids', ids => ids.push(action.id));

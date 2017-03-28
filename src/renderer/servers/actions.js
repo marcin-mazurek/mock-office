@@ -4,12 +4,13 @@ export const START = 'servers/START';
 export const STOP = 'servers/STOP';
 export const REMOVE = 'servers/REMOVE';
 
-export const add = (name, port, serverType, id) => ({
+export const add = (name, port, serverType, id, secure) => ({
   type: ADD,
   name,
   port,
   id,
-  serverType
+  serverType,
+  secure
 });
 
 export const select = id => ({

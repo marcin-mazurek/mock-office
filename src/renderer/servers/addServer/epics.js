@@ -9,6 +9,6 @@ export default action$ =>
       const serversHub = remote.require('./main/servers').default;
       const serverId = serversHub.add(name, port, type, isSecure, keyPath, certPath);
 
-      return [name, port, type, serverId];
+      return [name, port, type, serverId, isSecure];
     }).map(serverConfig => add(...serverConfig)
   );
