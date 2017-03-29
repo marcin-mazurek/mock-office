@@ -1,6 +1,7 @@
 import express from 'express';
 import request from 'request';
 import HttpMockServer, { send } from './index';
+import { ServerEventsEmitter } from '../globalEvents';
 
 /* eslint-disable global-require */
 describe('send', () => {
@@ -89,7 +90,10 @@ describe('send', () => {
 describe('HttpMockServer', () => {
   describe('destroyOpenSockets', () => {
     it('should destroy and remove all saved sockets', () => {
-      const server = new HttpMockServer({ id: 'some id' });
+      const server = new HttpMockServer({
+        id: 'some id',
+        emitter: new ServerEventsEmitter()
+      });
       server.sockets = [
         {
           destroy() {

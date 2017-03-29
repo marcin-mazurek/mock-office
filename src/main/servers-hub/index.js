@@ -1,7 +1,6 @@
-import unique from 'node-unique';
-import { EventEmitter } from 'events';
 import HttpServer from '../http-mock-server';
 import WSMockServer from '../ws-mock-server';
+import { ServerEventsEmitter } from '../globalEvents';
 
 const serverTypes = {
   http: HttpServer,
@@ -10,7 +9,6 @@ const serverTypes = {
 
 class ServersHub {
   constructor() {
-    this.ee = new EventEmitter();
     this.servers = [];
     this.add = this.add.bind(this);
     this.start = this.start.bind(this);
@@ -21,15 +19,11 @@ class ServersHub {
   }
 
   add(name, port, type, isSecure, keyPath, certPath) {
-    const serverId = unique();
+    const emitter = new ServerEventsEmitter();
     const ServerConstructor = serverTypes[type];
-    const server = new ServerConstructor({ id: serverId, name, port, isSecure, keyPath, certPath });
-    this.servers.push({
-      id: serverId,
-      instance: server
-    });
-
-    return serverId;
+    const server = new ServerConstructor({ name, port, isSecure, keyPath, certPath, emitter });
+    this.servers.push(server);
+    return server.id;
   }
 
   start(id) {
@@ -63,7 +57,7 @@ class ServersHub {
       return undefined;
     }
 
-    return serverFound.instance;
+    return serverFound;
   }
 
   getAll() {

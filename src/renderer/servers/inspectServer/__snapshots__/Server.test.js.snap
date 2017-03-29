@@ -25,7 +25,7 @@ exports[`ServerInspect default snapshot 1`] = `
     <div
       className="inspect-server-header__toggle"
     >
-      <Connect(ServerToggle)
+      <Connect(Component)
         serverId="some id"
         toggled={true}
       />

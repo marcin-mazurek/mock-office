@@ -3,6 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import atob from 'atob';
+import unique from 'node-unique';
 import Scenario from '../scenario';
 
 export default class WSMockServer {
@@ -10,12 +11,14 @@ export default class WSMockServer {
     this.type = 'ws';
     this.port = config.port || 3010;
     this.name = config.name;
-    this.id = config.id;
-    this.scenario = new Scenario({ id: this.id });
+    this.id = unique();
+    this.emitter = config.emitter.extend({ serverId: this.id });
+    this.scenario = new Scenario({ emitter: this.emitter });
     this.listening = false;
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
+    this.emitter = config.emitter;
     this.getScenario = this.getScenario.bind(this);
     this.start = this.start.bind(this);
     this.setupSocket = this.setupSocket.bind(this);

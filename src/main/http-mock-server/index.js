@@ -10,6 +10,7 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
+import unique from 'node-unique';
 import Scenario from '../scenario';
 
 export const send = (req, res) => (args) => {
@@ -26,8 +27,9 @@ export const send = (req, res) => (args) => {
 
 export default class HttpMockServer {
   constructor(config) {
-    this.id = config.id;
-    this.scenario = new Scenario({ id: this.id });
+    this.id = unique();
+    this.emitter = config.emitter.extend({ serverId: this.id });
+    this.scenario = new Scenario({ emitter: this.emitter });
     this.sockets = [];
     this.type = 'http';
     this.port = config.port || 3000;

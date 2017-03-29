@@ -1,6 +1,7 @@
 import ServersHub from './index';
-import HttpServer from '../externals/http-server-doublr';
-import WsServer from '../externals/ws-server-doublr';
+import HttpServer from '../http-mock-server';
+import WsServer from '../ws-mock-server';
+import { ServerEventsEmitter } from '../globalEvents';
 
 describe('ServerHub', () => {
   it('add should add server to servers list', () => {
@@ -19,13 +20,13 @@ describe('ServerHub', () => {
   it('add should add server of type Http if we provide http type', () => {
     const serversHub = new ServersHub();
     serversHub.add('server name', 3000, 'http', false);
-    expect(serversHub.servers[serversHub.servers.length - 1].instance).toBeInstanceOf(HttpServer);
+    expect(serversHub.servers[serversHub.servers.length - 1]).toBeInstanceOf(HttpServer);
   });
 
   it('add should add server of type Ws if we provide ws type', () => {
     const serversHub = new ServersHub();
     serversHub.add('server name', 3000, 'ws', false);
-    expect(serversHub.servers[serversHub.servers.length - 1].instance).toBeInstanceOf(WsServer);
+    expect(serversHub.servers[serversHub.servers.length - 1]).toBeInstanceOf(WsServer);
   });
 
   it('add should throw error if we provide unknown server type', () => {
@@ -35,113 +36,96 @@ describe('ServerHub', () => {
     ).toThrow();
   });
 
-  it('start should call server start if it is not running', () => {
+  it('start should call server start only if it is not running', () => {
     const serversHub = new ServersHub();
-    const mockFn = jest.fn();
-    const serverId = 'some-id';
+    const startMock = jest.fn();
 
     serversHub.servers = [
       {
-        id: serverId,
-        instance: {
-          isLive() {
-            return false;
-          },
-          start(cb) {
-            cb();
-            mockFn(0);
-          }
+        id: 'server 1',
+        isLive() {
+          return false;
+        },
+        start() {
+          startMock();
+        }
+      },
+      {
+        id: 'server 2',
+        isLive() {
+          return true;
+        },
+        start() {
+          startMock();
         }
       }
     ];
 
-    serversHub.start(serverId);
-    expect(mockFn.mock.calls.length).toEqual(1);
-  });
-
-  it('start should not call server start if it is running', () => {
-    const serversHub = new ServersHub();
-    const mockFn = jest.fn();
-    const serverId = 'some-id';
-
-    serversHub.servers = [
-      {
-        id: serverId,
-        instance: {
-          isLive() {
-            return true;
-          },
-          start(cb) {
-            cb();
-            mockFn();
-          }
-        }
-      }
-    ];
-
-    serversHub.start(serverId);
-    expect(mockFn.mock.calls.length).toEqual(0);
+    serversHub.start('server 1');
+    expect(startMock).toHaveBeenCalledTimes(1);
+    serversHub.start('server 2');
+    expect(startMock).toHaveBeenCalledTimes(1);
   });
 
   it('stop should call server stop if it is running', () => {
     const serversHub = new ServersHub();
-    const mockFn = jest.fn();
+    const stopMock = jest.fn();
     const serverId = 'some-id';
 
     serversHub.servers = [
       {
         id: serverId,
-        instance: {
-          isLive() {
-            return true;
-          },
-          stop(cb) {
-            cb();
-            mockFn();
-          }
+        isLive() {
+          return true;
+        },
+        stop(cb) {
+          cb();
+          stopMock();
         }
       }
     ];
 
     serversHub.stop(serverId);
-    expect(mockFn.mock.calls.length).toEqual(1);
+    expect(stopMock).toHaveBeenCalledTimes(1);
   });
 
   it('stop should not call server stop if it is not running', () => {
     const serversHub = new ServersHub();
-    const mockFn = jest.fn();
+    const stopMock = jest.fn();
     const serverId = 'some-id';
 
     serversHub.servers = [
       {
         id: serverId,
-        instance: {
-          isLive() {
-            return false;
-          },
-          stop(cb) {
-            mockFn();
-            cb();
-          }
+        isLive() {
+          return false;
+        },
+        stop(cb) {
+          stopMock();
+          cb();
         }
       }
     ];
 
     serversHub.stop(serverId);
-    expect(mockFn.mock.calls.length).toEqual(0);
+    expect(stopMock).not.toHaveBeenCalled();
   });
 
   it('find should return proper server', () => {
     const serversHub = new ServersHub();
     const server = {
-      id: 'one id',
-      instance: 'server instance'
+      id: 'one id'
     };
 
-    serversHub.servers = [server];
+    serversHub.servers = [
+      server,
+      {
+        id: 'another id'
+      }
+    ];
 
     const foundServer = serversHub.find('one id');
-    expect(foundServer).toEqual('server instance');
+    expect(foundServer).toBe(server);
   });
 
   it('find should return undefined if doesnt find server', () => {
@@ -169,18 +153,14 @@ describe('ServerHub', () => {
     serversHub.servers = [
       {
         id: 'some id',
-        instance: {
-          isLive() {
-            return false;
-          }
+        isLive() {
+          return false;
         }
       },
       {
         id: 'another id',
-        instance: {
-          isLive() {
-            return false;
-          }
+        isLive() {
+          return false;
         }
       }
     ];
@@ -210,19 +190,23 @@ describe('ServerHub', () => {
     serversHub.servers = [
       {
         id: 'some id',
-        instance: {
-          isLive() {
-            return true;
-          },
-          stop(cb) {
-            stopMockFn();
-            cb();
-          }
+        isLive() {
+          return true;
+        },
+        stop(cb) {
+          stopMockFn();
+          cb();
         }
       }
     ];
 
     serversHub.remove('some id');
     expect(stopMockFn).toHaveBeenCalled();
+  });
+
+  it('should create emitter for server when adding server', () => {
+    const serversHub = new ServersHub();
+    serversHub.add('server name', 3000, 'http', false);
+    expect(serversHub.servers[0].emitter).toBeInstanceOf(ServerEventsEmitter);
   });
 });
