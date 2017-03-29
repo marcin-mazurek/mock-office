@@ -83,13 +83,14 @@ export default class Scenario {
 
   play(id, action) {
     const scene = this.find(id);
-    const schedule = createSchedule(scene);
     let finishedPartsCount = 0;
 
     scene.parts.forEach((part) => {
       /* eslint-disable no-param-reassign */
-      const partStop = schedule(
+      const schedule = createSchedule(part);
+      part.subscription = schedule(
         () => {
+          part.pending = true;
           action(part);
         },
         () => {},
@@ -99,13 +100,13 @@ export default class Scenario {
 
           if (finishedPartsCount === scene.parts.length) {
             globalEvents.emit('SCENE_END', { serverId: this.id, sceneId: scene.id });
-            this.attemptToRemoveScene(scene);
+            this.attemptToRemoveScene(scene.id);
           }
         }
       );
 
       part.stop = () => {
-        partStop();
+        part.subscription.unsubscribe();
         globalEvents.emit('SCENE_CANCEL', { serverId: this.id, sceneId: scene.id });
         part.pending = false;
       };
@@ -165,10 +166,20 @@ export default class Scenario {
   }
 
   cancelPendingScenes() {
-    const pendingScenes = this.scenes.filter(scene => !!scene.dispose);
-    pendingScenes.forEach(scene => scene.dispose());
-    this.scenes = pendingScenes.map(scene =>
-      Object.assign(scene, { dispose: undefined })
-    );
+    const pendingScenes = this.scenes.filter(scene => scene.pending);
+    pendingScenes.forEach((scene) => {
+      /* eslint-disable no-param-reassign */
+      if (scene.pending) {
+        scene.parts.forEach((part) => {
+          if (part.pending) {
+            part.stop();
+            part.pending = false;
+          }
+        });
+
+        scene.pending = false;
+      }
+      /* eslint-enable no-param-reassign */
+    });
   }
 }

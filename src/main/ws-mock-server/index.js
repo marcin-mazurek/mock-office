@@ -112,6 +112,8 @@ export default class WSMockServer {
   }
 
   stop(cb) {
+    this.scenario.cancelPendingScenes();
+
     if (this.ws) {
       this.ws.close();
     }

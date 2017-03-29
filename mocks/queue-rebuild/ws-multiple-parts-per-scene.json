@@ -7,7 +7,7 @@
     "parts": [
       {
         "title": "welcome",
-        "type": "single",
+        "type": "immediate",
         "taskPayload": {
           "message": "welcome message"
         }
@@ -23,8 +23,8 @@
       },
       {
         "title": "establish complete",
-        "type": "single",
-        "delay": 10000,
+        "type": "future",
+        "delay": 5000,
         "taskPayload": {
           "message": "establishing complete"
         }
