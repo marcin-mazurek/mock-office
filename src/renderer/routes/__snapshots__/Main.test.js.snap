@@ -7,7 +7,7 @@ exports[`Main should render 1`] = `
   <div
     className="main__navbar"
   >
-    <Component />
+    <SideBar />
   </div>
   <div
     className="main__content"
