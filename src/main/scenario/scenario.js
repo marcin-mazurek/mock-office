@@ -44,12 +44,17 @@ export default class Scenario {
     const scene = new Scene(Object.assign(sceneConfig, { emitter: this.emitter }));
     this.scenes.push(scene);
 
-
     return scene.id;
   }
 
   removeScene(sceneId) {
+    console.log('sceneId', sceneId);
     const sceneIndex = this.scenes.findIndex(scene => scene.id === sceneId);
+    console.log('sceneIndex', sceneIndex);
+    const scene = this.scenes[sceneIndex];
+    console.log(scene);
+
+    scene.cancel();
     this.scenes.splice(sceneIndex, 1);
   }
 
@@ -59,10 +64,14 @@ export default class Scenario {
 
     return scene.play(action).then(
       () => {
+        console.log('scenario then');
         if (scene.toRemove) {
-          this.removeScene(scene.id);
+          this.removeScene(id);
           scene.emitter.emit('SCENE_REMOVED');
         }
+      },
+      (err) => {
+        console.log('scenario caught:', err);
       }
     );
   }
@@ -94,8 +103,6 @@ export default class Scenario {
   }
 
   cancelPendingScenes() {
-    this.scenes
-      .filter(scene => scene.pending)
-      .forEach(scene => scene.cancel());
+    this.scenes.forEach(scene => scene.cancel());
   }
 }

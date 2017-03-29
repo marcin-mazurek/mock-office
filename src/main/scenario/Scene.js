@@ -32,19 +32,31 @@ export default class Scene {
 
   // Function -> Promise
   play(action) {
+    this.pending = true;
     this.emitter.emit('SCENE_START');
     const allPartsDidFinish = Promise.all(this.parts.map(part => part.play(action)));
-    allPartsDidFinish.then(() => {
-      this.pending = false;
-      this.checkReuse();
-      this.emitter.emit('SCENE_END');
-    });
+
+    allPartsDidFinish.then(
+      () => {
+        console.log('scene then');
+        this.pending = false;
+        this.checkReuse();
+        this.emitter.emit('SCENE_END');
+      },
+      (err) => {
+        console.log('scene play caught:', err);
+        this.pending = false;
+        this.emitter.emit('SCENE_CANCEL');
+      }
+    );
+
     return allPartsDidFinish;
   }
 
   // void -> void
   cancel() {
-    this.parts.forEach(part => part.cancel());
-    this.emitter.emit('SCENE_CANCEL');
+    if (this.pending) {
+      this.parts.forEach(part => part.cancel());
+    }
   }
 }

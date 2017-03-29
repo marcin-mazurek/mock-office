@@ -20,14 +20,6 @@
         "type": "periodic",
         "repeat": 3,
         "interval": 3000
-      },
-      {
-        "title": "establish complete",
-        "type": "future",
-        "delay": 5000,
-        "taskPayload": {
-          "message": "establishing complete"
-        }
       }
     ]
   }

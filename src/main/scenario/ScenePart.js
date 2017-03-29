@@ -11,11 +11,11 @@ export default class ScenePart {
 
   // Function -> Promise
   play(action) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const schedule = createSchedule(this.scheduleDetails);
+
       this.subscription = schedule(
         () => {
-          this.pending = true;
           action(this.scheduleDetails);
         },
         () => {
@@ -23,15 +23,19 @@ export default class ScenePart {
         },
         () => {
           this.emitter.emit('SCENE_PART_END');
+          this.pending = false;
           resolve();
         }
       );
 
-      this.cancel = () => {
+      this.pending = true;
+
+      this.stop = () => {
+        console.log('scheduler stop', this.id);
         this.subscription.unsubscribe();
         this.emitter.emit('SCENE_PART_CANCEL');
         this.pending = false;
-        resolve();
+        reject('SCENE_PART_CANCEL');
       };
     });
   }
@@ -39,7 +43,7 @@ export default class ScenePart {
   // void -> void
   cancel() {
     if (this.pending) {
-      this.cancel();
+      this.stop();
     }
   }
 }
