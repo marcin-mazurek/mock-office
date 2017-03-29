@@ -7,8 +7,8 @@
     "parts": [
       {
         "title": "response for /some-url request",
-        "type": "single",
-        "taskPayload": {
+        "type": "immediate",
+        "payload": {
           "body": {
             "data": "response for some-url"
           }

@@ -16,20 +16,20 @@ export default class ScenePart {
       this.subscription = schedule(
         () => {
           this.pending = true;
-          action(this.payload);
+          action(this.scheduleDetails);
         },
         () => {
-          this.emitter('SCENE_PART_START');
+          this.emitter.emit('SCENE_PART_START');
         },
         () => {
-          this.emitter('SCENE_PART_END');
+          this.emitter.emit('SCENE_PART_END');
           resolve();
         }
       );
 
       this.cancel = () => {
         this.subscription.unsubscribe();
-        this.emitter('SCENE_PART_CANCEL');
+        this.emitter.emit('SCENE_PART_CANCEL');
         this.pending = false;
         resolve();
       };

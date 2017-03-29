@@ -10,11 +10,10 @@ export default class Scene {
     this.pending = false;
     this.parts = args.parts.map(
       partConfig => new ScenePart(
-        Object.assign(partConfig,
-          {
-            emitter: this.emitter
-          }
-        )
+        {
+          scheduleDetails: partConfig,
+          emitter: this.emitter
+        }
       )
     );
   }

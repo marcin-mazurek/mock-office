@@ -22,7 +22,7 @@ export const send = (req, res) => (args) => {
     res.set(args.headers);
   }
 
-  res.json(args.taskPayload);
+  res.json(args.payload);
 };
 
 export default class HttpMockServer {
