@@ -1,11 +1,3 @@
-/*
- Http-Mock-Server
- - is responsible for reacting on requests
- - after retrieved request server use scenario for searching instructions
- - use scenario for scheduling
- - if wants to dispose findScene it calls scenario method
- */
-
 import express from 'express';
 import https from 'https';
 import http from 'http';
