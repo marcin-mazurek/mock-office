@@ -16,6 +16,11 @@ export default class WSMockServer {
     this.isSecure = config.isSecure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
+    this.getScenario = this.getScenario.bind(this);
+    this.start = this.start.bind(this);
+    this.setupSocket = this.setupSocket.bind(this);
+    this.stop = this.stop.bind(this);
+    this.isLive = this.isLive.bind(this);
 
     const httpServer = this.secure ? https : http;
 
@@ -68,12 +73,8 @@ export default class WSMockServer {
     });
   }
 
-  addScene(desc) {
-    return this.scenario.addScene(desc);
-  }
-
-  removeScene(taskId) {
-    this.scenario.removeScene(taskId);
+  getScenario() {
+    return this.scenario;
   }
 
   start(cb) {
