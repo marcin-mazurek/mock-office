@@ -40,7 +40,7 @@ export default class Scene {
     return Promise.all(this.parts.map(part => part.play(action))).then(
       () => {
         this.pending = false;
-        this.checkReuse();
+        this.updateReuseStatus();
         this.emitter.emit('SCENE_END');
       },
       () => {
