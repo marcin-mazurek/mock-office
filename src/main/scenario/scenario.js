@@ -48,11 +48,8 @@ export default class Scenario {
   }
 
   removeScene(sceneId) {
-    console.log('sceneId', sceneId);
     const sceneIndex = this.scenes.findIndex(scene => scene.id === sceneId);
-    console.log('sceneIndex', sceneIndex);
     const scene = this.scenes[sceneIndex];
-    console.log(scene);
 
     scene.cancel();
     this.scenes.splice(sceneIndex, 1);
@@ -64,14 +61,10 @@ export default class Scenario {
 
     return scene.play(action).then(
       () => {
-        console.log('scenario then');
         if (scene.toRemove) {
           this.removeScene(id);
           scene.emitter.emit('SCENE_REMOVED');
         }
-      },
-      (err) => {
-        console.log('scenario caught:', err);
       }
     );
   }

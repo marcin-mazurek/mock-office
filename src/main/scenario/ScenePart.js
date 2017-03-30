@@ -31,7 +31,6 @@ export default class ScenePart {
       this.pending = true;
 
       this.stop = () => {
-        console.log('scheduler stop', this.id);
         this.subscription.unsubscribe();
         this.emitter.emit('SCENE_PART_CANCEL');
         this.pending = false;
