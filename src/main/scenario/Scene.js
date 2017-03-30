@@ -8,6 +8,8 @@ export default class Scene {
     this.emitter = args.emitter.extend({ sceneId: this.id });
     this.parts = [];
     this.pending = false;
+    this.reuse = args.reuse;
+    this.quantity = args.quantity || 0;
     this.parts = args.parts.map(
       partConfig => new ScenePart(
         {
@@ -19,7 +21,7 @@ export default class Scene {
   }
 
   // void -> void
-  checkReuse() {
+  updateReuseStatus() {
     if (this.reuse === 'fixed') {
       if (this.quantity === 0) {
         this.toRemove = true;
