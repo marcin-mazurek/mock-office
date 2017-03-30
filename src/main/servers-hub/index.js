@@ -1,10 +1,9 @@
-import os from 'os';
 import fs from 'fs';
 import HttpServer from '../http-mock-server';
 import WSMockServer from '../ws-mock-server';
 import { ServerEventsEmitter } from '../globalEvents';
 
-const SAVED_STATE_FILE = `${os.homedir()}/.mockeeState.json`;
+const SAVED_STATE_FILE = './.mockeeState.json';
 
 const serverTypes = {
   http: HttpServer,
