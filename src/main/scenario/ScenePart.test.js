@@ -6,6 +6,7 @@ describe('ScenePart', () => {
   it('should setup emitter', () => {
     const scenePart = new ScenePart({ emitter: new ServerEventsEmitter() });
     expect(scenePart.emitter).toBeInstanceOf(ServerEventsEmitter);
+    expect(scenePart.emitter.params.scenePartId).toEqual(scenePart.id);
   });
 
   describe('play', () => {
