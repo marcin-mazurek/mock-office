@@ -33,6 +33,9 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  // restore saved state
+  servers.restoreState();
 }
 
 // This method will be called when Electron has finished

@@ -1,6 +1,10 @@
+import os from 'os';
+import fs from 'fs';
 import HttpServer from '../http-mock-server';
 import WSMockServer from '../ws-mock-server';
 import { ServerEventsEmitter } from '../globalEvents';
+
+const SAVED_STATE_FILE = `${os.homedir()}/.mockeeState.json`;
 
 const serverTypes = {
   http: HttpServer,
@@ -16,6 +20,52 @@ class ServersHub {
     this.find = this.find.bind(this);
     this.getAll = this.getAll.bind(this);
     this.remove = this.remove.bind(this);
+    this.backupState = this.backupState.bind(this);
+    this.restoreState = this.restoreState.bind(this);
+    this.saveDisabled = false;
+  }
+
+  backupState() {
+    if (this.saveDisabled) {
+      return;
+    }
+    this.saveDisabled = true;
+    const serversState = this.servers.map(server => ({
+      name: server.instance.name,
+      port: server.instance.port,
+      type: server.instance.type,
+      isSecure: server.instance.isSecure,
+      keyPath: server.instance.keyPath,
+      certPath: server.instance.certPath,
+      isLive: server.instance.isLive(),
+      tasks: server.instance.queue.backupTasks()
+    }));
+    fs.writeFile(SAVED_STATE_FILE, JSON.stringify(serversState), 'utf8', () => {
+      this.saveDisabled = false;
+    });
+  }
+
+  restoreState() {
+    this.saveDisabled = true;
+    fs.readFile(SAVED_STATE_FILE, (err, data) => {
+      if (err) return;
+
+      try {
+        const serverState = JSON.parse(data);
+        serverState.forEach((s) => {
+          const id = this.add(s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false);
+          const server = this.find(id);
+          server.queue.restoreTasks(s.tasks);
+          if (s.isLive) {
+            this.start(id, false);
+          }
+        });
+      } catch (e) {
+        this.ee.emit('RESTORE_STATE_ERROR', e);
+      } finally {
+        this.saveDisabled = false;
+      }
+    });
   }
 
   add(name, port, type, isSecure, keyPath, certPath) {
@@ -32,7 +82,7 @@ class ServersHub {
     if (!server.isLive()) {
       return new Promise((resolve, reject) => {
         server.start(resolve, reject);
-      });
+      }).then(this.backupState);
     }
 
     return Promise.resolve();
@@ -44,7 +94,7 @@ class ServersHub {
     if (server.isLive()) {
       return new Promise((resolve) => {
         server.stop(resolve);
-      });
+      }).then(this.backupState);
     }
 
     return Promise.resolve();
@@ -62,10 +112,10 @@ class ServersHub {
     const index = this.servers.findIndex(server => server.id === id);
 
     if (index >= 0) {
-      const promise = this.stop(id);
-
-      this.servers.splice(index, 1);
-      return promise;
+      return this.stop(id).then(() => {
+        this.servers.splice(index, 1);
+        this.backupState();
+      });
     }
 
     return Promise.reject();
