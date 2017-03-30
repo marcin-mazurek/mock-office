@@ -3,6 +3,7 @@ import ScenePart from './ScenePart';
 
 export default class Scene {
   constructor(args) {
+    this.title = args.title;
     this.requirements = args.requirements;
     this.id = unique();
     this.emitter = args.emitter.extend({ sceneId: this.id });

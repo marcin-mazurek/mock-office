@@ -6,21 +6,21 @@ export default (store) => {
   const servers = remote.require('./main/servers').default.servers;
 
   for (let i = 0; i < servers.length; i += 1) {
-    const { instance, id } = servers[i];
-    store.dispatch(add(instance.name, instance.port, instance.type, id));
+    const server = servers[i];
+    store.dispatch(add(server.name, server.port, server.type, server.id));
 
-    if (instance.isLive()) {
-      store.dispatch(start(id));
+    if (server.isLive()) {
+      store.dispatch(start(server.id));
     }
 
-    const scenario = instance.scenario;
+    const scenario = server.scenario;
     const scenes = scenario.scenes;
 
     for (let sceneIndex = 0; sceneIndex < scenes.length; sceneIndex += 1) {
       const scene = scenes[sceneIndex];
       store.dispatch(
         addScene(
-          id,
+          server.id,
           scene.id,
           scene.scenePayload,
           scene.title,
