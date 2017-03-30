@@ -11,6 +11,10 @@ export default class ScenePart {
 
   // Function -> Promise
   play(action) {
+    if (this.pending) {
+      return Promise.reject('Pending ScenePart cant be played.');
+    }
+
     return new Promise((resolve, reject) => {
       const schedule = createSchedule(this.scheduleDetails);
 
