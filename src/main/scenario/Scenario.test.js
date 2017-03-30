@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import Scenario, { extractSubTree } from './scenario';
+import Scenario, { extractSubTree } from './Scenario';
 import { ServerEventsEmitter } from '../globalEvents';
 
 describe('extractSubTree', () => {

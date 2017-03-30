@@ -1,1 +1,1 @@
-export { default } from './scenario';
+export { default } from './Scenario';

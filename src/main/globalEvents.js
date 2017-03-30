@@ -9,8 +9,8 @@ export class ServerEventsEmitter {
   extend(tuple) {
     return new ServerEventsEmitter(Object.assign({}, this.params, tuple));
   }
-  emit(eventType) {
-    ee.emit(eventType, this.params);
+  emit(eventType, params) {
+    ee.emit(eventType, Object.assign({}, this.params, params));
   }
 }
 
