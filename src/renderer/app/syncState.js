@@ -5,19 +5,14 @@ import { add as addScene } from '../scenes/addScene/actions';
 export default (store) => {
   const servers = remote.require('./main/servers').default.servers;
 
-  for (let i = 0; i < servers.length; i += 1) {
-    const server = servers[i];
+  servers.forEach((server) => {
     store.dispatch(add(server.name, server.port, server.type, server.id));
 
     if (server.isLive()) {
       store.dispatch(start(server.id));
     }
 
-    const scenario = server.scenario;
-    const scenes = scenario.scenes;
-
-    for (let sceneIndex = 0; sceneIndex < scenes.length; sceneIndex += 1) {
-      const scene = scenes[sceneIndex];
+    server.scenario.scenes.forEach((scene) => {
       store.dispatch(
         addScene(
           server.id,
@@ -32,6 +27,6 @@ export default (store) => {
           scene.blocking
         )
       );
-    }
-  }
+    });
+  });
 };
