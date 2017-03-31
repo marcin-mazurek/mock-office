@@ -5,37 +5,10 @@ import { ServerEventsEmitter } from '../globalEvents';
 
 /* eslint-disable global-require */
 describe('send', () => {
-  it('should enable CORS', (done) => {
+  it('should send CORS headers', (done) => {
     const app = express();
     app.get('*', (req, res, next) => {
       send(req, res)({
-        taskPayload: {
-          key: 'value'
-        }
-      });
-      next();
-    });
-
-    const server = app.listen(3005, () => {
-      request.defaults({
-        headers: {
-          origin: 'origin.com'
-        }
-      }).get('http://127.0.0.1:3005', (error, response) => {
-        server.close();
-        expect(response.headers['access-control-allow-origin']).toEqual('origin.com');
-        done();
-      });
-    });
-  });
-
-  it('should add custom headers to response', (done) => {
-    const app = express();
-    app.get('*', (req, res, next) => {
-      send(req, res)({
-        headers: {
-          'custom-header-name': 'custom header value'
-        },
         taskPayload: {
           key: 'value'
         }
