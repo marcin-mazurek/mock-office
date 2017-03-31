@@ -1,4 +1,4 @@
-import { Map, Record } from 'immutable';
+import { Map, Record, List } from 'immutable';
 import { REMOVE } from './removeScene/actions';
 import { ADD } from './addScene/actions';
 
@@ -10,7 +10,8 @@ const Scene = new Record({
   reuse: null,
   quantity: null,
   delay: null,
-  requirements: null
+  requirements: null,
+  parts: new List()
 });
 
 export default (state = initialState, action) => {
@@ -25,6 +26,9 @@ export default (state = initialState, action) => {
 
         return cfg;
       }, {});
+      if (sceneConfig.parts) {
+        sceneConfig.parts = new List(sceneConfig.parts.map(part => part.id));
+      }
       const scene = new Scene(sceneConfig);
 
       return state.set(id, scene);

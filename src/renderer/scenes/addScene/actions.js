@@ -7,7 +7,7 @@ export const init = (serverId, scenes) => ({
   scenes
 });
 
-export const add = (serverId, sceneId, title = 'untitled', interval, reuse, quantity, delay, requirements) => ({
+export const add = (serverId, sceneId, title = 'untitled', interval, reuse, quantity, delay, requirements, parts) => ({
   type: ADD,
   serverId,
   id: sceneId,
@@ -16,5 +16,6 @@ export const add = (serverId, sceneId, title = 'untitled', interval, reuse, quan
   reuse,
   quantity,
   delay,
-  requirements
+  requirements,
+  parts
 });

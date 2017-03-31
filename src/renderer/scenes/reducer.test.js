@@ -18,7 +18,8 @@ describe('scenes reducer', () => {
         quantity: null,
         title: '',
         delay: null,
-        requirements: null
+        requirements: null,
+        parts: []
       }
     });
   });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getScene } from '../selectors';
 import { init } from '../removeScene/actions';
 import { getQueueSceneIds } from '../../scenarios/selectors';
+import ScenePartsConnect from '../../sceneParts/SceneParts';
 
 export const Scene = ({
                         id,
@@ -27,40 +28,43 @@ export const Scene = ({
 
   return (
     <div className="scene">
-      <div className="scene__title">{title}</div>
-      <div className="scene-spec">
-        {
-          requirements
-            ? <div className="scene-spec__tag"><i className="fa fa-handshake-o" /></div>
-            : null
-        }
-        {
-          delay
-            ? (
-              <div className="scene-spec__tag">
-                <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
-              </div>
-            )
-            : null
-        }
-        {
-          interval
-            ? (
-              <div className="scene-spec__tag">
-                <i className="fa fa-history" />{' '}{interval / 1000}{'s'}
-              </div>
-            )
-            : null
-        }
-        {
-          reuse
-            ? <div className="scene-spec__tag">{quantityInfo}</div>
-            : null
-        }
+      <div className="scene-details">
+        <div className="scene__title">{title}</div>
+        <div className="scene-spec">
+          {
+            requirements
+              ? <div className="scene-spec__tag"><i className="fa fa-handshake-o" /></div>
+              : null
+          }
+          {
+            delay
+              ? (
+                <div className="scene-spec__tag">
+                  <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
+                </div>
+              )
+              : null
+          }
+          {
+            interval
+              ? (
+                <div className="scene-spec__tag">
+                  <i className="fa fa-history" />{' '}{interval / 1000}{'s'}
+                </div>
+              )
+              : null
+          }
+          {
+            reuse
+              ? <div className="scene-spec__tag">{quantityInfo}</div>
+              : null
+          }
+        </div>
+        <button className="scene__remove-button" onClick={() => remove(serverId, id)}>
+          <i className="fa fa-times" />
+        </button>
       </div>
-      <button className="scene__remove-button" onClick={() => remove(serverId, id)}>
-        <i className="fa fa-times" />
-      </button>
+      <ScenePartsConnect sceneId={id} />
     </div>
   );
 };

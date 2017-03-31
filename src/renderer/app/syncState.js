@@ -22,7 +22,8 @@ export default (store) => {
           scene.reuse,
           scene.quantity,
           scene.delay,
-          scene.requirements
+          scene.requirements,
+          scene.parts
         )
       );
     });
