@@ -10,6 +10,7 @@ const addSceneEpic = action$ =>
         const server = remote.require('./main/servers').default.find(serverId);
         const scenario = server.getScenario();
         const sceneId = scenario.addScene(scene);
+        const parts = scenario.scenes.find(scene => scene.id === sceneId).parts;
 
         return [
           serverId,
@@ -19,7 +20,8 @@ const addSceneEpic = action$ =>
           scene.reuse,
           scene.quantity,
           scene.delay,
-          scene.requirements
+          scene.requirements,
+          parts
         ];
       });
 
