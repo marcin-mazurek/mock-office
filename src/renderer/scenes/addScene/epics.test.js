@@ -56,8 +56,7 @@ describe('addSceneEpic', () => {
         title: 'scene title',
         requirements: {
           url: '/some-path'
-        },
-        scenePayload: 'scenePayload'
+        }
       }
     ]));
     expect(store.getActions()).toMatchSnapshot();

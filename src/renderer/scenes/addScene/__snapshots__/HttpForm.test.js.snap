@@ -6,18 +6,6 @@ exports[`HttpForm default snapshot 1`] = `
 >
   <div>
     <label
-      htmlFor="blocking"
-    >
-      Blocking:
-    </label>
-    <input
-      name="blocking"
-      onChange={[Function]}
-      type="checkbox"
-    />
-  </div>
-  <div>
-    <label
       htmlFor="delay"
     >
       Delay:
@@ -53,7 +41,6 @@ exports[`HttpForm default snapshot 1`] = `
       <textarea
         cols="30"
         name="payload"
-        onChange={[Function]}
         rows="10"
       />
     </div>

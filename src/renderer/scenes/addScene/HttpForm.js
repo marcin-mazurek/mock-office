@@ -8,28 +8,14 @@ export class HttpForm extends React.Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleBlockingChange = this.handleBlockingChange.bind(this);
     this.handleRequirementsChange = this.handleRequirementsChange.bind(this);
-    this.handlePayloadChange = this.handlePayloadChange.bind(this);
     this.handleDelayChange = this.handleDelayChange.bind(this);
     this.state = {};
-  }
-
-  handleBlockingChange(event) {
-    this.setState({
-      blocking: event.target.checked
-    });
   }
 
   handleRequirementsChange(event) {
     this.setState({
       requirements: event.target.value
-    });
-  }
-
-  handlePayloadChange(event) {
-    this.setState({
-      scenePayload: event.target.value
     });
   }
 
@@ -53,35 +39,15 @@ export class HttpForm extends React.Component {
       console.error(error.message);
     }
 
-    let scenePayload;
-
-    try {
-      scenePayload = JSON.parse(this.state.scenePayload);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
-    }
-
     this.props.initAddScene(this.props.queueId, {
-      blocking: this.state.blocking,
       delay,
-      requirements,
-      scenePayload
+      requirements
     });
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div>
-          <label htmlFor="blocking">Blocking:</label>
-          <input
-            type="checkbox"
-            name="blocking"
-            onChange={this.handleBlockingChange}
-            value={this.state.blocking}
-          />
-        </div>
         <div>
           <label htmlFor="delay">Delay:</label>
           <input type="number" name="delay" onChange={this.handleDelayChange} />

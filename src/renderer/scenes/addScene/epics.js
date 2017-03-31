@@ -14,14 +14,12 @@ const addSceneEpic = action$ =>
         return [
           serverId,
           sceneId,
-          scene.scenePayload,
           scene.title,
           scene.interval,
           scene.reuse,
           scene.quantity,
           scene.delay,
-          scene.requirements,
-          scene.blocking
+          scene.requirements
         ];
       });
 

@@ -5,14 +5,12 @@ import { ADD } from './addScene/actions';
 const initialState = new Map();
 const Scene = new Record({
   title: '',
-  scenePayload: {},
   id: '',
   interval: null,
   reuse: null,
   quantity: null,
   delay: null,
-  requirements: null,
-  blocking: false
+  requirements: null
 });
 
 export default (state = initialState, action) => {

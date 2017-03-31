@@ -5,17 +5,16 @@ import { init } from '../removeScene/actions';
 import { getQueueSceneIds } from '../../scenarios/selectors';
 
 export const Scene = ({
-                              id,
-                              title,
-                              serverId,
-                              remove,
-                              interval,
-                              reuse,
-                              quantity,
-                              delay,
-                              requirements,
-                              blocking
-                            }) => {
+                        id,
+                        title,
+                        serverId,
+                        remove,
+                        interval,
+                        reuse,
+                        quantity,
+                        delay,
+                        requirements,
+                      }) => {
   let quantityInfo = null;
 
   if (reuse) {
@@ -31,11 +30,6 @@ export const Scene = ({
       <div className="scene__title">{title}</div>
       <div className="scene-spec">
         {
-          blocking
-            ? <div className="scene-spec__tag"><i className="fa fa-lock" /></div>
-            : null
-        }
-        {
           requirements
             ? <div className="scene-spec__tag"><i className="fa fa-handshake-o" /></div>
             : null
@@ -46,7 +40,7 @@ export const Scene = ({
               <div className="scene-spec__tag">
                 <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
               </div>
-          )
+            )
             : null
         }
         {
@@ -80,15 +74,14 @@ Scene.propTypes = {
   reuse: React.PropTypes.string,
   quantity: React.PropTypes.number,
   delay: React.PropTypes.number,
-  requirements: React.PropTypes.shape({}),
-  blocking: React.PropTypes.bool
+  requirements: React.PropTypes.shape({})
 };
 
 const sceneMapStateToProps = (initialState, ownProps) => (state) => {
   const {
-    title, interval, reuse, quantity, delay, requirements, blocking
+    title, interval, reuse, quantity, delay, requirements
   } = getScene(state, ownProps);
-  return { title, interval, reuse, quantity, delay, requirements, blocking };
+  return { title, interval, reuse, quantity, delay, requirements };
 };
 
 const sceneMapDispatchToProps = {

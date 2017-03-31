@@ -8,7 +8,6 @@ Array [
         "requirements": Object {
           "url": "/some-path",
         },
-        "scenePayload": "scenePayload",
         "title": "scene title",
       },
     ],
@@ -16,7 +15,6 @@ Array [
     "type": "addScene/INIT",
   },
   Object {
-    "blocking": undefined,
     "delay": undefined,
     "id": "scene id",
     "interval": undefined,
@@ -25,7 +23,6 @@ Array [
       "url": "/some-path",
     },
     "reuse": undefined,
-    "scenePayload": "scenePayload",
     "serverId": "serverId",
     "title": "scene title",
     "type": "scenes/ADD",
