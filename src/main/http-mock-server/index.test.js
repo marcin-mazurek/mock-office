@@ -61,6 +61,30 @@ describe('send', () => {
 });
 
 describe('HttpMockServer', () => {
+  it('should ensure that all sockets are destroyed and close event dispatched on stop', (done) => {
+    // process.on('uncaughtException', (err) => {
+    //   console.log(err.stack);
+    // });
+    const server = new HttpMockServer({
+      port: 3000,
+      id: 'some id',
+      emitter: new ServerEventsEmitter()
+    });
+
+    server.start(() => {
+      request('http://127.0.0.1:3000', () => {
+        // we need catch error when server is destroying sockets
+      });
+      setTimeout(() => {
+        expect(server.sockets).toHaveLength(1);
+        server.stop(() => {
+          expect(server.sockets).toHaveLength(0);
+          done();
+        });
+      }, 100);
+    });
+  });
+
   describe('destroyOpenSockets', () => {
     it('should destroy and remove all saved sockets', () => {
       const server = new HttpMockServer({
@@ -79,6 +103,90 @@ describe('HttpMockServer', () => {
       ];
       server.destroyOpenSockets();
       expect(server.sockets).toHaveLength(0);
+    });
+  });
+
+  describe('getScenario', () => {
+    it('should return server scenario', () => {
+      const server = new HttpMockServer({
+        id: 'some id',
+        emitter: new ServerEventsEmitter()
+      });
+
+      expect(server.getScenario()).toBe(server.scenario);
+    });
+  });
+
+  describe('respond', () => {
+    it('should call scenario.play if found scene', () => {
+      const server = new HttpMockServer({
+        id: 'some id',
+        emitter: new ServerEventsEmitter()
+      });
+      const playMock = jest.fn();
+
+      server.scenario = {
+        findScene() {
+          return {};
+        },
+        play: playMock
+      };
+
+      server.respond(() => {
+      }, () => {
+      });
+      expect(playMock).toHaveBeenCalled();
+    });
+
+    it('should send response to client', (done) => {
+      const server = new HttpMockServer({
+        port: 3003,
+        id: 'some id',
+        emitter: new ServerEventsEmitter()
+      });
+
+      server.getScenario().addScene({
+        title: 'request for some-url',
+        requirements: {
+          event: 'RECEIVED_REQUEST'
+        },
+        parts: [
+          {
+            title: 'response for /some-url request',
+            type: 'immediate',
+            payload: {
+              body: {
+                data: 'response for some-url'
+              }
+            }
+          }
+        ]
+      });
+
+      server.start(() => {
+        request.get('http://127.0.0.1:3003', (error, response) => {
+          server.stop();
+          expect(JSON.parse(response.body)).toEqual({
+            body: {
+              data: 'response for some-url'
+            }
+          });
+          done();
+        });
+      });
+    });
+  });
+
+  describe('start', () => {
+    it('should start http server', (done) => {
+      const server = new HttpMockServer({
+        emitter: new ServerEventsEmitter()
+      });
+      server.start(() => {
+        expect(server.httpServer.listening).toBeTruthy();
+        server.stop();
+        done();
+      });
     });
   });
 });

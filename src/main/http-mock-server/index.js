@@ -53,6 +53,7 @@ export default class HttpMockServer {
       this.httpServer = httpServer.createServer(app);
     }
 
+    // we need store sockets to destroy them manually before closing server
     this.httpServer.on('connection', this.saveSocketRef);
   }
 
@@ -88,6 +89,11 @@ export default class HttpMockServer {
 
   stop(cb) {
     this.scenario.cancelPendingScenes();
+    // Browsers can keep connection open, thus callback after
+    // HttpMockServer.stop cant be called if there are sockets
+    // still open, thus we need to ensure that all sockets are
+    // destroyed
+    // https://nodejs.org/api/net.html#net_server_close_callback
     this.destroyOpenSockets();
     this.httpServer.close(cb);
   }
