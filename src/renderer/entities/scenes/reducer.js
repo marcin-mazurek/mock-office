@@ -1,24 +1,10 @@
-import { Map, Record, List } from 'immutable';
-import { REMOVE, FINISH } from './removeScene/actions';
-import { ADD } from './addScene/actions';
-import { RUN, STOP } from './runScene/actions';
+import { Map, List } from 'immutable';
+import { REMOVE, FINISH } from '../../scenes/removeScene/actions';
+import { ADD } from '../../scenes/addScene/actions';
+import { RUN, STOP } from '../../scenes/runScene/actions';
+import Scene from './Scene';
 
 const initialState = new Map();
-const Scene = new Record({
-  title: '',
-  id: '',
-  interval: null,
-  reuse: null,
-  quantity: null,
-  delay: null,
-  requirements: null,
-  parts: new List(),
-  finished: false,
-  running: false,
-  runCount: 0,
-  lastRunTimestamp: null,
-  lastDuration: null
-});
 
 export default (state = initialState, action) => {
   switch (action.type) {

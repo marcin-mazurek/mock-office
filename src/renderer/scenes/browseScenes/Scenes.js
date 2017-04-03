@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getScene } from '../selectors';
+import { createSelector } from 'reselect';
+import { getScene } from '../../entities/scenes/selectors';
 import { init } from '../removeScene/actions';
-import { getQueueSceneIds } from '../../scenarios/selectors';
+import { getScenes } from '../../entities/scenarios/selectors';
 import ScenePartsConnect from '../../sceneParts/browse/ScenePartList';
 
 export const Scene = ({
@@ -90,22 +91,20 @@ Scene.propTypes = {
   finished: React.PropTypes.bool.isRequired
 };
 
-const sceneMapStateToProps = (initialState, ownProps) => (state) => {
-  const {
-    title, interval, reuse, quantity, delay, requirements, finished, runCount, lastDuration
-  } = getScene(state, ownProps);
-  return {
-    title,
-    interval,
-    reuse,
-    quantity,
-    delay,
-    requirements,
-    finished,
-    runCount,
-    lastDuration
-  };
-};
+const sceneSelector = createSelector(
+  getScene,
+  scene => ({
+    title: scene.title,
+    reuse: scene.reuse,
+    quantity: scene.quantity,
+    requirements: scene.requirements,
+    finished: scene.finished,
+    runCount: scene.runCount,
+    lastDuration: scene.lastDuration
+  })
+);
+
+const sceneMapStateToProps = (initialState, ownProps) => state => sceneSelector(state, ownProps);
 
 const sceneMapDispatchToProps = {
   remove: init
@@ -132,7 +131,7 @@ Scenes.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  sceneIds: getQueueSceneIds(ownProps.serverId, state)
+  sceneIds: getScenes(ownProps.serverId, state)
 });
 
 export default connect(mapStateToProps)(Scenes);

@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
-import { REMOVE } from './removeScene/actions';
-import { ADD } from './addScene/actions';
+import { REMOVE } from '../../scenes/removeScene/actions';
+import { ADD } from '../../scenes/addScene/actions';
 
 describe('scenes reducer', () => {
   test(`${ADD}`, () => {
