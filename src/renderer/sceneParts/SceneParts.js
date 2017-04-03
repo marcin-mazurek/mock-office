@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { ScenePart } from '../sceneParts/reducer';
-import { getSceneParts } from './selectors';
+import getSceneParts from './selectors';
 
 export const SceneParts = ({ sceneParts }) => (
   <ul className="scene-parts">

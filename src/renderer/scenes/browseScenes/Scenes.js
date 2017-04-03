@@ -86,8 +86,8 @@ Scene.propTypes = {
   quantity: React.PropTypes.number,
   requirements: React.PropTypes.shape({}),
   runCount: React.PropTypes.number.isRequired,
-  lastDuration: React.PropTypes.number.isRequired,
-  finished: React.PropTypes.number.isRequired
+  lastDuration: React.PropTypes.number,
+  finished: React.PropTypes.bool.isRequired
 };
 
 const sceneMapStateToProps = (initialState, ownProps) => (state) => {
