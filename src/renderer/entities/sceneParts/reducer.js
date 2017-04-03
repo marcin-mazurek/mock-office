@@ -1,19 +1,10 @@
-import { Record, List, Map } from 'immutable';
-import { ADD } from '../scenes/addScene/actions';
+import { List, Map } from 'immutable';
+import { ADD } from '../../scenes/addScene/actions';
+import ScenePart from './ScenePart';
 
 const initialState = new Map({
   ids: new List(),
   entities: new Map()
-});
-
-export const ScenePart = new Record({
-  title: '',
-  id: '',
-  interval: null,
-  reuse: null,
-  quantity: null,
-  delay: null,
-  requirements: null
 });
 
 export default (state = initialState, action) => {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getScene } from '../selectors';
 import { init } from '../removeScene/actions';
 import { getQueueSceneIds } from '../../scenarios/selectors';
-import ScenePartsConnect from '../../sceneParts/SceneParts';
+import ScenePartsConnect from '../../sceneParts/browse/ScenePartList';
 
 export const Scene = ({
                         id,
@@ -32,7 +32,7 @@ export const Scene = ({
       <div className="scene-details">
         <div className="scene__title">{title}</div>
         <div className="scene-spec">
-          <div className="scene-part-spec__tag">{requirements.event}</div>
+          <div className="scene-spec__tag">{requirements.event}</div>
           {
             reuse
               ? <div className="scene-spec__tag">{quantityInfo}</div>

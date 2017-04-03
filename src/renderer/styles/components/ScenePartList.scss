@@ -1,13 +1,13 @@
-.scene-parts {
+.scene-part-list {
   @extend %list-reset;
 }
 
-.scene-part {
+.scene-part-list-item {
   display: flex;
   align-items: center;
 }
 
-.scene-part-spec__tag {
+.scene-part-list-item-spec__tag {
   border-radius: 3px;
   padding: 2px 6px;
   margin-right: 10px;
@@ -16,7 +16,7 @@
   color: darken($scene-spec-tag-background-color, 40%);
 }
 
-.scene-part__remove-button {
+.scene-part-list-item__remove-button {
   @extend %button-reset;
   cursor: pointer;
   font-size: 16px;
@@ -29,19 +29,19 @@
   }
 }
 
-.scene-part-spec {
+.scene-part-list-item-spec {
   display: flex;
   align-items: center;
   flex: none;
 }
 
-.scene-part-title {
+.scene-part-list-item-title {
   padding: 5px 15px;
   display: flex;
   align-items: center;
 }
 
-.scene-part__title {
+.scene-part-list-item__title {
   margin-right: 15px;
   flex: none;
 }
