@@ -50,3 +50,7 @@
   background-color: $scene-spec-tag-background-color;
   color: darken($scene-spec-tag-background-color, 40%);
 }
+
+.scene__parts {
+  padding-left: 10px;
+}

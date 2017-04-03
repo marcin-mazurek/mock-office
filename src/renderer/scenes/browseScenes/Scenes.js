@@ -10,11 +10,9 @@ export const Scene = ({
                         title,
                         serverId,
                         remove,
-                        interval,
                         reuse,
                         quantity,
-                        delay,
-                        requirements,
+                        requirements
                       }) => {
   let quantityInfo = null;
 
@@ -31,29 +29,7 @@ export const Scene = ({
       <div className="scene-details">
         <div className="scene__title">{title}</div>
         <div className="scene-spec">
-          {
-            requirements
-              ? <div className="scene-spec__tag"><i className="fa fa-handshake-o" /></div>
-              : null
-          }
-          {
-            delay
-              ? (
-                <div className="scene-spec__tag">
-                  <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
-                </div>
-              )
-              : null
-          }
-          {
-            interval
-              ? (
-                <div className="scene-spec__tag">
-                  <i className="fa fa-history" />{' '}{interval / 1000}{'s'}
-                </div>
-              )
-              : null
-          }
+          <div className="scene-part-spec__tag">{requirements.event}</div>
           {
             reuse
               ? <div className="scene-spec__tag">{quantityInfo}</div>
@@ -64,7 +40,9 @@ export const Scene = ({
           <i className="fa fa-times" />
         </button>
       </div>
-      <ScenePartsConnect sceneId={id} />
+      <div className="scene__parts">
+        <ScenePartsConnect sceneId={id} />
+      </div>
     </div>
   );
 };
@@ -74,10 +52,8 @@ Scene.propTypes = {
   title: React.PropTypes.string.isRequired,
   serverId: React.PropTypes.string.isRequired,
   remove: React.PropTypes.func.isRequired,
-  interval: React.PropTypes.number,
   reuse: React.PropTypes.string,
   quantity: React.PropTypes.number,
-  delay: React.PropTypes.number,
   requirements: React.PropTypes.shape({})
 };
 

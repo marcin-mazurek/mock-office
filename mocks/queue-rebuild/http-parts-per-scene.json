@@ -12,7 +12,8 @@
           "body": {
             "data": "response for some-url"
           }
-        }
+        },
+        "delay": 2000
       }
     ]
   }
