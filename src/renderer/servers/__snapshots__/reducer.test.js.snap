@@ -1,11 +1,12 @@
-exports[`servers reducer servers/ADD action 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`servers reducer servers/ADD scene 1`] = `
 Object {
   "entities": Object {
     "AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==": Object {
       "id": "AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==",
       "name": "Server name",
       "port": 3000,
-      "secure": false,
       "type": "http",
     },
   },

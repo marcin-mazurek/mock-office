@@ -19,7 +19,12 @@ describe('scenes reducer', () => {
         title: '',
         delay: null,
         requirements: null,
-        parts: []
+        parts: [],
+        finished: false,
+        running: false,
+        runCount: 0,
+        lastRunTimestamp: null,
+        lastDuration: null
       }
     });
   });

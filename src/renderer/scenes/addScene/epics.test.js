@@ -13,6 +13,13 @@ const mockedElectron = {
             return {
               getScenario() {
                 return {
+                  scenes: {
+                    find() {
+                      return {
+                        parts: []
+                      };
+                    }
+                  },
                   addScene() {
                     return 'scene id';
                   }

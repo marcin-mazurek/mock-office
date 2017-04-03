@@ -5,7 +5,7 @@ Array [
   Object {
     "sceneId": "scene id",
     "serverId": "server id",
-    "type": "remove/init",
+    "type": "removeScene/init",
   },
   Object {
     "sceneId": "scene id",

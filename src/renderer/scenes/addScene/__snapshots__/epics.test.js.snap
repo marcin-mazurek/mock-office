@@ -18,6 +18,7 @@ Array [
     "delay": undefined,
     "id": "scene id",
     "interval": undefined,
+    "parts": Array [],
     "quantity": undefined,
     "requirements": Object {
       "url": "/some-path",

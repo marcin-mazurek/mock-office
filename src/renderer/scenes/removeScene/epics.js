@@ -6,7 +6,7 @@ export const removeSceneEpic = action$ =>
     .map((action) => {
       const { serverId, sceneId } = action;
       const server = remote.require('./main/servers').default.find(serverId);
-      server.removeScene(sceneId);
+      server.getScenario().removeScene(sceneId);
       return [serverId, sceneId];
     }).map(scene => remove(...scene));
 
