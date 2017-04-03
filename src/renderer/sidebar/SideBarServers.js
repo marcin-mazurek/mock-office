@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { getServerList, getSelected } from '../servers/selectors';
+import { getSelected, getServerList } from '../servers/selectors';
 import { select as dispatchSelect } from '../servers/actions';
 
 export const SideBarServers = ({ servers, select, goToServerPage, selected }) => (
@@ -18,9 +18,23 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected }) =>
       {
         servers.map((server) => {
           const serverIndicatorClassNames = classnames(
-            'fa fa-power-off',
             'sidebar-server__status-indicator',
             { 'sidebar-server__status-indicator--up': server.running }
+          );
+          const serverTypeIndicatorClassNames = classnames(
+            'fa',
+            {
+              'fa-globe': server.type === 'http',
+              'fa-feed': server.type === 'ws'
+            }
+          );
+          const serverSecureIndicatorClassNames = classnames(
+            'fa',
+            'sidebar-server__secure-indicator',
+            {
+              'fa-lock': server.secure,
+              'fa-unlock': !server.secure
+            }
           );
           const serverListItemClassNames = classnames({
             'sidebar-servers-list-item': true,
@@ -29,7 +43,10 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected }) =>
 
           return (
             <li className={serverListItemClassNames} key={server.id}>
-              <i className={serverIndicatorClassNames} />
+              <span className={serverIndicatorClassNames}>
+                <i className={serverTypeIndicatorClassNames} title={server.type} />
+                <i className={serverSecureIndicatorClassNames} title={server.secure ? 'Enabled SSL' : 'Without SSL'} />
+              </span>
               <button
                 className="sidebar-server-list__label"
                 href=""

@@ -43,7 +43,8 @@ describe('ServerInspect', () => {
         port: 3000,
         queue: 'some queue id',
         id: 'some id'
-      }
+      },
+      removeServer: jest.fn()
     };
     const wrapper = shallow(<ServerInspect {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();

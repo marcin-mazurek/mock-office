@@ -73,9 +73,18 @@
   color: $sidebar-server-status-indicator-font-color;
   transition: color .3s ease;
   font-size: 18px;
-  margin-right: 5px;
+  margin-right: 10px;
+  position: relative;
 }
 
 .sidebar-server__status-indicator--up {
   color: $sidebar-server-status-indicator-up-font-color;
+}
+
+.sidebar-server__secure-indicator {
+  font-size: 10px;
+  position: absolute;
+  right: -7px;
+  bottom: -3px;
+  opacity: .6;
 }

@@ -57,7 +57,7 @@ class ServersHub {
       return undefined;
     }
 
-    return serverFound;
+    return serverFound.instance;
   }
 
   getAll() {

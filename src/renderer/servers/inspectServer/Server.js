@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
-import createStartScene from '../startServer/actions';
-import createStopScene from '../stopServer/actions';
+import createStartAction from '../startServer/actions';
+import createStopAction from '../stopServer/actions';
 import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../selectors';
 import FilePickerConnect from '../../scenes/addSceneFromFile/FilePicker';
 import ScenesConnect from '../../scenes/browseScenes/Scenes';
+import { init as createRemoveServerAction } from '../removeServer/actions';
 
 export const ServerPlaceholder = ({ serverExists }) =>
   <div className="server-placeholder">
@@ -59,15 +60,15 @@ ServerToggle.propTypes = {
 };
 
 const serverToggleMapDispatchToProps = {
-  start: createStartScene,
-  stop: createStopScene
+  start: createStartAction,
+  stop: createStopAction
 };
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
 
 const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
 
-export const ServerInspect = ({ running, serverDetails }) => {
+export const ServerInspect = ({ running, serverDetails, removeServer }) => {
   const { name, port, type, id } = serverDetails;
 
   return (
@@ -89,6 +90,17 @@ export const ServerInspect = ({ running, serverDetails }) => {
             </div>
           </div>
         </div>
+        <button
+          className="inspect-server__remove-button button"
+          onClick={() => (
+            confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
+              ? removeServer(id)
+              : false
+            )
+          }
+        >
+          <i className="fa fa-trash" />
+        </button>
       </div>
       <main className="inspect-server-main inspect-server__main">
         <div className="inspect-server-scenes-header">
@@ -118,12 +130,19 @@ export const ServerInspect = ({ running, serverDetails }) => {
 
 ServerInspect.propTypes = {
   running: React.PropTypes.bool.isRequired,
-  serverDetails: React.PropTypes.shape({})
+  serverDetails: React.PropTypes.shape({}),
+  removeServer: React.PropTypes.func.isRequired
 };
+
+const serverInspectMapDispatchToProps = {
+  removeServer: createRemoveServerAction
+};
+
+export const ServerInspectConnect = connect(null, serverInspectMapDispatchToProps)(ServerInspect);
 
 export const Server = ({ selected, running, serverDetails }) => (
   selected
-    ? <ServerInspect running={running} serverDetails={serverDetails} />
+    ? <ServerInspectConnect running={running} serverDetails={serverDetails} />
     : <ServerPlaceholderConnect />
 );
 

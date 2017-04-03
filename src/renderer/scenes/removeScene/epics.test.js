@@ -25,7 +25,7 @@ const mockedElectron = {
 };
 
 jest.mock('electron', () => mockedElectron);
-const removeSceneEpic = require('./epics').default;
+const removeSceneEpic = require('./epics').removeSceneEpic;
 
 let store;
 const epicMiddleware = createEpicMiddleware(removeSceneEpic);

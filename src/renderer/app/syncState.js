@@ -6,7 +6,7 @@ export default (store) => {
   const servers = remote.require('./main/servers').default.servers;
 
   servers.forEach((server) => {
-    store.dispatch(add(server.name, server.port, server.type, server.id));
+    store.dispatch(add(server.name, server.port, server.type, server.id, server.isSecure));
 
     if (server.isLive()) {
       store.dispatch(start(server.id));
