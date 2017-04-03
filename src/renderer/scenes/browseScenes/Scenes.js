@@ -12,7 +12,10 @@ export const Scene = ({
                         remove,
                         reuse,
                         quantity,
-                        requirements
+                        requirements,
+                        runCount,
+                        lastDuration,
+                        finished
                       }) => {
   let quantityInfo = null;
 
@@ -35,7 +38,34 @@ export const Scene = ({
               ? <div className="scene-spec__tag">{quantityInfo}</div>
               : null
           }
+          {
+            runCount > 0
+              ? (
+                <div className="scene-status__tag" title="Run count">
+                  <i className="fa fa-flash" /> {runCount}
+                </div>
+              )
+              : null
+          }
+          {
+            lastDuration
+              ? (
+                <div className="scene-status__tag" title="Last duration">
+                  <i className="fa fa-clock-o" /> {lastDuration}{'ms'}
+                </div>
+              )
+              : null
+          }
         </div>
+        {
+          finished
+            ? (
+              <div className="scene-status__tag">
+                <i className="fa fa-check" />{' Finished'}
+              </div>
+            )
+            : null
+        }
         <button className="scene__remove-button" onClick={() => remove(serverId, id)}>
           <i className="fa fa-times" />
         </button>
@@ -54,14 +84,27 @@ Scene.propTypes = {
   remove: React.PropTypes.func.isRequired,
   reuse: React.PropTypes.string,
   quantity: React.PropTypes.number,
-  requirements: React.PropTypes.shape({})
+  requirements: React.PropTypes.shape({}),
+  runCount: React.PropTypes.number.isRequired,
+  lastDuration: React.PropTypes.number.isRequired,
+  finished: React.PropTypes.number.isRequired
 };
 
 const sceneMapStateToProps = (initialState, ownProps) => (state) => {
   const {
-    title, interval, reuse, quantity, delay, requirements
+    title, interval, reuse, quantity, delay, requirements, finished, runCount, lastDuration
   } = getScene(state, ownProps);
-  return { title, interval, reuse, quantity, delay, requirements };
+  return {
+    title,
+    interval,
+    reuse,
+    quantity,
+    delay,
+    requirements,
+    finished,
+    runCount,
+    lastDuration
+  };
 };
 
 const sceneMapDispatchToProps = {

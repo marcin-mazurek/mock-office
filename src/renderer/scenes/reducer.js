@@ -1,6 +1,7 @@
 import { Map, Record, List } from 'immutable';
-import { REMOVE } from './removeScene/actions';
+import { REMOVE, FINISH } from './removeScene/actions';
 import { ADD } from './addScene/actions';
+import { RUN, STOP } from './runScene/actions';
 
 const initialState = new Map();
 const Scene = new Record({
@@ -11,7 +12,12 @@ const Scene = new Record({
   quantity: null,
   delay: null,
   requirements: null,
-  parts: new List()
+  parts: new List(),
+  finished: false,
+  running: false,
+  runCount: 0,
+  lastRunTimestamp: null,
+  lastDuration: null
 });
 
 export default (state = initialState, action) => {
@@ -35,6 +41,25 @@ export default (state = initialState, action) => {
     }
     case REMOVE: {
       return state.remove(action.sceneId);
+    }
+    case FINISH: {
+      return state.setIn([action.sceneId, 'finished'], true);
+    }
+    case STOP: {
+      const prevState = state.get(action.taskId);
+      return state.mergeIn([action.taskId], {
+        running: false,
+        lastDuration: Date.now() - prevState.get('lastRunTimestamp')
+      });
+    }
+    case RUN: {
+      const prevState = state.get(action.taskId);
+      return state.mergeIn([action.taskId], {
+        running: true,
+        runCount: prevState.get('runCount') + 1,
+        lastRunTimestamp: Date.now(),
+        lastDuration: null
+      });
     }
     default: {
       return state;

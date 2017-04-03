@@ -51,13 +51,7 @@ class ServersHub {
   }
 
   find(id) {
-    const serverFound = this.servers.find(server => server.id === id);
-
-    if (!serverFound) {
-      return undefined;
-    }
-
-    return serverFound.instance;
+    return this.servers.find(server => server.id === id);
   }
 
   getAll() {

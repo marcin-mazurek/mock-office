@@ -1,14 +1,16 @@
 import { remote } from 'electron';
-import { INIT, remove } from './actions';
+import { REMOVE_AFTER_USE, INIT, remove } from './actions';
 
-const removeSceneEpic = action$ =>
+export const removeSceneEpic = action$ =>
   action$.ofType(INIT)
     .map((action) => {
       const { serverId, sceneId } = action;
       const server = remote.require('./main/servers').default.find(serverId);
-      const scenario = server.getScenario();
-      scenario.removeScene(sceneId);
+      server.removeScene(sceneId);
       return [serverId, sceneId];
     }).map(scene => remove(...scene));
 
-export default removeSceneEpic;
+export const removeSceneAfterUseEpic = action$ =>
+  action$.ofType(REMOVE_AFTER_USE)
+    .delay(5000)
+    .map(({ serverId, sceneId }) => remove(serverId, sceneId));

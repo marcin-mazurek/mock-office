@@ -6,21 +6,21 @@ const addSceneEpic = action$ =>
   action$.ofType(INIT)
     .flatMap((action) => {
       const { serverId, scenes } = action;
-      const scenesForAdd = scenes.map((scene) => {
+      const scenesForAdd = scenes.map((sceneParams) => {
         const server = remote.require('./main/servers').default.find(serverId);
         const scenario = server.getScenario();
-        const sceneId = scenario.addScene(scene);
+        const sceneId = scenario.addScene(sceneParams);
         const parts = scenario.scenes.find(scene => scene.id === sceneId).parts;
 
         return [
           serverId,
           sceneId,
-          scene.title,
-          scene.interval,
-          scene.reuse,
-          scene.quantity,
-          scene.delay,
-          scene.requirements,
+          sceneParams.title,
+          sceneParams.interval,
+          sceneParams.reuse,
+          sceneParams.quantity,
+          sceneParams.delay,
+          sceneParams.requirements,
           parts
         ];
       });

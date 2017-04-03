@@ -54,3 +54,13 @@
 .scene__parts {
   padding-left: 10px;
 }
+
+.scene--running {
+  background-color: $task-status-running-background-color;
+  transition: none;
+}
+
+.scene--finished {
+  color: lighten($font-color, 30%);
+  background-color: inherit;
+}

@@ -1,5 +1,7 @@
-export const INIT = 'remove/init';
+export const INIT = 'removeScene/init';
 export const REMOVE = 'scenes/REMOVE';
+export const FINISH = 'scenes/FINISH';
+export const REMOVE_AFTER_USE = 'scenes/REMOVE_AFTER_USE';
 
 export const init = (serverId, sceneId) => ({
   type: INIT,
@@ -7,8 +9,20 @@ export const init = (serverId, sceneId) => ({
   serverId
 });
 
+export const finish = (serverId, sceneId) => ({
+  type: FINISH,
+  serverId,
+  sceneId
+});
+
 export const remove = (serverId, sceneId) => ({
   type: REMOVE,
+  serverId,
+  sceneId
+});
+
+export const removeAfterUse = (serverId, sceneId) => ({
+  type: REMOVE_AFTER_USE,
   serverId,
   sceneId
 });

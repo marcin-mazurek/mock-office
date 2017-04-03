@@ -63,7 +63,7 @@ export default class Scenario {
       () => {
         if (scene.toRemove) {
           this.removeScene(id);
-          this.emitter.emit('SCENE_REMOVED', { sceneId: id });
+          this.emitter.emit('SCENE_REMOVED_AFTER_USE', { sceneId: id });
         }
       }
     );
