@@ -1,9 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import Main from './Main';
 
-test('Main should render', () => {
-  const wrapper = shallow(<Main />);
-  expect(toJson(wrapper)).toMatchSnapshot();
+describe('Main', () => {
+  test('should render children', () => {
+    const Component = () => <div />;
+    const wrapper = shallow(<Main><Component /></Main>);
+    expect(wrapper.find(Component)).toHaveLength(1);
+  });
 });
