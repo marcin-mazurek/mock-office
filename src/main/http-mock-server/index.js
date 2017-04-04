@@ -74,8 +74,13 @@ export default class HttpMockServer {
     }
   }
 
-  start(cb) {
-    this.httpServer.listen(this.port, cb);
+  start(onSuccess, onError) {
+    this.httpServer.listen(this.port, onSuccess);
+    this.httpServer.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        onError(`Port ${err.port} is in use. Choose different port.`);
+      }
+    });
   }
 
   saveSocketRef(socket) {

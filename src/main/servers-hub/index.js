@@ -30,8 +30,8 @@ class ServersHub {
     const server = this.find(id);
 
     if (!server.isLive()) {
-      return new Promise((resolve) => {
-        server.start(resolve);
+      return new Promise((resolve, reject) => {
+        server.start(resolve, reject);
       });
     }
 
