@@ -1,7 +1,9 @@
 import React from 'react';
+import ErrorListConnect from '../errors/ErrorList';
 
 const App = ({ children }) => (
   <div className="app">
+    <ErrorListConnect />
     { children }
   </div>
 );

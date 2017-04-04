@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
       let newState = state;
-      newState = newState.push(new AppError({ reason: action.reason }));
+      newState = newState.push(new AppError(action.reason));
       return newState;
     }
     default: {

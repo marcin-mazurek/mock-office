@@ -4,7 +4,7 @@ import serversReducer from '../entities/servers/reducer';
 import queuesReducer from '../entities/scenarios/reducer';
 import scenesReducer from '../entities/scenes/reducer';
 import scenePartsReducer from '../entities/sceneParts/reducer';
-import errorsReducer from '../errors/reducer';
+import errorsReducer from '../entities/errors/reducer';
 
 export default combineReducers({
   routing: routingReducer,
