@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import createStartAction from '../startServer/actions';
 import createStopAction from '../stopServer/actions';
-import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../selectors';
+import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../../entities/servers/selectors';
 import FilePickerConnect from '../../scenes/addSceneFromFile/FilePicker';
 import ScenesConnect from '../../scenes/browseScenes/Scenes';
 import { init as createRemoveServerAction } from '../removeServer/actions';
@@ -93,6 +93,7 @@ export const ServerInspect = ({ running, serverDetails, removeServer }) => {
         <button
           className="inspect-server__remove-button button"
           onClick={() => (
+            // eslint-disable-next-line no-alert
             confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
               ? removeServer(id)
               : false

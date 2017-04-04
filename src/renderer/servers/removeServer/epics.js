@@ -1,7 +1,7 @@
 import { remote } from 'electron';
 import { Observable } from 'rxjs';
 import { INIT } from './actions';
-import { remove } from '../actions';
+import { remove } from '../../entities/servers/actions';
 
 export default action$ =>
   action$.ofType(INIT)

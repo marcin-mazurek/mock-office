@@ -1,5 +1,5 @@
 import { remote } from 'electron';
-import { add } from '../actions';
+import { add } from '../../entities/servers/actions';
 import { INIT } from './actions';
 
 export default action$ =>

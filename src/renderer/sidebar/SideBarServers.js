@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { getSelected, getServerList } from '../servers/selectors';
-import { select as dispatchSelect } from '../servers/actions';
+import { getSelected, getServerList } from '../entities/servers/selectors';
+import { select as dispatchSelect } from '../entities/servers/actions';
 
 export const SideBarServers = ({ servers, select, goToServerPage, selected }) => (
   <div className="sidebar-servers">

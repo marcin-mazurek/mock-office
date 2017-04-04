@@ -5,7 +5,7 @@ import { Map } from 'immutable';
 import configureStore from 'redux-mock-store';
 import SideBarServersConnect from './SideBarServers';
 import SideBar from './SideBar';
-import { Server } from '../servers/reducer';
+import Server from '../entities/servers/reducer';
 
 const mockStore = configureStore();
 

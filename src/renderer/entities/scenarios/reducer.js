@@ -1,5 +1,5 @@
 import { Map, Record, List } from 'immutable';
-import { ADD as ADD_SERVER } from '../../servers/actions';
+import { ADD as ADD_SERVER } from '../servers/actions';
 import { REMOVE as REMOVE_SCENE } from '../../scenes/removeScene/actions';
 import { ADD as ADD_SCENE } from '../../scenes/addScene/actions';
 

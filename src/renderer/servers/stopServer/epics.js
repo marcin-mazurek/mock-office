@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { remote } from 'electron';
-import { stop } from '../actions';
+import { stop } from '../../entities/servers/actions';
 import { INIT } from './actions';
 
 export default action$ =>

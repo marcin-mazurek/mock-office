@@ -2,7 +2,7 @@ import { Map, Set, List } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import 'rxjs';
 import { createEpicMiddleware } from 'redux-observable';
-import { Server } from '../reducer';
+import Server from '../../entities/servers/Server';
 import { init } from './actions';
 
 let mockStore;

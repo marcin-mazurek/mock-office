@@ -1,5 +1,5 @@
 import { render } from 'react-dom';
-import syncScenes from './scenes/syncScenes';
+import syncScenes from './app/syncScenes';
 import syncState from './app/syncState';
 import configureStore from './store';
 import routes from './routes';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { getSelectedServerDetails } from '../../servers/selectors';
+import { getSelectedServerDetails } from '../../entities/servers/selectors';
 import Http from './HttpForm';
 import Ws from './WsForm';
 

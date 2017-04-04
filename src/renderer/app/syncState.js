@@ -1,5 +1,5 @@
 import { remote } from 'electron';
-import { add, start } from '../servers/actions';
+import { add, start } from '../entities/servers/actions';
 import { add as addScene } from '../scenes/addScene/actions';
 
 export default (store) => {

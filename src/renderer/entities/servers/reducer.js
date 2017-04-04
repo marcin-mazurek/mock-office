@@ -1,12 +1,6 @@
-import { Record, Map, List, Set } from 'immutable';
+import { Map, List, Set } from 'immutable';
 import { ADD, SELECT, START, STOP, REMOVE } from './actions';
-
-export const Server = new Record({
-  id: '',
-  name: 'New Server',
-  port: null,
-  type: ''
-});
+import Server from './Server';
 
 const initialState = new Map({
   entities: new Map(),

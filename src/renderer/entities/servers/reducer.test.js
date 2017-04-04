@@ -41,7 +41,18 @@ describe('servers reducer', () => {
       serverType: 'http',
       secure: false
     });
-    expect(state.toJS()).toMatchSnapshot();
+    expect(state.toJS()).toEqual({
+      entities: {
+        'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==': {
+          name: 'Server name',
+          port: 3000,
+          id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
+          type: 'http',
+          secure: false
+        }
+      },
+      ids: ['AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==']
+    });
   });
 
   test(`${STOP} scene`, () => {

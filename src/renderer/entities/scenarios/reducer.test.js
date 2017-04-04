@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 import reducer from './reducer';
 import {
   ADD as ADD_SERVER
-} from '../../servers/actions';
+} from '../servers/actions';
 import { REMOVE as REMOVE_SCENE } from '../../scenes/removeScene/actions';
 import { ADD as ADD_SCENE } from '../../scenes/addScene/actions';
 

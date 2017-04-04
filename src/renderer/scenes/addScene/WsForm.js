@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { init as initAddScene } from './actions';
-import { getSelectedServerDetails } from '../../servers/selectors';
+import { getSelectedServerDetails } from '../../entities/servers/selectors';
 
 export class WsForm extends React.Component {
   constructor(props) {

@@ -6,8 +6,8 @@ import {
   SCENE_REMOVED_AFTER_USE,
   SCENE_END
 } from '../../main/common/eventNames';
-import { removeAfterUse, finish } from './removeScene/actions';
-import { run, stop } from './runScene/actions';
+import { removeAfterUse, finish } from '../scenes/removeScene/actions';
+import { run, stop } from '../scenes/runScene/actions';
 
 const eventArgs2ActionPayload = (event, args) => [args.serverId, args.sceneId];
 
