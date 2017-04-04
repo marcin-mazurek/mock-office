@@ -7,9 +7,10 @@ const initialState = new List();
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      let newState = state;
-      newState = newState.push(new AppError(action.reason));
-      return newState;
+      return state.push(new AppError(action.reason));
+    }
+    case 'errors/REMOVE': {
+      return state.filter(error => error.id !== action.id);
     }
     default: {
       return state;
