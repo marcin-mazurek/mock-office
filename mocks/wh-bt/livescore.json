@@ -1,54 +1,75 @@
 [
   {
     "title": "begin of communication",
-    "instant": true,
-    "taskPayload": {
-      "message": "NAIxMDACQzhDNDA0OENFRjc0NzRBMC0wMDQ0MEJDQjAwMDAwMDAx",
-      "type": "b64"
-    }
+    "requirements": {
+      "event": "CLIENT_CONNECTED"
+    },
+    "parts": [
+      {
+        "title": "response for /some-url request",
+        "type": "immediate",
+        "payload": {
+          "message": "NAIxMDACQzhDNDA0OENFRjc0NzRBMC0wMDQ0MEJDQjAwMDAwMDAx",
+          "type": "b64"
+        }
+      }
+    ]
   },
   {
     "title": "response for subscription for score",
     "requirements": {
+      "event": "RECEIVED_MESSAGE",
       "message": "FnNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvc2NvcmU=",
       "type": "b64"
     },
-    "taskPayload": {
-      "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvc2NvcmUhNmEwNwEwIC0gMA==",
-      "type": "b64"
-    }
+    "parts": [
+      {
+        "title": "response for /some-url request",
+        "type": "immediate",
+        "payload": {
+          "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvc2NvcmUhNmEwNwEwIC0gMA==",
+          "type": "b64"
+        }
+      }
+    ]
   },
   {
-    "blocking": true,
-    "title": "response for subscription for time",
+    "title": "start livescore",
     "requirements": {
+      "event": "RECEIVED_MESSAGE",
       "message": "FnNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZQ==",
       "type": "b64"
     },
-    "taskPayload": {
-      "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZSE2YTA5ATkyNw==",
-      "type": "b64"
-    }
-  },
-  {
-    "title": "emit seconds on interval",
-    "instant": true,
-    "interval": 1000,
-    "taskPayload": "generator",
-    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/timeTicker.js"
-  },
-  {
-    "title": "emit score on interval",
-    "instant": true,
-    "interval": 10000,
-    "taskPayload": "generator",
-    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/score.js"
-  },
-  {
-    "title": "emit ping on interval",
-    "instant": true,
-    "interval": 5000,
-    "taskPayload": "generator",
-    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/pinger.js"
+    "parts": [
+      {
+        "title": "response for /some-url request",
+        "type": "immediate",
+        "payload": {
+          "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZSE2YTA5ATkyNw==",
+          "type": "b64"
+        }
+      },
+      {
+        "title": "emit seconds on interval",
+        "type": "periodic",
+        "interval": 1000,
+        "payload": "generator",
+        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/timeTicker.js"
+      },
+      {
+        "title": "emit score on interval",
+        "type": "periodic",
+        "interval": 10000,
+        "payload": "generator",
+        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/score.js"
+      },
+      {
+        "title": "emit ping on interval",
+        "type": "periodic",
+        "interval": 5000,
+        "payload": "generator",
+        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/pinger.js"
+      }
+    ]
   }
 ]

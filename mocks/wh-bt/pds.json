@@ -1,26 +1,34 @@
 [
   {
     "title": "begin of communication",
-    "instant": true,
-    "taskPayload": {
-      "message": "NAIxMDACREQ5RTIwNUQ0QkU0N0RDQy0wMDAwMDAwMDAwMEEyRjVF",
-      "type": "b64"
-    }
-  },
-  {
-    "title": "begin of subscription",
-    "instant": true,
-    "taskPayload": {
-      "message": "FFBEUy9PQl9FVjEwNzU3NTAxITEyaDA3ATACdHJ1ZQJ0cnVlAkECZmFsc2UCMjAxNy0wMy0xNlQwMDo0NTowMC4wMDArMDAwMAJ0cnVlAjIwMTctMDMtMTZUMDA6NDU6MjMuMDAwKzAwMDA=",
-      "type": "b64"
-    }
-  },
-  {
-    "title": "emit ping on interval",
-    "instant": true,
-    "interval": 5000,
-    "taskPayload": "generator",
-    "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/pinger.js"
+    "requirements": {
+      "event": "CLIENT_CONNECTED"
+    },
+    "parts": [
+      {
+        "title": "emit welcome message",
+        "type": "immediate",
+        "payload": {
+          "message": "NAIxMDACREQ5RTIwNUQ0QkU0N0RDQy0wMDAwMDAwMDAwMEEyRjVF",
+          "type": "b64"
+        }
+      },
+      {
+        "title": "emit subscription message",
+        "type": "immediate",
+        "payload": {
+          "message": "FFBEUy9PQl9FVjEwNzU3NTAxITEyaDA3ATACdHJ1ZQJ0cnVlAkECZmFsc2UCMjAxNy0wMy0xNlQwMDo0NTowMC4wMDArMDAwMAJ0cnVlAjIwMTctMDMtMTZUMDA6NDU6MjMuMDAwKzAwMDA=",
+          "type": "b64"
+        }
+      },
+      {
+        "title": "emit subscription message",
+        "type": "periodic",
+        "interval": 5000,
+        "payload": "generator",
+        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/pinger.js"
+      }
+    ]
   }
 ]
 
