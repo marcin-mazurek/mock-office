@@ -3,15 +3,13 @@ import HttpServer from '../http-mock-server';
 import WSMockServer from '../ws-mock-server';
 import globalEvents, { ServerEventsEmitter } from '../globalEvents';
 
-const SAVED_STATE_FILE = './mockeeState.json';
-
 const serverTypes = {
   http: HttpServer,
   ws: WSMockServer
 };
 
 class ServersHub {
-  constructor() {
+  constructor(args) {
     this.servers = [];
     this.add = this.add.bind(this);
     this.start = this.start.bind(this);
@@ -21,27 +19,47 @@ class ServersHub {
     this.remove = this.remove.bind(this);
     this.backupState = this.backupState.bind(this);
     this.restoreState = this.restoreState.bind(this);
+    this.lastStateBackupPath = args && args.lastStateBackupPath ? args.lastStateBackupPath : './mockeeState.json';
   }
 
   backupState() {
-    fs.writeFileSync(SAVED_STATE_FILE, JSON.stringify(this.servers), 'utf8');
+    const state = this.servers.map(
+      server => ({
+        name: server.name,
+        type: server.type,
+        scenes: server.getScenario().scenes.map(scene => ({
+          title: scene.title,
+          requirements: scene.requirements,
+          reuse: scene.reuse,
+          parts: scene.parts.map(scenePart => ({
+            title: scenePart.scheduleDetails.title,
+            type: scenePart.scheduleDetails.type,
+            payload: scenePart.scheduleDetails.payload,
+            delay: scenePart.scheduleDetails.delay
+          }))
+        }))
+      })
+    );
+
+    fs.writeFileSync(this.lastStateBackupPath, JSON.stringify(state), 'utf8');
   }
 
   restoreState() {
-    fs.readFile(SAVED_STATE_FILE, (err, data) => {
+    fs.readFile(this.lastStateBackupPath, (err, data) => {
       if (err) return;
 
       try {
         const serverState = JSON.parse(data);
+
         serverState.forEach((s) => {
           const id = this.add(s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false);
           const server = this.find(id);
-          s.scenario.scenes.forEach((scene) => {
+          s.scenes.forEach((scene) => {
             server.getScenario().addScene(scene);
           });
         });
-        globalEvents.emit('RESTORE_STATE');
 
+        globalEvents.emit('RESTORE_STATE');
         this.backupState();
       } catch (e) {
         globalEvents.emit('RESTORE_STATE_ERROR', e);
