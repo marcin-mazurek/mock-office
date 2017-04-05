@@ -44,7 +44,7 @@ exports[`ErrorListConnect should display current errors from redux store 2`] = `
   errors={
     Array [
       Object {
-        "id": "AVs5B2T25JMNbPC9TEGdJAoB9gf8zw==",
+        "id": "AVs+Ozx6+b2EbRJIShO7iytWyvO9Xw==",
         "reason": "reason 1",
       },
     ]
