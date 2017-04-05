@@ -12,8 +12,8 @@
     "dev-main": "npm-watch",
     "build-main": "babel src --out-dir dist --ignore renderer --source-maps",
     "lint": "eslint 'src/**/*.js'",
-    "test": "jest",
-    "tdd": "jest --watch",
+    "test": "jest --runInBand",
+    "tdd": "jest --watch --runInBand",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

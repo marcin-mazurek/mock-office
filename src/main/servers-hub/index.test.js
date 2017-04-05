@@ -6,7 +6,6 @@ import { ServerEventsEmitter } from '../globalEvents';
 describe('ServerHub', () => {
   it('add should add server to servers list', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     const serversCount = serversHub.servers.length;
     serversHub.add('server name', 3000, 'http', false);
     expect(serversHub.servers.length).toEqual(serversCount + 1);
@@ -14,28 +13,24 @@ describe('ServerHub', () => {
 
   it('add should return id of added server and id of its queue', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     const serverId = serversHub.add('server name', 3000, 'http', false);
     expect(typeof serverId === 'string').toBeTruthy();
   });
 
   it('add should add server of type Http if we provide http type', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     serversHub.add('server name', 3000, 'http', false);
     expect(serversHub.servers[serversHub.servers.length - 1]).toBeInstanceOf(HttpServer);
   });
 
   it('add should add server of type Ws if we provide ws type', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     serversHub.add('server name', 3000, 'ws', false);
     expect(serversHub.servers[serversHub.servers.length - 1]).toBeInstanceOf(WsServer);
   });
 
   it('add should throw error if we provide unknown server type', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     expect(() =>
       serversHub.add('server name', 3000, 'unknown server type', false)
     ).toThrow();
@@ -43,7 +38,6 @@ describe('ServerHub', () => {
 
   it('start should call server start only if it is not running', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     const startMock = jest.fn();
 
     serversHub.servers = [
@@ -76,7 +70,6 @@ describe('ServerHub', () => {
   it('stop should call server stop if it is running', () => {
     const serversHub = new ServersHub();
     const stopMock = jest.fn();
-    serversHub.saveDisabled = true;
     const serverId = 'some-id';
 
     serversHub.servers = [
@@ -98,7 +91,6 @@ describe('ServerHub', () => {
 
   it('stop should not call server stop if it is not running', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     const stopMock = jest.fn();
     const serverId = 'some-id';
 
@@ -121,7 +113,6 @@ describe('ServerHub', () => {
 
   it('find should return proper server', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     const server = {
       id: 'one id'
     };
@@ -139,7 +130,6 @@ describe('ServerHub', () => {
 
   it('find should return undefined if doesnt find server', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     const server = {
       id: 'one id'
     };
@@ -152,40 +142,26 @@ describe('ServerHub', () => {
 
   it('getAll should return new copy of all servers', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     expect(serversHub.getAll()).not.toBe(serversHub.servers);
     expect(serversHub.getAll()).toEqual(serversHub.servers);
   });
 
   it('remove should remove server with provided id', (done) => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
+    const id = serversHub.add('server name', 3000, 'http', false);
 
-    serversHub.servers = [
-      {
-        id: 'some id',
-        isLive() {
-          return false;
-        }
-      },
-      {
-        id: 'another id',
-        isLive() {
-          return false;
-        }
-      }
-    ];
-
-    serversHub.remove('some id').then(() => {
-      expect(serversHub.servers.length).toEqual(1);
-      expect(serversHub.servers[0].id).toEqual('another id');
+    serversHub.remove(id).then(() => {
+      expect(serversHub.servers.length).toEqual(0);
       done();
-    });
+    })
+      .catch((err) => {
+      console.log(err);
+      done();
+      });
   });
 
   it('remove should do nothing when invalid id', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
 
     serversHub.servers = [
       {
@@ -199,7 +175,6 @@ describe('ServerHub', () => {
 
   it('remove should gracefully stop server before remove', () => {
     const serversHub = new ServersHub();
-    serversHub.saveDisabled = true;
     const stopMockFn = jest.fn();
 
     serversHub.servers = [

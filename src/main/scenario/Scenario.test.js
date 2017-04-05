@@ -167,7 +167,7 @@ describe('Scenario', () => {
   });
 
   describe('play', () => {
-    it.only('should remove scene if it shouldn\'t be reused', () => {
+    it('should remove scene if it shouldn\'t be reused', () => {
       const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
       scenario.scenes = [
         {
