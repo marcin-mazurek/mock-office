@@ -79,7 +79,7 @@ export default scenePart =>
         onStart();
         return Scheduler.asap.schedule(
           () => {
-            action(buildSendParams(scenePart.params, payload))
+            action(buildSendParams(scenePart.params, payload));
             onFinish();
             return () => {
             };
