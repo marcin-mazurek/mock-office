@@ -72,7 +72,8 @@ export default class HttpMockServer {
     if (scene) {
       this.scenario.play(scene.id, send(req, res));
     } else {
-      res.status(404).send('Sorry, we cannot find scene.');
+      res.set('Access-Control-Allow-Origin', req.headers.origin)
+        .status(404).send('Sorry, we cannot find scene.');
     }
   }
 
