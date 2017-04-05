@@ -1,11 +1,18 @@
 /*
-Utility module for choosing proper rxjs scheduler
+ Utility module for choosing proper rxjs scheduler
  */
 
 import { Scheduler } from 'rxjs';
 import vm from 'vm';
 import fs from 'fs';
 import atob from 'atob';
+
+const buildSendParams = (params, payload) =>
+  Object.assign({}, params,
+    {
+      payload: typeof payload === 'function' ? payload() : payload
+    }
+  );
 
 export default scenePart =>
   (action, onStart, onFinish) => {
@@ -27,12 +34,10 @@ export default scenePart =>
         onStart();
         return Scheduler.asap.schedule(
           () => {
-            const params = Object.assign({}, scenePart.params, {
-              payload: typeof payload === 'function' ? payload() : payload
-            });
-            action(params);
+            action(buildSendParams(scenePart.params, payload));
             onFinish();
-            return () => {};
+            return () => {
+            };
           }
         );
       }
@@ -40,22 +45,17 @@ export default scenePart =>
         onStart();
         return Scheduler.async.schedule(
           () => {
-            const params = Object.assign({}, scenePart.params, {
-              payload: typeof payload === 'function' ? payload() : payload
-            });
-            action(params);
+            action(buildSendParams(scenePart.params, payload));
             onFinish();
-            return () => {};
+            return () => {
+            };
           },
           scenePart.delay
         );
       }
       case 'periodic': {
         const task = function task(repeatLimit) {
-          const params = Object.assign({}, scenePart.params, {
-            payload: typeof payload === 'function' ? payload() : payload
-          });
-          action(params);
+          action(buildSendParams(scenePart.params, payload));
 
           if (repeatLimit !== undefined) {
             if (repeatLimit - 1 > 0) {
@@ -79,12 +79,10 @@ export default scenePart =>
         onStart();
         return Scheduler.asap.schedule(
           () => {
-            const params = Object.assign({}, scenePart.params, {
-              payload: typeof payload === 'function' ? payload() : payload
-            });
-            action(params);
+            action(buildSendParams(scenePart.params, payload))
             onFinish();
-            return () => {};
+            return () => {
+            };
           }
         );
       }
