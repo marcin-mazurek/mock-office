@@ -71,6 +71,8 @@ export default class HttpMockServer {
 
     if (scene) {
       this.scenario.play(scene.id, send(req, res));
+    } else {
+      res.status(404).send('Sorry, we cannot find scene.');
     }
   }
 
