@@ -20,7 +20,6 @@ export default class WSMockServer {
     this.emitter = config.emitter;
     this.getScenario = this.getScenario.bind(this);
     this.start = this.start.bind(this);
-    this.setupSocket = this.setupSocket.bind(this);
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
 
@@ -43,9 +42,39 @@ export default class WSMockServer {
       console.error(err.message);
     });
 
-    const setup = (ws) => {
+    this.wsServer.on('connection', (ws) => {
+      // support only one open socket
+      if (this.ws) {
+        ws.close();
+        return;
+      }
+
       this.ws = ws;
-      this.setupSocket(ws);
+
+      this.ws.on('message', (message) => {
+        const scene = this.scenario.findScene(
+          {
+            event: 'RECEIVED_MESSAGE',
+            message
+          }
+        );
+
+        if (scene) {
+          this.scenario.play(scene.id, (params) => {
+            this.ws.send(params.payload.message, (err) => {
+              if (err) {
+                // eslint-disable-next-line no-console
+                console.log('socket is closed so we cant send message. All tasks will be canceled on close event');
+              }
+            });
+          });
+        }
+      });
+
+      this.ws.on('close', () => {
+        this.scenario.cancelPendingScenes();
+        this.ws = undefined;
+      });
 
       const scene = this.scenario.findScene(
         {
@@ -58,16 +87,6 @@ export default class WSMockServer {
           this.ws.send(params.payload.message);
         });
       }
-    };
-
-    this.wsServer.on('connection', (ws) => {
-      // support only one open socket
-      if (this.ws) {
-        ws.close();
-        return;
-      }
-
-      setup(ws);
     });
   }
 
@@ -76,34 +95,7 @@ export default class WSMockServer {
   }
 
   start(cb) {
-    this.httpServer.listen(this.port);
-    cb();
-  }
-
-  setupSocket() {
-    this.ws.on('message', (message) => {
-      const scene = this.scenario.findScene(
-        {
-          event: 'RECEIVED_MESSAGE',
-          message
-        }
-      );
-
-      if (scene) {
-        this.scenario.play(scene.id, (params) => {
-          this.ws.send(params.payload.message, (err) => {
-            if (err) {
-              // eslint-disable-next-line no-console
-              console.log('socket is closed so we cant send message. All tasks will be canceled on close event');
-            }
-          });
-        });
-      }
-    });
-    this.ws.on('close', () => {
-      this.scenario.cancelPendingScenes();
-      this.ws = undefined;
-    });
+    this.httpServer.listen(this.port, cb);
   }
 
   stop(cb) {
