@@ -4,9 +4,13 @@ import { List } from 'immutable';
 import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
 import configureStore from '../store';
-import ErrorListConnect, { ErrorList } from './ErrorList';
-import AppError from '../entities/errors/AppError';
 import { add } from '../entities/errors/actions';
+
+jest.mock('node-unique', () => () => 'id');
+
+const ErrorList = require('./ErrorList').ErrorList;
+const AppError = require('../entities/errors/AppError').default;
+const ErrorListConnect = require('./ErrorList').default;
 
 describe('ErrorList', () => {
   it('should display reason', () => {
