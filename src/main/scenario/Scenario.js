@@ -71,7 +71,7 @@ export default class Scenario {
 
   findScene(requirements) {
     return this.scenes.find((scene) => {
-      if (!scene.scheduled) {
+      if (!scene.pending) {
         if (scene.requirements) {
           const req = requirements;
           if (requirements) {

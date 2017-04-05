@@ -4,9 +4,10 @@
     "requirements": {
       "event": "CLIENT_CONNECTED"
     },
+    "reuse": "infinite",
     "parts": [
       {
-        "title": "response for /some-url request",
+        "title": "emit livescore welcome message",
         "type": "immediate",
         "payload": {
           "message": "NAIxMDACQzhDNDA0OENFRjc0NzRBMC0wMDQ0MEJDQjAwMDAwMDAx",
@@ -17,6 +18,7 @@
   },
   {
     "title": "response for subscription for score",
+    "reuse": "infinite",
     "requirements": {
       "event": "RECEIVED_MESSAGE",
       "message": "FnNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvc2NvcmU=",
@@ -24,25 +26,33 @@
     },
     "parts": [
       {
-        "title": "response for /some-url request",
+        "title": "ls score subscription confirm",
         "type": "immediate",
         "payload": {
           "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvc2NvcmUhNmEwNwEwIC0gMA==",
           "type": "b64"
         }
+      },
+      {
+        "title": "ls emit score on interval",
+        "type": "periodic",
+        "interval": 10000,
+        "payload": "generator",
+        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/score.js"
       }
     ]
   },
   {
-    "title": "start livescore",
+    "title": "response for subscription for time",
     "requirements": {
       "event": "RECEIVED_MESSAGE",
       "message": "FnNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZQ==",
       "type": "b64"
     },
+    "reuse": "infinite",
     "parts": [
       {
-        "title": "response for /some-url request",
+        "title": "ls emit initial time",
         "type": "immediate",
         "payload": {
           "message": "FHNwb3J0c2Jvb2svZm9vdGJhbGwvMTA3NTc1MDEvc3RhdHMvdGltZSE2YTA5ATkyNw==",
@@ -50,21 +60,14 @@
         }
       },
       {
-        "title": "emit seconds on interval",
+        "title": "ls emit seconds on interval",
         "type": "periodic",
         "interval": 1000,
         "payload": "generator",
         "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/timeTicker.js"
       },
       {
-        "title": "emit score on interval",
-        "type": "periodic",
-        "interval": 10000,
-        "payload": "generator",
-        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/score.js"
-      },
-      {
-        "title": "emit ping on interval",
+        "title": "ls emit ping on interval",
         "type": "periodic",
         "interval": 5000,
         "payload": "generator",

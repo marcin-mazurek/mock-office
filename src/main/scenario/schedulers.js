@@ -3,15 +3,34 @@ Utility module for choosing proper rxjs scheduler
  */
 
 import { Scheduler } from 'rxjs';
+import vm from 'vm';
+import fs from 'fs';
+import atob from 'atob';
 
 export default scenePart =>
   (action, onStart, onFinish) => {
+    let payload;
+
+    if (scenePart.payload === 'generator') {
+      const scriptSrc = fs.readFileSync(scenePart.generatorPath);
+      payload = new vm.Script(scriptSrc).runInNewContext({});
+    } else if (scenePart.payload.type === 'b64') {
+      payload = {
+        message: atob(scenePart.payload.message)
+      };
+    } else {
+      payload = scenePart.payload;
+    }
+
     switch (scenePart.type) {
       case 'immediate': {
         onStart();
         return Scheduler.asap.schedule(
           () => {
-            action();
+            const params = Object.assign({}, scenePart.params, {
+              payload: typeof payload === 'function' ? payload() : payload
+            });
+            action(params);
             onFinish();
             return () => {};
           }
@@ -21,7 +40,10 @@ export default scenePart =>
         onStart();
         return Scheduler.async.schedule(
           () => {
-            action();
+            const params = Object.assign({}, scenePart.params, {
+              payload: typeof payload === 'function' ? payload() : payload
+            });
+            action(params);
             onFinish();
             return () => {};
           },
@@ -30,7 +52,10 @@ export default scenePart =>
       }
       case 'periodic': {
         const task = function task(repeatLimit) {
-          action();
+          const params = Object.assign({}, scenePart.params, {
+            payload: typeof payload === 'function' ? payload() : payload
+          });
+          action(params);
 
           if (repeatLimit !== undefined) {
             if (repeatLimit - 1 > 0) {
@@ -39,7 +64,7 @@ export default scenePart =>
               onFinish();
             }
           } else {
-            this.schedule(null, scenePart.interval);
+            this.schedule(undefined, scenePart.interval);
           }
         };
         onStart();
@@ -54,7 +79,10 @@ export default scenePart =>
         onStart();
         return Scheduler.asap.schedule(
           () => {
-            action();
+            const params = Object.assign({}, scenePart.params, {
+              payload: typeof payload === 'function' ? payload() : payload
+            });
+            action(params);
             onFinish();
             return () => {};
           }

@@ -2,7 +2,6 @@ import { Server as WebSocketServer } from 'ws';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import atob from 'atob';
 import unique from 'node-unique';
 import Scenario from '../scenario';
 
@@ -44,13 +43,7 @@ export default class WSMockServer {
       console.error(err.message);
     });
 
-    this.wsServer.on('connection', (ws) => {
-      // support only one open socket
-      if (this.ws) {
-        ws.close();
-        return;
-      }
-
+    const setup = (ws) => {
       this.ws = ws;
       this.setupSocket(ws);
 
@@ -61,18 +54,20 @@ export default class WSMockServer {
       );
 
       if (scene) {
-        this.scenario.play(scene.id, (part) => {
-          let message;
-
-          if (part.taskPayload.type === 'b64') {
-            message = atob(part.taskPayload.message);
-          } else {
-            message = part.taskPayload.message;
-          }
-
-          this.ws.send(message);
+        this.scenario.play(scene.id, (params) => {
+          this.ws.send(params.payload.message);
         });
       }
+    };
+
+    this.wsServer.on('connection', (ws) => {
+      // support only one open socket
+      if (this.ws) {
+        ws.close();
+        return;
+      }
+
+      setup(ws);
     });
   }
 
@@ -85,8 +80,8 @@ export default class WSMockServer {
     cb();
   }
 
-  setupSocket(socket) {
-    socket.on('message', (message) => {
+  setupSocket() {
+    this.ws.on('message', (message) => {
       const scene = this.scenario.findScene(
         {
           event: 'RECEIVED_MESSAGE',
@@ -95,28 +90,23 @@ export default class WSMockServer {
       );
 
       if (scene) {
-        this.scenario.play(scene.id, () => {
-          let msg;
-
-          if (scene.taskPayload.type === 'b64') {
-            msg = atob(scene.taskPayload.message);
-          } else {
-            msg = scene.taskPayload.message;
-          }
-
-          this.ws.send(msg);
-        }, scene);
+        this.scenario.play(scene.id, (params) => {
+          this.ws.send(params.payload.message, (err) => {
+            if (err) {
+              // eslint-disable-next-line no-console
+              console.log('socket is closed so we cant send message. All tasks will be canceled on close event');
+            }
+          });
+        });
       }
     });
-
-    socket.on('close', () => {
+    this.ws.on('close', () => {
+      this.scenario.cancelPendingScenes();
       this.ws = undefined;
     });
   }
 
   stop(cb) {
-    this.scenario.cancelPendingScenes();
-
     if (this.ws) {
       this.ws.close();
     }

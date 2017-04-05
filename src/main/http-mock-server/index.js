@@ -5,16 +5,16 @@ import fs from 'fs';
 import unique from 'node-unique';
 import Scenario from '../scenario';
 
-export const send = (req, res) => (args) => {
+export const send = (req, res) => (params) => {
   if (req.headers.origin) {
     res.set('Access-Control-Allow-Origin', req.headers.origin);
   }
 
-  if (args.headers) {
-    res.set(args.headers);
+  if (params.headers) {
+    res.set(params.headers);
   }
 
-  res.json(args.payload);
+  res.json(params.payload);
 };
 
 export default class HttpMockServer {

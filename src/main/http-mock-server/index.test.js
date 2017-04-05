@@ -9,19 +9,19 @@ describe('send', () => {
     const app = express();
     app.get('*', (req, res, next) => {
       send(req, res)({
-        taskPayload: {
+        headers: {
           key: 'value'
         }
       });
       next();
     });
 
-    const server = app.listen(3005, () => {
+    const server = app.listen(4000, () => {
       request.defaults({
         headers: {
           origin: 'origin.com'
         }
-      }).get('http://127.0.0.1:3005', (error, response) => {
+      }).get('http://127.0.0.1:4000', (error, response) => {
         server.close();
         expect(response.headers['access-control-allow-origin']).toEqual('origin.com');
         done();
@@ -66,23 +66,26 @@ describe('HttpMockServer', () => {
     //   console.log(err.stack);
     // });
     const server = new HttpMockServer({
-      port: 3000,
+      port: 4000,
       id: 'some id',
       emitter: new ServerEventsEmitter()
     });
 
-    server.start(() => {
-      request('http://127.0.0.1:3000', () => {
-        // we need catch error when server is destroying sockets
-      });
-      setTimeout(() => {
-        expect(server.sockets).toHaveLength(1);
-        server.stop(() => {
-          expect(server.sockets).toHaveLength(0);
-          done();
+    server.start(
+      () => {
+        request('http://127.0.0.1:4000', () => {
+          // we need catch error when server is destroying sockets
         });
-      }, 100);
-    });
+        setTimeout(() => {
+          expect(server.sockets).toHaveLength(1);
+          server.stop(() => {
+            expect(server.sockets).toHaveLength(0);
+            done();
+          });
+        }, 100);
+      },
+      err => console.log(err)
+    );
   });
 
   describe('destroyOpenSockets', () => {
@@ -140,7 +143,7 @@ describe('HttpMockServer', () => {
 
     it('should send response to client', (done) => {
       const server = new HttpMockServer({
-        port: 3003,
+        port: 4000,
         id: 'some id',
         emitter: new ServerEventsEmitter()
       });
@@ -163,30 +166,35 @@ describe('HttpMockServer', () => {
         ]
       });
 
-      server.start(() => {
-        request.get('http://127.0.0.1:3003', (error, response) => {
-          server.stop();
-          expect(JSON.parse(response.body)).toEqual({
-            body: {
-              data: 'response for some-url'
-            }
+      server.start(
+        () => {
+          request.get('http://127.0.0.1:4000', (error, response) => {
+            server.stop();
+            expect(JSON.parse(response.body)).toEqual({
+              body: {
+                data: 'response for some-url'
+              }
+            });
+            done();
           });
-          done();
-        });
-      });
+        },
+        err => console.log(err));
     });
   });
 
   describe('start', () => {
     it('should start http server', (done) => {
       const server = new HttpMockServer({
+        port: 4000,
         emitter: new ServerEventsEmitter()
       });
-      server.start(() => {
-        expect(server.httpServer.listening).toBeTruthy();
-        server.stop();
-        done();
-      });
+      server.start(
+        () => {
+          expect(server.httpServer.listening).toBeTruthy();
+          server.stop();
+          done();
+        },
+        err => console.log(err));
     });
   });
 });

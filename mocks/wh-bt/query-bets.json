@@ -8,7 +8,7 @@
     "reuse": "infinite",
     "parts": [
       {
-        "title": "response for /some-url request",
+        "title": "response with bets",
         "type": "future",
         "payload": {
           "bets": [
@@ -48,45 +48,10 @@
                 }
               ],
               "freeBet": false
-            },
-            {
-              "betId": "117343",
-              "betSettled": true,
-              "betStatus": "Active",
-              "betType": "Single",
-              "betPlacedTime": "Yesterday 11:14",
-              "betStake": "2.00",
-              "betStakePerLine": "2.00",
-              "betPotentialPayout": "2.50",
-              "betPayoutFormatted": "0.00",
-              "betPayoutValue": 0.00,
-              "slipId": "S00001067bec2425c4",
-              "slipStatus": "settled",
-              "slipTotalPayout": "7.50",
-              "slipTotalStake": "4.00",
-              "slipPlacedTime": "Yesterday 11:14",
-              "selections": [
-                {
-                  "selectionId": "OB_OU12893171",
-                  "selectionLabel": "Rafael Nadal @ 1/4",
-                  "marketId": "OB_MA3534571",
-                  "marketName": "Match Betting Live",
-                  "eventId": "OB_EV292906",
-                  "eventStartDateTime": "Yesterday 10:00",
-                  "eventHome": "Andy Murray",
-                  "eventAway": "Rafael Nadal",
-                  "eventStatus": "Suspended",
-                  "selectionStatus": "Suspended",
-                  "selectionResult": "Lose",
-                  "sportId": "24",
-                  "sportName": "Tennis"
-                }
-              ],
-              "freeBet": false
             }
           ]
         },
-        "delay": 3000
+        "delay": 500
       }
     ]
   }

@@ -19,9 +19,7 @@ export default class ScenePart {
       const schedule = createSchedule(this.scheduleDetails);
 
       this.subscription = schedule(
-        () => {
-          action(this.scheduleDetails);
-        },
+        action,
         () => {
           this.emitter.emit('SCENE_PART_START');
         },

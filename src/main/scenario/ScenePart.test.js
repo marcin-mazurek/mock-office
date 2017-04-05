@@ -15,7 +15,11 @@ describe('ScenePart', () => {
         emitter: new ServerEventsEmitter(),
         scheduleDetails: {
           type: 'immediate',
-          payload: { key: 'value' }
+          payload: {
+            headers: {
+              key: 'value'
+            }
+          }
         }
       });
 
@@ -30,7 +34,11 @@ describe('ScenePart', () => {
         emitter: new ServerEventsEmitter(),
         scheduleDetails: {
           type: 'immediate',
-          payload: { key: 'value' }
+          payload: {
+            headers: {
+              key: 'value'
+            }
+          }
         }
       });
 
@@ -46,7 +54,9 @@ describe('ScenePart', () => {
         emitter: new ServerEventsEmitter(),
         scheduleDetails: {
           type: 'immediate',
-          payload: { key: 'value' }
+          payload: {
+            headers: { key: 'value' }
+          }
         }
       });
 
@@ -67,7 +77,9 @@ describe('ScenePart', () => {
         emitter: new ServerEventsEmitter(),
         scheduleDetails: {
           type: 'immediate',
-          payload: { key: 'value' }
+          payload: {
+            headers: { key: 'value' }
+          }
         }
       });
       scenePart.play = function play() {
@@ -82,7 +94,9 @@ describe('ScenePart', () => {
         emitter: new ServerEventsEmitter(),
         scheduleDetails: {
           type: 'immediate',
-          payload: { key: 'value' }
+          payload: {
+            headers: { key: 'value' }
+          }
         }
       });
       scenePartNotPending.stop = jest.fn();

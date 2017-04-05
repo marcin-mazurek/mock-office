@@ -4,9 +4,10 @@
     "requirements": {
       "event": "CLIENT_CONNECTED"
     },
+    "reuse": "infinite",
     "parts": [
       {
-        "title": "emit welcome message",
+        "title": "pds emit welcome message",
         "type": "immediate",
         "payload": {
           "message": "NAIxMDACREQ5RTIwNUQ0QkU0N0RDQy0wMDAwMDAwMDAwMEEyRjVF",
@@ -14,7 +15,7 @@
         }
       },
       {
-        "title": "emit subscription message",
+        "title": "pds emit subscription message",
         "type": "immediate",
         "payload": {
           "message": "FFBEUy9PQl9FVjEwNzU3NTAxITEyaDA3ATACdHJ1ZQJ0cnVlAkECZmFsc2UCMjAxNy0wMy0xNlQwMDo0NTowMC4wMDArMDAwMAJ0cnVlAjIwMTctMDMtMTZUMDA6NDU6MjMuMDAwKzAwMDA=",
@@ -22,7 +23,7 @@
         }
       },
       {
-        "title": "emit subscription message",
+        "title": "pds pinger",
         "type": "periodic",
         "interval": 5000,
         "payload": "generator",
