@@ -33,4 +33,8 @@ export default (mainWindow) => {
   globalEvents.on(events.SCENE_PART_CANCEL,
     args => mainWindow.webContents.send(events.SCENE_PART_CANCEL, args)
   );
+
+  globalEvents.on('RESTORE_STATE',
+    () => mainWindow.webContents.send('RESTORE_STATE')
+  );
 };

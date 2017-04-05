@@ -44,8 +44,6 @@ describe('ServerHub', () => {
   it('start should call server start only if it is not running', () => {
     const serversHub = new ServersHub();
     serversHub.saveDisabled = true;
-    const mockFn = jest.fn();
-    const serverId = 'some-id';
     const startMock = jest.fn();
 
     serversHub.servers = [
@@ -79,7 +77,6 @@ describe('ServerHub', () => {
     const serversHub = new ServersHub();
     const stopMock = jest.fn();
     serversHub.saveDisabled = true;
-    const mockFn = jest.fn();
     const serverId = 'some-id';
 
     serversHub.servers = [
@@ -102,7 +99,6 @@ describe('ServerHub', () => {
   it('stop should not call server stop if it is not running', () => {
     const serversHub = new ServersHub();
     serversHub.saveDisabled = true;
-    const mockFn = jest.fn();
     const stopMock = jest.fn();
     const serverId = 'some-id';
 
@@ -145,8 +141,7 @@ describe('ServerHub', () => {
     const serversHub = new ServersHub();
     serversHub.saveDisabled = true;
     const server = {
-      id: 'one id',
-      instance: 'server instance'
+      id: 'one id'
     };
 
     serversHub.servers = [server];

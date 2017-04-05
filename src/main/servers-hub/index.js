@@ -1,9 +1,9 @@
 import fs from 'fs';
 import HttpServer from '../http-mock-server';
 import WSMockServer from '../ws-mock-server';
-import { ServerEventsEmitter } from '../globalEvents';
+import globalEvents, { ServerEventsEmitter } from '../globalEvents';
 
-const SAVED_STATE_FILE = './.mockeeState.json';
+const SAVED_STATE_FILE = './mockeeState.json';
 
 const serverTypes = {
   http: HttpServer,
@@ -21,31 +21,13 @@ class ServersHub {
     this.remove = this.remove.bind(this);
     this.backupState = this.backupState.bind(this);
     this.restoreState = this.restoreState.bind(this);
-    this.saveDisabled = false;
   }
 
   backupState() {
-    if (this.saveDisabled) {
-      return;
-    }
-    this.saveDisabled = true;
-    const serversState = this.servers.map(server => ({
-      name: server.instance.name,
-      port: server.instance.port,
-      type: server.instance.type,
-      isSecure: server.instance.isSecure,
-      keyPath: server.instance.keyPath,
-      certPath: server.instance.certPath,
-      isLive: server.instance.isLive(),
-      tasks: server.instance.queue.backupTasks()
-    }));
-    fs.writeFile(SAVED_STATE_FILE, JSON.stringify(serversState), 'utf8', () => {
-      this.saveDisabled = false;
-    });
+    fs.writeFileSync(SAVED_STATE_FILE, JSON.stringify(this.servers), 'utf8');
   }
 
   restoreState() {
-    this.saveDisabled = true;
     fs.readFile(SAVED_STATE_FILE, (err, data) => {
       if (err) return;
 
@@ -54,15 +36,15 @@ class ServersHub {
         serverState.forEach((s) => {
           const id = this.add(s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false);
           const server = this.find(id);
-          server.queue.restoreTasks(s.tasks);
-          if (s.isLive) {
-            this.start(id, false);
-          }
+          s.scenario.scenes.forEach((scene) => {
+            server.getScenario().addScene(scene);
+          });
         });
+        globalEvents.emit('RESTORE_STATE');
+
+        this.backupState();
       } catch (e) {
-        this.ee.emit('RESTORE_STATE_ERROR', e);
-      } finally {
-        this.saveDisabled = false;
+        globalEvents.emit('RESTORE_STATE_ERROR', e);
       }
     });
   }
@@ -72,6 +54,7 @@ class ServersHub {
     const ServerConstructor = serverTypes[type];
     const server = new ServerConstructor({ name, port, isSecure, keyPath, certPath, emitter });
     this.servers.push(server);
+    this.backupState();
     return server.id;
   }
 

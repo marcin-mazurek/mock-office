@@ -3,4 +3,4 @@ node_modules
 .DS_Store
 dist/
 npm-debug.log
-.mockeeState.json
+mockeeState.json

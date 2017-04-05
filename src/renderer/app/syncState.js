@@ -2,7 +2,7 @@ import { remote } from 'electron';
 import { add, start } from '../entities/servers/actions';
 import { add as addScene } from '../scenes/addScene/actions';
 
-export default (store) => {
+const loadState = (store) => {
   const servers = remote.require('./main/servers').default.servers;
 
   servers.forEach((server) => {
@@ -29,3 +29,5 @@ export default (store) => {
     });
   });
 };
+
+export default loadState;
