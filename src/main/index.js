@@ -3,7 +3,7 @@ import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
 import startPassingMessagesToMainWindow from './mainWindowMessageBus';
-import serversHub from './servers';
+import { restore } from './state';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -36,7 +36,7 @@ function createWindow() {
   });
 
   // restore saved state
-  serversHub.restoreState();
+  restore();
 }
 
 // This method will be called when Electron has finished
