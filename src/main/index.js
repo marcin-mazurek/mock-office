@@ -1,9 +1,9 @@
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow, app, Menu } from 'electron';
 import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
 import startPassingMessagesToMainWindow from './mainWindowMessageBus';
-import { restore } from './state';
+import { restore, save } from './state';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -34,6 +34,24 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  const menuTemplate = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'Save state',
+          accelerator: 'CmdOrCtrl+S',
+          click() {
+            save();
+          }
+        }
+      ]
+    }
+  ];
+
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
 
   // restore saved state
   restore();
