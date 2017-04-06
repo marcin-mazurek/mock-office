@@ -1,4 +1,4 @@
-import { BrowserWindow, app, Menu } from 'electron';
+import { BrowserWindow, app, Menu, MenuItem } from 'electron';
 import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
@@ -34,23 +34,15 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-
-  const menuTemplate = [
-    {
-      label: 'File',
-      submenu: [
-        {
-          label: 'Save state',
-          accelerator: 'CmdOrCtrl+S',
-          click() {
-            save();
-          }
-        }
-      ]
+  const menu = Menu.getApplicationMenu();
+  menu.items[1].submenu.append(new MenuItem({
+    label: 'Save state',
+    accelerator: 'CmdOrCtrl+S',
+    click() {
+      save();
     }
-  ];
+  }));
 
-  const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 
   // restore saved state
