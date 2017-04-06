@@ -1,5 +1,2 @@
-import ServersHub from './servers-hub';
-
-export default new ServersHub({
-  lastStateBackupPath: './dev-state.json'
-});
+export { default as ServerEventsEmitter } from './ServerEventsEmitter';
+export { default } from './Double';

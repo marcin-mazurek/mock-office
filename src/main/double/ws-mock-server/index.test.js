@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import WSMockServer from './index';
-import { ServerEventsEmitter } from '../globalEvents';
+import ServerEventsEmitter from '../ServerEventsEmitter';
 import Scenario from '../scenario';
 
 describe('WSMockServer', () => {

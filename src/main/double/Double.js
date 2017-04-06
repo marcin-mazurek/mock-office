@@ -1,13 +1,13 @@
-import HttpServer from '../http-mock-server';
-import WSMockServer from '../ws-mock-server';
-import { ServerEventsEmitter } from '../globalEvents';
+import HttpServer from './http-mock-server';
+import WSMockServer from './ws-mock-server';
+import ServerEventsEmitter from './ServerEventsEmitter';
 
 const serverTypes = {
   http: HttpServer,
   ws: WSMockServer
 };
 
-class ServersHub {
+class Double {
   constructor() {
     this.servers = [];
     this.add = this.add.bind(this);
@@ -16,12 +16,14 @@ class ServersHub {
     this.find = this.find.bind(this);
     this.getAll = this.getAll.bind(this);
     this.remove = this.remove.bind(this);
+    this.emitter = new ServerEventsEmitter();
   }
 
   add(name, port, type, isSecure, keyPath, certPath) {
-    const emitter = new ServerEventsEmitter();
     const ServerConstructor = serverTypes[type];
-    const server = new ServerConstructor({ name, port, isSecure, keyPath, certPath, emitter });
+    const server = new ServerConstructor(
+      { name, port, isSecure, keyPath, certPath, emitter: this.emitter }
+    );
     this.servers.push(server);
     return server.id;
   }
@@ -71,4 +73,4 @@ class ServersHub {
   }
 }
 
-export default ServersHub;
+export default Double;

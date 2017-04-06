@@ -1,5 +1,5 @@
 import fs from 'fs';
-import double from './double';
+import { double } from './index';
 
 const PATH_TO_FILE = './mockeeState.json';
 

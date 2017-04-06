@@ -1,4 +1,4 @@
-import globalEvents, { ServerEventsEmitter } from '../globalEvents';
+import ServerEventsEmitter from '../ServerEventsEmitter';
 import Scene from './Scene';
 
 describe('Scene', () => {
@@ -65,14 +65,15 @@ describe('Scene', () => {
     });
 
     it('should emit proper events on not cancelled scene', (done) => {
+      const serverEE = new ServerEventsEmitter();
       const scene = new Scene({
-        emitter: new ServerEventsEmitter(),
+        emitter: serverEE,
         parts: []
       });
       const sceneStartHandlerMock = jest.fn();
       const sceneEndHandlerMock = jest.fn();
-      globalEvents.on('SCENE_START', sceneStartHandlerMock);
-      globalEvents.on('SCENE_END', sceneEndHandlerMock);
+      serverEE.on('SCENE_START', sceneStartHandlerMock);
+      serverEE.on('SCENE_END', sceneEndHandlerMock);
 
       scene.play().then(() => {
         expect(sceneStartHandlerMock).toHaveBeenCalled();
@@ -82,8 +83,9 @@ describe('Scene', () => {
     });
 
     it('should emit proper events on cancelled scene', (done) => {
+      const serverEE = new ServerEventsEmitter();
       const scene = new Scene({
-        emitter: new ServerEventsEmitter(),
+        emitter: serverEE,
         parts: [
           {
             type: 'immediate',
@@ -93,7 +95,7 @@ describe('Scene', () => {
       });
 
       const sceneCancelHandlerMock = jest.fn();
-      globalEvents.on('SCENE_CANCEL', sceneCancelHandlerMock);
+      serverEE.on('SCENE_CANCEL', sceneCancelHandlerMock);
 
       scene.play(() => {
       }).then(

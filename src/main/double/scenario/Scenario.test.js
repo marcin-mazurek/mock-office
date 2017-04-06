@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import Scenario, { extractSubTree } from './Scenario';
-import { ServerEventsEmitter } from '../globalEvents';
+import ServerEventsEmitter from '../ServerEventsEmitter';
 
 describe('extractSubTree', () => {
   it('should trim shallow primitive values', () => {

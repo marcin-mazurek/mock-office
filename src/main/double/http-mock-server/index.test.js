@@ -1,7 +1,7 @@
 import express from 'express';
 import request from 'request';
 import HttpMockServer, { send } from './index';
-import { ServerEventsEmitter } from '../globalEvents';
+import ServerEventsEmitter from '../ServerEventsEmitter';
 
 /* eslint-disable global-require */
 describe('send', () => {

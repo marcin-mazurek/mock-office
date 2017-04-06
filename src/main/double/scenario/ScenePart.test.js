@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import ScenePart from './ScenePart';
-import { ServerEventsEmitter } from '../globalEvents';
+import ServerEventsEmitter from '../ServerEventsEmitter';
 
 describe('ScenePart', () => {
   it('should setup emitter', () => {
