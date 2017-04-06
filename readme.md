@@ -1,10 +1,14 @@
 ### Usage
-To start electron app, type:
+At first you need to install dependencies with npm.
+
+`npm i`
+
+To start electron app:
 
 `npm run start`
 
 ### Development
-To start app development, type:
+To start app development:
 
 `npm run dev`
 
