@@ -84,6 +84,7 @@ describe('HttpMockServer', () => {
           });
         }, 100);
       },
+      // eslint-disable-next-line no-console
       err => console.log(err)
     );
   });
@@ -178,6 +179,7 @@ describe('HttpMockServer', () => {
             done();
           });
         },
+        // eslint-disable-next-line no-console
         err => console.log(err));
     });
   });
@@ -194,6 +196,7 @@ describe('HttpMockServer', () => {
           server.stop();
           done();
         },
+        // eslint-disable-next-line no-console
         err => console.log(err));
     });
   });

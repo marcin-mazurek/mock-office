@@ -155,8 +155,9 @@ describe('ServerHub', () => {
       done();
     })
       .catch((err) => {
-      console.log(err);
-      done();
+        // eslint-disable-next-line no-console
+        console.log(err);
+        done();
       });
   });
 

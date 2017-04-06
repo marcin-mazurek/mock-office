@@ -1,5 +1,5 @@
 import fs from 'fs';
-import serversHub from './servers';
+import serversHub from './double/servers';
 
 const PATH_TO_FILE = './mockeeState.json';
 
