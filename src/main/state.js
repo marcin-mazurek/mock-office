@@ -1,10 +1,10 @@
 import fs from 'fs';
-import serversHub from './double/servers';
+import double from './double';
 
 const PATH_TO_FILE = './mockeeState.json';
 
 export function save() {
-  const state = serversHub.servers.map(
+  const state = double.servers.map(
     server => ({
       name: server.name,
       type: server.type,
@@ -33,8 +33,8 @@ export function restore() {
       const serverState = JSON.parse(data);
 
       serverState.forEach((s) => {
-        const id = serversHub.add(s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false);
-        const server = serversHub.find(id);
+        const id = double.add(s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false);
+        const server = double.find(id);
         s.scenes.forEach((scene) => {
           server.getScenario().addScene(scene);
         });
