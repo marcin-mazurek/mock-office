@@ -39,16 +39,20 @@ export default class Scene {
     this.emitter.emit('SCENE_START');
 
     return Promise.all(this.parts.map(part => part.play(action))).then(
-      () => {
-        this.updateReuseStatus();
-        this.emitter.emit('SCENE_END');
-      },
-      () => {
-        this.emitter.emit('SCENE_CANCEL');
+      (scenePartStatuses) => {
+        const finished = scenePartStatuses.every(partFinished => partFinished);
+
+        if (finished) {
+          this.updateReuseStatus();
+          this.emitter.emit('SCENE_END');
+        } else {
+          this.emitter.emit('SCENE_CANCEL');
+        }
+
+        this.pending = false;
+        return finished;
       }
-    ).then(() => {
-      this.pending = false;
-    });
+    );
   }
 
   // void -> void

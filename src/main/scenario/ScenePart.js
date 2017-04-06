@@ -15,7 +15,7 @@ export default class ScenePart {
       return Promise.reject('Pending ScenePart cant be played.');
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const schedule = createSchedule(this.scheduleDetails);
 
       this.subscription = schedule(
@@ -26,7 +26,7 @@ export default class ScenePart {
         () => {
           this.emitter.emit('SCENE_PART_END');
           this.pending = false;
-          resolve();
+          resolve(true);
         }
       );
 
@@ -36,7 +36,7 @@ export default class ScenePart {
         this.subscription.unsubscribe();
         this.emitter.emit('SCENE_PART_CANCEL');
         this.pending = false;
-        reject('SCENE_PART_CANCEL');
+        resolve(false);
       };
     });
   }

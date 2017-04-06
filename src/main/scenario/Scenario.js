@@ -60,11 +60,13 @@ export default class Scenario {
     const scene = this.find(id);
 
     return scene.play(action).then(
-      () => {
-        if (scene.toRemove) {
+      (finished) => {
+        if (finished && scene.toRemove) {
           this.removeScene(id);
           this.emitter.emit('SCENE_REMOVED_AFTER_USE', { sceneId: id });
         }
+
+        return finished;
       }
     );
   }

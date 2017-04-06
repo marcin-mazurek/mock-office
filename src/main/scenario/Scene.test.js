@@ -1,6 +1,5 @@
 import globalEvents, { ServerEventsEmitter } from '../globalEvents';
 import Scene from './Scene';
-import ScenePart from './ScenePart';
 
 describe('Scene', () => {
   it('should setup emitter', () => {
@@ -86,22 +85,23 @@ describe('Scene', () => {
       const scene = new Scene({
         emitter: new ServerEventsEmitter(),
         parts: [
-          new ScenePart({
-            emitter: new ServerEventsEmitter(),
-            scheduleDetails: {
-              type: 'future',
-              delay: 1000
-            }
-          })
+          {
+            type: 'immediate',
+            payload: {}
+          }
         ]
       });
+
       const sceneCancelHandlerMock = jest.fn();
       globalEvents.on('SCENE_CANCEL', sceneCancelHandlerMock);
 
-      scene.play().then(() => {
-        expect(sceneCancelHandlerMock).toHaveBeenCalled();
-        done();
-      });
+      scene.play(() => {
+      }).then(
+        () => {
+          expect(sceneCancelHandlerMock).toHaveBeenCalled();
+          done();
+        }
+      );
       scene.cancel();
     });
   });
@@ -111,20 +111,10 @@ describe('Scene', () => {
       const scene = new Scene({
         emitter: new ServerEventsEmitter(),
         parts: [
-          new ScenePart({
-            emitter: new ServerEventsEmitter(),
-            scheduleDetails: {
-              type: 'future',
-              delay: 1000
-            }
-          }),
-          new ScenePart({
-            emitter: new ServerEventsEmitter(),
-            scheduleDetails: {
-              type: 'periodic',
-              interval: 2000
-            }
-          })
+          {
+            type: 'immediate',
+            payload: {}
+          }
         ]
       });
 

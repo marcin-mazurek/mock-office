@@ -95,18 +95,11 @@ describe('Scenario', () => {
   describe('removeScene', () => {
     it('should remove scene from scenario scenes list', () => {
       const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
-      scenario.scenes = [
-        {
-          id: 'some id',
-          parts: []
-        },
-        {
-          id: 'some id2',
-          parts: []
-        }
-      ];
-      scenario.removeScene('some id');
-      expect(scenario.scenes).toHaveLength(1);
+      scenario.addScene({
+        parts: []
+      });
+      scenario.removeScene(scenario.scenes[0].id);
+      expect(scenario.scenes).toHaveLength(0);
     });
   });
 
@@ -144,25 +137,33 @@ describe('Scenario', () => {
   });
 
   describe('cancelPendingScenes', () => {
-    it('should cancel all active scene parts', () => {
-      const cancelMock = jest.fn();
+    it('should cancel all active scene parts', (done) => {
       const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
-      scenario.scenes = [
-        {
-          pending: true,
-          cancel: cancelMock
-        },
-        {
-          pending: false,
-          cancel: cancelMock
-        },
-        {
-          pending: true,
-          cancel: cancelMock
-        }
-      ];
+
+      const futureScene = {
+        parts: [
+          {
+            type: 'future',
+            payload: {},
+            delay: 1000
+          }
+        ]
+      };
+
+      scenario.addScene(futureScene);
+      scenario.addScene(futureScene);
+      scenario.addScene(futureScene);
+      Promise.all([
+        scenario.play(scenario.scenes[0].id, () => {}),
+        scenario.play(scenario.scenes[1].id, () => {}),
+        scenario.play(scenario.scenes[2].id, () => {})
+      ]).then((statuses) => {
+        expect(statuses.every(finished => !finished)).toBeTruthy();
+        expect(scenario.scenes.every(scene => scene.pending === false));
+        done();
+      });
+      expect(scenario.scenes.every(scene => scene.pending === true)).toBeTruthy();
       scenario.cancelPendingScenes();
-      expect(cancelMock).toHaveBeenCalledTimes(2);
     });
   });
 
