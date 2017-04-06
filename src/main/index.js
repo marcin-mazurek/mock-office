@@ -2,7 +2,7 @@ import { BrowserWindow, app, Menu, MenuItem } from 'electron';
 import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
-import notifyRenderer from './notifyRenderer';
+import syncRenderer from './syncRenderer';
 import { restore, save } from './state';
 import Double from './double';
 
@@ -29,7 +29,7 @@ function createWindow() {
   mainWindow.webContents.openDevTools();
 
   // sync UI with double
-  notifyRenderer(mainWindow, double.emitter);
+  syncRenderer(mainWindow, double.emitter);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
