@@ -62,11 +62,4 @@
     background: lighten($font-color, 40%);
     border: solid 1px lighten($font-color, 26%);
   }
-
-  &__icon--ok {
-    color: $confirm-color;
-  }
-  &__icon--cancel {
-    color: $cancel-color;
-  }
 }
