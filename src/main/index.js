@@ -4,7 +4,7 @@ import url from 'url';
 import addDevTools from './devtools';
 import syncRenderer from './syncRenderer';
 import { restore, save } from './state';
-import Double from './double';
+import Double from '../double';
 
 // eslint-disable-next-line import/prefer-default-export
 export const double = new Double();
