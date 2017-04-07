@@ -1,5 +1,5 @@
 import { Map, List, Set } from 'immutable';
-import { ADD, SELECT, START, STOP, REMOVE } from './actions';
+import { ADD, SELECT, START, STOP, REMOVE, RENAME } from './actions';
 import Server from './Server';
 
 const initialState = new Map({
@@ -41,6 +41,9 @@ export default (state = initialState, action) => {
         newState = newState.set('selected', null);
       }
       return newState;
+    }
+    case RENAME: {
+      return state.setIn(['entities', action.id, 'name'], action.name);
     }
     default: {
       return state;

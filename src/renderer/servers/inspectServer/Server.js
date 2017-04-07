@@ -9,6 +9,8 @@ import { isRunning, getSelectedServerDetails, getSelected, getAll } from '../../
 import FilePickerConnect from '../../scenes/addSceneFromFile/FilePicker';
 import ScenesConnect from '../../scenes/browseScenes/Scenes';
 import { init as createRemoveServerAction } from '../removeServer/actions';
+import { init as createRenameServerAction } from '../renameServer/actions';
+import EditableField from '../../editableField/EditableField';
 
 export const ServerPlaceholder = ({ serverExists }) =>
   <div className="server-placeholder">
@@ -68,7 +70,7 @@ const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(Server
 
 const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
 
-export const ServerInspect = ({ running, serverDetails, removeServer }) => {
+export const ServerInspect = ({ running, serverDetails, removeServer, serverNameChange }) => {
   const { name, port, type, id } = serverDetails;
 
   return (
@@ -78,7 +80,9 @@ export const ServerInspect = ({ running, serverDetails, removeServer }) => {
           <ServerToggleConnect toggled={running} serverId={id} />
         </div>
         <div className="inspect-server-details">
-          <div className="inspect-server-details__name">{name}</div>
+          <div className="inspect-server-details__name">
+            <EditableField onSave={newName => serverNameChange(id, newName)} value={name} />
+          </div>
           <div className="inspect-server-details__spec inspect-server-spec">
             <div className="inspect-server-spec__item">
               <span className="inspect-server-spec__label">Port:</span>
@@ -132,11 +136,13 @@ export const ServerInspect = ({ running, serverDetails, removeServer }) => {
 ServerInspect.propTypes = {
   running: React.PropTypes.bool.isRequired,
   serverDetails: React.PropTypes.shape({}),
-  removeServer: React.PropTypes.func.isRequired
+  removeServer: React.PropTypes.func.isRequired,
+  serverNameChange: React.PropTypes.func.isRequired
 };
 
 const serverInspectMapDispatchToProps = {
-  removeServer: createRemoveServerAction
+  removeServer: createRemoveServerAction,
+  serverNameChange: createRenameServerAction
 };
 
 export const ServerInspectConnect = connect(null, serverInspectMapDispatchToProps)(ServerInspect);

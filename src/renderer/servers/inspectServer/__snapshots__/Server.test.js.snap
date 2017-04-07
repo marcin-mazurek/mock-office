@@ -36,7 +36,13 @@ exports[`ServerInspect default snapshot 1`] = `
       <div
         className="inspect-server-details__name"
       >
-        some id
+        <EditableField
+          edit={false}
+          onCancel={[Function]}
+          onChange={[Function]}
+          onSave={[Function]}
+          value="some id"
+        />
       </div>
       <div
         className="inspect-server-details__spec inspect-server-spec"

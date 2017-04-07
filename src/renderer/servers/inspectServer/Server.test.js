@@ -44,7 +44,8 @@ describe('ServerInspect', () => {
         queue: 'some queue id',
         id: 'some id'
       },
-      removeServer: jest.fn()
+      removeServer: jest.fn(),
+      serverNameChange: jest.fn()
     };
     const wrapper = shallow(<ServerInspect {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();

@@ -5,7 +5,8 @@ import {
   SELECT,
   START,
   STOP,
-  REMOVE
+  REMOVE,
+  RENAME
 } from './actions';
 
 describe('servers reducer', () => {
@@ -92,6 +93,33 @@ describe('servers reducer', () => {
       entities: {},
       ids: [],
       selected: null
+    });
+  });
+
+  test(`${RENAME} scene`, () => {
+    const state = reducer(fromJS({
+      entities: {
+        'some id': {
+          id: 'some id',
+          name: 'Server name',
+          port: 3000,
+          type: 'http'
+        }
+      }
+    }), {
+      type: RENAME,
+      id: 'some id',
+      name: 'New server name',
+    });
+    expect(state.toJS()).toEqual({
+      entities: {
+        'some id': {
+          id: 'some id',
+          name: 'New server name',
+          port: 3000,
+          type: 'http'
+        }
+      }
     });
   });
 });
