@@ -1,16 +1,16 @@
 import WebSocket from 'ws';
 import WSMockServer from './index';
-import ServerEventsEmitter from '../ServerEventsEmitter';
+import { DoubleEmitter } from '../emitter';
 import Scenario from '../scenario';
 
 describe('WSMockServer', () => {
   it('should init scenario', () => {
-    const wsMockServer = new WSMockServer({ emitter: new ServerEventsEmitter() });
+    const wsMockServer = new WSMockServer({ emitter: new DoubleEmitter() });
     expect(wsMockServer.getScenario()).toBeInstanceOf(Scenario);
   });
 
   it('should listen after start', (done) => {
-    const wsMockServer = new WSMockServer({ port: 4000, emitter: new ServerEventsEmitter() });
+    const wsMockServer = new WSMockServer({ port: 4000, emitter: new DoubleEmitter() });
     wsMockServer.start(
       () => {
         expect(wsMockServer.httpServer.listening).toBeTruthy();
@@ -22,7 +22,7 @@ describe('WSMockServer', () => {
   });
 
   it('should stop gracefully', (done) => {
-    const wsMockServer = new WSMockServer({ port: 4000, emitter: new ServerEventsEmitter() });
+    const wsMockServer = new WSMockServer({ port: 4000, emitter: new DoubleEmitter() });
     wsMockServer.start(
       () => {
         wsMockServer.stop(() => {
@@ -34,7 +34,7 @@ describe('WSMockServer', () => {
   });
 
   it('should keep only one active connection', (done) => {
-    const wsMockServer = new WSMockServer({ port: 4000, emitter: new ServerEventsEmitter() });
+    const wsMockServer = new WSMockServer({ port: 4000, emitter: new DoubleEmitter() });
     const handleSocketCloseMock = jest.fn();
     wsMockServer.wsServer.on('connection', () => {
       setTimeout(() => {
@@ -55,7 +55,7 @@ describe('WSMockServer', () => {
   });
 
   it('should play scene on CLIENT_CONNECTED', (done) => {
-    const wsMockServer = new WSMockServer({ port: 4000, emitter: new ServerEventsEmitter() });
+    const wsMockServer = new WSMockServer({ port: 4000, emitter: new DoubleEmitter() });
     wsMockServer.getScenario().addScene({
       requirements: {
         event: 'CLIENT_CONNECTED'
@@ -82,7 +82,7 @@ describe('WSMockServer', () => {
   });
 
   it('should play scene on RECEIVED_MESSAGE', (done) => {
-    const wsMockServer = new WSMockServer({ port: 4000, emitter: new ServerEventsEmitter() });
+    const wsMockServer = new WSMockServer({ port: 4000, emitter: new DoubleEmitter() });
     wsMockServer.getScenario().addScene({
       requirements: {
         event: 'RECEIVED_MESSAGE'
@@ -112,7 +112,7 @@ describe('WSMockServer', () => {
   });
 
   it('should clear reference to last socket after close', (done) => {
-    const wsMockServer = new WSMockServer({ port: 4000, emitter: new ServerEventsEmitter() });
+    const wsMockServer = new WSMockServer({ port: 4000, emitter: new DoubleEmitter() });
     wsMockServer.start(() => {
       const ws = new WebSocket('ws://127.0.0.1:4000');
       ws.on('open', () => {

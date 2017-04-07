@@ -1,2 +1,2 @@
-export { default as ServerEventsEmitter } from './ServerEventsEmitter';
+export { emitter } from './emitter';
 export { default } from './Double';

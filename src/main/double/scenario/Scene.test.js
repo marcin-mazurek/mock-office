@@ -1,20 +1,20 @@
-import ServerEventsEmitter from '../ServerEventsEmitter';
+import { DoubleEmitter, addListener } from '../emitter';
 import Scene from './Scene';
 
 describe('Scene', () => {
   it('should setup emitter', () => {
     const scene = new Scene({
-      emitter: new ServerEventsEmitter(),
+      emitter: new DoubleEmitter(),
       parts: []
     });
-    expect(scene.emitter).toBeInstanceOf(ServerEventsEmitter);
+    expect(scene.emitter).toBeInstanceOf(DoubleEmitter);
     expect(scene.emitter.params.sceneId).toEqual(scene.id);
   });
 
   describe('updateReuseStatus', () => {
     it('should update toRemove property according to reuse type', () => {
       const infinityScene = new Scene({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         reuse: 'infinity',
         parts: []
       });
@@ -22,7 +22,7 @@ describe('Scene', () => {
       expect(infinityScene.toRemove).toBeFalsy();
 
       const twoTimesScene = new Scene({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         reuse: 'fixed',
         quantity: 2,
         parts: []
@@ -39,7 +39,7 @@ describe('Scene', () => {
   describe('play', () => {
     it('should update pending status', (done) => {
       const scene = new Scene({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         reuse: 'infinity',
         parts: []
       });
@@ -54,7 +54,7 @@ describe('Scene', () => {
 
     it('should marked scene as to remove', (done) => {
       const scene = new Scene({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         parts: []
       });
 
@@ -65,15 +65,15 @@ describe('Scene', () => {
     });
 
     it('should emit proper events on not cancelled scene', (done) => {
-      const serverEE = new ServerEventsEmitter();
+      const serverEE = new DoubleEmitter();
       const scene = new Scene({
         emitter: serverEE,
         parts: []
       });
       const sceneStartHandlerMock = jest.fn();
       const sceneEndHandlerMock = jest.fn();
-      serverEE.on('SCENE_START', sceneStartHandlerMock);
-      serverEE.on('SCENE_END', sceneEndHandlerMock);
+      addListener('SCENE_START', sceneStartHandlerMock);
+      addListener('SCENE_END', sceneEndHandlerMock);
 
       scene.play().then(() => {
         expect(sceneStartHandlerMock).toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('Scene', () => {
     });
 
     it('should emit proper events on cancelled scene', (done) => {
-      const serverEE = new ServerEventsEmitter();
+      const serverEE = new DoubleEmitter();
       const scene = new Scene({
         emitter: serverEE,
         parts: [
@@ -95,7 +95,7 @@ describe('Scene', () => {
       });
 
       const sceneCancelHandlerMock = jest.fn();
-      serverEE.on('SCENE_CANCEL', sceneCancelHandlerMock);
+      addListener('SCENE_CANCEL', sceneCancelHandlerMock);
 
       scene.play(() => {
       }).then(
@@ -111,7 +111,7 @@ describe('Scene', () => {
   describe('cancel', () => {
     it('should cancel all parts and scene', (done) => {
       const scene = new Scene({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         parts: [
           {
             type: 'immediate',

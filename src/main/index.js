@@ -29,7 +29,7 @@ function createWindow() {
   mainWindow.webContents.openDevTools();
 
   // sync UI with double
-  syncRenderer(mainWindow, double.emitter);
+  syncRenderer(mainWindow);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

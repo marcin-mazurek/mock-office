@@ -1,37 +1,39 @@
-export default (mainWindow, emitter) => {
-  emitter.on('SCENE_REMOVED',
+import { addListener } from './double/emitter';
+
+export default (mainWindow) => {
+  addListener('SCENE_REMOVED',
     args => mainWindow.webContents.send('SCENE_REMOVED', args)
   );
 
-  emitter.on('SCENE_START',
+  addListener('SCENE_START',
     args => mainWindow.webContents.send('SCENE_START', args)
   );
 
-  emitter.on('SCENE_END',
+  addListener('SCENE_END',
     args => mainWindow.webContents.send('SCENE_END', args)
   );
 
-  emitter.on('SCENE_CANCEL',
+  addListener('SCENE_CANCEL',
     args => mainWindow.webContents.send('SCENE_CANCEL', args)
   );
 
-  emitter.on('SCENE_REMOVED_AFTER_USE',
+  addListener('SCENE_REMOVED_AFTER_USE',
     args => mainWindow.webContents.send('SCENE_REMOVED_AFTER_USE', args)
   );
 
-  emitter.on('SCENE_PART_START',
+  addListener('SCENE_PART_START',
     args => mainWindow.webContents.send('SCENE_PART_START', args)
   );
 
-  emitter.on('SCENE_PART_END',
+  addListener('SCENE_PART_END',
     args => mainWindow.webContents.send('SCENE_PART_END', args)
   );
 
-  emitter.on('SCENE_PART_CANCEL',
+  addListener('SCENE_PART_CANCEL',
     args => mainWindow.webContents.send('SCENE_PART_CANCEL', args)
   );
 
-  emitter.on('RESTORE_STATE',
+  addListener('RESTORE_STATE',
     () => mainWindow.webContents.send('RESTORE_STATE')
   );
 };

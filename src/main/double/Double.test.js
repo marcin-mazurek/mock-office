@@ -1,7 +1,7 @@
 import Double from './Double';
 import HttpServer from './http-mock-server';
 import WsServer from './ws-mock-server';
-import ServerEventsEmitter from './ServerEventsEmitter';
+import { DoubleEmitter } from './emitter';
 
 describe('ServerHub', () => {
   it('add should add server to servers list', () => {
@@ -198,6 +198,6 @@ describe('ServerHub', () => {
   it('should create emitter for server when adding server', () => {
     const double = new Double();
     double.add('server name', 3000, 'http', false);
-    expect(double.servers[0].emitter).toBeInstanceOf(ServerEventsEmitter);
+    expect(double.servers[0].emitter).toBeInstanceOf(DoubleEmitter);
   });
 });

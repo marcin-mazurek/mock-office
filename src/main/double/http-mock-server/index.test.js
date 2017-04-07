@@ -1,7 +1,7 @@
 import express from 'express';
 import request from 'request';
 import HttpMockServer, { send } from './index';
-import ServerEventsEmitter from '../ServerEventsEmitter';
+import { DoubleEmitter } from '../emitter';
 
 /* eslint-disable global-require */
 describe('send', () => {
@@ -68,7 +68,7 @@ describe('HttpMockServer', () => {
     const server = new HttpMockServer({
       port: 4000,
       id: 'some id',
-      emitter: new ServerEventsEmitter()
+      emitter: new DoubleEmitter()
     });
 
     server.start(
@@ -93,7 +93,7 @@ describe('HttpMockServer', () => {
     it('should destroy and remove all saved sockets', () => {
       const server = new HttpMockServer({
         id: 'some id',
-        emitter: new ServerEventsEmitter()
+        emitter: new DoubleEmitter()
       });
       server.sockets = [
         {
@@ -114,7 +114,7 @@ describe('HttpMockServer', () => {
     it('should return server scenario', () => {
       const server = new HttpMockServer({
         id: 'some id',
-        emitter: new ServerEventsEmitter()
+        emitter: new DoubleEmitter()
       });
 
       expect(server.getScenario()).toBe(server.scenario);
@@ -125,7 +125,7 @@ describe('HttpMockServer', () => {
     it('should call scenario.play if found scene', () => {
       const server = new HttpMockServer({
         id: 'some id',
-        emitter: new ServerEventsEmitter()
+        emitter: new DoubleEmitter()
       });
       const playMock = jest.fn();
 
@@ -146,7 +146,7 @@ describe('HttpMockServer', () => {
       const server = new HttpMockServer({
         port: 4000,
         id: 'some id',
-        emitter: new ServerEventsEmitter()
+        emitter: new DoubleEmitter()
       });
 
       server.getScenario().addScene({
@@ -188,7 +188,7 @@ describe('HttpMockServer', () => {
     it('should start http server', (done) => {
       const server = new HttpMockServer({
         port: 4000,
-        emitter: new ServerEventsEmitter()
+        emitter: new DoubleEmitter()
       });
       server.start(
         () => {
