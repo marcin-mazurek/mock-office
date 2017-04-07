@@ -1,11 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
 
-export class EditableField extends React.Component {
+class EditableField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      edit: false,
+      edit: props.edit,
       value: props.value
     };
     this.setInputRef = this.setInputRef.bind(this);
@@ -15,6 +15,13 @@ export class EditableField extends React.Component {
     this.saveChanges = this.saveChanges.bind(this);
     this.handleKeys = this.handleKeys.bind(this);
     this.inputRef = null;
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      edit: props.edit,
+      value: props.value
+    });
   }
 
   setInputRef(ref) {
@@ -123,12 +130,14 @@ export class EditableField extends React.Component {
 
 EditableField.propTypes = {
   value: React.PropTypes.node,
+  edit: React.PropTypes.bool,
   onChange: React.PropTypes.func,
   onCancel: React.PropTypes.func,
   onSave: React.PropTypes.func.isRequired,
 };
 
 EditableField.defaultProps = {
+  edit: false,
   onChange: () => {
   },
   onCancel: () => {
