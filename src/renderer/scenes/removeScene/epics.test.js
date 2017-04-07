@@ -8,7 +8,7 @@ const mockedElectron = {
   remote: {
     require() {
       return {
-        default: {
+        double: {
           find() {
             return {
               getScenario() {

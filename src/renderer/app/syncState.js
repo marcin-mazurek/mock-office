@@ -3,7 +3,7 @@ import { add, start } from '../entities/servers/actions';
 import { add as addScene } from '../scenes/addScene/actions';
 
 const loadState = (store) => {
-  const servers = remote.require('./main/servers').default.servers;
+  const servers = remote.require('./main').double.servers;
 
   servers.forEach((server) => {
     store.dispatch(add(server.name, server.port, server.type, server.id, server.isSecure));

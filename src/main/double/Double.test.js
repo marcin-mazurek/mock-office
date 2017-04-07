@@ -1,46 +1,46 @@
-import ServersHub from './index';
-import HttpServer from '../http-mock-server';
-import WsServer from '../ws-mock-server';
-import { ServerEventsEmitter } from '../globalEvents';
+import Double from './Double';
+import HttpServer from './http-mock-server';
+import WsServer from './ws-mock-server';
+import { DoubleEmitter } from './emitter';
 
 describe('ServerHub', () => {
   it('add should add server to servers list', () => {
-    const serversHub = new ServersHub();
-    const serversCount = serversHub.servers.length;
-    serversHub.add('server name', 3000, 'http', false);
-    expect(serversHub.servers.length).toEqual(serversCount + 1);
+    const double = new Double();
+    const serversCount = double.servers.length;
+    double.add('server name', 3000, 'http', false);
+    expect(double.servers.length).toEqual(serversCount + 1);
   });
 
   it('add should return id of added server and id of its queue', () => {
-    const serversHub = new ServersHub();
-    const serverId = serversHub.add('server name', 3000, 'http', false);
+    const double = new Double();
+    const serverId = double.add('server name', 3000, 'http', false);
     expect(typeof serverId === 'string').toBeTruthy();
   });
 
   it('add should add server of type Http if we provide http type', () => {
-    const serversHub = new ServersHub();
-    serversHub.add('server name', 3000, 'http', false);
-    expect(serversHub.servers[serversHub.servers.length - 1]).toBeInstanceOf(HttpServer);
+    const double = new Double();
+    double.add('server name', 3000, 'http', false);
+    expect(double.servers[double.servers.length - 1]).toBeInstanceOf(HttpServer);
   });
 
   it('add should add server of type Ws if we provide ws type', () => {
-    const serversHub = new ServersHub();
-    serversHub.add('server name', 3000, 'ws', false);
-    expect(serversHub.servers[serversHub.servers.length - 1]).toBeInstanceOf(WsServer);
+    const double = new Double();
+    double.add('server name', 3000, 'ws', false);
+    expect(double.servers[double.servers.length - 1]).toBeInstanceOf(WsServer);
   });
 
   it('add should throw error if we provide unknown server type', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
     expect(() =>
-      serversHub.add('server name', 3000, 'unknown server type', false)
+      double.add('server name', 3000, 'unknown server type', false)
     ).toThrow();
   });
 
   it('start should call server start only if it is not running', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
     const startMock = jest.fn();
 
-    serversHub.servers = [
+    double.servers = [
       {
         id: 'server 1',
         isLive() {
@@ -61,18 +61,18 @@ describe('ServerHub', () => {
       }
     ];
 
-    serversHub.start('server 1');
+    double.start('server 1');
     expect(startMock).toHaveBeenCalledTimes(1);
-    serversHub.start('server 2');
+    double.start('server 2');
     expect(startMock).toHaveBeenCalledTimes(1);
   });
 
   it('stop should call server stop if it is running', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
     const stopMock = jest.fn();
     const serverId = 'some-id';
 
-    serversHub.servers = [
+    double.servers = [
       {
         id: serverId,
         isLive() {
@@ -85,16 +85,16 @@ describe('ServerHub', () => {
       }
     ];
 
-    serversHub.stop(serverId);
+    double.stop(serverId);
     expect(stopMock).toHaveBeenCalledTimes(1);
   });
 
   it('stop should not call server stop if it is not running', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
     const stopMock = jest.fn();
     const serverId = 'some-id';
 
-    serversHub.servers = [
+    double.servers = [
       {
         id: serverId,
         isLive() {
@@ -107,77 +107,78 @@ describe('ServerHub', () => {
       }
     ];
 
-    serversHub.stop(serverId);
+    double.stop(serverId);
     expect(stopMock).not.toHaveBeenCalled();
   });
 
   it('find should return proper server', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
     const server = {
       id: 'one id'
     };
 
-    serversHub.servers = [
+    double.servers = [
       server,
       {
         id: 'another id'
       }
     ];
 
-    const foundServer = serversHub.find('one id');
+    const foundServer = double.find('one id');
     expect(foundServer).toBe(server);
   });
 
   it('find should return undefined if doesnt find server', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
     const server = {
       id: 'one id'
     };
 
-    serversHub.servers = [server];
+    double.servers = [server];
 
-    const foundServer = serversHub.find('another id');
+    const foundServer = double.find('another id');
     expect(foundServer).toBeUndefined();
   });
 
   it('getAll should return new copy of all servers', () => {
-    const serversHub = new ServersHub();
-    expect(serversHub.getAll()).not.toBe(serversHub.servers);
-    expect(serversHub.getAll()).toEqual(serversHub.servers);
+    const double = new Double();
+    expect(double.getAll()).not.toBe(double.servers);
+    expect(double.getAll()).toEqual(double.servers);
   });
 
   it('remove should remove server with provided id', (done) => {
-    const serversHub = new ServersHub();
-    const id = serversHub.add('server name', 3000, 'http', false);
+    const double = new Double();
+    const id = double.add('server name', 3000, 'http', false);
 
-    serversHub.remove(id).then(() => {
-      expect(serversHub.servers.length).toEqual(0);
+    double.remove(id).then(() => {
+      expect(double.servers.length).toEqual(0);
       done();
     })
       .catch((err) => {
-      console.log(err);
-      done();
+        // eslint-disable-next-line no-console
+        console.log(err);
+        done();
       });
   });
 
   it('remove should do nothing when invalid id', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
 
-    serversHub.servers = [
+    double.servers = [
       {
         id: 'some id'
       }
     ];
 
-    serversHub.remove('invalid id');
-    expect(serversHub.servers.length).toEqual(1);
+    double.remove('invalid id');
+    expect(double.servers.length).toEqual(1);
   });
 
   it('remove should gracefully stop server before remove', () => {
-    const serversHub = new ServersHub();
+    const double = new Double();
     const stopMockFn = jest.fn();
 
-    serversHub.servers = [
+    double.servers = [
       {
         id: 'some id',
         isLive() {
@@ -190,13 +191,13 @@ describe('ServerHub', () => {
       }
     ];
 
-    serversHub.remove('some id');
+    double.remove('some id');
     expect(stopMockFn).toHaveBeenCalled();
   });
 
   it('should create emitter for server when adding server', () => {
-    const serversHub = new ServersHub();
-    serversHub.add('server name', 3000, 'http', false);
-    expect(serversHub.servers[0].emitter).toBeInstanceOf(ServerEventsEmitter);
+    const double = new Double();
+    double.add('server name', 3000, 'http', false);
+    expect(double.servers[0].emitter).toBeInstanceOf(DoubleEmitter);
   });
 });

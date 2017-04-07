@@ -1,18 +1,18 @@
 import { Subscription } from 'rxjs';
 import ScenePart from './ScenePart';
-import { ServerEventsEmitter } from '../globalEvents';
+import { DoubleEmitter } from '../emitter';
 
 describe('ScenePart', () => {
   it('should setup emitter', () => {
-    const scenePart = new ScenePart({ emitter: new ServerEventsEmitter() });
-    expect(scenePart.emitter).toBeInstanceOf(ServerEventsEmitter);
+    const scenePart = new ScenePart({ emitter: new DoubleEmitter() });
+    expect(scenePart.emitter).toBeInstanceOf(DoubleEmitter);
     expect(scenePart.emitter.params.scenePartId).toEqual(scenePart.id);
   });
 
   describe('play', () => {
     it('should change pending state if it is not pending yet', () => {
       const scenePart = new ScenePart({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         scheduleDetails: {
           type: 'immediate',
           payload: {
@@ -31,7 +31,7 @@ describe('ScenePart', () => {
 
     it('should setup functions for canceling if it is not pending yet', () => {
       const scenePart = new ScenePart({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         scheduleDetails: {
           type: 'immediate',
           payload: {
@@ -51,7 +51,7 @@ describe('ScenePart', () => {
 
     it('should return rejected promise if is pending', (done) => {
       const scenePart = new ScenePart({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         scheduleDetails: {
           type: 'immediate',
           payload: {
@@ -74,7 +74,7 @@ describe('ScenePart', () => {
   describe('cancel', () => {
     it('should call stop only if scene part is pending', () => {
       const scenePart = new ScenePart({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         scheduleDetails: {
           type: 'immediate',
           payload: {
@@ -91,7 +91,7 @@ describe('ScenePart', () => {
       expect(scenePart.stop).toHaveBeenCalled();
 
       const scenePartNotPending = new ScenePart({
-        emitter: new ServerEventsEmitter(),
+        emitter: new DoubleEmitter(),
         scheduleDetails: {
           type: 'immediate',
           payload: {

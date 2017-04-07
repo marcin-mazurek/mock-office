@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import Scenario, { extractSubTree } from './Scenario';
-import { ServerEventsEmitter } from '../globalEvents';
+import { DoubleEmitter } from '../emitter';
 
 describe('extractSubTree', () => {
   it('should trim shallow primitive values', () => {
@@ -77,14 +77,14 @@ describe('extractSubTree', () => {
 describe('Scenario', () => {
   describe('constructor', () => {
     it('should initialize list of scenes', () => {
-      const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
+      const scenario = new Scenario({ emitter: new DoubleEmitter() });
       expect(scenario).toHaveProperty('scenes');
     });
   });
 
   describe('addScene', () => {
     it('should add scene to scenario', () => {
-      const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
+      const scenario = new Scenario({ emitter: new DoubleEmitter() });
       scenario.addScene({ parts: [] });
       expect(scenario.scenes).toHaveLength(1);
       scenario.addScene({ parts: [] });
@@ -94,7 +94,7 @@ describe('Scenario', () => {
 
   describe('removeScene', () => {
     it('should remove scene from scenario scenes list', () => {
-      const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
+      const scenario = new Scenario({ emitter: new DoubleEmitter() });
       scenario.addScene({
         parts: []
       });
@@ -106,7 +106,7 @@ describe('Scenario', () => {
   describe('findScene', () => {
     it('should find scene scene if not yet scheduled', () => {
       const mockScene = jest.fn();
-      const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
+      const scenario = new Scenario({ emitter: new DoubleEmitter() });
       const scene = {
         id: 'some id',
         scene: mockScene
@@ -116,7 +116,7 @@ describe('Scenario', () => {
       ];
       expect(scenario.findScene()).toBe(scene);
 
-      const scenario2 = new Scenario({ emitter: new ServerEventsEmitter() });
+      const scenario2 = new Scenario({ emitter: new DoubleEmitter() });
       const desc2 = {
         id: 'another id',
         requirements: {
@@ -138,7 +138,7 @@ describe('Scenario', () => {
 
   describe('cancelPendingScenes', () => {
     it('should cancel all active scene parts', (done) => {
-      const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
+      const scenario = new Scenario({ emitter: new DoubleEmitter() });
 
       const futureScene = {
         parts: [
@@ -169,7 +169,7 @@ describe('Scenario', () => {
 
   describe('play', () => {
     it('should remove scene if it shouldn\'t be reused', () => {
-      const scenario = new Scenario({ emitter: new ServerEventsEmitter() });
+      const scenario = new Scenario({ emitter: new DoubleEmitter() });
       scenario.scenes = [
         {
           id: 'some id',

@@ -2,8 +2,12 @@ import { BrowserWindow, app, Menu, MenuItem } from 'electron';
 import path from 'path';
 import url from 'url';
 import addDevTools from './devtools';
-import startPassingMessagesToMainWindow from './mainWindowMessageBus';
+import syncRenderer from './syncRenderer';
 import { restore, save } from './state';
+import Double from './double';
+
+// eslint-disable-next-line import/prefer-default-export
+export const double = new Double();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -24,8 +28,8 @@ function createWindow() {
   addDevTools();
   mainWindow.webContents.openDevTools();
 
-  // init main window message bus
-  startPassingMessagesToMainWindow(mainWindow);
+  // sync UI with double
+  syncRenderer(mainWindow);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

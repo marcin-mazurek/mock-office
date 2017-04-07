@@ -14,7 +14,7 @@ describe('removeServerEpic', () => {
       remote: {
         require() {
           return {
-            default: {
+            double: {
               remove() {
                 removePromise = new Promise((resolve) => {
                   setTimeout(() => {
