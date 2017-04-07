@@ -13,6 +13,7 @@ class EditableField extends React.Component {
     this.updateValue = this.updateValue.bind(this);
     this.cancelEdit = this.cancelEdit.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
     this.handleKeys = this.handleKeys.bind(this);
     this.inputRef = null;
   }
@@ -67,6 +68,12 @@ class EditableField extends React.Component {
     return false;
   }
 
+  handleBlur(e) {
+    if (this.state.value === this.props.value) {
+      this.cancelEdit(e);
+    }
+  }
+
   handleKeys(e) {
     switch (e.keyCode) {
       case 13: { // Enter
@@ -99,6 +106,7 @@ class EditableField extends React.Component {
               type="text"
               value={value}
               onChange={this.updateValue}
+              onBlur={this.handleBlur}
               onKeyUp={this.handleKeys}
               ref={this.setInputRef}
             />

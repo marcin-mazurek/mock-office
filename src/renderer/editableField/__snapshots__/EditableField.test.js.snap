@@ -20,6 +20,7 @@ exports[`EditableField edited snapshot 1`] = `
 >
   <input
     className="editable-field__input"
+    onBlur={[Function]}
     onChange={[Function]}
     onKeyUp={[Function]}
     type="text"
