@@ -36,3 +36,8 @@ app.post('/stop-server', (req, res) => {
     res.end();
   });
 });
+
+app.listen(3060, () => {
+  // eslint-disable-next-line no-console
+  console.log('rest-api is running');
+});
