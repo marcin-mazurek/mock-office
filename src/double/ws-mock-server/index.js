@@ -8,7 +8,7 @@ import Scenario from '../scenario';
 export default class WSMockServer {
   constructor(config) {
     this.type = 'ws';
-    this.port = config.port || 3010;
+    this.port = config.port || 3000;
     this.name = config.name;
     this.id = unique();
     this.emitter = config.emitter.extend({ serverId: this.id });

@@ -8,6 +8,7 @@ export function save() {
     server => ({
       name: server.name,
       type: server.type,
+      port: server.port,
       scenes: server.getScenario().scenes.map(scene => ({
         title: scene.title,
         requirements: scene.requirements,
