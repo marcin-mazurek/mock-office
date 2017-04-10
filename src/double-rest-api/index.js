@@ -135,10 +135,70 @@ app.post('/stop-server', bodyParser.json(), (req, res) => {
   }
 });
 
-app.post('/add-scene', (req, res) => {
-  const server = double.find(req.body.serverId);
-  const sceneId = server.getScenario().addScene(req.body.scene);
-  res.end(sceneId);
+app.post('/add-scene', bodyParser.json(), (req, res) => {
+  const schema = {
+    properties: {
+      serverId: {
+        type: 'string'
+      },
+      scene: {
+        type: 'object',
+        properties: {
+          title: {
+            type: 'string'
+          },
+          requirements: {
+            type: 'object'
+          },
+          reuse: {
+            type: 'string'
+          },
+          parts: {
+            type: 'array',
+            minItems: 1,
+            items: {
+              type: 'object',
+              properties: {
+                title: {
+                  type: 'string'
+                },
+                type: {
+                  type: 'string'
+                },
+                payload: {
+                  type: 'object'
+                },
+                delay: {
+                  type: 'number'
+                }
+              },
+              required: ['type']
+            }
+          }
+        },
+        required: ['parts']
+      }
+    },
+    required: ['serverId', 'scene']
+  };
+
+  if (ajv.validate(schema, req.body)) {
+    const server = double.find(req.body.serverId);
+
+    if (!server) {
+      res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+      return;
+    }
+
+    const sceneId = server.getScenario().addScene(req.body.scene);
+
+    res.status(200).json({
+      id: sceneId
+    });
+    return;
+  }
+
+  res.json(ajv.errors);
 });
 
 app.post('/remove-scene', (req, res) => {
