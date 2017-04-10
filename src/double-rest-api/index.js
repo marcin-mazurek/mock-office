@@ -202,8 +202,33 @@ app.post('/add-scene', bodyParser.json(), (req, res) => {
 });
 
 app.post('/remove-scene', (req, res) => {
-  double.find(req.body.serverId).getScenario().removeScene(req.body.sceneId);
-  res.end();
+  const schema = {
+    properties: {
+      id: {
+        type: 'string'
+      }
+    },
+    required: ['id']
+  };
+
+  if (!ajv.validate(schema, req.body)) {
+    res.json(ajv.errors);
+  }
+
+  const server = double.find(req.body.serverId);
+
+  if (!server) {
+    res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+    return;
+  }
+
+  const sceneRemoved = server.getScenario().removeScene(req.body.sceneId);
+
+  if (sceneRemoved) {
+    res.end();
+  } else {
+    res.status(400).end();
+  }
 });
 
 app.listen(3060, () => {
