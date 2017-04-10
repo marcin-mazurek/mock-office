@@ -195,9 +195,11 @@ app.post('/add-scene', bodyParser.json(), (req, res) => {
     }
 
     const sceneId = server.getScenario().addScene(req.body.scene);
+    const parts = server.getScenario().find(sceneId).parts.map(part => part.id);
 
     res.status(200).json({
-      id: sceneId
+      id: sceneId,
+      parts
     });
     return;
   }

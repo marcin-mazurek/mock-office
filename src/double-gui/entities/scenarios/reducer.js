@@ -9,19 +9,19 @@ const Scenario = new Record({
   scenes: new List()
 });
 
-export default (state = initialState, scene) => {
-  switch (scene.type) {
+export default (state = initialState, action) => {
+  switch (action.type) {
     case ADD_SERVER: {
       const queue = new Scenario();
-      return state.set(scene.id, queue);
+      return state.set(action.id, queue);
     }
     case ADD_SCENE: {
-      return state.updateIn([scene.serverId, 'scenes'], scenes => scenes.push(scene.id));
+      return state.updateIn([action.serverId, 'scenes'], scenes => scenes.push(action.id));
     }
     case REMOVE_SCENE: {
-      return state.updateIn([scene.serverId, 'scenes'], (scenes) => {
+      return state.updateIn([action.serverId, 'scenes'], (scenes) => {
         const sceneIndex =
-          scenes.findIndex(sceneId => sceneId === scene.sceneId);
+          scenes.findIndex(sceneId => sceneId === action.sceneId);
         return scenes.delete(sceneIndex, 1);
       });
     }

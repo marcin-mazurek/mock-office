@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
         newState = newState.setIn(
           ['entities', part.id],
           new ScenePart(
-            Object.assign({ id: part.id }, part.scheduleDetails)
+            Object.assign({ id: part.id }, part)
           )
         );
       });
