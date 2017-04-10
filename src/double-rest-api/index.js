@@ -108,10 +108,31 @@ app.post('/start-server', bodyParser.json(), (req, res) => {
   }
 });
 
-app.post('/stop-server', (req, res) => {
-  double.find(req.body.id).stop(() => {
-    res.end();
-  });
+app.post('/stop-server', bodyParser.json(), (req, res) => {
+  const schema = {
+    properties: {
+      id: {
+        type: 'string'
+      }
+    },
+    required: ['id']
+  };
+
+  if (ajv.validate(schema, req.body)) {
+    const serverToStop = double.find(req.body.id);
+
+    if (!serverToStop) {
+      res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+    } else {
+      serverToStop.stop(
+        () => {
+          res.status(200).end();
+        }
+      );
+    }
+  } else {
+    res.json(ajv.errors);
+  }
 });
 
 app.post('/add-scene', (req, res) => {
