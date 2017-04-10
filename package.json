@@ -19,6 +19,9 @@
     "watch-main": "babel src/main --out-dir dist/main --source-maps --watch",
     "dev-main": "npm-run-all build-main watch-main",
     "build-entry": "babel src/index.js --out-file dist/index.js",
+    "build-rest-api": "babel src/double-rest-api --out-dir dist/double-rest-api --source-maps",
+    "watch-rest-api": "babel src/double-rest-api --out-dir dist/double-rest-api --source-maps --watch",
+    "dev-rest-api": "npm-run-all build-rest-api watch-rest-api",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest --runInBand",
     "tdd": "jest --watch --runInBand",
@@ -72,7 +75,9 @@
     "webpack": "^1.13.3"
   },
   "dependencies": {
+    "ajv": "^4.11.6",
     "atob": "^2.0.3",
+    "body-parser": "^1.17.1",
     "btoa": "^1.1.2",
     "classnames": "^2.2.5",
     "deep-equal": "^1.0.1",

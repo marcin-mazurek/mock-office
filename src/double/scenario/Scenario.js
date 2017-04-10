@@ -49,10 +49,16 @@ export default class Scenario {
 
   removeScene(sceneId) {
     const sceneIndex = this.scenes.findIndex(scene => scene.id === sceneId);
-    const scene = this.scenes[sceneIndex];
 
+    if (sceneIndex < 0) {
+      return false;
+    }
+
+    const scene = this.scenes[sceneIndex];
     scene.cancel();
     this.scenes.splice(sceneIndex, 1);
+
+    return true;
   }
 
   // (String, Function) -> Promise
