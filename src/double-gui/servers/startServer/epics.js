@@ -6,12 +6,13 @@ import { add } from '../../entities/errors/actions';
 export default action$ =>
   action$.ofType(INIT)
     .flatMap(action => Observable.from(
-      fetch({
-        host: 'http://127.0.0.1',
-        url: '/start-server',
-        port: 3060,
+      fetch('http://127.0.0.1:3060/start-server', {
         method: 'POST',
-        payload: { id: action.id }
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: action.id })
       }).then(() => action.id)
     ))
     .map(id => start(id))
