@@ -207,14 +207,17 @@ app.post('/add-scene', bodyParser.json(), (req, res) => {
   res.json(ajv.errors);
 });
 
-app.post('/remove-scene', (req, res) => {
+app.post('/remove-scene', bodyParser(), (req, res) => {
   const schema = {
     properties: {
-      id: {
+      sceneId: {
+        type: 'string'
+      },
+      serverId: {
         type: 'string'
       }
     },
-    required: ['id']
+    required: ['sceneId', 'serverId']
   };
 
   if (!ajv.validate(schema, req.body)) {
