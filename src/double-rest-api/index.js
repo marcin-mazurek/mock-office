@@ -11,6 +11,7 @@ const double = new Double();
 
 app.post('/add-server', bodyParser.json(), (req, res) => {
   const schema = {
+    type: 'object',
     properties: {
       name: {
         type: 'string'
@@ -60,6 +61,7 @@ app.post('/add-server', bodyParser.json(), (req, res) => {
 
 app.post('/remove-server', bodyParser.json(), (req, res) => {
   const schema = {
+    type: 'object',
     properties: {
       id: {
         type: 'string'
