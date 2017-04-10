@@ -108,6 +108,10 @@ export default class WSMockServer {
     });
   }
 
+  rename(name) {
+    this.name = name;
+  }
+
   isLive() {
     return this.httpServer.listening;
   }

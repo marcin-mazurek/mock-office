@@ -16,6 +16,7 @@ class Double {
     this.find = this.find.bind(this);
     this.getAll = this.getAll.bind(this);
     this.remove = this.remove.bind(this);
+    this.rename = this.rename.bind(this);
     this.emitter = new DoubleEmitter();
   }
 
@@ -67,6 +68,17 @@ class Double {
       return this.stop(id).then(() => {
         this.servers.splice(index, 1);
       });
+    }
+
+    return Promise.reject();
+  }
+
+  rename(id, name) {
+    const server = this.find(id);
+
+    if (server) {
+      server.rename(name);
+      return Promise.resolve();
     }
 
     return Promise.reject();

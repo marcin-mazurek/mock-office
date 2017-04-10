@@ -6,6 +6,7 @@ import addSceneEpic from '../scenes/addScene/epics';
 import { removeSceneEpic, removeSceneAfterUseEpic } from '../scenes/removeScene/epics';
 import addSceneFromFileEpic from '../scenes/addSceneFromFile/epics';
 import removeServerEpic from '../servers/removeServer/epics';
+import renameServerEpic from '../servers/renameServer/epics';
 
 export default combineEpics(
   addServerEpic,
@@ -15,5 +16,6 @@ export default combineEpics(
   removeSceneEpic,
   removeSceneAfterUseEpic,
   addSceneFromFileEpic,
-  removeServerEpic
+  removeServerEpic,
+  renameServerEpic
 );

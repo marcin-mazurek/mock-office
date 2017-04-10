@@ -3,6 +3,7 @@ export const SELECT = 'servers/SELECT';
 export const START = 'servers/START';
 export const STOP = 'servers/STOP';
 export const REMOVE = 'servers/REMOVE';
+export const RENAME = 'servers/RENAME';
 
 export const add = (name, port, serverType, id, secure) => ({
   type: ADD,
@@ -31,4 +32,10 @@ export const stop = id => ({
 export const remove = id => ({
   type: REMOVE,
   id
+});
+
+export const rename = (id, name) => ({
+  type: RENAME,
+  id,
+  name
 });

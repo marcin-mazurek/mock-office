@@ -1,38 +1,44 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import { Provider } from 'react-redux';
-import { Map } from 'immutable';
-import configureStore from 'redux-mock-store';
-import SideBarServersConnect from './SideBarServers';
-import SideBar from './SideBar';
-import Server from '../entities/servers/reducer';
+import { SideBarServers } from './SideBarServers';
 
-const mockStore = configureStore();
-
-const state = new Map({
-  servers: new Map({
-    entities: new Map({
-      'some-id': new Server({
-        name: 'Server 1',
-        id: 'some-id'
-      }),
-      'another-id': new Server({
-        name: 'Server 2',
-        id: 'another-id'
-      })
-    }),
-    selected: null,
-    running: new Set(['another-id'])
-  })
-});
-
-const store = mockStore(state);
+const props = {
+  servers: [
+    {
+      name: 'HTTP running server',
+      id: 'server1',
+      type: 'http',
+      secure: false,
+      running: true,
+    },
+    {
+      name: 'Secure HTTP server',
+      id: 'server2',
+      type: 'http',
+      secure: true,
+      running: false,
+    },
+    {
+      name: 'Web socket server',
+      id: 'server3',
+      type: 'ws',
+      secure: false,
+      running: false,
+    },
+    {
+      name: 'Secure & running web socket server',
+      id: 'server4',
+      type: 'ws',
+      secure: true,
+      running: true,
+    }
+  ],
+  select: () => {},
+  goToServerPage: () => {},
+  selected: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
+};
 
 storiesOf('SideBarServers', module)
-  .add('single server', () => (
-    <Provider store={store}>
-      <SideBar>
-        <SideBarServersConnect />
-      </SideBar>
-    </Provider>
+  .add('some servers config', () => (
+    <SideBarServers {...props} />
   ));

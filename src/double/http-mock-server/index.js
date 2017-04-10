@@ -106,6 +106,10 @@ export default class HttpMockServer {
     this.httpServer.close(cb);
   }
 
+  rename(name) {
+    this.name = name;
+  }
+
   isLive() {
     return this.httpServer.listening;
   }
