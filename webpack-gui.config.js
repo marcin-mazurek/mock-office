@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   entry: [
@@ -12,19 +13,19 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.css/,
-        loaders: ['style', 'css']
+        loaders: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'file'
+        loader: 'file-loader'
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg|jpg|png|ico)(\?.+)?$/,
@@ -33,7 +34,7 @@ module.exports = {
           name: './static/[name].[ext]'
         }
       },
-      { test: /\.json/, loader: 'json' }
+      { test: /\.json/, loader: 'json-loader' }
     ]
   },
   plugins: [
@@ -44,13 +45,12 @@ module.exports = {
   ],
   devtool: 'source-map',
   output: {
-    path: './dist/double-gui',
-    filename: 'bundle.js',
-    publicPath: './'
+    path: path.join(__dirname, 'dist/double-gui'),
+    filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    modulesDirectories: [
+    extensions: ['.js', '.jsx'],
+    modules: [
       'node_modules'
     ]
   }

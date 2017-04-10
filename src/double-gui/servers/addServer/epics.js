@@ -7,15 +7,18 @@ export default action$ =>
     .flatMap((action) => {
       const { name, port, serverType: type, isSecure, keyPath, certPath } = action;
       return Observable.from(
-        fetch({
-          host: 'http://127.0.0.1',
-          url: '/add-server',
-          port: 3060,
+        fetch('http://127.0.0.1:3060/add-server', {
+          headers: {
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
           method: 'POST',
-          payload: { name, port, serverType: type, isSecure, keyPath, certPath }
-        }).then(
+          body: JSON.stringify({ name, port, type, isSecure, keyPath, certPath })
+        })
+          .then(response => response.json())
+          .then(
           (response) => {
-            const serverId = response.json().id;
+            const serverId = response.id;
             return [name, port, type, serverId, isSecure];
           }
         )

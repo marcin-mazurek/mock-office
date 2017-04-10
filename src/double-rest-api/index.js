@@ -1,10 +1,12 @@
 import Ajv from 'ajv';
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import Double from '../double';
 
 const ajv = new Ajv();
 const app = express();
+app.use(cors());
 const double = new Double();
 
 app.post('/add-server', bodyParser.json(), (req, res) => {
