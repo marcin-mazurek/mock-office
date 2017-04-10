@@ -1,0 +1,66 @@
+.scenes {
+  @extend %list-reset;
+  width: 100%;
+}
+
+.scenes__item {
+  border-bottom: 1px solid #EEE;
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+}
+
+.scene-details {
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.scene__title {
+  margin-right: 15px;
+  flex: none;
+}
+
+.scene-spec {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.scene__remove-button {
+  @extend %button-reset;
+  cursor: pointer;
+  font-size: 16px;
+  color: $scene-remove-button-font-color;
+  margin-left: auto;
+  transition: color .2s ease;
+
+  &:hover {
+    color: $scene-remove-button-hover-font-color;
+  }
+}
+
+.scene-spec__tag {
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-right: 10px;
+  font-size: 11px;
+  background-color: $scene-spec-tag-background-color;
+  color: darken($scene-spec-tag-background-color, 40%);
+}
+
+.scene__parts {
+  padding-left: 10px;
+}
+
+.scene--running {
+  background-color: $task-status-running-background-color;
+  transition: none;
+}
+
+.scene--finished {
+  color: lighten($font-color, 30%);
+  background-color: inherit;
+}

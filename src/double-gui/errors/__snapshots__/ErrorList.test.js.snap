@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorList should display reason 1`] = `
+<ul>
+  <li>
+    reason 1
+    <button
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-close"
+      />
+    </button>
+  </li>
+</ul>
+`;
+
+exports[`ErrorList should display remove button 1`] = `
+<ul>
+  <li>
+    reason 1
+    <button
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-close"
+      />
+    </button>
+  </li>
+</ul>
+`;
+
+exports[`ErrorListConnect should display current errors from redux store 1`] = `
+<Component
+  errors={Array []}
+  remove={[Function]}
+>
+  <ul />
+</Component>
+`;
+
+exports[`ErrorListConnect should display current errors from redux store 2`] = `
+<Component
+  errors={
+    Array [
+      Object {
+        "id": "id",
+        "reason": "reason 1",
+      },
+    ]
+  }
+  remove={[Function]}
+>
+  <ul>
+    <li>
+      reason 1
+      <button
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-close"
+        />
+      </button>
+    </li>
+  </ul>
+</Component>
+`;
+
+exports[`ErrorListConnect should display current errors from redux store 3`] = `
+<Component
+  errors={Array []}
+  remove={[Function]}
+>
+  <ul />
+</Component>
+`;

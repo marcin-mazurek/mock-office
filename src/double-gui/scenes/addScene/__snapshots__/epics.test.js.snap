@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addSceneEpic success flow snapshot 1`] = `
+Array [
+  Object {
+    "scenes": Array [
+      Object {
+        "requirements": Object {
+          "url": "/some-path",
+        },
+        "title": "scene title",
+      },
+    ],
+    "serverId": "serverId",
+    "type": "addScene/INIT",
+  },
+  Object {
+    "delay": undefined,
+    "id": "scene id",
+    "interval": undefined,
+    "parts": Array [],
+    "quantity": undefined,
+    "requirements": Object {
+      "url": "/some-path",
+    },
+    "reuse": undefined,
+    "serverId": "serverId",
+    "title": "scene title",
+    "type": "scenes/ADD",
+  },
+]
+`;
