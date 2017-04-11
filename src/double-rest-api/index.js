@@ -207,7 +207,7 @@ app.post('/add-scene', bodyParser.json(), (req, res) => {
   res.json(ajv.errors);
 });
 
-app.post('/remove-scene', bodyParser(), (req, res) => {
+app.post('/remove-scene', bodyParser.json(), (req, res) => {
   const schema = {
     properties: {
       sceneId: {
