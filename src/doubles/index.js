@@ -1,5 +1,2 @@
-import serveGUI from './serve-gui';
-import serveApp from './serve-app';
-
-serveApp();
-serveGUI();
+import './serve-gui';
+import './serve-app';
