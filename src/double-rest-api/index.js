@@ -2,7 +2,9 @@ import Ajv from 'ajv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { Server as WebSocketServer } from 'ws';
 import Double from '../double';
+import { addListener } from '../double/emitter';
 
 const ajv = new Ajv();
 const app = express();
@@ -273,4 +275,55 @@ app.get('/state', (req, res) => {
 app.listen(3060, () => {
   // eslint-disable-next-line no-console
   console.log('rest-api is running');
+});
+
+const wsServer = new WebSocketServer({ port: 3061 });
+let sockets = [];
+
+const broadcast = (event, args) => sockets.forEach(
+  socket => socket.send(JSON.stringify(Object.assign({ event }, args)))
+);
+
+addListener('SCENE_REMOVED',
+  args => broadcast('SCENE_REMOVED', args)
+);
+
+addListener('SCENE_START',
+  args => broadcast('SCENE_START', args)
+);
+
+addListener('SCENE_END',
+  args => broadcast('SCENE_END', args)
+);
+
+addListener('SCENE_CANCEL',
+  args => broadcast('SCENE_CANCEL', args)
+);
+
+addListener('SCENE_REMOVED_AFTER_USE',
+  args => broadcast('SCENE_REMOVED_AFTER_USE', args)
+);
+
+addListener('SCENE_PART_START',
+  args => broadcast('SCENE_PART_START', args)
+);
+
+addListener('SCENE_PART_END',
+  args => broadcast('SCENE_PART_END', args)
+);
+
+addListener('SCENE_PART_CANCEL',
+  args => broadcast('SCENE_PART_CANCEL', args)
+);
+
+addListener('RESTORE_STATE',
+  () => broadcast('RESTORE_STATE')
+);
+
+wsServer.on('connection', (ws) => {
+  sockets.push(ws);
+
+  ws.on('close', () => {
+    sockets = sockets.filter(soc => soc !== ws);
+  });
 });
