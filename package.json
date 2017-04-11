@@ -13,22 +13,22 @@
     "dev-doubles-electron-main": "npm-run-all build-doubles-electron-main watch-doubles-electron-main",
 
     "dev-doubles-electron": "npm-run-all --parallel dev-doubles-electron-main dev-doubles-electron-renderer start-doubles-electron",
-    "build": "npm-run-all build-doubles-electron-main build-doubles-electron-renderer build-doubles-electron-entry",
-    "start": "npm-run-all build start-electron",
+    "build-doubles-electron": "npm-run-all build-doubles-electron-main build-doubles-electron-renderer build-doubles-electron-entry",
+    "run-doubles-electron": "npm-run-all build start-electron",
     "start-doubles-electron": "electron .",
     "build-doubles-electron-entry": "babel src/index.js --out-file dist/index.js",
-
-    "build-doubles": "babel src/doubles --out-dir dist/doubles --source-maps --ignore doubles/gui",
-    "watch-doubles": "babel src/doubles --out-dir dist/doubles --source-maps --watch --ignore doubles/gui",
-    "dev-doubles": "npm-run-all build-doubles watch-doubles",
-    "pm2-run-doubles": "pm2 start ./dist/doubles/index.js --watch",
-    "start-doubles": "node ./dist/doubles/index.js",
-    "run-doubles": "npm-run-all build-doubles-gui build-doubles start-doubles",
 
     "build-doubles-gui": "webpack --config webpack-gui.config.js",
     "dev-doubles-gui": "webpack-dev-server --config webpack-gui.config.js",
     "test-doubles-gui": "jest src/doubles/gui",
     "tdd-doubles-gui": "jest src/doubles/gui --watch",
+
+    "build": "babel src/doubles --out-dir dist/doubles --source-maps --ignore doubles/gui",
+    "watch": "babel src/doubles --out-dir dist/doubles --source-maps --watch --ignore doubles/gui",
+    "dev": "npm-run-all build watch",
+    "pm2-run": "pm2 start ./dist/doubles/index.js --watch",
+    "start": "node ./dist/doubles/index.js",
+    "run": "npm-run-all build-doubles-gui build start",
 
     "lint": "eslint 'src/**/*.js'",
     "test": "jest --runInBand",
