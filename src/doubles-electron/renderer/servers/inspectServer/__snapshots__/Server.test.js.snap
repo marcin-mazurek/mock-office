@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Server default snapshot 1`] = `
+<Connect(Component)
+  running={true}
+  serverDetails={
+    Object {
+      "id": "some id",
+      "name": "some id",
+      "port": 3000,
+      "queue": "some queue id",
+      "type": "some type",
+    }
+  }
+/>
+`;
+
+exports[`ServerInspect default snapshot 1`] = `
+<div
+  className="inspect-server"
+>
+  <div
+    className="inspect-server__header inspect-server-header"
+  >
+    <div
+      className="inspect-server-header__toggle"
+    >
+      <Connect(ServerToggle)
+        serverId="some id"
+        toggled={true}
+      />
+    </div>
+    <div
+      className="inspect-server-details"
+    >
+      <div
+        className="inspect-server-details__name"
+      >
+        <EditableField
+          edit={false}
+          onCancel={[Function]}
+          onChange={[Function]}
+          onSave={[Function]}
+          value="some id"
+        />
+      </div>
+      <div
+        className="inspect-server-details__spec inspect-server-spec"
+      >
+        <div
+          className="inspect-server-spec__item"
+        >
+          <span
+            className="inspect-server-spec__label"
+          >
+            Port:
+          </span>
+          <span
+            className="inspect-server-spec__value"
+          >
+            3000
+          </span>
+        </div>
+        <div
+          className="inspect-server-spec__item"
+        >
+          <span
+            className="inspect-server-spec__label"
+          >
+            Type:
+          </span>
+          <span
+            className="inspect-server-spec__value"
+          >
+            some type
+          </span>
+        </div>
+      </div>
+    </div>
+    <button
+      className="inspect-server__remove-button button"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-trash"
+      />
+    </button>
+  </div>
+  <main
+    className="inspect-server-main inspect-server__main"
+  >
+    <div
+      className="inspect-server-scenes-header"
+    >
+      <div
+        className="inspect-server-scenes-header__label"
+      >
+        <i
+          className="fa fa-scenes"
+        />
+         Scenes:
+      </div>
+      <Component
+        className="inspect-server__add-scene-button button inspect-server-scenes-header__button"
+        onlyActiveOnIndex={false}
+        style={Object {}}
+        to="/add-scene"
+      >
+        <i
+          className="fa fa-plus"
+        />
+      </Component>
+      <Connect(FilePicker)
+        serverId="some id"
+      />
+    </div>
+    <div
+      className="inspect-server__scenes"
+    >
+      <div
+        className="inspect-server__scenes-scroll-container"
+      >
+        <Scrollbars
+          autoHeight={false}
+          autoHeightMax={200}
+          autoHeightMin={0}
+          autoHide={false}
+          autoHideDuration={200}
+          autoHideTimeout={1000}
+          hideTracksWhenNotNeeded={false}
+          renderThumbHorizontal={[Function]}
+          renderThumbVertical={[Function]}
+          renderTrackHorizontal={[Function]}
+          renderTrackVertical={[Function]}
+          renderView={[Function]}
+          tagName="div"
+          thumbMinSize={30}
+          universal={false}
+        >
+          <Connect(Component)
+            serverId="some id"
+          />
+        </Scrollbars>
+      </div>
+    </div>
+  </main>
+</div>
+`;
+
+exports[`ServerPlaceholder any servers exists snapshot 1`] = `
+<div
+  className="server-placeholder"
+>
+  Add server
+</div>
+`;
+
+exports[`ServerPlaceholder some servers exist snapshot 1`] = `
+<div
+  className="server-placeholder"
+>
+  Select server
+</div>
+`;

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddScene default snapshot 1`] = `
+<div
+  className="add-scene"
+>
+  <div
+    className="view-header"
+  >
+    Add scene
+  </div>
+  <div
+    className="add-scene__main"
+  >
+    <Component
+      className="add-scene__back-button"
+      onlyActiveOnIndex={false}
+      style={Object {}}
+      to="/"
+    >
+      <i
+        className="fa fa-arrow-left"
+      />
+       Server details
+    </Component>
+    <Connect(WsForm) />
+  </div>
+</div>
+`;

@@ -1,0 +1,13 @@
+.file-picker {
+  position: relative;
+  overflow: hidden;
+}
+
+.file-picker__button {
+  border: $file-picker-button-border;
+  cursor: pointer;
+}
+
+.file-picker__input {
+  display: none;
+}

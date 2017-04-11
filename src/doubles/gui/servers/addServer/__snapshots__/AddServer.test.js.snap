@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddServer default snapshot 1`] = `
+<div>
+  <div
+    className="view-header add-server__header"
+  >
+    Add server
+  </div>
+  <Connect(AddServerForm) />
+</div>
+`;
