@@ -13,6 +13,10 @@ and then
 
 Local app will be listening on `http://127.0.0.1:3060`
 
+For enabling GUI
+
+`npm run start-with-gui`
+
 GUI is served at `http://127.0.0.1:3070`
 
 ### Development
