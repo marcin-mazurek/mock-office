@@ -77,7 +77,7 @@ app.post('/remove-server', bodyParser.json(), (req, res) => {
           res.status(200).end();
         },
         () => {
-          res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+          res.status(404).end();
         }
       );
   } else {
@@ -99,7 +99,7 @@ app.post('/start-server', bodyParser.json(), (req, res) => {
     const serverToStart = double.find(req.body.id);
 
     if (!serverToStart) {
-      res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+      res.status(404).end();
     } else {
       serverToStart.start(
         () => {
@@ -126,7 +126,7 @@ app.post('/stop-server', bodyParser.json(), (req, res) => {
     const serverToStop = double.find(req.body.id);
 
     if (!serverToStop) {
-      res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+      res.status(404).end();
     } else {
       serverToStop.stop(
         () => {
@@ -190,7 +190,7 @@ app.post('/add-scene', bodyParser.json(), (req, res) => {
     const server = double.find(req.body.serverId);
 
     if (!server) {
-      res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+      res.status(404).end();
       return;
     }
 
@@ -227,7 +227,7 @@ app.post('/remove-scene', bodyParser(), (req, res) => {
   const server = double.find(req.body.serverId);
 
   if (!server) {
-    res.status(400).send(`Cannot found server with id ${req.body.id}.`);
+    res.status(404).end();
     return;
   }
 
@@ -236,7 +236,7 @@ app.post('/remove-scene', bodyParser(), (req, res) => {
   if (sceneRemoved) {
     res.end();
   } else {
-    res.status(400).end();
+    res.status(404).end();
   }
 });
 
