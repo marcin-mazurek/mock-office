@@ -27,6 +27,8 @@
 
     "build-doubles-gui": "webpack --config webpack-gui.config.js",
     "dev-doubles-gui": "webpack-dev-server --config webpack-gui.config.js",
+    "test-doubles-gui": "jest src/doubles/gui",
+    "tdd-doubles-gui": "jest src/doubles/gui --watch",
 
     "lint": "eslint 'src/**/*.js'",
     "test": "jest --runInBand",
