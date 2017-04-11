@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { Server as WebSocketServer } from 'ws';
+import fs from 'fs';
 import ServersManager from './servers-manager';
 import { addListener } from './servers-manager/emitter';
 
@@ -320,8 +321,91 @@ addListener('RESTORE_STATE',
   () => broadcast('RESTORE_STATE')
 );
 
+const PATH_TO_FILE = './mockeeState.json';
+
+function save() {
+  const state = serversManager.servers.map(
+    server => ({
+      name: server.name,
+      type: server.type,
+      port: server.port,
+      scenes: server.getScenario().scenes.map(scene => ({
+        title: scene.title,
+        requirements: scene.requirements,
+        reuse: scene.reuse,
+        parts: scene.parts.map(scenePart => ({
+          title: scenePart.scheduleDetails.title,
+          type: scenePart.scheduleDetails.type,
+          payload: scenePart.scheduleDetails.payload,
+          delay: scenePart.scheduleDetails.delay
+        }))
+      }))
+    })
+  );
+
+  fs.writeFileSync(PATH_TO_FILE, JSON.stringify(state), 'utf8');
+}
+
+function restore() {
+  fs.readFile(PATH_TO_FILE, (err, data) => {
+    if (err) return;
+
+    try {
+      const serverState = JSON.parse(data);
+
+      serverState.forEach((s) => {
+        const id = serversManager.add(
+          s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false
+        );
+        const server = serversManager.find(id);
+        s.scenes.forEach((scene) => {
+          server.getScenario().addScene(scene);
+        });
+      });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
+  });
+}
+
 wsServer.on('connection', (ws) => {
   sockets.push(ws);
+  restore();
+
+  const state = {
+    servers: serversManager.servers.map(server => ({
+      running: server.isLive(),
+      name: server.name,
+      type: server.type,
+      port: server.port,
+      id: server.id,
+      scenes: server.getScenario().scenes.map(scene => ({
+        id: scene.id,
+        title: scene.title,
+        interval: scene.interval,
+        reuse: scene.reuse,
+        quantity: scene.quantity,
+        delay: scene.delay,
+        requirements: scene.requirements,
+        parts: scene.parts.map(part => ({
+          id: part.id,
+          pending: part.pending,
+          title: part.scheduleDetails.title,
+          type: part.scheduleDetails.type,
+          delay: part.scheduleDetails.delay
+        }))
+      }))
+    }))
+  };
+
+  broadcast('RESTORE_STATE', { state });
+
+  ws.on('message', (message) => {
+    if (message === 'SAVE_STATE') {
+      save();
+    }
+  });
 
   ws.on('close', () => {
     sockets = sockets.filter(soc => soc !== ws);
