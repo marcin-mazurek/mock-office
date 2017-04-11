@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import { getSelected, getServerList } from '../entities/servers/selectors';
 import { select as dispatchSelect } from '../entities/servers/actions';
 
-export const SideBarServers = ({ servers, select, goToServerPage, selected }) => (
+export const SideBarServers = ({ servers, select, goToServerPage, selected, saveState }) => (
   <div className="sidebar-servers">
     <div className="sidebar-servers__header">
       <i className="fa fa-server sidebar-servers-header__icon" />{' Servers'}
@@ -63,6 +63,7 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected }) =>
         })
       }
     </ul>
+    <button onClick={saveState}>saveState</button>
   </div>
 );
 
@@ -80,7 +81,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   select: id => dispatchSelect(id),
-  goToServerPage: () => push('/')
+  goToServerPage: () => push('/'),
+  saveState: () => ({ type: 'SAVE_STATE' })
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarServers);
