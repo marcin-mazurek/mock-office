@@ -1,4 +1,4 @@
-import { addListener } from '../doubles-servers/emitter';
+import { addListener } from '../servers-manager/emitter';
 
 export default (mainWindow) => {
   addListener('SCENE_REMOVED',

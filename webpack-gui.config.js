@@ -5,8 +5,8 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'whatwg-fetch',
-    './src/doubles-gui/styles/main.scss',
-    './src/doubles-gui/main.js'
+    './src/doubles/gui/styles/main.scss',
+    './src/doubles/gui/main.js'
   ],
   module: {
     loaders: [
@@ -39,13 +39,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/doubles-gui/index.html',
+      template: './src/doubles/gui/index.html',
       chunksSortMode: 'dependency'
     })
   ],
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, 'dist/doubles-gui'),
+    path: path.join(__dirname, 'dist/doubles/gui'),
     filename: 'bundle.js'
   },
   resolve: {

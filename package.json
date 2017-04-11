@@ -18,16 +18,12 @@
     "start-doubles-electron": "electron .",
     "build-doubles-electron-entry": "babel src/index.js --out-file dist/index.js",
 
-    "build-doubles-servers": "babel src/doubles-servers --out-dir dist/doubles-servers --source-maps",
-    "watch-doubles-servers": "babel src/doubles-servers --out-dir dist/doubles-servers --source-maps --watch",
-    "dev-doubles-servers": "npm-run-all build-doubles-servers watch-doubles-servers",
-
-    "build-doubles": "babel src/doubles --out-dir dist/doubles --source-maps",
-    "watch-doubles": "babel src/doubles --out-dir dist/doubles --source-maps --watch",
-    "pm2-run-doubles": "pm2 start ./dist/doubles --watch",
-    "dev-doubles": "npm-run-all build-doubles watch-doubles start-doubles",
+    "build-doubles": "babel src/doubles --out-dir dist/doubles --source-maps --ignore doubles/gui",
+    "watch-doubles": "babel src/doubles --out-dir dist/doubles --source-maps --watch --ignore doubles/gui",
+    "dev-doubles": "npm-run-all build-doubles watch-doubles",
+    "pm2-run-doubles": "pm2 start ./dist/doubles/index.js --watch",
     "start-doubles": "node ./dist/doubles/index.js",
-    "run-doubles": "npm-run-all build-doubles-servers build-doubles-gui build-doubles start-doubles",
+    "run-doubles": "npm-run-all build-doubles-gui build-doubles start-doubles",
 
     "build-doubles-gui": "webpack --config webpack-gui.config.js",
     "dev-doubles-gui": "webpack-dev-server --config webpack-gui.config.js",

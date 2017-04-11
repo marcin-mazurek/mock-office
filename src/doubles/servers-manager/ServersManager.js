@@ -1,5 +1,5 @@
-import HttpServer from './http-double';
-import WSMockServer from './ws-double';
+import HttpServer from '../http-double';
+import WSMockServer from '../ws-double';
 import { DoublesEmitter } from './emitter';
 
 const serverTypes = {
@@ -7,7 +7,7 @@ const serverTypes = {
   ws: WSMockServer
 };
 
-class Double {
+class ServersManager {
   constructor() {
     this.servers = [];
     this.add = this.add.bind(this);
@@ -85,4 +85,4 @@ class Double {
   }
 }
 
-export default Double;
+export default ServersManager;
