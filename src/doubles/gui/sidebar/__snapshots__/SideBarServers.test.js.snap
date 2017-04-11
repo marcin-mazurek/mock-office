@@ -11,7 +11,7 @@ exports[`SideBarServers should render 1`] = `
       className="fa fa-server sidebar-servers-header__icon"
     />
      Servers
-    <Component
+    <Link
       className="sidebar-servers__add-server-button"
       onlyActiveOnIndex={false}
       style={Object {}}
@@ -20,7 +20,7 @@ exports[`SideBarServers should render 1`] = `
       <i
         className="fa fa-plus"
       />
-    </Component>
+    </Link>
   </div>
   <ul
     className="sidebar-servers-list"

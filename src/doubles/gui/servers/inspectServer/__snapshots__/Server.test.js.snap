@@ -100,7 +100,7 @@ exports[`ServerInspect default snapshot 1`] = `
         />
          Scenes:
       </div>
-      <Component
+      <Link
         className="inspect-server__add-scene-button button inspect-server-scenes-header__button"
         onlyActiveOnIndex={false}
         style={Object {}}
@@ -109,7 +109,7 @@ exports[`ServerInspect default snapshot 1`] = `
         <i
           className="fa fa-plus"
         />
-      </Component>
+      </Link>
       <Connect(FilePicker)
         serverId="some id"
       />
