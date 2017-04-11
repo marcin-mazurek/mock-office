@@ -148,19 +148,17 @@ app.post('/start-server', bodyParser.json(), (req, res) => {
   };
 
   if (ajv.validate(schema, req.body)) {
-    const serverToStart = serversManager.find(req.body.id);
-
-    if (!serverToStart) {
-      res.status(404).end();
-    } else {
-      serverToStart.start(
+    serversManager.start(req.body.id)
+      .then(
         () => {
-          res.status(200).end();
+          res.status(200).json({ id: req.body.id });
+        },
+        (err) => {
+          res.status(400).json({ error: err });
         }
       );
-    }
   } else {
-    res.json(ajv.errors);
+    res.status(400).json({ error: ajv.errors });
   }
 });
 
