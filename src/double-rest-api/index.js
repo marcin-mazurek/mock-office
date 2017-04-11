@@ -240,6 +240,36 @@ app.post('/remove-scene', bodyParser.json(), (req, res) => {
   }
 });
 
+app.get('/state', (req, res) => {
+  const state = {
+    servers: double.servers.map(server => ({
+      running: server.isLive(),
+      name: server.name,
+      type: server.type,
+      port: server.port,
+      id: server.id,
+      scenes: server.getScenario().scenes.map(scene => ({
+        id: scene.id,
+        title: scene.title,
+        interval: scene.interval,
+        reuse: scene.reuse,
+        quantity: scene.quantity,
+        delay: scene.delay,
+        requirements: scene.requirements,
+        parts: scene.parts.map(part => ({
+          id: part.id,
+          pending: part.pending,
+          title: part.scheduleDetails.title,
+          type: part.scheduleDetails.type,
+          delay: part.scheduleDetails.delay
+        }))
+      }))
+    }))
+  };
+
+  res.json(state);
+});
+
 app.listen(3060, () => {
   // eslint-disable-next-line no-console
   console.log('rest-api is running');
