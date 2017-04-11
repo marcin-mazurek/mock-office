@@ -5,13 +5,13 @@ const emitter = new EventEmitter();
 export const addListener = emitter.on.bind(emitter);
 export const removeListener = emitter.removeListener.bind(emitter);
 
-export class DoubleEmitter {
+export class DoublesEmitter {
   constructor(params) {
     this.params = params || {};
   }
 
   extend(extraParams) {
-    return new DoubleEmitter(
+    return new DoublesEmitter(
       Object.assign({}, this.params, extraParams)
     );
   }

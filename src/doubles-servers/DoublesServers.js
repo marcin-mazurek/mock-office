@@ -1,6 +1,6 @@
 import HttpServer from './http-mock-server';
 import WSMockServer from './ws-mock-server';
-import { DoubleEmitter } from './emitter';
+import { DoublesEmitter } from './emitter';
 
 const serverTypes = {
   http: HttpServer,
@@ -17,7 +17,7 @@ class Double {
     this.getAll = this.getAll.bind(this);
     this.remove = this.remove.bind(this);
     this.rename = this.rename.bind(this);
-    this.emitter = new DoubleEmitter();
+    this.emitter = new DoublesEmitter();
   }
 
   add(name, port, type, isSecure, keyPath, certPath) {

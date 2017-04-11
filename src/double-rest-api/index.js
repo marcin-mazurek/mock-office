@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { Server as WebSocketServer } from 'ws';
 import Double from '../double';
-import { addListener } from '../double/emitter';
+import { addListener } from '../doubles-servers/emitter';
 
 const ajv = new Ajv();
 const app = express();
