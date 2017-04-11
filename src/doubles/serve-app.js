@@ -274,7 +274,7 @@ app.get('/state', (req, res) => {
 
 app.listen(3060, () => {
   // eslint-disable-next-line no-console
-  console.log('rest-api is running');
+  console.log('App address: http://127.0.0.1:3060');
 });
 
 const wsServer = new WebSocketServer({ port: 3061 });
