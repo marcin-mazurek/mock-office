@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { getScene } from '../../entities/scenes/selectors';
@@ -79,16 +80,16 @@ export const Scene = ({
 };
 
 Scene.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  serverId: React.PropTypes.string.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  reuse: React.PropTypes.string,
-  quantity: React.PropTypes.number,
-  requirements: React.PropTypes.shape({}),
-  runCount: React.PropTypes.number.isRequired,
-  lastDuration: React.PropTypes.number,
-  finished: React.PropTypes.bool.isRequired
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  serverId: PropTypes.string.isRequired,
+  remove: PropTypes.func.isRequired,
+  reuse: PropTypes.string,
+  quantity: PropTypes.number,
+  requirements: PropTypes.shape({}),
+  runCount: PropTypes.number.isRequired,
+  lastDuration: PropTypes.number,
+  finished: PropTypes.bool.isRequired
 };
 
 const sceneSelector = createSelector(
@@ -126,8 +127,8 @@ export const Scenes = ({ sceneIds, serverId }) => (
 );
 
 Scenes.propTypes = {
-  sceneIds: React.PropTypes.shape({}).isRequired,
-  serverId: React.PropTypes.string.isRequired
+  sceneIds: PropTypes.shape({}).isRequired,
+  serverId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({

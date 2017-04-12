@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import init from './actions';
 
@@ -172,7 +173,7 @@ export class AddServerForm extends React.Component {
 }
 
 AddServerForm.propTypes = {
-  add: React.PropTypes.func.isRequired
+  add: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

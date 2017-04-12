@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { createSelector } from 'reselect';
 import getSceneParts, { getScenePart } from '../../entities/sceneParts/selectors';
@@ -54,11 +55,11 @@ export const ScenePartListItem = ({
 };
 
 ScenePartListItem.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  interval: React.PropTypes.number,
-  reuse: React.PropTypes.bool,
-  quantity: React.PropTypes.number,
-  delay: React.PropTypes.number
+  title: PropTypes.string.isRequired,
+  interval: PropTypes.number,
+  reuse: PropTypes.bool,
+  quantity: PropTypes.number,
+  delay: PropTypes.number
 };
 
 const scenePartSelector = createSelector(
@@ -89,7 +90,7 @@ export const ScenePartList = ({ sceneParts }) => (
 );
 
 ScenePartList.propTypes = {
-  sceneParts: ImmutablePropTypes.listOf(React.PropTypes.string)
+  sceneParts: ImmutablePropTypes.listOf(PropTypes.string)
 };
 
 const mapStateToProps = (state, ownProps) => ({

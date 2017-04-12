@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getSelectedServerDetails } from '../../entities/servers/selectors';
@@ -24,7 +25,7 @@ export const AddScene = ({ serverType }) => (
 );
 
 AddScene.propTypes = {
-  serverType: React.PropTypes.string.isRequired
+  serverType: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({

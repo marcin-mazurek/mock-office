@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { init as initAddScene } from './actions';
 import { getSelectedServerDetails } from '../../entities/servers/selectors';
@@ -94,8 +95,8 @@ export class WsForm extends React.Component {
 }
 
 WsForm.propTypes = {
-  initAddScene: React.PropTypes.func.isRequired,
-  queueId: React.PropTypes.string.isRequired
+  initAddScene: PropTypes.func.isRequired,
+  queueId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({

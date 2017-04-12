@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
@@ -68,10 +69,11 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected, save
 );
 
 SideBarServers.propTypes = {
-  servers: React.PropTypes.shape().isRequired,
-  select: React.PropTypes.func.isRequired,
-  goToServerPage: React.PropTypes.func.isRequired,
-  selected: React.PropTypes.string
+  servers: PropTypes.shape().isRequired,
+  select: PropTypes.func.isRequired,
+  goToServerPage: PropTypes.func.isRequired,
+  selected: PropTypes.string,
+  saveState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { init as intiAddSceneFromFile } from './actions';
 
@@ -42,8 +43,8 @@ export class FilePicker extends React.Component {
 }
 
 FilePicker.propTypes = {
-  serverId: React.PropTypes.string.isRequired,
-  intiAddSceneFromFile: React.PropTypes.func.isRequired
+  serverId: PropTypes.string.isRequired,
+  intiAddSceneFromFile: PropTypes.func.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(FilePicker);

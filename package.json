@@ -99,6 +99,7 @@
     "json8": "^0.9.2",
     "node-unique": "^1.0.0",
     "npm-watch": "^0.1.8",
+    "prop-types": "^15.5.7",
     "ramda": "^0.23.0",
     "ramda-fantasy": "^0.7.0",
     "react": "^15.4.1",

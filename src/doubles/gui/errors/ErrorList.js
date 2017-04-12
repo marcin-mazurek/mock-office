@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import AppError from '../entities/errors/AppError';
 import { remove as createRemoveAction } from '../entities/errors/actions';
@@ -21,7 +22,7 @@ export const ErrorList = ({ errors, remove }) =>
 
 ErrorList.propTypes = {
   errors: ImmutablePropTypes.listOf(AppError),
-  remove: React.PropTypes.func.isRequired
+  remove: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

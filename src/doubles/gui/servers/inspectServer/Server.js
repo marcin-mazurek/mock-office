@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
@@ -55,10 +56,10 @@ const ServerToggle = ({ toggled, serverId, stop, start }) => {
 };
 
 ServerToggle.propTypes = {
-  toggled: React.PropTypes.bool.isRequired,
-  serverId: React.PropTypes.string.isRequired,
-  stop: React.PropTypes.func.isRequired,
-  start: React.PropTypes.func.isRequired
+  toggled: PropTypes.bool.isRequired,
+  serverId: PropTypes.string.isRequired,
+  stop: PropTypes.func.isRequired,
+  start: PropTypes.func.isRequired
 };
 
 const serverToggleMapDispatchToProps = {

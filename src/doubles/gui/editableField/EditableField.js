@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 class EditableField extends React.Component {
@@ -137,11 +138,11 @@ class EditableField extends React.Component {
 }
 
 EditableField.propTypes = {
-  value: React.PropTypes.node,
-  edit: React.PropTypes.bool,
-  onChange: React.PropTypes.func,
-  onCancel: React.PropTypes.func,
-  onSave: React.PropTypes.func.isRequired,
+  value: PropTypes.node,
+  edit: PropTypes.bool,
+  onChange: PropTypes.func,
+  onCancel: PropTypes.func,
+  onSave: PropTypes.func.isRequired,
 };
 
 EditableField.defaultProps = {

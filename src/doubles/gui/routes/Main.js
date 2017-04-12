@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SideBar from '../sidebar/SideBar';
 
 const Main = ({ children }) => (
@@ -13,7 +14,7 @@ const Main = ({ children }) => (
 );
 
 Main.propTypes = {
-  children: React.PropTypes.node
+  children: PropTypes.node
 };
 
 export default Main;
