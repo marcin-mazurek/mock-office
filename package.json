@@ -4,17 +4,6 @@
   "description": "App for mocking API",
   "main": "dist/index.js",
   "scripts": {
-    "build-doubles-electron-renderer": "webpack",
-    "watch-doubles-electron-renderer": "webpack --watch",
-    "dev-doubles-electron-renderer": "npm-run-all build-renderer watch-renderer",
-    "build-doubles-electron-main": "babel src/main --out-dir dist/main --source-maps",
-    "watch-doubles-electron-main": "babel src/main --out-dir dist/main --source-maps --watch",
-    "dev-doubles-electron-main": "npm-run-all build-doubles-electron-main watch-doubles-electron-main",
-    "dev-doubles-electron": "npm-run-all --parallel dev-doubles-electron-main dev-doubles-electron-renderer start-doubles-electron",
-    "build-doubles-electron": "npm-run-all build-doubles-electron-main build-doubles-electron-renderer build-doubles-electron-entry",
-    "run-doubles-electron": "npm-run-all build start-electron",
-    "start-doubles-electron": "electron .",
-    "build-doubles-electron-entry": "babel src/index.js --out-file dist/index.js",
     "build-gui": "webpack --config webpack-gui.config.js",
     "dev-gui": "webpack-dev-server --config webpack-gui.config.js",
     "test-gui": "jest src/doubles/gui",
@@ -41,9 +30,8 @@
       ]
     }
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://bitbucket.org/clixr/mockee",
   "keywords": [
-    "Electron",
     "mock api"
   ],
   "author": "clixr",
@@ -59,9 +47,6 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "css-loader": "^0.26.1",
-    "electron": "^1.4.12",
-    "electron-devtools-installer": "^2.0.1",
-    "electron-reload": "^1.0.3",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
