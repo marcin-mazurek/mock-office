@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import WsDouble from './index';
-import { DoublesEmitter } from '../emitter';
+import { DoublesEmitter } from '../servers-manager/emitter';
 import Scenario from '../scenario';
 
 describe('WsDouble', () => {

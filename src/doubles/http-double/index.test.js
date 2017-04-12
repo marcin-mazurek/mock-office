@@ -1,7 +1,7 @@
 import express from 'express';
 import request from 'request';
 import HttpDouble, { send } from './index';
-import { DoublesEmitter } from '../emitter';
+import { DoublesEmitter } from '../servers-manager/emitter';
 
 /* eslint-disable global-require */
 describe('send', () => {

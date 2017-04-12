@@ -1,4 +1,4 @@
-import { DoublesEmitter, addListener } from '../emitter';
+import { DoublesEmitter, addListener } from '../servers-manager/emitter';
 import Scene from './Scene';
 
 describe('Scene', () => {

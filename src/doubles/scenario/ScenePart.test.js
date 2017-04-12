@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import ScenePart from './ScenePart';
-import { DoublesEmitter } from '../emitter';
+import { DoublesEmitter } from '../servers-manager/emitter';
 
 describe('ScenePart', () => {
   it('should setup emitter', () => {
