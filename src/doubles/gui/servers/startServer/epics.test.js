@@ -1,7 +1,6 @@
 /* eslint-disable global-require */
 describe('startServerEpic', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
     jest.resetModules();
   });
 
