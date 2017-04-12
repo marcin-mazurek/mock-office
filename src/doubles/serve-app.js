@@ -154,11 +154,17 @@ app.post('/start-server', bodyParser.json(), (req, res) => {
           res.status(200).json({ id: req.body.id });
         },
         (err) => {
-          res.status(400).json({ error: err });
+          res.status(400).json({
+            errors: [
+              {
+                message: err
+              }
+            ]
+          });
         }
       );
   } else {
-    res.status(400).json({ error: ajv.errors });
+    res.status(400).json({ errors: ajv.errors });
   }
 });
 

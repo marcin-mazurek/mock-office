@@ -25,5 +25,8 @@ exports[`SideBarServers should render 1`] = `
   <ul
     className="sidebar-servers-list"
   />
+  <button>
+    saveState
+  </button>
 </div>
 `;

@@ -41,7 +41,7 @@ describe('ErrorListConnect', () => {
     );
     const errorList = wrapper.find(ErrorList);
     expect(toJson(errorList)).toMatchSnapshot();
-    store.dispatch(add('reason 1'));
+    store.dispatch(add(['reason 1']));
     expect(toJson(errorList)).toMatchSnapshot();
     errorList.find('li').first().find('button').simulate('click');
     expect(toJson(errorList)).toMatchSnapshot();

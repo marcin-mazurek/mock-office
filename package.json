@@ -127,7 +127,7 @@
       "\\.(css|scss)$": "<rootDir>/jest/stylesMock.js"
     },
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/src/doubles/gui"
     ]
   }
 }

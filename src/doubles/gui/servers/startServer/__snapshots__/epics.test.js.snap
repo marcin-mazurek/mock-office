@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`startServerEpic should dispatch servers/START 1`] = `
+Array [
+  Object {
+    "id": "some id",
+    "type": "startServer/INIT",
+  },
+  Object {
+    "id": "some id",
+    "type": "servers/START",
+  },
+]
+`;

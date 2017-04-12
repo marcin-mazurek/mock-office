@@ -1,9 +1,9 @@
 export const ADD = 'errors/ADD';
 export const REMOVE = 'errors/REMOVE';
 
-export const add = reason => ({
+export const add = reasons => ({
   type: ADD,
-  reason
+  reasons
 });
 
 export const remove = id => ({

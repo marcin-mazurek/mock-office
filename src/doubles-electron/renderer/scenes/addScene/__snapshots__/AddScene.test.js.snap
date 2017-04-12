@@ -12,7 +12,7 @@ exports[`AddScene default snapshot 1`] = `
   <div
     className="add-scene__main"
   >
-    <Component
+    <Link
       className="add-scene__back-button"
       onlyActiveOnIndex={false}
       style={Object {}}
@@ -22,7 +22,7 @@ exports[`AddScene default snapshot 1`] = `
         className="fa fa-arrow-left"
       />
        Server details
-    </Component>
+    </Link>
     <Connect(WsForm) />
   </div>
 </div>
