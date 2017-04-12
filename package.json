@@ -6,14 +6,14 @@
   "scripts": {
     "build-gui": "webpack --config webpack-gui.config.js",
     "dev-gui": "webpack-dev-server --config webpack-gui.config.js",
-    "test-gui": "jest src/doubles/gui",
-    "tdd-gui": "jest src/doubles/gui --watch",
-    "build": "babel src/doubles --out-dir dist/doubles --source-maps --ignore doubles/gui/",
-    "watch": "babel src/doubles --out-dir dist/doubles --source-maps --watch --ignore doubles/gui/",
+    "test-gui": "jest src/gui",
+    "tdd-gui": "jest src/gui --watch",
+    "build": "babel src --out-dir dist --source-maps --ignore gui/",
+    "watch": "babel src --out-dir dist --source-maps --watch --ignore gui/",
     "dev": "npm-run-all build watch",
-    "pm2-run": "pm2 start ./dist/doubles/index.js --watch",
-    "start": "node ./dist/doubles/index.js",
-    "start-with-gui": "node ./dist/doubles/index.js --gui",
+    "pm2-run": "pm2 start ./dist/index.js --watch",
+    "start": "node ./dist/index.js",
+    "start-with-gui": "node ./dist/index.js --gui",
     "run": "npm-run-all build-gui build start",
     "run-with-gui": "npm-run-all build-gui build start-with-gui",
     "lint": "eslint 'src/**/*.js'",
@@ -113,7 +113,7 @@
       "\\.(css|scss)$": "<rootDir>/jest/stylesMock.js"
     },
     "roots": [
-      "<rootDir>/src/doubles/gui"
+      "<rootDir>/src"
     ]
   }
 }
