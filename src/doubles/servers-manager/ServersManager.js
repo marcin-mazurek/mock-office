@@ -87,6 +87,46 @@ class ServersManager {
 
     return Promise.reject();
   }
+
+  getState() {
+    return this.servers.map(
+      server => ({
+        running: server.isLive(),
+        name: server.name,
+        type: server.type,
+        port: server.port,
+        id: server.id,
+        scenes: server.getScenario().scenes.map(scene => ({
+          id: scene.id,
+          title: scene.title,
+          interval: scene.interval,
+          reuse: scene.reuse,
+          quantity: scene.quantity,
+          delay: scene.delay,
+          requirements: scene.requirements,
+          parts: scene.parts.map(part => ({
+            id: part.id,
+            pending: part.pending,
+            title: part.scheduleDetails.title,
+            type: part.scheduleDetails.type,
+            delay: part.scheduleDetails.delay
+          }))
+        }))
+      })
+    );
+  }
+
+  setState(state) {
+    state.forEach((s) => {
+      const id = this.add(
+        s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false
+      );
+      const server = this.find(id);
+      s.scenes.forEach((scene) => {
+        server.getScenario().addScene(scene);
+      });
+    });
+  }
 }
 
 export default ServersManager;

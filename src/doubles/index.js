@@ -1,5 +1,14 @@
 import commandLineArgs from 'command-line-args';
-import './serve-app';
+import { serveAppServer, configureAppServer } from './appServer';
+import configurePersistentState from './configurePersistentState';
+import createGuiEventsServer from './createGuiEventsServer';
+import ServersManager from './servers-manager';
+import { configureGuiServer, serveGuiServer } from './guiServer';
+
+const serversManager = new ServersManager();
+const persistentState = configurePersistentState(serversManager);
+persistentState.restore();
+serveAppServer(configureAppServer(serversManager));
 
 const options = commandLineArgs([
   {
@@ -10,5 +19,7 @@ const options = commandLineArgs([
 
 if (options.gui) {
   // eslint-disable-next-line global-require
-  require('./serve-gui');
+  const guiEventsServer = createGuiEventsServer(serversManager, persistentState);
+  guiEventsServer.start(3061);
+  serveGuiServer(configureGuiServer());
 }

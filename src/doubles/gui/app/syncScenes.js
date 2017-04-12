@@ -42,7 +42,7 @@ export default (store) => {
           break;
         }
         case 'RESTORE_STATE': {
-          data.state.servers.forEach((server) => {
+          data.state.forEach((server) => {
             store.dispatch(add(server.name, server.port, server.type, server.id, server.isSecure));
 
             if (server.running) {
