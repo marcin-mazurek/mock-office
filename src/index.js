@@ -10,6 +10,7 @@ const persistentState = createPersistentState(serversManager);
 persistentState.restore();
 serveAppServer(createAppServer(serversManager));
 
+// Very simple command line arguments support
 const options = commandLineArgs([
   {
     name: 'gui',
@@ -17,6 +18,7 @@ const options = commandLineArgs([
   }
 ]);
 
+// Spawning GUI server
 if (options.gui) {
   // eslint-disable-next-line global-require
   const guiEventsServer = createGuiEventsServer(serversManager, persistentState);
