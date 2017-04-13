@@ -14,8 +14,8 @@ const buildSendParams = (params, payload) =>
     }
   );
 
-export default scenePart =>
-  (action, onStart, onFinish) => {
+export default function createSchedule(scenePart) {
+  return function schedule(action, onStart, onFinish) {
     let payload;
 
     if (typeof scenePart.payload !== 'undefined') {
@@ -90,3 +90,4 @@ export default scenePart =>
       }
     }
   };
+}

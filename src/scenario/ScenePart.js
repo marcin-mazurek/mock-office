@@ -1,5 +1,5 @@
 import unique from 'node-unique';
-import createSchedule from './schedulers';
+import createSchedule from './createSchedule';
 
 export default class ScenePart {
   constructor(args) {
