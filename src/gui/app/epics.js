@@ -1,8 +1,7 @@
-import wsConnect from '../wsConnect';
-
 export default action$ =>
   action$.ofType('SAVE_STATE')
     .map(() => {
-      wsConnect.socket.send('SAVE_STATE');
-      return { type: 'SAVE_STATE_COMPLETE' };
-    });
+      window.location = 'http://127.0.0.1:3060/export';
+      return true;
+    })
+    .mapTo({ type: 'SAVE_STATE_COMPLETE' });
