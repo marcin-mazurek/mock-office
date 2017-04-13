@@ -5,10 +5,11 @@ import createGuiEventsServer from './createGuiEventsServer';
 import ServersManager from './servers-manager';
 import { createGuiServer, serveGuiServer } from './guiServer';
 
+const APP_SERVER_PORT = 3060;
 const serversManager = new ServersManager();
 const persistentState = createPersistentState(serversManager);
 persistentState.restore();
-serveAppServer(createAppServer(serversManager));
+serveAppServer(createAppServer(serversManager), APP_SERVER_PORT);
 
 // Very simple command line arguments support
 const options = commandLineArgs([

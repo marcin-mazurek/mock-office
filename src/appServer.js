@@ -246,9 +246,9 @@ export const createAppServer = (serversManager) => {
   return app;
 };
 
-export const serveAppServer = (app) => {
-  app.listen(3060, () => {
+export const serveAppServer = (app, port) => {
+  app.listen(port, () => {
     // eslint-disable-next-line no-console
-    console.log('App address: http://127.0.0.1:3060');
+    console.log(`App address: http://127.0.0.1:${port}`);
   });
 };
