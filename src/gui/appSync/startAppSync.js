@@ -3,14 +3,12 @@ import { removeAfterUse, finish } from '../scenes/removeScene/actions';
 import { run, stop } from '../scenes/runScene/actions';
 import { add, start } from '../entities/servers/actions';
 import { add as addScene } from '../scenes/addScene/actions';
-import wsConnect from '../wsConnect';
 
 const eventArgs2ActionPayload = data => [data.serverId, data.sceneId];
-const ws = new WebSocket('ws://127.0.0.1:3061');
 
-wsConnect.socket = ws;
+export default function startAppSync(store) {
+  const ws = new WebSocket('ws://127.0.0.1:3061');
 
-export default (store) => {
   Observable.fromEventPattern(
     (handler) => {
       ws.addEventListener('message', handler);
@@ -72,4 +70,4 @@ export default (store) => {
       }
     }
   );
-};
+}
