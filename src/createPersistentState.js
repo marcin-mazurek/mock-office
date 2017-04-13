@@ -1,5 +1,6 @@
 import fs from 'fs';
 import Ajv from 'ajv';
+import colors from 'colors/safe';
 
 const PATH_TO_FILE = './mockeeState.json';
 const schema = {
@@ -95,7 +96,7 @@ export default function createPersistentState(serversManager) {
         serversManager.setState(persistentState);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        console.error(colors.red(e));
       }
     });
   }
