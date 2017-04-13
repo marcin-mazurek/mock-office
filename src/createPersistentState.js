@@ -2,7 +2,7 @@ import fs from 'fs';
 
 const PATH_TO_FILE = './mockeeState.json';
 
-export default function configurePersistentState(serversManager) {
+export default function createPersistentState(serversManager) {
   function save() {
     fs.writeFileSync(PATH_TO_FILE, JSON.stringify(serversManager.getState()), 'utf8');
   }

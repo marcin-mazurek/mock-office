@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 
-export function configureGuiServer() {
+export function createGuiServer() {
   const serveStatic = express.static(path.resolve(__dirname, './gui'));
   const app = express();
   app.use(serveStatic);

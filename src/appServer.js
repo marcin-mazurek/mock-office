@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-export const configureAppServer = (serversManager) => {
+export const createAppServer = (serversManager) => {
   const ajv = new Ajv();
   const app = express();
   app.use(cors());
