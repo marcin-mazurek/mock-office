@@ -18,15 +18,17 @@ export default scenePart =>
   (action, onStart, onFinish) => {
     let payload;
 
-    if (scenePart.payload === 'generator') {
-      const scriptSrc = fs.readFileSync(scenePart.generatorPath);
-      payload = new vm.Script(scriptSrc).runInNewContext({});
-    } else if (scenePart.payload.type === 'b64') {
-      payload = {
-        message: atob(scenePart.payload.message)
-      };
-    } else {
-      payload = scenePart.payload;
+    if (typeof scenePart.payload !== 'undefined') {
+      if (scenePart.payload === 'generator') {
+        const scriptSrc = fs.readFileSync(scenePart.generatorPath);
+        payload = new vm.Script(scriptSrc).runInNewContext({});
+      } else if (scenePart.payload.type === 'b64') {
+        payload = {
+          message: atob(scenePart.payload.message)
+        };
+      } else {
+        payload = scenePart.payload;
+      }
     }
 
     switch (scenePart.type) {
