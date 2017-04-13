@@ -2,6 +2,7 @@ import Ajv from 'ajv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import colors from 'colors/safe';
 
 export const createAppServer = (serversManager) => {
   const ajv = new Ajv();
@@ -249,6 +250,6 @@ export const createAppServer = (serversManager) => {
 export const serveAppServer = (app, port) => {
   app.listen(port, () => {
     // eslint-disable-next-line no-console
-    console.log(`App address: http://127.0.0.1:${port}`);
+    console.log(colors.green(`App address: http://127.0.0.1:${port}`));
   });
 };

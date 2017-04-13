@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import colors from 'colors/safe';
 
 export function createGuiServer() {
   const serveStatic = express.static(path.resolve(__dirname, './gui'));
@@ -12,6 +13,6 @@ export function createGuiServer() {
 export function serveGuiServer(app, port) {
   app.listen(port, () => {
     // eslint-disable-next-line no-console
-    console.log(`GUI address: http://127.0.0.1:${port}`);
+    console.log(colors.green(`GUI address: http://127.0.0.1:${port}`));
   });
 }
