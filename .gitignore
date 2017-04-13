@@ -5,3 +5,4 @@ dist/
 npm-debug.log
 mockeeState.json
 dev-state.json
+/pm2-0.log
