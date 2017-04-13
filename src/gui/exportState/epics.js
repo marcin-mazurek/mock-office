@@ -1,5 +1,7 @@
+import { INIT } from './actions';
+
 export default action$ =>
-  action$.ofType('SAVE_STATE')
+  action$.ofType(INIT)
     .map(() => {
       window.location = 'http://127.0.0.1:3060/export';
       return true;

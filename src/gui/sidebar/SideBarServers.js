@@ -6,8 +6,9 @@ import { Link } from 'react-router';
 import classnames from 'classnames';
 import { getSelected, getServerList } from '../entities/servers/selectors';
 import { select as dispatchSelect } from '../entities/servers/actions';
+import { init as createInitExportAction } from '../exportState/actions';
 
-export const SideBarServers = ({ servers, select, goToServerPage, selected, saveState }) => (
+export const SideBarServers = ({ servers, select, goToServerPage, selected, initExport }) => (
   <div className="sidebar-servers">
     <div className="sidebar-servers__header">
       <i className="fa fa-server sidebar-servers-header__icon" />{' Servers'}
@@ -64,7 +65,7 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected, save
         })
       }
     </ul>
-    <button onClick={saveState}>saveState</button>
+    <button onClick={initExport}>saveState</button>
   </div>
 );
 
@@ -73,7 +74,7 @@ SideBarServers.propTypes = {
   select: PropTypes.func.isRequired,
   goToServerPage: PropTypes.func.isRequired,
   selected: PropTypes.string,
-  saveState: PropTypes.func.isRequired
+  initExport: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -84,7 +85,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   select: id => dispatchSelect(id),
   goToServerPage: () => push('/'),
-  saveState: () => ({ type: 'SAVE_STATE' })
+  initExport: createInitExportAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarServers);

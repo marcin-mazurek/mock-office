@@ -6,7 +6,7 @@ import addSceneEpic from '../scenes/addScene/epics';
 import { removeSceneEpic, removeSceneAfterUseEpic } from '../scenes/removeScene/epics';
 import addSceneFromFileEpic from '../scenes/addSceneFromFile/epics';
 import removeServerEpic from '../servers/removeServer/epics';
-import saveStateEpic from '../app/epics';
+import saveStateEpic from '../exportState/epics';
 // currently renaming is not supported by rest-api
 // import renameServerEpic from '../servers/renameServer/epics';
 
@@ -20,5 +20,5 @@ export default combineEpics(
   addSceneFromFileEpic,
   removeServerEpic,
   saveStateEpic
-  //renameServerEpic
+  // renameServerEpic
 );
