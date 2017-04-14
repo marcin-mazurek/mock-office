@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import { List } from 'immutable';
-import { NotificationsList, Notification } from './NotificationsList';
+import { NotificationsList } from './NotificationsList';
+import { Notification } from '../entities/notifications/createNotification';
 
 storiesOf('Notifications', module)
   .add('single notification', () => {
