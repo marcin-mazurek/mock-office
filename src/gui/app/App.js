@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ErrorListConnect from '../errors/ErrorList';
+import NotificationsListConnect from '../notifications/NotificationsList';
 
 const App = ({ children }) => (
   <div className="app">
-    <ErrorListConnect />
     { children }
+    <NotificationsListConnect />
   </div>
 );
 

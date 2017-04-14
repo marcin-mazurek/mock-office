@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { INIT } from './actions';
 import { start } from '../../entities/servers/actions';
-import { add } from '../../entities/errors/actions';
+import { add } from '../../entities/notifications/actions';
 import { requestStartServer } from '../../api/api';
 
 export default action$ =>
@@ -11,7 +11,7 @@ export default action$ =>
     )
     .map((res) => {
       if (res.errors) {
-        return add(res.errors.map(error => error.message));
+        return add(res.errors.map(error => ({ text: error.message, type: 'error' }))[0]);
       }
 
       return start(res.id);
