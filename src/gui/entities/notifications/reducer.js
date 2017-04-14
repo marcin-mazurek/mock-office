@@ -1,5 +1,6 @@
 import { Map, List, Record } from 'immutable';
 import createNotification from './createNotification';
+import { REMOVE, ADD } from './actions';
 
 export const NotificationsState = new Record({
   entities: new Map(),
@@ -9,7 +10,7 @@ export const NotificationsState = new Record({
 // notificationsReducer :: (NotificationsState, Object) -> NotificationsState
 export default function notificationsReducer(state = new NotificationsState(), action) {
   switch (action.type) {
-    case 'notifications/ADD': {
+    case ADD: {
       let newState = state;
 
       try {
@@ -24,7 +25,7 @@ export default function notificationsReducer(state = new NotificationsState(), a
 
       return newState;
     }
-    case 'notifications/REMOVE': {
+    case REMOVE: {
       return state
         .update('ids', ids => ids.filter(id => id !== action.id))
         .update('entities', entities => entities.delete(action.id));

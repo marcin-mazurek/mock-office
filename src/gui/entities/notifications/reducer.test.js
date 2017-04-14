@@ -1,4 +1,5 @@
 import reducer, { NotificationsState } from './reducer';
+import { remove, add, ADD, REMOVE } from './actions';
 
 jest.mock('node-unique', () => () => 'id');
 
@@ -7,15 +8,12 @@ describe('notifications reducer', () => {
     expect(reducer(undefined, { type: 'some type' })).toEqual(new NotificationsState());
   });
 
-  it('should add notification on notifications/ADD action only if notification params are provided', () => {
+  it(`should add notification on ${ADD} action only if notification params are provided`, () => {
     const successAddState = reducer(
       undefined,
-      {
-        type: 'notifications/ADD',
-        notification: {
-          text: 'notification text'
-        }
-      }
+      add({
+        text: 'notification text'
+      })
     );
 
     expect(successAddState.toJS()).toEqual({
@@ -31,9 +29,7 @@ describe('notifications reducer', () => {
 
     const failedAddState = reducer(
       undefined,
-      {
-        type: 'notifications/ADD'
-      }
+      add()
     );
 
     expect(failedAddState.toJS()).toEqual({
@@ -42,18 +38,15 @@ describe('notifications reducer', () => {
     });
   });
 
-  it('should remove notification on notifications/REMOVE action', () => {
+  it(`should remove notification on ${REMOVE} action`, () => {
     const stateAfterAdd = reducer(
       undefined,
-      {
-        type: 'notifications/ADD',
-        notification: {
-          text: 'notification text'
-        }
-      }
+      add({
+        text: 'notification text'
+      })
     );
 
-    const stateAfterRemove = reducer(stateAfterAdd, { type: 'notifications/REMOVE', id: 'id' });
+    const stateAfterRemove = reducer(stateAfterAdd, remove('id'));
 
     expect(stateAfterRemove.toJS()).toEqual({
       ids: [],
