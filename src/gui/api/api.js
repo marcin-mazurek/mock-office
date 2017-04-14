@@ -1,4 +1,5 @@
 import { ConnectionError } from '../errors/types';
+import { ValidationError, ServerNotFoundError } from '../servers/errors';
 
 // eslint-disable-next-line import/prefer-default-export
 export const requestStartServer = id =>
@@ -13,5 +14,14 @@ export const requestStartServer = id =>
     })
     .catch(() => {
       throw new ConnectionError('Connection failed.');
+    })
+    .then((res) => {
+      if (res.status === 400) {
+        throw new ValidationError(res.error);
+      } else if (res.status === 404) {
+        throw new ServerNotFoundError('Server not found');
+      }
+
+      return res;
     })
     .then(res => res.json());

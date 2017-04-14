@@ -8,12 +8,6 @@ export default action$ =>
   action$.ofType(INIT)
     .flatMap(action =>
       Observable.from(requestStartServer(action.id))
-        .map((res) => {
-          if (res.errors) {
-            return add(res.errors.map(error => ({ text: error.message, type: 'error' }))[0]);
-          }
-
-          return start(res.id);
-        })
+        .map(res => start(res.id))
         .catch(err => Observable.of(add({ text: err.message, type: 'error' })))
     );
