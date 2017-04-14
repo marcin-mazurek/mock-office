@@ -1,5 +1,6 @@
 import http from 'http';
 import { Server as WebSocketServer } from 'ws';
+import colors from 'colors/safe';
 import { addListener } from './servers-manager/emitter';
 
 export function configureGuiEventsServer(serversManager, persistentState) {
@@ -75,5 +76,8 @@ export function configureGuiEventsServer(serversManager, persistentState) {
 }
 
 export function serveGuiEventsServer(server, port) {
-  server.listen(port);
+  server.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(colors.green(`GUI events address: ws://127.0.0.1:${port}`));
+  });
 }
