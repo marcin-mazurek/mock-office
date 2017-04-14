@@ -1,5 +1,5 @@
 import { ConnectionError } from '../errors/types';
-import { ValidationError, ServerNotFoundError } from '../servers/errors';
+import { ValidationError, ServerNotFoundError } from '../servers/startServer/errors';
 
 // eslint-disable-next-line import/prefer-default-export
 export const requestStartServer = id =>
