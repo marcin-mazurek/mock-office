@@ -5,6 +5,7 @@ import queuesReducer from '../entities/scenarios/reducer';
 import scenesReducer from '../entities/scenes/reducer';
 import scenePartsReducer from '../entities/sceneParts/reducer';
 import errorsReducer from '../entities/errors/reducer';
+import notificationsReducer from '../entities/notifications/reducer';
 
 export default combineReducers({
   routing: routingReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   queues: queuesReducer,
   scenes: scenesReducer,
   sceneParts: scenePartsReducer,
-  errors: errorsReducer
+  errors: errorsReducer,
+  notifications: notificationsReducer
 });
