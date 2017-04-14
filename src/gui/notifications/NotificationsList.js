@@ -1,14 +1,8 @@
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import { Record } from 'immutable';
-
-export const Notification = new Record({
-  id: '',
-  text: '',
-  type: 'info'
-});
-
+import { Notification } from '../entities/notifications/createNotification';
+// eslint-disable-next-line import/prefer-default-export
 export const NotificationsList = ({ notifications, remove }) => (
   <ul className="notifications-list">
     {

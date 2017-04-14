@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { List } from 'immutable';
-import { NotificationsList, Notification } from './NotificationsList';
+import { NotificationsList } from './NotificationsList';
+import { Notification } from '../entities/notifications/createNotification';
 
 describe('NotificationsList', () => {
   test('snapshot: with notifications', () => {
