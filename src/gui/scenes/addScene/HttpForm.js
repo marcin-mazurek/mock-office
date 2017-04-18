@@ -86,7 +86,7 @@ HttpForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  queueId: getSelectedServerDetails(state).queue
+  queueId: getSelectedServerDetails(state).id
 });
 
 const mapDispatchToProps = {
