@@ -38,7 +38,7 @@
         "type": "periodic",
         "interval": 10000,
         "payload": "generator",
-        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/score.js"
+        "generatorPath": "/Users/bartoszadamczyk/Projects/chan/mocks/wh-bt/score.js"
       }
     ]
   },
@@ -64,14 +64,14 @@
         "type": "periodic",
         "interval": 1000,
         "payload": "generator",
-        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/timeTicker.js"
+        "generatorPath": "/Users/bartoszadamczyk/Projects/chan/mocks/wh-bt/timeTicker.js"
       },
       {
         "title": "ls emit ping on interval",
         "type": "periodic",
         "interval": 5000,
         "payload": "generator",
-        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/pinger.js"
+        "generatorPath": "/Users/bartoszadamczyk/Projects/chan/mocks/wh-bt/pinger.js"
       }
     ]
   }

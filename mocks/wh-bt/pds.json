@@ -27,7 +27,7 @@
         "type": "periodic",
         "interval": 5000,
         "payload": "generator",
-        "generatorPath": "/Users/bartoszadamczyk/Projects/mockee/mocks/wh-bt/pinger.js"
+        "generatorPath": "/Users/bartoszadamczyk/Projects/chan/mocks/wh-bt/pinger.js"
       }
     ]
   }

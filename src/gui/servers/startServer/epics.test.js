@@ -21,18 +21,12 @@ describe('startServerEpic', () => {
     expect(store.getActions()).toMatchSnapshot();
   });
 
-  it('actions snapshot when response object has got errors', () => {
+  it('actions snapshot when on api request errors', (done) => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('./actions').default;
     jest.mock('../../api/api', () => ({
-      requestStartServer: () => [{
-        errors: [
-          {
-            message: 'error message'
-          }
-        ]
-      }]
+      requestStartServer: () => Promise.reject(new Error())
     }));
     const startServerEpic = require('./epics').default;
 
@@ -40,6 +34,10 @@ describe('startServerEpic', () => {
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
     store.dispatch(initStart('some id'));
-    expect(store.getActions()).toMatchSnapshot();
+
+    Promise.resolve().then(() => {
+      expect(store.getActions()).toMatchSnapshot();
+      done();
+    });
   });
 });

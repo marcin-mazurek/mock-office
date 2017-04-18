@@ -3,6 +3,8 @@ node_modules
 .DS_Store
 dist/
 npm-debug.log
-mockeeState.json
+chanState.json
 dev-state.json
-/pm2-0.log
+/pm2.log
+/pm2-errors.log
+bin/

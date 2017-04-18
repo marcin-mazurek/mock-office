@@ -1,5 +1,5 @@
 {
-  "name": "mockee",
+  "name": "chan",
   "version": "0.5.0",
   "description": "App for mocking API",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "dev": "npm-run-all build watch",
     "pm2-run": "pm2 start ecosystem.config.js --only app-server",
     "pm2-run-with-gui": "pm2 start ecosystem.config.js --only app-server-with-gui",
-    "pm2-log": "tail -F pm2-0.log",
+    "pm2-log": "tail -F pm2.log",
     "start": "node ./dist/index.js",
     "start-with-gui": "node ./dist/index.js --gui",
     "run": "npm-run-all build-gui build start",
@@ -34,7 +34,7 @@
       ]
     }
   },
-  "repository": "https://bitbucket.org/clixr/mockee",
+  "repository": "https://bitbucket.org/clixr/chan",
   "keywords": [
     "mock api"
   ],

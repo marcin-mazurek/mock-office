@@ -1,16 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`startServerEpic actions snapshot when response object has got errors 1`] = `
+exports[`startServerEpic actions snapshot when on api request errors 1`] = `
 Array [
   Object {
     "id": "some id",
     "type": "startServer/INIT",
   },
   Object {
-    "reasons": Array [
-      "error message",
-    ],
-    "type": "errors/ADD",
+    "notification": Object {
+      "text": "",
+      "type": "error",
+    },
+    "type": "notifications/ADD",
   },
 ]
 `;

@@ -2,7 +2,7 @@ import fs from 'fs';
 import Ajv from 'ajv';
 import colors from 'colors/safe';
 
-const PATH_TO_FILE = './mockeeState.json';
+const PATH_TO_FILE = './chanState.json';
 const schema = {
   type: 'array',
   items: {

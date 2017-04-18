@@ -1,5 +1,5 @@
 {
-  "name": "mockee",
+  "name": "chan",
   "version": "0.3.0",
   "dependencies": {
     "@kadira/react-split-pane": {
