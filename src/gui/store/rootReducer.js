@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux-immutable';
+import { reducer as formReducer } from 'redux-form';
 import routingReducer from './utils';
 import serversReducer from '../entities/servers/reducer';
 import queuesReducer from '../entities/scenarios/reducer';
@@ -14,5 +15,6 @@ export default combineReducers({
   scenes: scenesReducer,
   sceneParts: scenePartsReducer,
   errors: errorsReducer,
-  notifications: notificationsReducer
+  notifications: notificationsReducer,
+  form: formReducer
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getSelectedServerDetails } from '../../entities/servers/selectors';
-import Http from './HttpForm';
+import HttpServerAddSceneFormConnect from './HttpServerAddSceneForm';
 import Ws from './WsForm';
 
 export const AddScene = ({ serverType }) => (
@@ -17,7 +17,7 @@ export const AddScene = ({ serverType }) => (
       </Link>
       {
         serverType === 'http'
-          ? <Http />
+          ? <HttpServerAddSceneFormConnect />
           : <Ws />
       }
     </div>

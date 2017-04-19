@@ -1,96 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable';
 import { connect } from 'react-redux';
-import { init as initAddScene } from './actions';
-import { getSelectedServerDetails } from '../../entities/servers/selectors';
+import ScenePartFormSection from './ScenePartFormSection';
 
-export class HttpForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRequirementsChange = this.handleRequirementsChange.bind(this);
-    this.handleDelayChange = this.handleDelayChange.bind(this);
-    this.state = {};
-  }
-
-  handleRequirementsChange(event) {
-    this.setState({
-      requirements: event.target.value
-    });
-  }
-
-  handleDelayChange(event) {
-    this.setState({
-      delay: parseInt(event.target.value, 10)
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    const delay = parseInt(this.state.delay, 10);
-    let requirements;
-
-    try {
-      if (this.state.requirements) {
-        requirements = JSON.parse(this.state.requirements);
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
-    }
-
-    this.props.initAddScene(this.props.queueId, {
-      delay,
-      requirements
-    });
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <label htmlFor="delay">Delay:</label>
-          <input type="number" name="delay" onChange={this.handleDelayChange} />
-        </div>
-        <div>
-          <label htmlFor="requirements">Requirements:</label>
-          <div>
-            <textarea
-              name="requirements"
-              cols="30"
-              rows="10"
-              onChange={this.handleRequirementsChange}
-            />
-          </div>
-        </div>
-        <div>
-          <label htmlFor="payload">Payload:</label>
-          <div>
-            <textarea name="payload" cols="30" rows="10" onChange={this.handlePayloadChange} />
-          </div>
-        </div>
-        <div>
-          <button type="submit">
-            Submit
-          </button>
-        </div>
-      </form>
-    );
-  }
-}
+export const HttpForm = props => (
+  <form onSubmit={props.handleSubmit}>
+    <div>
+      <label htmlFor="title">Title:</label>
+      <Field name="title" component="input" type="text" placeholder="Scene title" />
+    </div>
+    <div>
+      <div>
+        <label htmlFor="requirements">Requirements:</label>
+        <Field name="requirements-check" component="input" type="checkbox" />
+      </div>
+      <Field
+        name="requirements"
+        component="textarea"
+        cols="30"
+        rows="10"
+      />
+    </div>
+    <div>
+      <label htmlFor="part">Send:</label>
+      <div>
+        <ScenePartFormSection />
+      </div>
+    </div>
+    <div>
+      <button className="button" type="submit">
+        Submit
+      </button>
+    </div>
+  </form>
+);
 
 HttpForm.propTypes = {
-  initAddScene: PropTypes.func.isRequired,
-  queueId: PropTypes.string.isRequired
+  handleSubmit: PropTypes.func.isRequired
 };
+
+HttpForm.defaultPropTypes = {
+  needRequirements: false
+};
+
+const selector = formValueSelector('httpServerScene');
 
 const mapStateToProps = state => ({
-  queueId: getSelectedServerDetails(state).id
+  needRequirements: selector(state, 'type')
 });
 
-const mapDispatchToProps = {
-  initAddScene
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(HttpForm);
+export default connect(mapStateToProps)(
+  reduxForm(
+    {
+      form: 'httpServerScene'
+    }
+  )(HttpForm)
+);
