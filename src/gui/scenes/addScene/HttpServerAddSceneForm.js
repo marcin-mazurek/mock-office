@@ -13,17 +13,23 @@ export class HttpServerAddSceneForm extends React.Component {
 
   handleSubmit(values) {
     let requirements;
+    const requirementsDefaults = {
+      event: 'RECEIVED_REQUEST'
+    };
 
     try {
       if (values.requirements) {
         requirements = JSON.parse(values.requirements);
+        requirements = Object.assign(requirementsDefaults, requirements);
+      } else {
+        requirements = requirementsDefaults;
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message);
     }
 
-    if (values.scenePart) {
+    if (values.scenePart && values.scenePart.payload) {
       // temporary solution for parsing json payload fro form
       // should be done within epic
       // eslint-disable-next-line no-param-reassign

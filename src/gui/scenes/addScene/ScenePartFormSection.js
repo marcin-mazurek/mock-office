@@ -33,5 +33,5 @@ export default class ScenePartFormSection extends FormSection {
 }
 
 ScenePartFormSection.defaultProps = {
-  name: 'scenePart'
+  name: ''
 };

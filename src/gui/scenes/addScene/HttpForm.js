@@ -53,7 +53,12 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(
   reduxForm(
     {
-      form: 'httpServerScene'
+      form: 'httpServerScene',
+      initialValues: {
+        scenePart: {
+          type: 'immediate'
+        }
+      }
     }
   )(HttpForm)
 );
