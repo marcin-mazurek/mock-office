@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getSelectedServerDetails } from '../../entities/servers/selectors';
-import HttpServerAddSceneFormConnect from './HttpServerAddSceneForm';
+import HttpFormConnect from './httpServerForm/HttpForm';
 import Ws from './WsForm';
 
-export const AddScene = ({ serverType }) => (
+export const AddScene = ({ serverType, scenarioId }) => (
   <div className="add-scene">
     <div className="view-header">
       Add scene
@@ -17,7 +17,7 @@ export const AddScene = ({ serverType }) => (
       </Link>
       {
         serverType === 'http'
-          ? <HttpServerAddSceneFormConnect />
+          ? <HttpFormConnect scenarioId={scenarioId} />
           : <Ws />
       }
     </div>
@@ -25,11 +25,17 @@ export const AddScene = ({ serverType }) => (
 );
 
 AddScene.propTypes = {
-  serverType: PropTypes.string.isRequired
+  serverType: PropTypes.string.isRequired,
+  scenarioId: PropTypes.string.isRequired
 };
 
-const mapStateToProps = state => ({
-  serverType: getSelectedServerDetails(state).type
-});
+const mapStateToProps = (state) => {
+  const serverDetails = getSelectedServerDetails(state);
+
+  return {
+    serverType: serverDetails.type,
+    scenarioId: serverDetails.id
+  };
+};
 
 export default connect(mapStateToProps)(AddScene);

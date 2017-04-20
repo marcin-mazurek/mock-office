@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm, formValueSelector, FormSection } from 'redux-form/immutable';
 import { connect } from 'react-redux';
-import ScenePartFormSection from './ScenePartFormSection';
+import ScenePartFormSection from '../ScenePartFormSection';
+import { submitHttpScene as createSubmitHttpSceneAction } from './actions';
 
 export const HttpForm = props => (
   <form onSubmit={props.handleSubmit}>
@@ -52,7 +53,11 @@ const mapStateToProps = state => ({
   needRequirements: selector(state, 'type')
 });
 
-export default connect(mapStateToProps)(
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onSubmit: values => dispatch(createSubmitHttpSceneAction(ownProps.scenarioId, values))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   reduxForm(
     {
       form: 'httpServerScene',
