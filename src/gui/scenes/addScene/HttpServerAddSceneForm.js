@@ -38,6 +38,7 @@ export class HttpServerAddSceneForm extends React.Component {
 
     this.props.initAddScene(this.props.scenarioId, [
       {
+        title: values.title,
         requirements,
         parts: [
           values.scenePart
