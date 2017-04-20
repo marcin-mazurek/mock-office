@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable';
+import { Field, reduxForm, formValueSelector, FormSection } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import ScenePartFormSection from './ScenePartFormSection';
 
@@ -25,7 +25,9 @@ export const HttpForm = props => (
     <div>
       <label htmlFor="part">Send:</label>
       <div>
-        <ScenePartFormSection />
+        <FormSection name="scenePart">
+          <ScenePartFormSection />
+        </FormSection>
       </div>
     </div>
     <div>
