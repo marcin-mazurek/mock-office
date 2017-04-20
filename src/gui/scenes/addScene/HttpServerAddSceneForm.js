@@ -12,13 +12,14 @@ export class HttpServerAddSceneForm extends React.Component {
   }
 
   handleSubmit(values) {
+    let formValues = values;
     let requirements;
     const requirementsDefaults = {
       event: 'RECEIVED_REQUEST'
     };
 
     try {
-      const requirementsSubmitted = values.get('requirements');
+      const requirementsSubmitted = formValues.get('requirements');
       if (requirementsSubmitted) {
         requirements = JSON.parse(requirementsSubmitted);
         requirements = Object.assign(requirementsDefaults, requirements);
@@ -30,22 +31,29 @@ export class HttpServerAddSceneForm extends React.Component {
       console.error(error.message);
     }
 
-    if (values.getIn(['scenePart', 'payload'])) {
-      // temporary solution for parsing json payload fro form
+    if (formValues.getIn(['scenePart', 'payload'])) {
+      // temporary solution for parsing json payload from form
       // should be done within epic
-      // eslint-disable-next-line no-param-reassign
-      values = values.setIn(
+      formValues = formValues.setIn(
         ['scenePart', 'payload'],
-        JSON.parse(values.getIn(['scenePart', 'payload']))
+        JSON.parse(formValues.getIn(['scenePart', 'payload']))
       );
     }
 
+    formValues = formValues.updateIn(['scenePart', 'delay'], (delay) => {
+      if (!delay) {
+        return delay;
+      }
+
+      return parseInt(delay, 10);
+    });
+
     this.props.initAddScene(this.props.scenarioId, [
       {
-        title: values.get('title'),
+        title: formValues.get('title'),
         requirements,
         parts: [
-          values.get('scenePart')
+          formValues.get('scenePart').toJS()
         ]
       }
     ]);

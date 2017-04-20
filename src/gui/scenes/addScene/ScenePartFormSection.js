@@ -24,8 +24,8 @@ export default class ScenePartFormSection extends FormSection {
           <Field component="textarea" name="payload" />
         </div>
         <div>
-          <label htmlFor="type">Delay:</label>
-          <Field component="input" type="number" name="type" />
+          <label htmlFor="delay">Delay:</label>
+          <Field component="input" type="number" name="delay" />
         </div>
       </div>
     );
