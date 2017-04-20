@@ -6,7 +6,7 @@ import { addListener } from './servers-manager/emitter';
 export function configureGuiEventsServer(serversManager, persistentState) {
   const httpServer = http.createServer();
   const server = new WebSocketServer({ server: httpServer });
-  const sockets = [];
+  let sockets = [];
 
   function broadcast(event, args) {
     sockets.forEach(
@@ -38,6 +38,10 @@ export function configureGuiEventsServer(serversManager, persistentState) {
 
   server.on('connection', (ws) => {
     sockets.push(ws);
+
+    ws.on('close', () => {
+      sockets = sockets.filter(socket => socket !== ws);
+    });
   });
 
   addListener('SCENE_REMOVED',
