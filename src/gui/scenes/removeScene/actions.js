@@ -15,10 +15,11 @@ export const finish = (serverId, sceneId) => ({
   sceneId
 });
 
-export const remove = (serverId, sceneId) => ({
+export const remove = (serverId, sceneId, parts) => ({
   type: REMOVE,
   serverId,
-  sceneId
+  sceneId,
+  parts
 });
 
 export const removeAfterUse = (serverId, sceneId) => ({
