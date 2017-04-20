@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux-immutable';
-import { reducer as formReducer } from 'redux-form';
+import { reducer as formReducer } from 'redux-form/immutable';
 import routingReducer from './utils';
 import serversReducer from '../entities/servers/reducer';
 import queuesReducer from '../entities/scenarios/reducer';
