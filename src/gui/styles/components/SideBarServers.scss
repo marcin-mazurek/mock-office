@@ -54,6 +54,10 @@ $lock-icon-width: 20px;
   }
 }
 
+.sidebar-servers-list-item--selected {
+  background-color: #0C0D11;
+}
+
 .sidebar-servers-list-item--selected .sidebar-server-list__label {
   color: inherit;
   opacity: 1;
