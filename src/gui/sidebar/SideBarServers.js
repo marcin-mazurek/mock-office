@@ -7,13 +7,23 @@ import classnames from 'classnames';
 import { getSelected, getServerList } from '../entities/servers/selectors';
 import { select as dispatchSelect } from '../entities/servers/actions';
 import { init as createInitExportAction } from '../exportState/actions';
+import plusIcon from '../assets/icons_white_add.svg';
+import lockIcon from '../assets/icons_general_locked@3x.svg';
 
 export const SideBarServers = ({ servers, select, goToServerPage, selected, initExport }) => (
   <div className="sidebar-servers">
     <div className="sidebar-servers__header">
-      <i className="fa fa-server sidebar-servers-header__icon" />{' Servers'}
+      <div>
+        <div>Servers</div>
+        <button
+          className="sidebar-servers__header-export-button"
+          onClick={initExport}
+        >
+          Export
+        </button>
+      </div>
       <Link className="sidebar-servers__add-server-button" to="/add-server">
-        <i className="fa fa-plus" />
+        <img src={plusIcon} role="presentation" />
       </Link>
     </div>
     <ul className="sidebar-servers-list">
@@ -23,31 +33,24 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected, init
             'sidebar-server__status-indicator',
             { 'sidebar-server__status-indicator--up': server.running }
           );
-          const serverTypeIndicatorClassNames = classnames(
-            'fa',
-            {
-              'fa-globe': server.type === 'http',
-              'fa-feed': server.type === 'ws'
-            }
-          );
-          const serverSecureIndicatorClassNames = classnames(
-            'fa',
-            'sidebar-server__secure-indicator',
-            {
-              'fa-lock': server.secure,
-              'fa-unlock': !server.secure
-            }
-          );
           const serverListItemClassNames = classnames({
             'sidebar-servers-list-item': true,
             'sidebar-servers-list-item--selected': server.id === selected
           });
 
+          const serverType = server.type.toUpperCase();
+
           return (
             <li className={serverListItemClassNames} key={server.id}>
+              <div className="sidebar-server__secure-indicator">
+                {
+                  server.secure
+                    ? <img src={lockIcon} role="presentation" />
+                    : null
+                }
+              </div>
               <span className={serverIndicatorClassNames}>
-                <i className={serverTypeIndicatorClassNames} title={server.type} />
-                <i className={serverSecureIndicatorClassNames} title={server.secure ? 'Enabled SSL' : 'Without SSL'} />
+                {serverType}
               </span>
               <button
                 className="sidebar-server-list__label"
@@ -65,7 +68,6 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected, init
         })
       }
     </ul>
-    <button onClick={initExport}>saveState</button>
   </div>
 );
 

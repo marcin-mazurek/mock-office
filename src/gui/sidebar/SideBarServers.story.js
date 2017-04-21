@@ -40,5 +40,7 @@ const props = {
 
 storiesOf('SideBarServers', module)
   .add('some servers config', () => (
-    <SideBarServers {...props} />
+    <div className="sidebar">
+      <SideBarServers {...props} />
+    </div>
   ));

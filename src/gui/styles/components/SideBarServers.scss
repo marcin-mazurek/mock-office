@@ -1,12 +1,24 @@
+$padding-left: 36px;
+$lock-icon-width: 20px;
+
 .sidebar-servers__header {
   display: flex;
   align-items: center;
-  letter-spacing: 0.5px;
   font-weight: 500;
-  border-bottom: 1px solid darken($sidebar-background-color, 5%);
-  padding: 15px 20px;
-  font-size: 18px;
+  border-bottom: 1px solid #444851;
+  padding: 36px $padding-left + $lock-icon-width;
+  font-size: 20px;
   text-transform: uppercase;
+}
+
+.sidebar-servers__header-export-button {
+  @extend %button-reset;
+  display: block;
+  cursor: pointer;
+  color: #23D1A9;
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
 }
 
 .sidebar-servers-header__icon {
@@ -32,59 +44,50 @@
   @extend %button-reset;
   cursor: pointer;
   display: block;
-  padding: 5px;
   text-decoration: none;
   width: 100%;
-  color: $sidebar-servers-list-item-font-color;
+  opacity: .45;
+  font-weight: 300;
 
   &:hover {
-    color: inherit;
+    opacity: 1;
   }
 }
 
 .sidebar-servers-list-item--selected .sidebar-server-list__label {
   color: inherit;
+  opacity: 1;
 }
 
 .sidebar-servers-list-item {
-  padding: 3px 20px;
   display: flex;
   align-items: center;
   font-size: 15px;
   position: relative;
-}
+  padding: 17px 0 17px $padding-left;
+  border-bottom: 1px solid #444851;
 
-.sidebar-servers-list-item--selected {
-  color: inherit;
-  background-color: darken($sidebar-background-color, 6%);
-
-  &:before {
-    content: ' ';
-    background-color: darken($sidebar-background-color, 20%);
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 4px;
+  &:last-child {
+    border-bottom: none;
   }
 }
 
+
 .sidebar-server__status-indicator {
-  color: $sidebar-server-status-indicator-font-color;
-  transition: color .3s ease;
-  font-size: 18px;
-  margin-right: 10px;
-  position: relative;
+  transition: border-color .3s ease;
+  font-size: 11px;
+  line-height: 20px;
+  border-bottom: 2px solid #979797;
+  margin-right: 20px;
+  text-align: center;
+  width: 29px;
 }
 
 .sidebar-server__status-indicator--up {
-  color: $sidebar-server-status-indicator-up-font-color;
+  border-bottom: 2px solid #23D1A9;
 }
 
 .sidebar-server__secure-indicator {
-  font-size: 10px;
-  position: absolute;
-  right: -7px;
-  bottom: -3px;
-  opacity: .6;
+  margin-right: 5px;
+  width: $lock-icon-width;
 }
