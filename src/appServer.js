@@ -202,7 +202,9 @@ export const createAppServer = (serversManager) => {
       return;
     }
 
-    res.json(ajv.errors);
+    const splitPath = ajv.errors[0].dataPath.split('.');
+    const param = splitPath[splitPath.length - 1];
+    res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
   });
 
   app.post('/remove-scene', bodyParser.json(), (req, res) => {
