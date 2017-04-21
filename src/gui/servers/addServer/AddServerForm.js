@@ -72,7 +72,7 @@ export class AddServerForm extends React.Component {
       this.state.name,
       this.state.port,
       this.state.type.value,
-      this.state.isSecure === 'yes',
+      this.state.isSecure,
       this.state.keyPath,
       this.state.cartPath
     );
