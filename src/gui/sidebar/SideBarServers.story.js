@@ -35,10 +35,12 @@ const props = {
   ],
   select: () => {},
   goToServerPage: () => {},
-  selected: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
+  selected: 'server2',
 };
 
 storiesOf('SideBarServers', module)
   .add('some servers config', () => (
-    <SideBarServers {...props} />
+    <div className="sidebar">
+      <SideBarServers {...props} />
+    </div>
   ));

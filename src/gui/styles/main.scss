@@ -1,5 +1,6 @@
 // vendor
 @import '../../../node_modules/font-awesome/css/font-awesome.css';
+@import '~react-select/dist/react-select.css';
 
 // settings
 @import 'settings/reset';
@@ -26,3 +27,6 @@
 @import 'components/ScenePartList';
 @import 'components/EditableField';
 @import 'components/Notifications';
+@import 'components/AddServerPage';
+@import 'components/FormFields';
+@import 'components/rc-switch-theme';

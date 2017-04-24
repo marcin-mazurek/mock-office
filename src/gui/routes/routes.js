@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
 import Main from './Main';
-import AddServerPage from '../servers/addServer/AddServer';
+import AddServerPage from '../servers/addServer/AddServerPage';
 import ServerPage from '../servers/inspectServer/Server';
 import AddScenePage from '../scenes/addScene/AddScene';
 

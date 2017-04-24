@@ -69,7 +69,7 @@ export const Scene = ({
             : null
         }
         <button className="scene__remove-button" onClick={() => remove(serverId, id)}>
-          <i className="fa fa-times" />
+          remove
         </button>
       </div>
       <div className="scene__parts">

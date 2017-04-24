@@ -1,3 +1,5 @@
+$padding-left: 24px;
+
 .inspect-server {
   display: flex;
   flex: auto;
@@ -14,34 +16,28 @@
 }
 
 .inspect-server-details__name {
-  font-size: 26px;
   font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 6px;
 }
 
 .inspect-server-header {
   display: flex;
-  padding: 10px 15px;
+  padding: 24px 24px 24px $padding-left;
   align-items: center;
-  border-bottom: $inspect-server-header-border-bottom;
+  border-bottom: 1px solid #EBEBEB;
 }
 
 .inspect-server-spec {
   display: flex;
   font-size: 12px;
+  line-height: 14px;
   letter-spacing: 0.5px;
 }
 
 .inspect-server-spec__item {
-  padding: 4px 7px;
-  border-right: 1px solid #EEE;
-
-  &:first-child {
-    padding-left: 0;
-  }
-
-  &:last-child {
-    border-right: none;
-  }
+  color: #60666F;
+  margin-right: 12px;
 }
 
 .inspect-server-spec__value {
@@ -49,12 +45,13 @@
 }
 
 .inspect-server-spec__label {
-  color: $inspect-server-spec-label-font-color;
+  opacity: 0.39;
   font-weight: 300;
 }
 
 .inspect-server__main {
   flex: auto;
+  background-color: #F6F7F9;
 }
 
 .inspect-server-main {
@@ -63,49 +60,52 @@
 }
 
 .inspect-server__add-scene-button {
+  @extend %button-reset;
+  text-decoration: none;
   margin-right: 10px;
+  padding: 0 20px;
+  border-right: 1px solid #D8D8D8;
 }
 
 $size: 40px;
 
-.inspect-server-header__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  margin-right: 10px;
+.inspect-server-header-toggle__icon {
+  transition: all .5s ease;
 }
 
 .inspect-server-header-toggle {
-  background-color: $start-button-background-color;
-  font-size: 21px;
-  border-radius: 100%;
+  margin-right: 20px;
   cursor: pointer;
-  height: $size;
-  width: $size;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: $start-button-border;
-  border: $start-button-default-border;
-  transition: all .1s ease-in-out;
+
+  #Oval {
+    transition: all .3s ease;
+  }
 
   &:hover {
-    color: $start-button-font-color;
-    border: $start-button-border;
-    height: $size + 5;
-    width: $size + 5;
+    #Oval {
+      r: 28;
+    }
   }
 }
 
-.inspect-server-header-toggle.inspect-server-header-toggle--up {
-  color: $start-button-font-color;
-  border: $start-button-border;
-
-  &:hover {
-    color: $stop-button-font-color;
-    border: 2px solid $stop-button-font-color;
+.inspect-server-header-toggle--up {
+  #Oval {
+    stroke: #23D1A9;
+    r: 28;
   }
+
+  .inspect-server-header-toggle__icon {
+    fill: #23D1A9;
+  }
+}
+
+.inspect-server-header-toggle {
+  @extend %button-reset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .1s ease-in-out;
+  padding: 0;
 }
 
 .inspect-server__scenes {
@@ -114,12 +114,13 @@ $size: 40px;
 }
 
 .inspect-server-scenes-header {
-  background-color: $scenes-header-background-color;
-  padding: 10px 15px;
+  color: #727880;
+  padding: 16px 15px 16px $padding-left;
   font-weight: 500;
   display: flex;
   align-items: center;
   flex: none;
+  font-size: 15px;
 }
 
 .inspect-server-scenes-header__button {
@@ -129,7 +130,49 @@ $size: 40px;
 }
 
 .inspect-server-scenes-header__label {
+  margin-right: 50px;
+}
+
+.inspect-server__scenes-legend {
   margin-right: auto;
+}
+
+.inspect-server-scenes-legend {
+  @extend %list-reset;
+  display: flex;
+  font-weight: 300;
+  color: #6B717A;
+  font-size: 12px;
+}
+
+.inspect-server-scenes-legend__item {
+  margin-right: 18px;
+}
+
+.inspect-server-scenes-legend-item {
+  display: flex;
+  align-items: center;
+}
+
+.inspect-server-scenes-legend__icon {
+  display: inline-block;
+  border-radius: 100%;
+  height: 6px;
+  width: 6px;
+  background-color: #E1E5EE;
+  margin-right: 8px;
+}
+
+.inspect-server-scenes-legend__icon--cancelled {
+  background-color: #EC9292;
+}
+
+.inspect-server-scenes-legend__icon--in-progress {
+  background-color: #B9EBE0;
+}
+
+.inspect-server-scenes-legend__icon--finished {
+  background-color: #23D1A9;
 }
 
 .inspect-server__scenes-scroll-container {
@@ -145,10 +188,5 @@ $size: 40px;
   font-size: 24px;
   transition: color .2s ease;
   cursor: pointer;
-  color: $inspect-server-remove-button-font-color;
-
-  &:hover {
-    color: $inspect-server-remove-button-hover-font-color;
-  }
 }
 

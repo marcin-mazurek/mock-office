@@ -4844,6 +4844,11 @@
         }
       }
     },
+    "rc-switch": {
+      "version": "1.4.4",
+      "from": "rc-switch@latest",
+      "resolved": "https://registry.npmjs.org/rc-switch/-/rc-switch-1.4.4.tgz"
+    },
     "react": {
       "version": "15.5.4",
       "from": "react@>=15.4.1 <16.0.0",
@@ -4881,6 +4886,11 @@
       "from": "react-immutable-proptypes@>=2.1.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/react-immutable-proptypes/-/react-immutable-proptypes-2.1.0.tgz"
     },
+    "react-input-autosize": {
+      "version": "1.1.0",
+      "from": "react-input-autosize@>=1.1.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/react-input-autosize/-/react-input-autosize-1.1.0.tgz"
+    },
     "react-inspector": {
       "version": "1.1.2",
       "from": "react-inspector@>=1.1.0 <2.0.0",
@@ -4917,6 +4927,11 @@
       "version": "4.0.8",
       "from": "react-router-redux@>=4.0.7 <5.0.0",
       "resolved": "https://registry.npmjs.org/react-router-redux/-/react-router-redux-4.0.8.tgz"
+    },
+    "react-select": {
+      "version": "1.0.0-rc.3",
+      "from": "react-select@latest",
+      "resolved": "https://registry.npmjs.org/react-select/-/react-select-1.0.0-rc.3.tgz"
     },
     "react-simple-di": {
       "version": "1.2.0",

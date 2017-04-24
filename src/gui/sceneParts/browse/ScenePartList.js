@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { createSelector } from 'reselect';
 import getSceneParts, { getScenePart } from '../../entities/sceneParts/selectors';
+import expandIcon from '../../assets/icons_green_expand@3x.svg';
 
 export const ScenePartListItem = ({
                                     title,
@@ -22,8 +23,8 @@ export const ScenePartListItem = ({
     }
   }
   return (
-    <div className="scene-part-list-item">
-      <i className="fa fa-circle-o" />
+    <li className="scene-part-list-item">
+      <img src={expandIcon} role="presentation" />
       <div className="scene-part-list-item-title">{title}</div>
       <div className="scene-part-list-item-spec">
         {
@@ -50,7 +51,7 @@ export const ScenePartListItem = ({
             : null
         }
       </div>
-    </div>
+    </li>
   );
 };
 

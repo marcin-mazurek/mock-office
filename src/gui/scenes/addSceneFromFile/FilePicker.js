@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { init as intiAddSceneFromFile } from './actions';
+import uploadIcon from '../../assets/icons_gray_upload@3x.svg';
 
 const mapDispatchToProps = {
   intiAddSceneFromFile
@@ -25,10 +26,11 @@ export class FilePicker extends React.Component {
     return (
       <div className="file-picker">
         <label
-          className="file-picker__button button inspect-server-scenes-header__button"
+          className="file-picker__button inspect-server-scenes-header__button"
           htmlFor="file-picker__input"
         >
-          <i className="fa fa-upload" />
+          <img src={uploadIcon} role="presentation" style={{ marginRight: '11px' }} />
+          Import from file
         </label>
         <input
           id="file-picker__input"
