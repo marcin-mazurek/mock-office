@@ -44,9 +44,8 @@ export const requestAddScene = (serverId, scene) => fetch('http://127.0.0.1:3060
       throw new ServerNotFoundError('Server not found');
     }
 
-    return res;
+    return payload;
   }))
-  .then(res => res.json())
   .then(
     res => [
       serverId,
