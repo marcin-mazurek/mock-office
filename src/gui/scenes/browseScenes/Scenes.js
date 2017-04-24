@@ -67,15 +67,6 @@ export const Scene = ({
               : null
           }
         </div>
-        {
-          finished
-            ? (
-              <div className="scene-status__tag">
-                <i className="fa fa-check" />{' Finished'}
-              </div>
-            )
-            : null
-        }
         <button className="scene__remove-button" onClick={() => remove(serverId, id)}>
           remove
         </button>
@@ -97,7 +88,8 @@ Scene.propTypes = {
   requirements: PropTypes.shape({}),
   runCount: PropTypes.number.isRequired,
   lastDuration: PropTypes.number,
-  finished: PropTypes.bool.isRequired
+  finished: PropTypes.bool.isRequired,
+  running: PropTypes.bool.isRequired
 };
 
 const sceneSelector = createSelector(

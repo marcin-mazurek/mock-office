@@ -7,6 +7,10 @@
   align-items: center;
   border-bottom: 1px solid #EBEBEB;
   padding: 10px 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .scene-part-list-item-spec__tag {
