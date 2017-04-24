@@ -24,7 +24,9 @@ export const ScenePartListItem = ({
   }
   return (
     <li className="scene-part-list-item">
-      <img src={expandIcon} role="presentation" />
+      <button className="scene-part-expand-button">
+        <img src={expandIcon} role="presentation" />
+      </button>
       <div className="scene-part-list-item-title">{title}</div>
       <div className="scene-part-list-item-spec">
         {

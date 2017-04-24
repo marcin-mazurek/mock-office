@@ -20,6 +20,15 @@
   flex-direction: column;
   padding: 18px 24px;
   font-size: 15px;
+  border-left: 4px solid #E1E5EE;
+}
+
+.scene--running {
+  border-color: #B9EBE0;
+}
+
+.scene--finished {
+  border-color: #23D1A9;
 }
 
 .scene-details {
@@ -48,6 +57,10 @@
   margin-left: auto;
   transition: color .2s ease;
   text-transform: uppercase;
+
+  &:hover {
+    opacity: .5;
+  }
 }
 
 .scene-spec__tag {
@@ -57,14 +70,4 @@
   font-size: 13px;
   background-color: $scene-spec-tag-background-color;
   color: darken($scene-spec-tag-background-color, 40%);
-}
-
-.scene--running {
-  background-color: $task-status-running-background-color;
-  transition: none;
-}
-
-.scene--finished {
-  color: lighten($font-color, 30%);
-  background-color: inherit;
 }

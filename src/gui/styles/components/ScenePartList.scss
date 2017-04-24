@@ -48,3 +48,12 @@
   margin-right: 15px;
   flex: none;
 }
+
+.scene-part-expand-button {
+  @extend %button-reset;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .5;
+  }
+}

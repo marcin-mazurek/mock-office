@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import classnames from 'classnames';
 import { getScene } from '../../entities/scenes/selectors';
 import { init } from '../removeScene/actions';
 import { getScenes } from '../../entities/scenarios/selectors';
@@ -17,7 +18,8 @@ export const Scene = ({
                         requirements,
                         runCount,
                         lastDuration,
-                        finished
+                        finished,
+                        running
                       }) => {
   let quantityInfo = null;
 
@@ -29,8 +31,14 @@ export const Scene = ({
     }
   }
 
+  const sceneClassNames = classnames({
+    scene: true,
+    'scene--finished': finished,
+    'scene--running': running
+  });
+
   return (
-    <div className="scene">
+    <div className={sceneClassNames}>
       <div className="scene-details">
         <div className="scene__title">{title}</div>
         <div className="scene-spec">
@@ -101,7 +109,8 @@ const sceneSelector = createSelector(
     requirements: scene.requirements,
     finished: scene.finished,
     runCount: scene.runCount,
-    lastDuration: scene.lastDuration
+    lastDuration: scene.lastDuration,
+    running: scene.running
   })
 );
 
