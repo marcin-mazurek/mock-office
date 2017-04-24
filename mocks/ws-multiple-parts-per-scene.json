@@ -6,16 +6,16 @@
     },
     "parts": [
       {
-        "title": "welcome",
+        "title": "welcome message",
         "type": "immediate",
-        "taskPayload": {
+        "payload": {
           "message": "welcome message"
         }
       },
       {
-        "title": "establishing",
-        "taskPayload": {
-          "message": "establishing in progress..."
+        "title": "ping",
+        "payload": {
+          "message": "ping"
         },
         "type": "periodic",
         "repeat": 3,
