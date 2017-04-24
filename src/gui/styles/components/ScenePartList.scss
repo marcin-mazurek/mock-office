@@ -5,13 +5,15 @@
 .scene-part-list-item {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #EBEBEB;
+  padding: 10px 0;
 }
 
 .scene-part-list-item-spec__tag {
   border-radius: 3px;
   padding: 2px 6px;
   margin-right: 10px;
-  font-size: 11px;
+  font-size: 13px;
   background-color: $scene-spec-tag-background-color;
   color: darken($scene-spec-tag-background-color, 40%);
 }
@@ -39,6 +41,7 @@
   padding: 5px 15px;
   display: flex;
   align-items: center;
+  font-weight: 300;
 }
 
 .scene-part-list-item__title {

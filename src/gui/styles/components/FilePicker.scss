@@ -4,8 +4,9 @@
 }
 
 .file-picker__button {
-  border: $file-picker-button-border;
+  @extend %button-reset;
   cursor: pointer;
+  padding: 0 20px;
 }
 
 .file-picker__input {
