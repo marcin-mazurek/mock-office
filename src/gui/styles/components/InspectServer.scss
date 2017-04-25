@@ -188,5 +188,9 @@ $size: 40px;
   font-size: 24px;
   transition: color .2s ease;
   cursor: pointer;
+
+  &:hover {
+    opacity: .5;
+  }
 }
 
