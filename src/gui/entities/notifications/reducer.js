@@ -13,15 +13,10 @@ export default function notificationsReducer(state = new NotificationsState(), a
     case ADD: {
       let newState = state;
 
-      try {
-        const notification = createNotification(action.notification);
-        newState = newState
-          .update('entities', entities => entities.set(notification.id, notification))
-          .update('ids', ids => ids.push(notification.id));
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e);
-      }
+      const notification = createNotification(action.notification);
+      newState = newState
+        .update('entities', entities => entities.set(notification.id, notification))
+        .update('ids', ids => ids.push(notification.id));
 
       return newState;
     }

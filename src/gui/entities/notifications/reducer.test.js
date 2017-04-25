@@ -26,16 +26,6 @@ describe('notifications reducer', () => {
         }
       }
     });
-
-    const failedAddState = reducer(
-      undefined,
-      add()
-    );
-
-    expect(failedAddState.toJS()).toEqual({
-      ids: [],
-      entities: {}
-    });
   });
 
   it(`should remove notification on ${REMOVE} action`, () => {
