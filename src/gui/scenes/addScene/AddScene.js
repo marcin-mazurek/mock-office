@@ -6,13 +6,13 @@ import { getServerDetails } from '../../entities/servers/selectors';
 import HttpFormConnect from './httpServerForm/HttpForm';
 import Ws from './WsForm';
 
-export const AddScene = ({ serverType, scenarioId }) => (
+export const AddScene = ({ serverType, scenarioId, params }) => (
   <div className="add-scene">
     <div className="view-header">
       Add scene
     </div>
     <div className="add-scene__main">
-      <Link to="/" className="add-scene__back-button">
+      <Link to={`/server/${params.id}`} className="add-scene__back-button">
         <i className="fa fa-arrow-left" />{' Server details'}
       </Link>
       {
@@ -26,7 +26,10 @@ export const AddScene = ({ serverType, scenarioId }) => (
 
 AddScene.propTypes = {
   serverType: PropTypes.string.isRequired,
-  scenarioId: PropTypes.string.isRequired
+  scenarioId: PropTypes.string.isRequired,
+  params: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
