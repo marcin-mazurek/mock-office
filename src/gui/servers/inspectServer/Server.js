@@ -16,7 +16,6 @@ import FilePickerConnect from '../../scenes/addSceneFromFile/FilePicker';
 import ScenesConnect from '../../scenes/browseScenes/Scenes';
 import { init as createRemoveServerAction } from '../removeServer/actions';
 import { init as createRenameServerAction } from '../renameServer/actions';
-import EditableField from '../../editableField/EditableField';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../assets/icons_gray_add@3x.svg';
 
@@ -112,7 +111,7 @@ const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(Server
 
 const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
 
-export const ServerInspect = ({ running, serverDetails, removeServer, serverNameChange }) => {
+export const ServerInspect = ({ running, serverDetails, removeServer }) => {
   const { name, port, type, id } = serverDetails;
 
   return (
@@ -123,7 +122,7 @@ export const ServerInspect = ({ running, serverDetails, removeServer, serverName
         </div>
         <div className="inspect-server-details">
           <div className="inspect-server-details__name">
-            <EditableField onSave={newName => serverNameChange(id, newName)} value={name} />
+            {name}
           </div>
           <div className="inspect-server-details__spec inspect-server-spec">
             <div className="inspect-server-spec__item">
@@ -216,8 +215,7 @@ export const ServerInspect = ({ running, serverDetails, removeServer, serverName
 ServerInspect.propTypes = {
   running: React.PropTypes.bool.isRequired,
   serverDetails: React.PropTypes.shape({}),
-  removeServer: React.PropTypes.func.isRequired,
-  serverNameChange: React.PropTypes.func.isRequired
+  removeServer: React.PropTypes.func.isRequired
 };
 
 const serverInspectMapDispatchToProps = {
