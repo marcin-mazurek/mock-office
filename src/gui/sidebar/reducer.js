@@ -14,7 +14,7 @@ export default function sidebarReducer(state = new Map(), action) {
       return state.delete('currentDisplayedServerId');
     }
     default: {
-      return state.delete('currentDisplayedServerId');
+      return state;
     }
   }
 }
