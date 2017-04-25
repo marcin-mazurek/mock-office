@@ -7,7 +7,7 @@ import NotificationsListConnect, { NotificationsList } from './NotificationsList
 import { Notification } from '../entities/notifications/createNotification';
 import configureStore from '../store';
 
-jest.mock('node-unique', () => () => 'id');
+jest.mock('cuid', () => () => 'id');
 
 describe('NotificationsList', () => {
   test('snapshot: with notifications', () => {

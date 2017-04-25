@@ -1,7 +1,7 @@
 import reducer, { NotificationsState } from './reducer';
 import { remove, add, ADD, REMOVE } from './actions';
 
-jest.mock('node-unique', () => () => 'id');
+jest.mock('cuid', () => () => 'id');
 
 describe('notifications reducer', () => {
   it('should returns empty list as initial state', () => {

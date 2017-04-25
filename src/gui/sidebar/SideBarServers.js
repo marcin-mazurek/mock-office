@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { getSelected, getServerList } from '../entities/servers/selectors';
-import { select as dispatchSelect } from '../entities/servers/actions';
+import { getServerList } from '../entities/servers/selectors';
 import { init as createInitExportAction } from '../exportState/actions';
 import plusIcon from '../assets/icons_white_add.svg';
 import lockIcon from '../assets/icons_general_locked@3x.svg';
+import getCurrentDisplayedServerId from './selectors';
 
-export const SideBarServers = ({ servers, select, goToServerPage, selected, initExport }) => (
+export const SideBarServers = ({ servers, selected, initExport }) => (
   <div className="sidebar-servers">
     <div className="sidebar-servers__header">
       <div>
@@ -52,17 +51,9 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected, init
               <span className={serverIndicatorClassNames}>
                 {serverType}
               </span>
-              <button
-                className="sidebar-server-list__label"
-                href=""
-                onClick={(e) => {
-                  e.preventDefault();
-                  select(server.id);
-                  goToServerPage();
-                }}
-              >
+              <Link to={`/server/${server.id}`} className="sidebar-server-list__label">
                 {server.name}
-              </button>
+              </Link>
             </li>
           );
         })
@@ -73,20 +64,16 @@ export const SideBarServers = ({ servers, select, goToServerPage, selected, init
 
 SideBarServers.propTypes = {
   servers: PropTypes.shape().isRequired,
-  select: PropTypes.func.isRequired,
-  goToServerPage: PropTypes.func.isRequired,
   selected: PropTypes.string,
   initExport: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   servers: getServerList(state),
-  selected: getSelected(state)
+  selected: getCurrentDisplayedServerId(state)
 });
 
 const mapDispatchToProps = {
-  select: id => dispatchSelect(id),
-  goToServerPage: () => push('/'),
   initExport: createInitExportAction
 };
 

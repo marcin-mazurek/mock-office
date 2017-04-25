@@ -1,4 +1,4 @@
-import unique from 'node-unique';
+import unique from 'cuid';
 import deepEqual from 'deep-equal';
 import btoa from 'btoa';
 import Scene from './Scene';

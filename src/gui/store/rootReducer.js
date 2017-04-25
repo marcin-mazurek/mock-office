@@ -7,6 +7,7 @@ import scenesReducer from '../entities/scenes/reducer';
 import scenePartsReducer from '../entities/sceneParts/reducer';
 import errorsReducer from '../entities/errors/reducer';
 import notificationsReducer from '../entities/notifications/reducer';
+import sidebarReducer from '../sidebar/reducer';
 
 export default combineReducers({
   routing: routingReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   sceneParts: scenePartsReducer,
   errors: errorsReducer,
   notifications: notificationsReducer,
-  form: formReducer
+  form: formReducer,
+  sidebar: sidebarReducer
 });

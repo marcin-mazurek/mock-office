@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import configureStore from '../store';
 import { add } from '../entities/errors/actions';
 
-jest.mock('node-unique', () => () => 'id');
+jest.mock('cuid', () => () => 'id');
 
 const ErrorList = require('./ErrorList').ErrorList;
 const AppError = require('../entities/errors/AppError').default;

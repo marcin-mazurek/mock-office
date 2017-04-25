@@ -2,7 +2,7 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import unique from 'node-unique';
+import unique from 'cuid';
 import Scenario from '../scenario';
 
 export const send = (req, res) => (params) => {

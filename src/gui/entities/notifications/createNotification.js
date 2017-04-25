@@ -1,5 +1,5 @@
 import { Record } from 'immutable';
-import unique from 'node-unique';
+import unique from 'cuid';
 
 export const Notification = new Record({
   id: '',

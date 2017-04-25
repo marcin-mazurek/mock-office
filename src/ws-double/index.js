@@ -2,7 +2,7 @@ import { Server as WebSocketServer } from 'ws';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import unique from 'node-unique';
+import unique from 'cuid';
 import Scenario from '../scenario';
 
 export default class WsDouble {

@@ -7,26 +7,30 @@ exports[`SideBarServers should render 1`] = `
   <div
     className="sidebar-servers__header"
   >
-    <i
-      className="fa fa-server sidebar-servers-header__icon"
-    />
-     Servers
+    <div>
+      <div>
+        Servers
+      </div>
+      <button
+        className="sidebar-servers__header-export-button"
+      >
+        Export
+      </button>
+    </div>
     <Link
       className="sidebar-servers__add-server-button"
       onlyActiveOnIndex={false}
       style={Object {}}
       to="/add-server"
     >
-      <i
-        className="fa fa-plus"
+      <img
+        role="presentation"
+        src=""
       />
     </Link>
   </div>
   <ul
     className="sidebar-servers-list"
   />
-  <button>
-    saveState
-  </button>
 </div>
 `;

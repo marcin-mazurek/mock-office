@@ -1,4 +1,4 @@
-import unique from 'node-unique';
+import unique from 'cuid';
 import ScenePart from './ScenePart';
 
 export default class Scene {

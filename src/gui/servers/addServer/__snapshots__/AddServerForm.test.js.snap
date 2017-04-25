@@ -1,107 +1,171 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AddServerForm default snapshot 1`] = `
-<div
+<form
+  action="#"
   className="add-server-form"
 >
-  <form
-    action="#"
+  <div
+    className="add-server-form__header"
+  >
+    <img
+      alt=""
+      className="add-server-form__header-icon"
+      src=""
+    />
+    Add server
+  </div>
+  <div
+    className="add-server-form-row"
   >
     <div
       className="add-server-form__field"
     >
       <label
-        className="add-server-form__label"
+        className="form-field__label"
         htmlFor="server-name"
       >
         Name:
       </label>
       <input
-        className="input input--text"
+        className="form-field__input"
         name="server-name"
         onChange={[Function]}
+        placeholder="Awesome server"
         type="text"
         value="Server name"
       />
     </div>
+  </div>
+  <div
+    className="add-server-form-row"
+  >
     <div
-      className="add-server-form__field"
+      className="add-server-form__col"
     >
-      <label
-        className="add-server-form__label"
-        htmlFor="server-port"
+      <div
+        className="add-server-form__field"
       >
-        Port:
-      </label>
-      <input
-        className="input input--text"
-        name="server-port"
-        onChange={[Function]}
-        type="text"
-        value={3000}
-      />
+        <label
+          className="form-field__label"
+          htmlFor="server-port"
+        >
+          Port:
+        </label>
+        <input
+          className="form-field__input"
+          name="server-port"
+          onChange={[Function]}
+          type="text"
+          value={3000}
+        />
+      </div>
     </div>
     <div
-      className="add-server-form__field"
+      className="add-server-form__col"
     >
-      <label
-        className="add-server-form__label"
-        htmlFor="server-type"
+      <div
+        className="add-server-form__field"
       >
-        Type:
-      </label>
-      <select
-        name="server-type"
-        onChange={[Function]}
-        value="http"
-      >
-        <option
+        <label
+          className="form-field__label"
+          htmlFor="server-type"
+        >
+          Type:
+        </label>
+        <Select
+          addLabelText="Add \\"{label}\\"?"
+          arrowRenderer={[Function]}
+          autosize={true}
+          backspaceRemoves={true}
+          backspaceToRemoveMessage="Press backspace to remove {label}"
+          className="form-field__select"
+          clearAllText="Clear all"
+          clearRenderer={[Function]}
+          clearValueText="Clear value"
+          clearable={false}
+          deleteRemoves={true}
+          delimiter=","
+          disabled={false}
+          escapeClearsValue={true}
+          filterOptions={[Function]}
+          ignoreAccents={true}
+          ignoreCase={true}
+          inputProps={Object {}}
+          isLoading={false}
+          joinValues={false}
+          labelKey="label"
+          matchPos="any"
+          matchProp="any"
+          menuBuffer={0}
+          menuRenderer={[Function]}
+          multi={false}
+          name="server-type"
+          noResultsText="No results found"
+          onBlurResetsInput={true}
+          onChange={[Function]}
+          onCloseResetsInput={true}
+          openAfterFocus={false}
+          optionComponent={[Function]}
+          options={
+            Array [
+              Object {
+                "label": "HTTP",
+                "value": "http",
+              },
+              Object {
+                "label": "Web Socket",
+                "value": "ws",
+              },
+            ]
+          }
+          pageSize={5}
+          placeholder="Select..."
+          required={false}
+          scrollMenuIntoView={true}
+          searchable={false}
+          simpleValue={false}
+          tabSelectsValue={true}
           value="http"
-        >
-          http
-        </option>
-        <option
-          value="ws"
-        >
-          ws
-        </option>
-      </select>
+          valueComponent={[Function]}
+          valueKey="value"
+        />
+      </div>
     </div>
     <div
-      className="add-server-form__field"
+      className="add-server-form__col add-server-form__col--small"
     >
-      <label
-        className="add-server-form__label"
-        htmlFor="server-secure"
+      <div
+        className="add-server-form__field"
       >
-        Secure:
-      </label>
-      <select
-        name="server-secure"
-        onChange={[Function]}
-        value="no"
-      >
-        <option
-          value="yes"
+        <label
+          className="form-field__label"
+          htmlFor="server-secure"
         >
-          yes
-        </option>
-        <option
-          value="no"
-        >
-          no
-        </option>
-      </select>
+          Secure:
+        </label>
+        <Switch
+          checked={false}
+          checkedChildren="Yes"
+          className="form-field__switch"
+          defaultChecked={false}
+          onChange={[Function]}
+          prefixCls="rc-switch"
+          unCheckedChildren="No"
+        />
+      </div>
     </div>
-    <button
-      className="button add-server-form__submit-button"
-      onClick={[Function]}
-    >
-      <i
-        className="fa fa-plus"
-      />
-       Create
-    </button>
-  </form>
-</div>
+  </div>
+  <button
+    className="button add-server-form__submit-button"
+    onClick={[Function]}
+  >
+    <img
+      alt=""
+      className="add-server-form__submit-icon"
+      src=""
+    />
+    Create
+  </button>
+</form>
 `;

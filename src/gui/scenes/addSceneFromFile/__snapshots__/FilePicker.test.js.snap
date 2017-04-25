@@ -5,12 +5,19 @@ exports[`FilePicker default snapshot 1`] = `
   className="file-picker"
 >
   <label
-    className="file-picker__button button inspect-server-scenes-header__button"
+    className="file-picker__button inspect-server-scenes-header__button"
     htmlFor="file-picker__input"
   >
-    <i
-      className="fa fa-upload"
+    <img
+      role="presentation"
+      src=""
+      style={
+        Object {
+          "marginRight": "11px",
+        }
+      }
     />
+    Import from file
   </label>
   <input
     className="file-picker__input"

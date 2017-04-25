@@ -8,9 +8,7 @@ import createStartAction from '../startServer/actions';
 import createStopAction from '../stopServer/actions';
 import {
   isRunning,
-  getSelectedServerDetails,
-  getSelected,
-  getAll
+  getServerDetails
 } from '../../entities/servers/selectors';
 import FilePickerConnect from '../../scenes/addSceneFromFile/FilePicker';
 import ScenesConnect from '../../scenes/browseScenes/Scenes';
@@ -18,19 +16,6 @@ import { init as createRemoveServerAction } from '../removeServer/actions';
 import { init as createRenameServerAction } from '../renameServer/actions';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../assets/icons_gray_add@3x.svg';
-
-export const ServerPlaceholder = ({ serverExists }) =>
-  <div className="server-placeholder">
-    {serverExists ? 'Select server' : 'Add server'}
-  </div>;
-
-ServerPlaceholder.propTypes = {
-  serverExists: React.PropTypes.bool.isRequired
-};
-
-const serverPlaceholderMapStateToProps = state => ({
-  serverExists: !getAll(state).isEmpty()
-});
 
 const ServerToggle = ({ toggled, serverId, stop, start }) => {
   let handleClick;
@@ -109,9 +94,7 @@ const serverToggleMapDispatchToProps = {
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
 
-const ServerPlaceholderConnect = connect(serverPlaceholderMapStateToProps)(ServerPlaceholder);
-
-export const ServerInspect = ({ running, serverDetails, removeServer }) => {
+export const Server = ({ running, serverDetails, removeServer }) => {
   const { name, port, type, id } = serverDetails;
 
   return (
@@ -212,35 +195,22 @@ export const ServerInspect = ({ running, serverDetails, removeServer }) => {
   );
 };
 
-ServerInspect.propTypes = {
+Server.propTypes = {
   running: React.PropTypes.bool.isRequired,
   serverDetails: React.PropTypes.shape({}),
   removeServer: React.PropTypes.func.isRequired
 };
 
-const serverInspectMapDispatchToProps = {
+const serverMapDispatchToProps = {
   removeServer: createRemoveServerAction,
   serverNameChange: createRenameServerAction
 };
 
-export const ServerInspectConnect = connect(null, serverInspectMapDispatchToProps)(ServerInspect);
-
-export const Server = ({ selected, running, serverDetails }) => (
-  selected
-    ? <ServerInspectConnect running={running} serverDetails={serverDetails} />
-    : <ServerPlaceholderConnect />
-);
-
-Server.propTypes = {
-  selected: React.PropTypes.string,
-  running: React.PropTypes.bool.isRequired,
-  serverDetails: React.PropTypes.shape({})
-};
-
-const serverMapStateToProps = state => ({
-  selected: getSelected(state),
-  running: isRunning(state),
-  serverDetails: getSelectedServerDetails(state)
+const serverMapStateToProps = (state, ownProps) => ({
+  running: isRunning(state, ownProps.params.id),
+  serverDetails: getServerDetails(state, ownProps.params.id)
 });
 
-export default connect(serverMapStateToProps)(Server);
+export default connect(
+  serverMapStateToProps, serverMapDispatchToProps
+)(Server);

@@ -1,4 +1,4 @@
-import unique from 'node-unique';
+import unique from 'cuid';
 import createSchedule from './createSchedule';
 
 export default class ScenePart {

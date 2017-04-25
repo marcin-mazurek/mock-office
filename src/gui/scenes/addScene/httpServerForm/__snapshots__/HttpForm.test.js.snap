@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HttpForm default snapshot 1`] = `
+<form>
+  <div>
+    <label
+      htmlFor="title"
+    >
+      Title:
+    </label>
+    <Field
+      component="input"
+      name="title"
+      placeholder="Scene title"
+      type="text"
+    />
+  </div>
+  <div>
+    <div>
+      <label
+        htmlFor="requirements"
+      >
+        Requirements:
+      </label>
+      <Field
+        component="input"
+        name="requirements-check"
+        type="checkbox"
+      />
+    </div>
+    <Field
+      cols="30"
+      component="textarea"
+      name="requirements"
+      rows="10"
+    />
+  </div>
+  <div>
+    <label
+      htmlFor="part"
+    >
+      Send:
+    </label>
+    <div>
+      <FormSection
+        component="div"
+        name="scenePart"
+      >
+        <ScenePartFormSection />
+      </FormSection>
+    </div>
+  </div>
+  <div>
+    <button
+      className="button"
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+`;
