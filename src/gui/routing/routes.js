@@ -17,7 +17,7 @@ export default function configureRoutes(store) {
     <Route component={Main}>
       <Route path="/add-server" component={AddServerPage} />
       <Route path="/server/:id" component={ServerPage} onEnter={checkIfServerExists} />
-      <Route path="/add-scene" component={AddScenePage} />
+      <Route path="/:id/add-scene" component={AddScenePage} onEnter={checkIfServerExists} />
       <Route path="/" component={LandingPageConnect} />
       <Redirect from="*" to="/" />
     </Route>

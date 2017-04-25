@@ -1,7 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { AddScene } from './AddScene';
+import { Provider } from 'react-redux';
+import configureStore from '../../store';
+import AddSceneConnect, { AddScene } from './AddScene';
 
 describe('AddScene', () => {
   test('default snapshot', () => {
@@ -10,5 +12,26 @@ describe('AddScene', () => {
     };
     const wrapper = shallow(<AddScene {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
+  });
+});
+
+describe('AddSceneConnect', () => {
+  it('should render AddScene', () => {
+    const store = configureStore();
+    store.dispatch({
+      type: 'servers/ADD',
+      name: 'Server name',
+      port: 3000,
+      id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
+      serverType: 'http',
+      secure: false
+    });
+    const wrapper = mount(
+      <Provider store={store}>
+        <AddSceneConnect params={{ id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==' }} />
+      </Provider>
+    );
+
+    expect(wrapper.find(AddScene)).toHaveLength(1);
   });
 });

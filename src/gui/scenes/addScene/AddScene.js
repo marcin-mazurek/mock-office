@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { getSelectedServerDetails } from '../../entities/servers/selectors';
+import { getServerDetails } from '../../entities/servers/selectors';
 import HttpFormConnect from './httpServerForm/HttpForm';
 import Ws from './WsForm';
 
@@ -29,8 +29,8 @@ AddScene.propTypes = {
   scenarioId: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => {
-  const serverDetails = getSelectedServerDetails(state);
+const mapStateToProps = (state, ownProps) => {
+  const serverDetails = getServerDetails(state, ownProps.params.id);
 
   return {
     serverType: serverDetails.type,

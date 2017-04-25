@@ -175,7 +175,7 @@ export const Server = ({ running, serverDetails, removeServer }) => {
             </li>
           </ul>
           <Link
-            to="/add-scene"
+            to={`${id}/add-scene`}
             className="inspect-server__add-scene-button inspect-server-scenes-header__button"
           >
             <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
