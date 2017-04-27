@@ -255,6 +255,51 @@ export const createAppServer = (serversManager) => {
       });
   });
 
+  app.patch('/edit-server', bodyParser.json(), (req, res) => {
+    const schema = {
+      properties: {
+        name: {
+          type: 'string'
+        },
+        port: {
+          type: 'number'
+        },
+        id: {
+          type: 'string'
+        }
+      },
+      required: ['id']
+    };
+
+    if (!ajv.validate(schema, req.body)) {
+      const splitPath = ajv.errors[0].dataPath.split('.');
+      const param = splitPath[splitPath.length - 1];
+      res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
+      return;
+    }
+
+    const { id, name, port } = req.body;
+
+    const server = serversManager.find(id);
+
+    if (server) {
+      if (name) {
+        server.name = name;
+      }
+
+      if (port) {
+        server.stop(() => {
+          server.port = port;
+          server.start(() => {
+            res.status(200).end();
+          });
+        });
+      }
+
+      res.status(200).end();
+    }
+  });
+
   return app;
 };
 
