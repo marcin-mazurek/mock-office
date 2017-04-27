@@ -1,30 +1,7 @@
 import { ConnectionError } from '../errors/types';
 import { ValidationError, ServerNotFoundError } from '../servers/startServer/errors';
 
-// eslint-disable-next-line import/prefer-default-export
-export const requestStartServer = id =>
-  fetch('http://127.0.0.1:3060/start-server',
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id })
-    })
-    .catch(() => {
-      throw new Error('Connection failed.');
-    })
-    .then((res) => {
-      if (res.status === 400) {
-        return res.json().then(payload => ({ error: payload.error }));
-      } else if (res.status === 404) {
-        return { error: 'Server not found' };
-      }
-
-      return res.json(payload => ({ id: payload.id }));
-    });
-
+/* eslint-disable import/prefer-default-export */
 export const requestAddScene = (serverId, scene) => fetch('http://127.0.0.1:3060/add-scene', {
   headers: {
     Accept: 'application/json, text/plain, */*',

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { INIT } from './actions';
 import { start } from '../../entities/servers/actions';
 import { add } from '../../entities/notifications/actions';
-import { requestStartServer } from '../../api/api';
+import requestStartServer from './rest';
 
 export default action$ =>
   action$.ofType(INIT)

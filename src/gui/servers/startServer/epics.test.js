@@ -4,13 +4,11 @@ describe('startServerEpic', () => {
     jest.resetModules();
   });
 
-  test('actions snapshot when response object hasn\'t got errors', () => {
+  test('actions snapshot when response object hasn\'t got errors', (done) => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('./actions').default;
-    jest.mock('../../api/api', () => ({
-      requestStartServer: () => ([{ id: 'some id' }])
-    }));
+    jest.mock('./rest', () => () => Promise.resolve({ id: 'some id' }));
     // eslint-disable-next-line global-require
     const startServerEpic = require('./epics').default;
 
@@ -18,16 +16,18 @@ describe('startServerEpic', () => {
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
     store.dispatch(initStart('some id'));
-    expect(store.getActions()).toMatchSnapshot();
+
+    Promise.resolve().then(() => {
+      expect(store.getActions()).toMatchSnapshot();
+      done();
+    });
   });
 
   it('actions snapshot when on api request errors', (done) => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('./actions').default;
-    jest.mock('../../api/api', () => ({
-      requestStartServer: () => ([{ error: 'error message' }])
-    }));
+    jest.mock('./rest', () => () => Promise.resolve({ error: 'error message' }));
     const startServerEpic = require('./epics').default;
 
     const epicMiddleware = createEpicMiddleware(startServerEpic);
