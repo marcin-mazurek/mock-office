@@ -8,7 +8,7 @@ Array [
   },
   Object {
     "notification": Object {
-      "text": "",
+      "text": "error message",
       "type": "error",
     },
     "type": "notifications/ADD",

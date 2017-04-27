@@ -13,18 +13,17 @@ export const requestStartServer = id =>
       body: JSON.stringify({ id })
     })
     .catch(() => {
-      throw new ConnectionError('Connection failed.');
+      throw new Error('Connection failed.');
     })
     .then((res) => {
       if (res.status === 400) {
-        throw new ValidationError(res.error);
+        return res.json().then(payload => ({ error: payload.error }));
       } else if (res.status === 404) {
-        throw new ServerNotFoundError('Server not found');
+        return { error: 'Server not found' };
       }
 
-      return res;
-    })
-    .then(res => res.json());
+      return res.json(payload => ({ id: payload.id }));
+    });
 
 export const requestAddScene = (serverId, scene) => fetch('http://127.0.0.1:3060/add-scene', {
   headers: {

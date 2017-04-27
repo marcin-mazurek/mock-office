@@ -26,7 +26,7 @@ describe('startServerEpic', () => {
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('./actions').default;
     jest.mock('../../api/api', () => ({
-      requestStartServer: () => Promise.reject(new Error())
+      requestStartServer: () => ([{ error: 'error message' }])
     }));
     const startServerEpic = require('./epics').default;
 

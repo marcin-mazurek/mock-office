@@ -98,11 +98,15 @@ export const createAppServer = (serversManager) => {
     if (ajv.validate(schema, req.body)) {
       serversManager.start(req.body.id)
         .then(
-          () => {
-            res.status(200).json({ id: req.body.id });
+          (started) => {
+            if (started) {
+              res.status(200).json({ id: req.body.id });
+            } else {
+              res.status(404).end();
+            }
           },
-          () => {
-            res.status(404).end();
+          (err) => {
+            res.status(400).json({ error: err });
           }
         );
     } else {

@@ -33,16 +33,16 @@ class ServersManager {
     const server = this.find(id);
 
     if (!server) {
-      return Promise.reject('Server not found');
+      return Promise.resolve(false);
     }
 
     if (!server.isLive()) {
       return new Promise((resolve, reject) => {
-        server.start(resolve, reject);
+        server.start(() => resolve(true), reject);
       });
     }
 
-    return Promise.resolve();
+    return Promise.resolve(true);
   }
 
   stop(id) {
