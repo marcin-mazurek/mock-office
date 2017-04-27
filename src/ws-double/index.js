@@ -22,6 +22,8 @@ export default class WsDouble {
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
+    this.changeName = this.changeName.bind(this);
+    this.changePort = this.changePort.bind(this);
 
     const httpServer = this.secure ? https : http;
 
@@ -114,5 +116,13 @@ export default class WsDouble {
 
   isLive() {
     return this.httpServer.listening;
+  }
+
+  changeName(name) {
+    this.name = name;
+  }
+
+  changePort(port) {
+    this.port = port;
   }
 }
