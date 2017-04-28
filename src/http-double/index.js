@@ -42,7 +42,7 @@ export default class HttpDouble {
 
     const httpServer = this.isSecure ? https : http;
     const app = express();
-    app.get('*', this.respond);
+    app.use('*', this.respond);
 
     if (this.isSecure) {
       const credentials = {
@@ -67,7 +67,10 @@ export default class HttpDouble {
     const scene = this.scenario.findScene(
       {
         event: 'RECEIVED_REQUEST',
-        url: req.url
+        request: {
+          url: req.url,
+          method: req.method
+        }
       }
     );
 
