@@ -252,4 +252,72 @@ describe('HttpMockServer', () => {
       });
     });
   });
+
+  it('should filter scenes by request headers', (done) => {
+    const server = new HttpMockServer({
+      port: 4000,
+      emitter: new Emitter()
+    });
+
+    server.getScenario().addScene({
+      requirements: {
+        event: 'RECEIVED_REQUEST',
+        request: {
+          headers: {
+            origin: 'http://localhost:3000'
+          }
+        }
+      },
+      parts: [
+        {
+          type: 'immediate',
+          payload: {
+            message: 'its working!'
+          }
+        }
+      ]
+    });
+
+    server.start(() => {
+      request.post({
+        url: 'http://127.0.0.1:4000',
+        headers: {
+          Origin: 'http://localhost:3000'
+        }
+      }, (err, res) => {
+        expect(JSON.parse(res.body)).toEqual({ message: 'its working!' });
+
+        server.getScenario().addScene({
+          requirements: {
+            event: 'RECEIVED_REQUEST',
+            request: {
+              headers: {
+                origin: 'http://localhost:3000'
+              }
+            }
+          },
+          parts: [
+            {
+              type: 'immediate',
+              payload: {
+                message: 'its working!'
+              }
+            }
+          ]
+        });
+
+        const options = {
+          url: 'http://127.0.0.1:4000',
+          headers: {
+            origin: 'http://localhost:3456'
+          }
+        };
+
+        request.get(options, (error, response) => {
+          expect(response.body).toEqual('Sorry, we cannot find scene.');
+          server.stop(done);
+        });
+      });
+    });
+  });
 });

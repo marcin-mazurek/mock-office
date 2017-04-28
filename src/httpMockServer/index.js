@@ -69,7 +69,8 @@ export default class HttpMockServer {
         event: 'RECEIVED_REQUEST',
         request: {
           url: req.url,
-          method: req.method
+          method: req.method,
+          headers: req.headers
         }
       }
     );
