@@ -29,16 +29,18 @@ export const handleEditServer = serversManager => (req, res) => {
   }
 
   const { id, name, port } = req.body;
-
   const server = serversManager.find(id);
-
   if (!server) {
     res.status(404).end();
     return;
   }
 
+  const response = {
+    id
+  };
   if (name) {
     server.changeName(name);
+    response.name = name;
   }
 
   if (port) {
@@ -46,16 +48,18 @@ export const handleEditServer = serversManager => (req, res) => {
       server.stop(() => {
         server.changePort(port);
         server.start(() => {
-          res.status(200).end();
+          response.port = port;
+          res.status(200).json(response);
         });
       });
     } else {
       server.changePort(port);
-      res.status(200).end();
+      response.port = port;
+      res.status(200).json(response);
     }
+  } else {
+    res.status(200).json(response);
   }
-
-  res.status(200).end();
 };
 
 export const createAppServer = (serversManager) => {
@@ -309,7 +313,7 @@ export const createAppServer = (serversManager) => {
       });
   });
 
-  app.patch('/edit-server', bodyParser.json(), handleEditServer(serversManager));
+  app.post('/edit-server', bodyParser.json(), handleEditServer(serversManager));
 
   return app;
 };

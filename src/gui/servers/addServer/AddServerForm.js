@@ -80,13 +80,13 @@ export class AddServerForm extends React.Component {
 
   render() {
     return (
-      <form className="add-server-form" action="#">
-        <div className="add-server-form__header">
-          <img className="add-server-form__header-icon" src={serverIcon} alt="" />
+      <form className="form" action="#">
+        <div className="form__header">
+          <img className="form__header-icon" src={serverIcon} alt="" />
           Add server
         </div>
-        <div className="add-server-form-row">
-          <div className="add-server-form__field">
+        <div className="form-row">
+          <div className="form__field">
             <label className="form-field__label" htmlFor="server-name">
               Name:
             </label>
@@ -100,9 +100,9 @@ export class AddServerForm extends React.Component {
             />
           </div>
         </div>
-        <div className="add-server-form-row">
-          <div className="add-server-form__col">
-            <div className="add-server-form__field">
+        <div className="form-row">
+          <div className="form__col">
+            <div className="form__field">
               <label className="form-field__label" htmlFor="server-port">
                 Port:
               </label>
@@ -115,8 +115,8 @@ export class AddServerForm extends React.Component {
               />
             </div>
           </div>
-          <div className="add-server-form__col">
-            <div className="add-server-form__field">
+          <div className="form__col">
+            <div className="form__field">
               <label className="form-field__label" htmlFor="server-type">
                 Type:
               </label>
@@ -134,8 +134,8 @@ export class AddServerForm extends React.Component {
               />
             </div>
           </div>
-          <div className="add-server-form__col add-server-form__col--small">
-            <div className="add-server-form__field">
+          <div className="form__col form__col--small">
+            <div className="form__field">
               <label className="form-field__label" htmlFor="server-secure">
                 Secure:
               </label>
@@ -153,7 +153,7 @@ export class AddServerForm extends React.Component {
           this.state.isSecure
             ? (
               <div>
-                <div className="add-server-form__field">
+                <div className="form__field">
                   <label
                     className="form-field__label"
                     htmlFor="server-key"
@@ -166,7 +166,7 @@ export class AddServerForm extends React.Component {
                     name="server-key"
                   />
                 </div>
-                <div className="add-server-form__field">
+                <div className="form__field">
                   <label
                     className=""
                     htmlFor="server-cert"
@@ -183,12 +183,14 @@ export class AddServerForm extends React.Component {
             )
             : null
         }
-        <button
-          className="button add-server-form__submit-button"
-          onClick={this.submit}
-        >
-          <img className="add-server-form__submit-icon" src={plusIcon} alt="" />Create
-        </button>
+        <div className="form-row">
+          <button
+            className="button form__button"
+            onClick={this.submit}
+          >
+            <img className="form__submit-icon" src={plusIcon} alt="" />Create
+          </button>
+        </div>
       </form>
     );
   }
