@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'request';
-import HttpDouble, { send } from './index';
+import HttpMockServer, { send } from './index';
 import { DoublesEmitter } from '../servers-manager/emitter';
 
 /* eslint-disable global-require */
@@ -60,12 +60,12 @@ describe('send', () => {
   });
 });
 
-describe('HttpDouble', () => {
+describe('HttpMockServer', () => {
   it('should ensure that all sockets are destroyed and close event dispatched on stop', (done) => {
     // process.on('uncaughtException', (err) => {
     //   console.log(err.stack);
     // });
-    const server = new HttpDouble({
+    const server = new HttpMockServer({
       port: 4000,
       id: 'some id',
       emitter: new DoublesEmitter()
@@ -91,7 +91,7 @@ describe('HttpDouble', () => {
 
   describe('destroyOpenSockets', () => {
     it('should destroy and remove all saved sockets', () => {
-      const server = new HttpDouble({
+      const server = new HttpMockServer({
         id: 'some id',
         emitter: new DoublesEmitter()
       });
@@ -112,7 +112,7 @@ describe('HttpDouble', () => {
 
   describe('getScenario', () => {
     it('should return server scenario', () => {
-      const server = new HttpDouble({
+      const server = new HttpMockServer({
         id: 'some id',
         emitter: new DoublesEmitter()
       });
@@ -123,7 +123,7 @@ describe('HttpDouble', () => {
 
   describe('respond', () => {
     it('should call scenario.play if found scene', () => {
-      const server = new HttpDouble({
+      const server = new HttpMockServer({
         id: 'some id',
         emitter: new DoublesEmitter()
       });
@@ -143,7 +143,7 @@ describe('HttpDouble', () => {
     });
 
     it('should send response to client', (done) => {
-      const server = new HttpDouble({
+      const server = new HttpMockServer({
         port: 4000,
         id: 'some id',
         emitter: new DoublesEmitter()
@@ -186,7 +186,7 @@ describe('HttpDouble', () => {
 
   describe('start', () => {
     it('should start http server', (done) => {
-      const server = new HttpDouble({
+      const server = new HttpMockServer({
         port: 4000,
         emitter: new DoublesEmitter()
       });
@@ -202,7 +202,7 @@ describe('HttpDouble', () => {
   });
 
   it('should filter scenes by request method', (done) => {
-    const server = new HttpDouble({
+    const server = new HttpMockServer({
       port: 4000,
       emitter: new DoublesEmitter()
     });

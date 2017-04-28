@@ -17,7 +17,7 @@ export const send = (req, res) => (params) => {
   res.json(params.payload);
 };
 
-export default class HttpDouble {
+export default class HttpMockServer {
   constructor(config) {
     this.id = unique();
     this.emitter = config.emitter.extend({ serverId: this.id });
@@ -103,7 +103,7 @@ export default class HttpDouble {
   stop(cb) {
     this.scenario.cancelPendingScenes();
     // Browsers can keep connection open, thus callback after
-    // HttpDouble.stop cant be called if there are sockets
+    // HttpMockServer.stop cant be called if there are sockets
     // still open, thus we need to ensure that all sockets are
     // destroyed
     // https://nodejs.org/api/net.html#net_server_close_callback

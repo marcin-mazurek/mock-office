@@ -1,5 +1,5 @@
 import ServersManager from './ServersManager';
-import HttpServer from '../http-double';
+import HttpServer from '../httpMockServer';
 import WsServer from '../ws-double';
 import { DoublesEmitter } from './emitter';
 
