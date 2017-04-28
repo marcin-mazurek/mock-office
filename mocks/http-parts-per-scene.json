@@ -2,7 +2,10 @@
   {
     "title": "request for some-url",
     "requirements": {
-      "event": "RECEIVED_REQUEST"
+      "event": "RECEIVED_REQUEST",
+      "request": {
+        "method": "GET"
+      }
     },
     "parts": [
       {
