@@ -61,6 +61,7 @@
     "file-loader": "^0.10.1",
     "html-webpack-plugin": "^2.28.0",
     "jest": "^19.0.2",
+    "jest-fetch-mock": "^1.1.1",
     "node-sass": "^4.0.0",
     "npm-run-all": "^4.0.2",
     "postcss-loader": "^1.2.1",
@@ -121,6 +122,9 @@
       "\\.(png|jpg|svg)$": "<rootDir>/jest/webpackAssetsMock.js",
       "\\.(css|scss)$": "<rootDir>/jest/stylesMock.js"
     },
+    "setupFiles": [
+      "./jest/fetchMock.js"
+    ],
     "roots": [
       "<rootDir>/src"
     ]

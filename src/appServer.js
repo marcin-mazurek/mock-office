@@ -9,10 +9,12 @@ export const handleEditServer = serversManager => (req, res) => {
   const schema = {
     properties: {
       name: {
-        type: 'string'
+        type: 'string',
+        minLength: 1
       },
       port: {
-        type: 'number'
+        type: 'number',
+        minimum: 3000
       },
       id: {
         type: 'string'

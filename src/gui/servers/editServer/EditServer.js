@@ -78,7 +78,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const EditServerFormConnect = connect(mapStateToProps, mapDispatchToProps)(
+export const EditServerFormConnect = connect(mapStateToProps, mapDispatchToProps)(
   reduxForm(
     {
       form: 'editServer'
