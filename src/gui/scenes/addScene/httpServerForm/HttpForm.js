@@ -6,16 +6,23 @@ import ScenePartFormSection from '../ScenePartFormSection';
 import { submitHttpScene as createSubmitHttpSceneAction } from './actions';
 
 export const HttpForm = props => (
-  <form onSubmit={props.handleSubmit}>
-    <div>
-      <label htmlFor="title">Title:</label>
-      <Field name="title" component="input" type="text" placeholder="Scene title" />
+  <form className="form" onSubmit={props.handleSubmit}>
+    <div className="form__header">
+      Add scene
     </div>
-    <div>
-      <div>
-        <label htmlFor="requirements">Requirements:</label>
-        <Field name="requirements-check" component="input" type="checkbox" />
+    <div className="form-row">
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="title">Title:</label>
+        <Field
+          name="title"
+          component="input"
+          type="text"
+          placeholder="Scene title"
+          className="form-field__input"
+        />
       </div>
+    </div>
+    <div className="form-row">
       <Field
         name="requirements"
         component="textarea"
@@ -23,16 +30,14 @@ export const HttpForm = props => (
         rows="10"
       />
     </div>
-    <div>
-      <label htmlFor="part">Send:</label>
-      <div>
-        <FormSection name="scenePart">
-          <ScenePartFormSection />
-        </FormSection>
-      </div>
+    <div>Send:</div>
+    <div className="form-row">
+      <FormSection name="scenePart">
+        <ScenePartFormSection />
+      </FormSection>
     </div>
-    <div>
-      <button className="button" type="submit">
+    <div className="form-row">
+      <button className="button form__button" type="submit">
         Submit
       </button>
     </div>

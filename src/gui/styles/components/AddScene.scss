@@ -1,6 +1,9 @@
 .add-scene {
   height: 100%;
-  overflow-y: scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .add-scene__back-button {

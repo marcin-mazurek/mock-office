@@ -1,29 +1,55 @@
 import React from 'react';
+import Select from 'react-select';
 import { Field } from 'redux-form/immutable';
 
 const ScenePartType = field =>
-  <select onChange={field.input.onChange}>
-    <option value="immediate">immediate</option>
-    <option value="future">future</option>
-  </select>;
+  <Select
+    name="server-type"
+    value={field.input.value}
+    onChange={field.input.onChange}
+    searchable={false}
+    clearable={false}
+    className="form-field__select"
+    options={[
+      { value: 'immediate', label: 'immediate' },
+      { value: 'future', label: 'future' }
+    ]}
+  />
+;
 
 const ScenePartFormSection = () => (
-  <div>
-    <div>
-      <label htmlFor="title">title:</label>
-      <Field component="input" name="title" type="text" />
+  <div style={{ width: '100%' }}>
+    <div className="form-row">
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="title">Title:</label>
+        <Field
+          className="form-field__input"
+          component="input"
+          name="title"
+          type="text"
+        />
+      </div>
     </div>
-    <div>
-      <label htmlFor="type">type:</label>
-      <Field component={ScenePartType} name="type" />
+    <div className="form-row">
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="type">Type:</label>
+        <Field component={ScenePartType} name="type" />
+      </div>
     </div>
     <div>
       <label htmlFor="payload">Payload:</label>
       <Field component="textarea" name="payload" />
     </div>
-    <div>
-      <label htmlFor="delay">Delay:</label>
-      <Field component="input" type="number" name="delay" />
+    <div className="form-row">
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="delay">Delay:</label>
+        <Field
+          className="form-field__input"
+          component="input"
+          type="number"
+          name="delay"
+        />
+      </div>
     </div>
   </div>
 );

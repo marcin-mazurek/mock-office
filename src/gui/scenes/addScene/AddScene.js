@@ -8,19 +8,14 @@ import Ws from './WsForm';
 
 export const AddScene = ({ serverType, scenarioId, params }) => (
   <div className="add-scene">
-    <div className="view-header">
-      Add scene
-    </div>
-    <div className="add-scene__main">
-      <Link to={`/server/${params.id}`} className="add-scene__back-button">
-        <i className="fa fa-arrow-left" />{' Server details'}
-      </Link>
-      {
-        serverType === 'http'
-          ? <HttpFormConnect scenarioId={scenarioId} />
-          : <Ws />
-      }
-    </div>
+    <Link to={`/server/${params.id}`} className="add-scene__back-button">
+      <i className="fa fa-arrow-left" />{' Server details'}
+    </Link>
+    {
+      serverType === 'http'
+        ? <HttpFormConnect scenarioId={scenarioId} />
+        : <Ws />
+    }
   </div>
 );
 
