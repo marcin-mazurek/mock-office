@@ -200,4 +200,56 @@ describe('HttpDouble', () => {
         err => console.log(err));
     });
   });
+
+  it('should filter scenes by request method', (done) => {
+    const server = new HttpDouble({
+      port: 4000,
+      emitter: new DoublesEmitter()
+    });
+
+    server.getScenario().addScene({
+      requirements: {
+        event: 'RECEIVED_REQUEST',
+        request: {
+          method: 'POST'
+        }
+      },
+      parts: [
+        {
+          type: 'immediate',
+          payload: {
+            message: 'its working!'
+          }
+        }
+      ]
+    });
+
+    server.start(() => {
+      request.post('http://127.0.0.1:4000', (err, res) => {
+        expect(JSON.parse(res.body)).toEqual({ message: 'its working!' });
+
+        server.getScenario().addScene({
+          requirements: {
+            event: 'RECEIVED_REQUEST',
+            request: {
+              method: 'POST'
+            }
+          },
+          parts: [
+            {
+              type: 'immediate',
+              payload: {
+                message: 'its working!'
+              }
+            }
+          ]
+        });
+
+        request.get('http://127.0.0.1:4000', (error, response) => {
+          expect(response.body).toEqual('Sorry, we cannot find scene.');
+          server.stop(done);
+        });
+      });
+    });
+  });
 });
