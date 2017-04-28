@@ -8,7 +8,8 @@ import AddSceneConnect, { AddScene } from './AddScene';
 describe('AddScene', () => {
   test('default snapshot', () => {
     const props = {
-      serverType: 'some type'
+      serverType: 'some type',
+      params: { id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==' }
     };
     const wrapper = shallow(<AddScene {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();

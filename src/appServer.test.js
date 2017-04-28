@@ -4,9 +4,6 @@ import ServersManager from './servers-manager';
 describe('handleEditServer', () => {
   it('should change name', () => {
     const changeNameMock = jest.fn();
-    const resStatusMock = jest.fn(() => ({
-      end() {}
-    }));
     const serversManager = {
       find() {
         return {
@@ -15,7 +12,8 @@ describe('handleEditServer', () => {
       }
     };
     const res = {
-      status: resStatusMock
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
     };
     const req = {
       body: {
@@ -25,7 +23,7 @@ describe('handleEditServer', () => {
     };
     handleEditServer(serversManager)(req, res);
     expect(changeNameMock).toHaveBeenCalledWith('new name');
-    expect(resStatusMock).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(200);
   });
 
   it('should validate name param', () => {
@@ -57,7 +55,7 @@ describe('handleEditServer', () => {
     };
     const res = {
       status: jest.fn().mockReturnThis(),
-      end: jest.fn().mockReturnThis()
+      json: jest.fn().mockReturnThis()
     };
     const req = {
       body: {
@@ -88,14 +86,12 @@ describe('handleEditServer', () => {
   });
 
   it('should work even with no params', () => {
-    const resStatusMock = jest.fn(() => ({
-      end() {}
-    }));
     const serversManager = {
       find() { return {}; }
     };
     const res = {
-      status: resStatusMock
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
     };
     const req = {
       body: {
@@ -103,16 +99,14 @@ describe('handleEditServer', () => {
       }
     };
     handleEditServer(serversManager)(req, res);
-    expect(resStatusMock).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(200);
   });
 
   it('should change name', () => {
     const serversManager = new ServersManager();
-    const resStatusMock = jest.fn(() => ({
-      end() {}
-    }));
     const res = {
-      status: resStatusMock
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
     };
     const serverId = serversManager.add('name', 3000, 'http');
     const req = {
@@ -127,11 +121,9 @@ describe('handleEditServer', () => {
 
   it('should change port', () => {
     const serversManager = new ServersManager();
-    const resStatusMock = jest.fn(() => ({
-      end() {}
-    }));
     const res = {
-      status: resStatusMock
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
     };
     const serverId = serversManager.add('name', 3000, 'http');
     const req = {
@@ -146,11 +138,9 @@ describe('handleEditServer', () => {
 
   it('should change port is server is listening and start it again', (done) => {
     const serversManager = new ServersManager();
-    const resStatusMock = jest.fn(() => ({
-      end() {}
-    }));
     const res = {
-      status: resStatusMock
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
     };
     const serverId = serversManager.add('name', 3000, 'http');
     const server = serversManager.find(serverId);
