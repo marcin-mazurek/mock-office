@@ -4,6 +4,7 @@ export const START = 'servers/START';
 export const STOP = 'servers/STOP';
 export const REMOVE = 'servers/REMOVE';
 export const RENAME = 'servers/RENAME';
+export const UPDATE = 'server/UPDATE';
 
 export const add = (name, port, serverType, id, secure) => ({
   type: ADD,
@@ -38,4 +39,10 @@ export const rename = (id, name) => ({
   type: RENAME,
   id,
   name
+});
+
+export const update = (id, params) => ({
+  type: UPDATE,
+  id,
+  params
 });

@@ -37,6 +37,8 @@ export default class HttpDouble {
     this.isLive = this.isLive.bind(this);
     this.respond = this.respond.bind(this);
     this.getScenario = this.getScenario.bind(this);
+    this.changeName = this.changeName.bind(this);
+    this.changePort = this.changePort.bind(this);
 
     const httpServer = this.isSecure ? https : http;
     const app = express();
@@ -112,5 +114,13 @@ export default class HttpDouble {
 
   isLive() {
     return this.httpServer.listening;
+  }
+
+  changeName(name) {
+    this.name = name;
+  }
+
+  changePort(port) {
+    this.port = port;
   }
 }

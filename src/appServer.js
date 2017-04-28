@@ -4,6 +4,66 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import colors from 'colors/safe';
 
+export const handleEditServer = serversManager => (req, res) => {
+  const ajv = new Ajv();
+  const schema = {
+    properties: {
+      name: {
+        type: 'string',
+        minLength: 1
+      },
+      port: {
+        type: 'number',
+        minimum: 3000
+      },
+      id: {
+        type: 'string'
+      }
+    },
+    required: ['id']
+  };
+
+  if (!ajv.validate(schema, req.body)) {
+    const splitPath = ajv.errors[0].dataPath.split('.');
+    const param = splitPath[splitPath.length - 1];
+    res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
+    return;
+  }
+
+  const { id, name, port } = req.body;
+  const server = serversManager.find(id);
+  if (!server) {
+    res.status(404).end();
+    return;
+  }
+
+  const response = {
+    id
+  };
+  if (name) {
+    server.changeName(name);
+    response.name = name;
+  }
+
+  if (port) {
+    if (server.isLive()) {
+      server.stop(() => {
+        server.changePort(port);
+        server.start(() => {
+          response.port = port;
+          res.status(200).json(response);
+        });
+      });
+    } else {
+      server.changePort(port);
+      response.port = port;
+      res.status(200).json(response);
+    }
+  } else {
+    res.status(200).json(response);
+  }
+};
+
 export const createAppServer = (serversManager) => {
   const ajv = new Ajv();
   const app = express();
@@ -255,12 +315,17 @@ export const createAppServer = (serversManager) => {
       });
   });
 
+  app.post('/edit-server', bodyParser.json(), handleEditServer(serversManager));
+
   return app;
 };
 
-export const serveAppServer = (app, port) => {
+export const serveAppServer = (app, port, cb) => {
   app.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(colors.green(`App address: http://127.0.0.1:${port}`));
+    if (typeof cb === 'function') {
+      cb();
+    }
   });
 };

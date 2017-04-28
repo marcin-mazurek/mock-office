@@ -1,5 +1,5 @@
 import { Map, List, Set } from 'immutable';
-import { ADD, SELECT, START, STOP, REMOVE, RENAME } from './actions';
+import { ADD, SELECT, START, STOP, REMOVE, RENAME, UPDATE } from './actions';
 import Server from './Server';
 
 const initialState = new Map({
@@ -44,6 +44,9 @@ export default (state = initialState, action) => {
     }
     case RENAME: {
       return state.setIn(['entities', action.id, 'name'], action.name);
+    }
+    case UPDATE: {
+      return state.mergeIn(['entities', action.id], action.params);
     }
     default: {
       return state;

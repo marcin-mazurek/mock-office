@@ -123,13 +123,16 @@ export const Server = ({ running, serverDetails, removeServer }) => {
           onClick={() => (
             // eslint-disable-next-line no-alert
             confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
-              ? removeServer(id)
+              ? removeServer()
               : false
           )
           }
         >
           <img src={trashIcon} role="presentation" />
         </button>
+        <Link className="inspect-server__edit-button" to={`/server/${id}/edit`}>
+          Edit
+        </Link>
       </div>
       <main className="inspect-server-main inspect-server__main">
         <div className="inspect-server-scenes-header">

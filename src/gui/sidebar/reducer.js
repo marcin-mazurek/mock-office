@@ -4,11 +4,16 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 export default function sidebarReducer(state = new Map(), action) {
   switch (action.type) {
     case LOCATION_CHANGE: {
-      const pathname = action.payload.pathname;
+      const splitPathName = action.payload.pathname.split('/');
+      let serverId;
+      splitPathName.forEach((urlPart, index) => {
+        if (splitPathName[index - 1] && splitPathName[index - 1] === 'server') {
+          serverId = urlPart;
+        }
+      });
 
-      if (pathname.includes('/server/')) {
-        const splitPathName = action.payload.pathname.split('/');
-        return state.set('currentDisplayedServerId', splitPathName[splitPathName.length - 1]);
+      if (serverId) {
+        return state.set('currentDisplayedServerId', serverId);
       }
 
       return state.delete('currentDisplayedServerId');

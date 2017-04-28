@@ -16,7 +16,7 @@ exports[`AddScene default snapshot 1`] = `
       className="add-scene__back-button"
       onlyActiveOnIndex={false}
       style={Object {}}
-      to="/"
+      to="/server/AVoOVEFMUlrzP+XqRbO2VYXFeAw78w=="
     >
       <i
         className="fa fa-arrow-left"

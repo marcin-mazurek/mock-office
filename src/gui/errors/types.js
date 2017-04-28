@@ -5,4 +5,9 @@ export class RestError {
   }
 }
 
-export class ConnectionError extends RestError {}
+export class ConnectionError extends RestError {
+  constructor() {
+    super();
+    this.message = 'Connection error';
+  }
+}
