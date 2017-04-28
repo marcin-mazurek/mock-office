@@ -1,6 +1,6 @@
 import ServersManager from './ServersManager';
 import HttpServer from '../httpMockServer';
-import WsServer from '../ws-double';
+import WsServer from '../wsMockServer';
 import { DoublesEmitter } from './emitter';
 
 describe('ServerHub', () => {

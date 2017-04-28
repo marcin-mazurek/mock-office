@@ -5,7 +5,7 @@ import fs from 'fs';
 import unique from 'cuid';
 import Scenario from '../scenario';
 
-export default class WsDouble {
+export default class WsMockServer {
   constructor(config) {
     this.type = 'ws';
     this.port = config.port || 3000;

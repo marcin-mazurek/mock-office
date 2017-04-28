@@ -1,5 +1,5 @@
 import HttpMockServer from '../httpMockServer';
-import WSMockServer from '../ws-double';
+import WSMockServer from '../wsMockServer';
 import { DoublesEmitter } from './emitter';
 
 const serverTypes = {
