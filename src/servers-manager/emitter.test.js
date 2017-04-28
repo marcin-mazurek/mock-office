@@ -1,16 +1,16 @@
-import { DoublesEmitter, addListener } from './emitter';
+import { Emitter, addListener } from './emitter';
 
-describe('DoublesEmitter', () => {
+describe('Emitter', () => {
   it('should initialize params object', () => {
-    const serverEE = new DoublesEmitter(null);
+    const serverEE = new Emitter(null);
     expect(serverEE.params).toEqual({});
-    const serverEEWithDefaultParams = new DoublesEmitter({ param: 'value' });
+    const serverEEWithDefaultParams = new Emitter({ param: 'value' });
     expect(serverEEWithDefaultParams.params).toEqual({ param: 'value' });
   });
 
   describe('extend', () => {
     it('should pass params to new emitter', () => {
-      const serverEE = new DoublesEmitter({ param: 'param value' });
+      const serverEE = new Emitter({ param: 'param value' });
       const extendedEE = serverEE.extend();
       expect(extendedEE.params).toEqual({
         param: 'param value'
@@ -18,7 +18,7 @@ describe('DoublesEmitter', () => {
     });
 
     it('should pass extra params to new emitter', () => {
-      const serverEE = new DoublesEmitter({ param: 'param value' });
+      const serverEE = new Emitter({ param: 'param value' });
       const extendedEE = serverEE.extend({
         extraParam: 'extra param value'
       });
@@ -33,7 +33,7 @@ describe('DoublesEmitter', () => {
     it('should emit event with its params', () => {
       const eventHandlerMock = jest.fn();
       addListener('event', eventHandlerMock);
-      const serverEE = new DoublesEmitter({ param: 'param value' });
+      const serverEE = new Emitter({ param: 'param value' });
       serverEE.emit('event');
       expect(eventHandlerMock).toHaveBeenCalled();
       expect(eventHandlerMock).toHaveBeenCalledWith({ param: 'param value' });
@@ -44,7 +44,7 @@ describe('DoublesEmitter', () => {
     it('should emit event with its params', () => {
       const eventHandlerMock = jest.fn();
       addListener('event', eventHandlerMock);
-      const serverEE = new DoublesEmitter({ param: 'param value' });
+      const serverEE = new Emitter({ param: 'param value' });
       serverEE.emit('event');
       expect(eventHandlerMock).toHaveBeenCalled();
       expect(eventHandlerMock).toHaveBeenCalledWith({ param: 'param value' });

@@ -1,20 +1,20 @@
-import { DoublesEmitter, addListener } from '../servers-manager/emitter';
+import { Emitter, addListener } from '../servers-manager/emitter';
 import Scene from './Scene';
 
 describe('Scene', () => {
   it('should setup emitter', () => {
     const scene = new Scene({
-      emitter: new DoublesEmitter(),
+      emitter: new Emitter(),
       parts: []
     });
-    expect(scene.emitter).toBeInstanceOf(DoublesEmitter);
+    expect(scene.emitter).toBeInstanceOf(Emitter);
     expect(scene.emitter.params.sceneId).toEqual(scene.id);
   });
 
   describe('updateReuseStatus', () => {
     it('should update toRemove property according to reuse type', () => {
       const infinityScene = new Scene({
-        emitter: new DoublesEmitter(),
+        emitter: new Emitter(),
         reuse: 'infinity',
         parts: []
       });
@@ -22,7 +22,7 @@ describe('Scene', () => {
       expect(infinityScene.toRemove).toBeFalsy();
 
       const twoTimesScene = new Scene({
-        emitter: new DoublesEmitter(),
+        emitter: new Emitter(),
         reuse: 'fixed',
         quantity: 2,
         parts: []
@@ -39,7 +39,7 @@ describe('Scene', () => {
   describe('play', () => {
     it('should update pending status', (done) => {
       const scene = new Scene({
-        emitter: new DoublesEmitter(),
+        emitter: new Emitter(),
         reuse: 'infinity',
         parts: []
       });
@@ -54,7 +54,7 @@ describe('Scene', () => {
 
     it('should marked scene as to remove', (done) => {
       const scene = new Scene({
-        emitter: new DoublesEmitter(),
+        emitter: new Emitter(),
         parts: []
       });
 
@@ -65,7 +65,7 @@ describe('Scene', () => {
     });
 
     it('should emit proper events on not cancelled scene', (done) => {
-      const serverEE = new DoublesEmitter();
+      const serverEE = new Emitter();
       const scene = new Scene({
         emitter: serverEE,
         parts: []
@@ -83,7 +83,7 @@ describe('Scene', () => {
     });
 
     it('should emit proper events on cancelled scene', (done) => {
-      const serverEE = new DoublesEmitter();
+      const serverEE = new Emitter();
       const scene = new Scene({
         emitter: serverEE,
         parts: [
@@ -111,7 +111,7 @@ describe('Scene', () => {
   describe('cancel', () => {
     it('should cancel all parts and scene', (done) => {
       const scene = new Scene({
-        emitter: new DoublesEmitter(),
+        emitter: new Emitter(),
         parts: [
           {
             type: 'immediate',

@@ -1,7 +1,7 @@
 import ServersManager from './ServersManager';
 import HttpServer from '../httpMockServer';
 import WsServer from '../wsMockServer';
-import { DoublesEmitter } from './emitter';
+import { Emitter } from './emitter';
 
 describe('ServerHub', () => {
   it('add should add server to serversManager list', () => {
@@ -198,6 +198,6 @@ describe('ServerHub', () => {
   it('should create emitter for server when adding server', () => {
     const serversManager = new ServersManager();
     serversManager.add('server name', 3000, 'http', false);
-    expect(serversManager.servers[0].emitter).toBeInstanceOf(DoublesEmitter);
+    expect(serversManager.servers[0].emitter).toBeInstanceOf(Emitter);
   });
 });

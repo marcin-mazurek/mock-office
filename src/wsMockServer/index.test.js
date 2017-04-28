@@ -1,16 +1,16 @@
 import WebSocket from 'ws';
 import WsMockServer from './index';
-import { DoublesEmitter } from '../servers-manager/emitter';
+import { Emitter } from '../servers-manager/emitter';
 import Scenario from '../scenario';
 
 describe('WsMockServer', () => {
   it('should init scenario', () => {
-    const wsDouble = new WsMockServer({ emitter: new DoublesEmitter() });
+    const wsDouble = new WsMockServer({ emitter: new Emitter() });
     expect(wsDouble.getScenario()).toBeInstanceOf(Scenario);
   });
 
   it('should listen after start', (done) => {
-    const wsDouble = new WsMockServer({ port: 4000, emitter: new DoublesEmitter() });
+    const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
     wsDouble.start(
       () => {
         expect(wsDouble.httpServer.listening).toBeTruthy();
@@ -22,7 +22,7 @@ describe('WsMockServer', () => {
   });
 
   it('should stop gracefully', (done) => {
-    const wsDouble = new WsMockServer({ port: 4000, emitter: new DoublesEmitter() });
+    const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
     wsDouble.start(
       () => {
         wsDouble.stop(() => {
@@ -34,7 +34,7 @@ describe('WsMockServer', () => {
   });
 
   it('should keep only one active connection', (done) => {
-    const wsDouble = new WsMockServer({ port: 4000, emitter: new DoublesEmitter() });
+    const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
     const handleSocketCloseMock = jest.fn();
     wsDouble.wsServer.on('connection', () => {
       setTimeout(() => {
@@ -55,7 +55,7 @@ describe('WsMockServer', () => {
   });
 
   it('should play scene on CLIENT_CONNECTED', (done) => {
-    const wsDouble = new WsMockServer({ port: 4000, emitter: new DoublesEmitter() });
+    const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
     wsDouble.getScenario().addScene({
       requirements: {
         event: 'CLIENT_CONNECTED'
@@ -82,7 +82,7 @@ describe('WsMockServer', () => {
   });
 
   it('should play scene on RECEIVED_MESSAGE', (done) => {
-    const wsDouble = new WsMockServer({ port: 4000, emitter: new DoublesEmitter() });
+    const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
     wsDouble.getScenario().addScene({
       requirements: {
         event: 'RECEIVED_MESSAGE'
@@ -112,7 +112,7 @@ describe('WsMockServer', () => {
   });
 
   it('should clear reference to last socket after close', (done) => {
-    const wsDouble = new WsMockServer({ port: 4000, emitter: new DoublesEmitter() });
+    const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
     wsDouble.start(() => {
       const ws = new WebSocket('ws://127.0.0.1:4000');
       ws.on('open', () => {
