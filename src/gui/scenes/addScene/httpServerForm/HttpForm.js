@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import ScenePartFormSection from '../ScenePartFormSection';
-import { submitHttpScene as createSubmitHttpSceneAction } from './actions';
+import { submitHttpScene } from './addSceneEpic';
 
 export const HttpForm = props => (
   <form className="form" onSubmit={props.handleSubmit}>
@@ -50,7 +50,7 @@ HttpForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(createSubmitHttpSceneAction(ownProps.scenarioId, values))
+  onSubmit: values => dispatch(submitHttpScene(ownProps.scenarioId, values))
 });
 
 export default connect(null, mapDispatchToProps)(

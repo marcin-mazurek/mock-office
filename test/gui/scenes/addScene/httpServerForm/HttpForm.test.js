@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { HttpForm } from './HttpForm';
+import { HttpForm } from '../../../../../src/gui/scenes/addScene/httpServerForm/HttpForm';
 
 describe('HttpForm', () => {
   test('default snapshot', () => {
