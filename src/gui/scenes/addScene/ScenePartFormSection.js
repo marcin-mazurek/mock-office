@@ -27,6 +27,7 @@ const ScenePartFormSection = () => (
           component="input"
           name="title"
           type="text"
+          placeholder="scene part title"
         />
       </div>
     </div>
@@ -36,9 +37,11 @@ const ScenePartFormSection = () => (
         <Field component={ScenePartType} name="type" />
       </div>
     </div>
-    <div>
-      <label htmlFor="payload">Payload:</label>
-      <Field component="textarea" name="payload" />
+    <div className="form-row">
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="payload">Payload:</label>
+        <Field component="textarea" name="payload" />
+      </div>
     </div>
     <div className="form-row">
       <div className="form__field">
