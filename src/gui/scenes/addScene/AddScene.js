@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { getServerDetails } from '../../entities/servers/selectors';
-import HttpFormConnect from './httpServerForm/HttpForm';
+import AddSceneFormConnect from './httpServerForm/AddSceneForm';
 import Ws from './WsForm';
 
 export const AddScene = ({ serverType, scenarioId, params }) => (
@@ -15,7 +15,7 @@ export const AddScene = ({ serverType, scenarioId, params }) => (
       </Link>
       {
         serverType === 'http'
-          ? <HttpFormConnect scenarioId={scenarioId} />
+          ? <AddSceneFormConnect scenarioId={scenarioId} />
           : <Ws />
       }
     </div>

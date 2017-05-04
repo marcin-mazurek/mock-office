@@ -27,7 +27,7 @@ const ScenePartFormSection = () => (
           component="input"
           name="title"
           type="text"
-          placeholder="scene part title"
+          placeholder="task title"
         />
       </div>
     </div>

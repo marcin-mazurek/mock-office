@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { HttpForm } from '../../../../../src/gui/scenes/addScene/httpServerForm/HttpForm';
+import { AddSceneForm } from '../../../../../src/gui/scenes/addScene/httpServerForm/AddSceneForm';
 
 describe('HttpForm', () => {
   test('default snapshot', () => {
@@ -9,7 +9,7 @@ describe('HttpForm', () => {
       initAddScene: () => {},
       queueId: 'some id'
     };
-    const wrapper = shallow(<HttpForm {...props} />);
+    const wrapper = shallow(<AddSceneForm {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
