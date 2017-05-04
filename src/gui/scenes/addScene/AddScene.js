@@ -2,21 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { getServerDetails } from '../../entities/servers/selectors';
 import HttpFormConnect from './httpServerForm/HttpForm';
 import Ws from './WsForm';
 
 export const AddScene = ({ serverType, scenarioId, params }) => (
-  <div className="add-scene">
-    <Link to={`/server/${params.id}`} className="add-scene__back-button">
-      <i className="fa fa-arrow-left" />{' Server details'}
-    </Link>
-    {
-      serverType === 'http'
-        ? <HttpFormConnect scenarioId={scenarioId} />
-        : <Ws />
-    }
-  </div>
+  <Scrollbars>
+    <div className="add-scene">
+      <Link to={`/server/${params.id}`} className="add-scene__back-button">
+        <i className="fa fa-arrow-left" />{' Server details'}
+      </Link>
+      {
+        serverType === 'http'
+          ? <HttpFormConnect scenarioId={scenarioId} />
+          : <Ws />
+      }
+    </div>
+  </Scrollbars>
+
 );
 
 AddScene.propTypes = {

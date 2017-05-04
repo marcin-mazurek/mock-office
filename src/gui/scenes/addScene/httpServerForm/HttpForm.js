@@ -23,19 +23,20 @@ export const HttpForm = props => (
       </div>
     </div>
     <div className="form-row">
-      <Field
-        name="requirements"
-        component="textarea"
-        cols="30"
-        rows="10"
-      />
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="requirements">Requirements:</label>
+        <Field
+          name="requirements"
+          component="textarea"
+          cols="30"
+          rows="10"
+        />
+      </div>
     </div>
-    <div>Send:</div>
-    <div className="form-row">
-      <FormSection name="scenePart">
-        <ScenePartFormSection />
-      </FormSection>
-    </div>
+    <div>Part:</div>
+    <FormSection name="scenePart">
+      <ScenePartFormSection />
+    </FormSection>
     <div className="form-row">
       <button className="button form__button" type="submit">
         Submit
