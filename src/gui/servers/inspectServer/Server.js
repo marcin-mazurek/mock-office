@@ -137,7 +137,7 @@ export const Server = ({ running, serverDetails, removeServer }) => {
       <main className="inspect-server-main inspect-server__main">
         <div className="inspect-server-scenes-header">
           <div className="inspect-server-scenes-header__label">
-            Scenes:
+            Mocks:
           </div>
           <ul className="inspect-server-scenes-legend inspect-server__scenes-legend">
             <li
@@ -182,7 +182,7 @@ export const Server = ({ running, serverDetails, removeServer }) => {
             className="inspect-server__add-scene-button inspect-server-scenes-header__button"
           >
             <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
-            Add scene
+            Add mock
           </Link>
           <FilePickerConnect serverId={id} />
         </div>
