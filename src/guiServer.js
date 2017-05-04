@@ -3,10 +3,9 @@ import path from 'path';
 import colors from 'colors/safe';
 
 export function createGuiServer() {
+  const serveStatic = express.static(path.resolve(__dirname, './gui'));
   const app = express();
-  app.get('*', (req, res) => {
-    res.send(path.resolve(__dirname, './gui/index.html'));
-  });
+  app.use(serveStatic);
 
   return app;
 }
