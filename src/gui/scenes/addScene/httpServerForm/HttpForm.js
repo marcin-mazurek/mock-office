@@ -50,7 +50,7 @@ HttpForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(submitHttpScene(ownProps.scenarioId, values))
+  onSubmit: values => dispatch(submitHttpScene(ownProps.scenarioId, values.toJS()))
 });
 
 export default connect(null, mapDispatchToProps)(
