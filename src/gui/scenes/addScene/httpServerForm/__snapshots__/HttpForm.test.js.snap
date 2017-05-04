@@ -1,33 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HttpForm default snapshot 1`] = `
-<form>
-  <div>
-    <label
-      htmlFor="title"
-    >
-      Title:
-    </label>
-    <Field
-      component="input"
-      name="title"
-      placeholder="Scene title"
-      type="text"
-    />
+<form
+  className="form"
+>
+  <div
+    className="form__header"
+  >
+    Add scene
   </div>
-  <div>
-    <div>
+  <div
+    className="form-row"
+  >
+    <div
+      className="form__field"
+    >
       <label
-        htmlFor="requirements"
+        className="form-field__label"
+        htmlFor="title"
       >
-        Requirements:
+        Title:
       </label>
       <Field
+        className="form-field__input"
         component="input"
-        name="requirements-check"
-        type="checkbox"
+        name="title"
+        placeholder="Scene title"
+        type="text"
       />
     </div>
+  </div>
+  <div
+    className="form-row"
+  >
     <Field
       cols="30"
       component="textarea"
@@ -36,23 +41,23 @@ exports[`HttpForm default snapshot 1`] = `
     />
   </div>
   <div>
-    <label
-      htmlFor="part"
-    >
-      Send:
-    </label>
-    <div>
-      <FormSection
-        component="div"
-        name="scenePart"
-      >
-        <ScenePartFormSection />
-      </FormSection>
-    </div>
+    Send:
   </div>
-  <div>
+  <div
+    className="form-row"
+  >
+    <FormSection
+      component="div"
+      name="scenePart"
+    >
+      <ScenePartFormSection />
+    </FormSection>
+  </div>
+  <div
+    className="form-row"
+  >
     <button
-      className="button"
+      className="button form__button"
       type="submit"
     >
       Submit

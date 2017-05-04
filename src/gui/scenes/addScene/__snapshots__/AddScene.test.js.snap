@@ -4,26 +4,17 @@ exports[`AddScene default snapshot 1`] = `
 <div
   className="add-scene"
 >
-  <div
-    className="view-header"
+  <Link
+    className="add-scene__back-button"
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/server/AVoOVEFMUlrzP+XqRbO2VYXFeAw78w=="
   >
-    Add scene
-  </div>
-  <div
-    className="add-scene__main"
-  >
-    <Link
-      className="add-scene__back-button"
-      onlyActiveOnIndex={false}
-      style={Object {}}
-      to="/server/AVoOVEFMUlrzP+XqRbO2VYXFeAw78w=="
-    >
-      <i
-        className="fa fa-arrow-left"
-      />
-       Server details
-    </Link>
-    <Connect(WsForm) />
-  </div>
+    <i
+      className="fa fa-arrow-left"
+    />
+     Server details
+  </Link>
+  <Connect(WsForm) />
 </div>
 `;
