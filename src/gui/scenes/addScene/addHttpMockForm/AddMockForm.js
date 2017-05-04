@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ScenePartFormSection from '../ScenePartFormSection';
 import { submitHttpScene } from './addSceneEpic';
 
-export const AddSceneForm = props => (
+export const AddMockForm = props => (
   <form className="form" onSubmit={props.handleSubmit}>
     <div className="form__header">
       Add mock
@@ -50,7 +50,7 @@ export const AddSceneForm = props => (
   </form>
 );
 
-AddSceneForm.propTypes = {
+AddMockForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
@@ -61,12 +61,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(null, mapDispatchToProps)(
   reduxForm(
     {
-      form: 'httpServerScene',
+      form: 'httpMock',
       initialValues: {
         scenePart: {
           type: 'immediate'
         }
       }
     }
-  )(AddSceneForm)
+  )(AddMockForm)
 );

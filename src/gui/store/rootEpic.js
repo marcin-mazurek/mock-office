@@ -3,7 +3,7 @@ import addServerEpic from '../servers/addServer/epics';
 import startServerEpic from '../servers/startServer/epics';
 import stopServerEpic from '../servers/stopServer/epics';
 import addSceneEpic from '../scenes/addScene/epics';
-import submitHttpSceneEpic from '../scenes/addScene/httpServerForm/addSceneEpic';
+import submitHttpSceneEpic from '../scenes/addScene/addHttpMockForm/addSceneEpic';
 import { removeSceneEpic, removeSceneAfterUseEpic } from '../scenes/removeScene/epics';
 import addSceneFromFileEpic from '../scenes/addSceneFromFile/epics';
 import removeServerEpic from '../servers/removeServer/epics';
