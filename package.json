@@ -126,7 +126,8 @@
       "./jest/fetchMock.js"
     ],
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/src",
+      "<rootDir>/test"
     ]
   }
 }
