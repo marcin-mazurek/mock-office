@@ -15,21 +15,24 @@ const processFormValues = (formValues) => {
   const fV = formValues;
   let requirements;
 
-  try {
-    const requirementsSubmitted = fV.requirements;
-    if (requirementsSubmitted) {
+  const requirementsSubmitted = fV.requirements;
+  if (requirementsSubmitted) {
+    try {
       requirements = JSON.parse(requirementsSubmitted);
-      requirements = Object.assign({}, requirements);
-    } else {
-      requirements = {};
+    } catch (error) {
+      throw new Error('Requirements JSON is broken');
     }
+    requirements = Object.assign({}, requirements);
+  } else {
+    requirements = {};
+  }
 
-    if (fV.task && fV.task.payload) {
+  if (fV.task && fV.task.payload) {
+    try {
       fV.task.payload = JSON.parse(fV.task.payload);
+    } catch (error) {
+      throw new Error('Payload JSON is broken');
     }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error.message);
   }
 
   if (fV.task.delay) {
@@ -46,17 +49,20 @@ const processFormValues = (formValues) => {
 export default function addMockEpic(action$) {
   return action$.ofType(SUBMIT)
     .flatMap((action) => {
-      const mockParams = processFormValues(action.formValues);
+      try {
+        const mockParams = processFormValues(action.formValues);
 
-      return Observable.from(
-        Promise.all(
-          [Object.assign(mockParams, { event: 'RECEIVED_REQUEST' })].map(
-            mock => requestAddMock(action.scenarioId, mock)
+        return Observable.from(
+          Promise.all(
+            [Object.assign(mockParams, { event: 'RECEIVED_REQUEST' })].map(
+              mock => requestAddMock(action.scenarioId, mock)
+            )
           )
         )
-      );
-    })
-    .flatMap(mocks => Observable.from(mocks))
-    .map(mock => add(...mock))
-    .catch(err => Observable.of(addNotification({ text: err.message, type: 'error' })));
+          .flatMap(mocks => Observable.from(mocks))
+          .map(mock => add(...mock));
+      } catch (error) {
+        return Observable.of(addNotification({ text: error.message, type: 'error' }));
+      }
+    });
 }
