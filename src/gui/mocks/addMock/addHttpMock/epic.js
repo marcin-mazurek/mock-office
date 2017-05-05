@@ -3,7 +3,7 @@ import { requestAddMock } from '../../../api/api';
 import { add as addNotification } from '../../../entities/notifications/actions';
 import { add } from '../actions';
 
-export const SUBMIT = 'addMock/SUBMIT';
+export const SUBMIT = 'addHttpMock/SUBMIT';
 
 export const submit = (scenarioId, formValues) => ({
   type: SUBMIT,
