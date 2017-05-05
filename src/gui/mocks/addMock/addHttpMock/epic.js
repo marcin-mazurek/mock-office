@@ -36,13 +36,23 @@ const processFormValues = (formValues) => {
   }
 
   if (fV.task.delay) {
+    if (fV.task.delay < 0) {
+      return {
+        error: {
+          message: 'Delay is < 0'
+        }
+      }
+    }
+
     fV.task.delay = parseInt(fV.task.delay, 10);
   }
 
   return {
-    title: fV.title,
-    requirements,
-    tasks: [fV.task]
+    mock: {
+      title: fV.title,
+      requirements,
+      tasks: [fV.task]
+    }
   };
 };
 
@@ -50,11 +60,15 @@ export default function addMockEpic(action$) {
   return action$.ofType(SUBMIT)
     .flatMap((action) => {
       try {
-        const mockParams = processFormValues(action.formValues);
+        const { mock, error } = processFormValues(action.formValues);
+
+        if (error) {
+          return Observable.of(addNotification({ text: error.message, type: 'error' }))
+        }
 
         return Observable.from(
           Promise.all(
-            [Object.assign(mockParams, { event: 'RECEIVED_REQUEST' })].map(
+            [Object.assign(mock, { event: 'RECEIVED_REQUEST' })].map(
               mock => requestAddMock(action.scenarioId, mock)
             )
           )
