@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { getServerDetails } from '../../entities/servers/selectors';
-import AddMockFormConnect from './addHttpMock/AddMockForm';
-import Ws from './WsForm';
+import AddHttpMockFormConnect from './addHttpMock/AddMockForm';
+import AddWsMockFormConnect from './addWsMock/AddWsMockForm';
 
 export const AddMock = ({ serverType, scenarioId, params }) => (
   <Scrollbars>
@@ -15,8 +15,8 @@ export const AddMock = ({ serverType, scenarioId, params }) => (
       </Link>
       {
         serverType === 'http'
-          ? <AddMockFormConnect scenarioId={scenarioId} />
-          : <Ws />
+          ? <AddHttpMockFormConnect scenarioId={scenarioId} />
+          : <AddWsMockFormConnect scenarioId={scenarioId} />
       }
     </div>
   </Scrollbars>
