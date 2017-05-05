@@ -48,7 +48,6 @@ export const AddMockForm = props => (
       </div>
     </div>
     <section className="form-section">
-      <header className="form-section__header">Request:</header>
       <div className="form-row">
         <div className="form__field">
           <label className="form-field__label" htmlFor="requirements">Requirements:</label>
@@ -62,7 +61,7 @@ export const AddMockForm = props => (
       </div>
     </section>
     <section className="form-section">
-      <header className="form-section__header">Response:</header>
+      <header className="form-section__header">Message:</header>
       <FormSection name="task">
         <TaskFormSection />
       </FormSection>

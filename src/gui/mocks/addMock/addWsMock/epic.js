@@ -27,6 +27,8 @@ const processFormValues = (formValues) => {
     requirements = {};
   }
 
+  Object.assign(requirements, { event: fV.event });
+
   if (fV.task && fV.task.payload) {
     try {
       fV.task.payload = JSON.parse(fV.task.payload);
@@ -68,7 +70,7 @@ export default function addWsMockEpic(action$) {
 
         return Observable.from(
           Promise.all(
-            [Object.assign(mock, { event: 'RECEIVED_REQUEST' })].map(
+            [mock].map(
               mock => requestAddMock(action.scenarioId, mock)
             )
           )
