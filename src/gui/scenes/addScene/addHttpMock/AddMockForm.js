@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection } from 'redux-form/immutable';
 import { connect } from 'react-redux';
-import ScenePartFormSection from '../ScenePartFormSection';
-import { submitHttpScene } from './addSceneEpic';
+import TaskFormSection from './TaskFormSection';
+import { submit } from './epic';
 
 export const AddMockForm = props => (
   <form className="form" onSubmit={props.handleSubmit}>
@@ -39,7 +39,7 @@ export const AddMockForm = props => (
     <section className="form-section">
       <header className="form-section__header">Response:</header>
       <FormSection name="scenePart">
-        <ScenePartFormSection />
+        <TaskFormSection />
       </FormSection>
       <div className="form-row">
         <button className="button form__button" type="submit">
@@ -55,13 +55,13 @@ AddMockForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(submitHttpScene(ownProps.scenarioId, values.toJS()))
+  onSubmit: values => dispatch(submit(ownProps.scenarioId, values.toJS()))
 });
 
 export default connect(null, mapDispatchToProps)(
   reduxForm(
     {
-      form: 'httpMock',
+      form: 'addHttpMock',
       initialValues: {
         scenePart: {
           type: 'immediate'

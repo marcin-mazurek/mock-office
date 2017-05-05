@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { Field } from 'redux-form/immutable';
 
-const ScenePartType = field =>
+const TaskType = field =>
   <Select
     name="server-type"
     value={field.input.value}
@@ -17,7 +17,7 @@ const ScenePartType = field =>
   />
 ;
 
-const ScenePartFormSection = () => (
+const TaskFormSection = () => (
   <div style={{ width: '100%' }}>
     <div className="form-row">
       <div className="form__field">
@@ -34,7 +34,7 @@ const ScenePartFormSection = () => (
     <div className="form-row">
       <div className="form__field">
         <label className="form-field__label" htmlFor="type">Type:</label>
-        <Field component={ScenePartType} name="type" />
+        <Field component={TaskType} name="type" />
       </div>
     </div>
     <div className="form-row">
@@ -57,4 +57,4 @@ const ScenePartFormSection = () => (
   </div>
 );
 
-export default ScenePartFormSection;
+export default TaskFormSection;

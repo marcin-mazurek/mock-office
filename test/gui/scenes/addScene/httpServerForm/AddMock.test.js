@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { AddMockForm } from '../../../../../src/gui/scenes/addScene/addHttpMockForm/AddMockForm';
+import { AddMockForm } from '../../../../../src/gui/scenes/addScene/addHttpMock/AddMockForm';
 
 describe('HttpForm', () => {
   test('default snapshot', () => {
