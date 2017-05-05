@@ -19,23 +19,28 @@ export default function startAppSync(store) {
   ).subscribe(
     (message) => {
       const data = JSON.parse(message.data);
+      // compatibility after renaming
+      // scene -> mock
+      // scene part -> task
+      data.taskId = data.scenePartId;
+      data.mockId = data.sceneId;
 
       switch (data.event) {
-        case 'MOCK_STOP': {
+        case 'SCENE_STOP': {
           store.dispatch(stop(...eventArgs2ActionPayload(data)));
           break;
         }
-        case 'MOCK_END': {
+        case 'SCENE_END': {
           store.dispatch(finish(...eventArgs2ActionPayload(data)));
           break;
         }
-        case 'MOCK_REMOVED_AFTER_USE': {
+        case 'SCENE_REMOVED_AFTER_USE': {
           setTimeout(() => {
             store.dispatch(removeAfterUse(...eventArgs2ActionPayload(data)));
           }, 5000);
           break;
         }
-        case 'MOCK_START': {
+        case 'SCENE_START': {
           store.dispatch(run(...eventArgs2ActionPayload(data)));
           break;
         }

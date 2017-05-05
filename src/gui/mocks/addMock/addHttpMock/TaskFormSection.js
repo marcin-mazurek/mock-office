@@ -6,7 +6,7 @@ const TaskType = field =>
   <Select
     name="server-type"
     value={field.input.value}
-    onChange={field.input.onChange}
+    onChange={option => field.input.onChange(option.value)}
     searchable={false}
     clearable={false}
     className="form-field__select"
