@@ -3,7 +3,9 @@ import Select from 'react-select';
 import { Field } from 'redux-form/immutable';
 
 const TaskType = field =>
-  <Select
+{
+  console.log(field);
+  return <Select
     name="server-type"
     value={field.input.value}
     onChange={option => field.input.onChange(option.value)}
@@ -14,11 +16,12 @@ const TaskType = field =>
       { value: 'immediate', label: 'immediate' },
       { value: 'future', label: 'future' }
     ]}
-  />
-;
+  />;
+};
 
 const TaskFormSection = () => (
   <div style={{ width: '100%' }}>
+    <header className="form-section__header">Message:</header>
     <div className="form-row">
       <div className="form__field">
         <label className="form-field__label" htmlFor="title">Title:</label>

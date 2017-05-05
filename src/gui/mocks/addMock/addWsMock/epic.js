@@ -12,6 +12,7 @@ export const submit = (scenarioId, formValues) => ({
 });
 
 const processFormValues = (formValues) => {
+  let error;
   const fV = formValues;
   let requirements;
 
@@ -29,31 +30,37 @@ const processFormValues = (formValues) => {
 
   Object.assign(requirements, { event: fV.event });
 
-  if (fV.task && fV.task.payload) {
-    try {
-      fV.task.payload = JSON.parse(fV.task.payload);
-    } catch (error) {
-      throw new Error('Payload JSON is broken');
+  fV.tasks.forEach((task) => {
+    if (error) {
+      return;
     }
-  }
 
-  if (fV.task.delay) {
-    if (fV.task.delay < 0) {
-      return {
-        error: {
-          message: 'Delay is < 0'
-        }
+    if (task && task.payload) {
+      try {
+        task.payload = JSON.parse(task.payload);
+      } catch (err) {
+        error = { message: 'Payload JSON is broken' };
       }
     }
 
-    fV.task.delay = parseInt(fV.task.delay, 10);
+    if (task.delay) {
+      if (task.delay < 0) {
+        error = { message: 'Delay is < 0' };
+      }
+
+      task.delay = parseInt(task.delay, 10);
+    }
+  });
+
+  if (error) {
+    return error;
   }
 
   return {
     mock: {
       title: fV.title,
       requirements,
-      tasks: [fV.task]
+      tasks: fV.tasks
     }
   };
 };
@@ -76,7 +83,8 @@ export default function addWsMockEpic(action$) {
           )
         )
           .flatMap(mocks => Observable.from(mocks))
-          .map(mock => add(...mock));
+          .map(mock => add(...mock))
+          .catch(error => Observable.of(addNotification({ text: error.message, type: 'error' })))
       } catch (error) {
         return Observable.of(addNotification({ text: error.message, type: 'error' }));
       }
