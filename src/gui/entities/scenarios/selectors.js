@@ -1,2 +1,2 @@
-export const getAll = state => state.get('queues');
-export const getScenes = (queueId, state) => state.getIn(['queues', queueId, 'scenes']);
+// eslint-disable-next-line import/prefer-default-export
+export const getMocks = (scenarioId, state) => state.getIn(['scenarios', scenarioId, 'mocks']);

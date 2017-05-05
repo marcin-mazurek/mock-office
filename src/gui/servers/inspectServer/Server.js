@@ -10,8 +10,8 @@ import {
   isRunning,
   getServerDetails
 } from '../../entities/servers/selectors';
-import FilePickerConnect from '../../scenes/addSceneFromFile/FilePicker';
-import ScenesConnect from '../../scenes/browseScenes/Scenes';
+import FilePickerConnect from '../../mocks/importMock/FilePicker';
+import MocksConnect from '../../mocks/browseMocks/Mocks';
 import { init as createRemoveServerAction } from '../removeServer/actions';
 import { init as createRenameServerAction } from '../renameServer/actions';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
@@ -135,61 +135,61 @@ export const Server = ({ running, serverDetails, removeServer }) => {
         </Link>
       </div>
       <main className="inspect-server-main inspect-server__main">
-        <div className="inspect-server-scenes-header">
-          <div className="inspect-server-scenes-header__label">
+        <div className="inspect-server-mocks-header">
+          <div className="inspect-server-mocks-header__label">
             Mocks:
           </div>
-          <ul className="inspect-server-scenes-legend inspect-server__scenes-legend">
+          <ul className="inspect-server-mocks-legend inspect-server__mocks-legend">
             <li
-              className="inspect-server-scenes-legend__item
-              inspect-server-scenes-legend-item"
+              className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
             >
               <i
-                className="inspect-server-scenes-legend__icon
-                inspect-server-scenes-legend__icon--finished"
+                className="inspect-server-mocks-legend__icon
+                inspect-server-mocks-legend__icon--finished"
               />
               Finished
             </li>
             <li
-              className="inspect-server-scenes-legend__item
-              inspect-server-scenes-legend-item"
+              className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
             >
               <i
-                className="inspect-server-scenes-legend__icon
-                inspect-server-scenes-legend__icon--in-progress"
+                className="inspect-server-mocks-legend__icon
+                inspect-server-mocks-legend__icon--in-progress"
               />
               In progress
             </li>
             <li
-              className="inspect-server-scenes-legend__item
-              inspect-server-scenes-legend-item"
+              className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
             >
               <i
-                className="inspect-server-scenes-legend__icon
-                inspect-server-scenes-legend__icon--cancelled"
+                className="inspect-server-mocks-legend__icon
+                inspect-server-mocks-legend__icon--cancelled"
               />
               Cancelled
             </li>
             <li
-              className="inspect-server-scenes-legend__item
-              inspect-server-scenes-legend-item"
+              className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
             >
-              <i className="inspect-server-scenes-legend__icon" />Ready
+              <i className="inspect-server-mocks-legend__icon" />Ready
             </li>
           </ul>
           <Link
-            to={`${id}/add-scene`}
-            className="inspect-server__add-scene-button inspect-server-scenes-header__button"
+            to={`${id}/add-mock`}
+            className="inspect-server__add-mock-button inspect-server-mocks-header__button"
           >
             <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
             Add mock
           </Link>
           <FilePickerConnect serverId={id} />
         </div>
-        <div className="inspect-server__scenes">
-          <div className="inspect-server__scenes-scroll-container">
+        <div className="inspect-server__mocks">
+          <div className="inspect-server__mocks-scroll-container">
             <Scrollbars>
-              <ScenesConnect serverId={id} />
+              <MocksConnect serverId={id} />
             </Scrollbars>
           </div>
         </div>

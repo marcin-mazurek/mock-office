@@ -4,7 +4,7 @@
     "requirements": {
       "event": "CLIENT_CONNECTED"
     },
-    "parts": [
+    "tasks": [
       {
         "title": "welcome message",
         "type": "immediate",

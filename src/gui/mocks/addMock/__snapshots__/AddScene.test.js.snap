@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddMock default snapshot 1`] = `
+<Scrollbars
+  autoHeight={false}
+  autoHeightMax={200}
+  autoHeightMin={0}
+  autoHide={false}
+  autoHideDuration={200}
+  autoHideTimeout={1000}
+  hideTracksWhenNotNeeded={false}
+  renderThumbHorizontal={[Function]}
+  renderThumbVertical={[Function]}
+  renderTrackHorizontal={[Function]}
+  renderTrackVertical={[Function]}
+  renderView={[Function]}
+  tagName="div"
+  thumbMinSize={30}
+  universal={false}
+>
+  <div
+    className="add-mock"
+  >
+    <Link
+      className="add-mock__back-button"
+      onlyActiveOnIndex={false}
+      style={Object {}}
+      to="/server/AVoOVEFMUlrzP+XqRbO2VYXFeAw78w=="
+    >
+      <i
+        className="fa fa-arrow-left"
+      />
+       Server details
+    </Link>
+    <Connect(WsForm) />
+  </div>
+</Scrollbars>
+`;

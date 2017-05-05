@@ -76,7 +76,7 @@ describe('extractSubTree', () => {
 
 describe('Scenario', () => {
   describe('constructor', () => {
-    it('should initialize list of scenes', () => {
+    it('should initialize list of mocks', () => {
       const scenario = new Scenario({ emitter: new Emitter() });
       expect(scenario).toHaveProperty('scenes');
     });
@@ -93,7 +93,7 @@ describe('Scenario', () => {
   });
 
   describe('removeScene', () => {
-    it('should remove scene from scenario scenes list', () => {
+    it('should remove scene from scenario mocks list', () => {
       const scenario = new Scenario({ emitter: new Emitter() });
       scenario.addScene({
         parts: []

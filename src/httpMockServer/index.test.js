@@ -201,7 +201,7 @@ describe('HttpMockServer', () => {
     });
   });
 
-  it('should filter scenes by request method', (done) => {
+  it('should filter mocks by request method', (done) => {
     const server = new HttpMockServer({
       port: 4000,
       emitter: new Emitter()
@@ -253,7 +253,7 @@ describe('HttpMockServer', () => {
     });
   });
 
-  it('should filter scenes by request headers', (done) => {
+  it('should filter mocks by request headers', (done) => {
     const server = new HttpMockServer({
       port: 4000,
       emitter: new Emitter()

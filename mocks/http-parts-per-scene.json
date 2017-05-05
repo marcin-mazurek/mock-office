@@ -7,7 +7,7 @@
         "method": "GET"
       }
     },
-    "parts": [
+    "tasks": [
       {
         "title": "response for /some-url request",
         "type": "future",
