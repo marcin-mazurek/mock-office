@@ -4,7 +4,7 @@ import { Emitter } from '../servers-manager/emitter';
 import Scenario from '../scenario';
 
 describe('WsMockServer', () => {
-  it('should init scenario', () => {
+  it('should initAction scenario', () => {
     const wsDouble = new WsMockServer({ emitter: new Emitter() });
     expect(wsDouble.getScenario()).toBeInstanceOf(Scenario);
   });

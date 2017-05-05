@@ -59,7 +59,7 @@ $padding-left: 24px;
   flex-direction: column;
 }
 
-.inspect-server__add-scene-button {
+.inspect-server__add-mock-button {
   @extend %button-reset;
   text-decoration: none;
   margin-right: 10px;
@@ -108,12 +108,12 @@ $size: 40px;
   padding: 0;
 }
 
-.inspect-server__scenes {
+.inspect-server__mocks {
   flex: auto;
   position: relative;
 }
 
-.inspect-server-scenes-header {
+.inspect-server-mocks-header {
   color: #727880;
   padding: 16px 15px 16px $padding-left;
   font-weight: 500;
@@ -123,21 +123,21 @@ $size: 40px;
   font-size: 15px;
 }
 
-.inspect-server-scenes-header__button {
+.inspect-server-mocks-header__button {
   &:hover {
     color: #23D1A9;
   }
 }
 
-.inspect-server-scenes-header__label {
+.inspect-server-mocks-header__label {
   margin-right: 50px;
 }
 
-.inspect-server__scenes-legend {
+.inspect-server__mocks-legend {
   margin-right: auto;
 }
 
-.inspect-server-scenes-legend {
+.inspect-server-mocks-legend {
   @extend %list-reset;
   display: flex;
   font-weight: 300;
@@ -145,16 +145,16 @@ $size: 40px;
   font-size: 12px;
 }
 
-.inspect-server-scenes-legend__item {
+.inspect-server-mocks-legend__item {
   margin-right: 18px;
 }
 
-.inspect-server-scenes-legend-item {
+.inspect-server-mocks-legend-item {
   display: flex;
   align-items: center;
 }
 
-.inspect-server-scenes-legend__icon {
+.inspect-server-mocks-legend__icon {
   display: inline-block;
   border-radius: 100%;
   height: 6px;
@@ -163,19 +163,19 @@ $size: 40px;
   margin-right: 8px;
 }
 
-.inspect-server-scenes-legend__icon--cancelled {
+.inspect-server-mocks-legend__icon--cancelled {
   background-color: #EC9292;
 }
 
-.inspect-server-scenes-legend__icon--in-progress {
+.inspect-server-mocks-legend__icon--in-progress {
   background-color: #B9EBE0;
 }
 
-.inspect-server-scenes-legend__icon--finished {
+.inspect-server-mocks-legend__icon--finished {
   background-color: #23D1A9;
 }
 
-.inspect-server__scenes-scroll-container {
+.inspect-server__mocks-scroll-container {
   height: 100%;
   position: absolute;
   left: 0;

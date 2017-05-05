@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HttpForm default snapshot 1`] = `
+<form
+  className="form"
+>
+  <div
+    className="form__header"
+  >
+    Add mock
+  </div>
+  <div
+    className="form-row"
+  >
+    <div
+      className="form__field"
+    >
+      <label
+        className="form-field__label"
+        htmlFor="title"
+      >
+        Title:
+      </label>
+      <Field
+        className="form-field__input"
+        component="input"
+        name="title"
+        placeholder="Mock title"
+        type="text"
+      />
+    </div>
+  </div>
+  <section
+    className="form-section"
+  >
+    <header
+      className="form-section__header"
+    >
+      Request:
+    </header>
+    <div
+      className="form-row"
+    >
+      <div
+        className="form__field"
+      >
+        <label
+          className="form-field__label"
+          htmlFor="requirements"
+        >
+          Requirements:
+        </label>
+        <Field
+          cols="30"
+          component="textarea"
+          name="requirements"
+          rows="10"
+        />
+      </div>
+    </div>
+  </section>
+  <section
+    className="form-section"
+  >
+    <header
+      className="form-section__header"
+    >
+      Response:
+    </header>
+    <FormSection
+      component="div"
+      name="task"
+    >
+      <TaskFormSection />
+    </FormSection>
+    <div
+      className="form-row"
+    >
+      <button
+        className="button form__button"
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </section>
+</form>
+`;

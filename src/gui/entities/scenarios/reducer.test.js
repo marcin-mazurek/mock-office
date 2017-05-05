@@ -3,53 +3,53 @@ import reducer from './reducer';
 import {
   ADD as ADD_SERVER
 } from '../servers/actions';
-import { REMOVE as REMOVE_SCENE } from '../../scenes/removeScene/actions';
-import { ADD as ADD_SCENE } from '../../scenes/addScene/actions';
+import { REMOVE as REMOVE_MOCK } from '../../mocks/removeMock/actions';
+import { ADD as ADD_MOCK } from '../../mocks/addMock/actions';
 
 describe('scenarios reducer', () => {
-  test(`${ADD_SERVER} scene`, () => {
+  test(`${ADD_SERVER} mock`, () => {
     const state = reducer(fromJS({}),
       { type: ADD_SERVER, id: 'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==' });
 
     expect(state.toJS()).toEqual({
       'AVoPUwib8A1waDvCQ0id6T1QcfLxWQ==': {
-        scenes: []
+        mocks: []
       }
     });
   });
 
-  test(`${ADD_SCENE} scene`, () => {
+  test(`${ADD_MOCK} mock`, () => {
     const state = reducer(fromJS({
       'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
-        scenes: []
+        mocks: []
       }
     }), {
-      type: ADD_SCENE,
+      type: ADD_MOCK,
       serverId: 'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==',
       id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
     });
 
     expect(state.toJS()).toEqual({
       'AVn5d/fFT13LWVVYQzKEVy1VkdW4vQ==': {
-        scenes: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
+        mocks: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
       }
     });
   });
 
-  test(`${REMOVE_SCENE} scene`, () => {
+  test(`${REMOVE_MOCK} mock`, () => {
     const state = reducer(fromJS({
       'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
-        scenes: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
+        mocks: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
       }
     }), {
-      type: REMOVE_SCENE,
+      type: REMOVE_MOCK,
       serverId: 'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==',
-      sceneId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+      mockId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
     });
 
     expect(state.toJS()).toEqual({
       'AVn5tu8PHaWCyc49SEGSLn90iT+ZFQ==': {
-        scenes: []
+        mocks: []
       }
     });
   });

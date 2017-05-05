@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
-import { removeAfterUse, finish } from '../scenes/removeScene/actions';
-import { run, stop } from '../scenes/runScene/actions';
+import { removeAfterUse, finish } from '../mocks/removeMock/actions';
+import { run, stop } from '../mocks/runMock/actions';
 import { add, start } from '../entities/servers/actions';
-import { add as addScene } from '../scenes/addScene/actions';
+import { add as addMock } from '../mocks/addMock/actions';
 
-const eventArgs2ActionPayload = data => [data.serverId, data.sceneId];
+const eventArgs2ActionPayload = data => [data.serverId, data.mockId];
 
 export default function startAppSync(store) {
   const ws = new WebSocket('ws://127.0.0.1:3061');
@@ -19,6 +19,11 @@ export default function startAppSync(store) {
   ).subscribe(
     (message) => {
       const data = JSON.parse(message.data);
+      // compatibility after renaming
+      // scene -> mock
+      // scene part -> task
+      data.taskId = data.scenePartId;
+      data.mockId = data.sceneId;
 
       switch (data.event) {
         case 'SCENE_STOP': {
@@ -47,18 +52,18 @@ export default function startAppSync(store) {
               store.dispatch(start(server.id));
             }
 
-            server.scenes.forEach((scene) => {
+            server.scenes.forEach((mock) => {
               store.dispatch(
-                addScene(
+                addMock(
                   server.id,
-                  scene.id,
-                  scene.title,
-                  scene.interval,
-                  scene.reuse,
-                  scene.quantity,
-                  scene.delay,
-                  scene.requirements,
-                  scene.parts
+                  mock.id,
+                  mock.title,
+                  mock.interval,
+                  mock.reuse,
+                  mock.quantity,
+                  mock.delay,
+                  mock.requirements,
+                  mock.parts
                 )
               );
             });
