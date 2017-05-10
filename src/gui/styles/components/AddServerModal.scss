@@ -1,0 +1,27 @@
+.add-server-modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  background-color: white;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 20px;
+  padding: 5px;
+}
+
+.add-server-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-server-modal__overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
