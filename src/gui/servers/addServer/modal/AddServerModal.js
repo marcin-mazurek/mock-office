@@ -23,9 +23,6 @@ const AddServerModal = ({ isOpen, close }) => (
     <div className="modal-content">
       <AddServerFormConnect />
     </div>
-    <div className="modal-footer">
-      <button className="button modal-footer__button">Create</button>
-    </div>
   </Modal>
 );
 
