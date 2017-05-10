@@ -1,20 +1,45 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { connect } from 'react-redux';
 import AddServerFormConnect from '../AddServerForm';
+import { closeModal as closeModalAction } from '../actions';
+import serverIcon from '../icons_gray_server.svg';
 
-const AddServerModal = () => (
+const AddServerModal = ({ isOpen, close }) => (
   <Modal
-    className="add-server-modal"
-    overlayClassName="add-server-modal__overlay"
-    isOpen
+    isOpen={isOpen}
+    className="modal add-server-modal"
+    overlayClassName="add-server-modal-overlay"
+    contentLabel="add server modal"
+    onRequestClose={() => close()}
   >
-    <Scrollbars>
-      <div className="add-server-modal-content">
-        <AddServerFormConnect />
+    <div className="modal-header">
+      <img className="modal-header__icon" src={serverIcon} alt="" />
+      <div className="modal-header__label">
+        Add server
       </div>
-    </Scrollbars>
+    </div>
+    <div className="modal-content">
+      <AddServerFormConnect />
+    </div>
   </Modal>
 );
 
-export default AddServerModal;
+AddServerModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired
+};
+
+const isOpenSelector = state => state.getIn(['addServer', 'isOpen']);
+
+const AddServerModalConnect = connect(
+  state => ({
+    isOpen: isOpenSelector(state)
+  }),
+  {
+    close: closeModalAction
+  }
+)(AddServerModal);
+
+export default AddServerModalConnect;

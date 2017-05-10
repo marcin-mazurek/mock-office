@@ -27,6 +27,8 @@ $lock-icon-width: 20px;
 }
 
 .sidebar-servers__add-server-button {
+  @extend %button-reset;
+  cursor: pointer;
   color: $sidebar-servers-add-server-button-font-color;
   margin-left: auto;
 

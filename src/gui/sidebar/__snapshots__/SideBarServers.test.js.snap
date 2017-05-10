@@ -17,17 +17,14 @@ exports[`SideBarServers should render 1`] = `
         Export
       </button>
     </div>
-    <Link
+    <button
       className="sidebar-servers__add-server-button"
-      onlyActiveOnIndex={false}
-      style={Object {}}
-      to="/add-server"
     >
       <img
         role="presentation"
         src=""
       />
-    </Link>
+    </button>
   </div>
   <ul
     className="sidebar-servers-list"
