@@ -123,7 +123,7 @@ export const Server = ({ running, serverDetails, removeServer }) => {
           onClick={() => (
             // eslint-disable-next-line no-alert
             confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
-              ? removeServer()
+              ? removeServer(id)
               : false
           )
           }
