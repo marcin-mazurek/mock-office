@@ -8,6 +8,7 @@ import tasksReducer from '../entities/tasks/reducer';
 import errorsReducer from '../entities/errors/reducer';
 import notificationsReducer from '../entities/notifications/reducer';
 import sidebarReducer from '../sidebar/reducer';
+import addServerReducer from '../servers/addServer/reducer';
 
 export default combineReducers({
   routing: routingReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   errors: errorsReducer,
   notifications: notificationsReducer,
   form: formReducer,
-  sidebar: sidebarReducer
+  sidebar: sidebarReducer,
+  addServer: addServerReducer
 });

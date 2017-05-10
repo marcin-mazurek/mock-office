@@ -24,5 +24,6 @@ export default action$ =>
         )
       );
     })
-    .map(serverConfig => add(...serverConfig)
+    .flatMap(serverConfig =>
+      [{ type: 'addServer/CLOSE_MODAL' }, add(...serverConfig)]
     );
