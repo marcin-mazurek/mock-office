@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import Switch from 'rc-switch';
 import init from './actions';
-import serverIcon from './icons_gray_server.svg';
 import plusIcon from '../../assets/icons_white_add.svg';
 
 export class AddServerForm extends React.Component {
@@ -81,10 +80,6 @@ export class AddServerForm extends React.Component {
   render() {
     return (
       <form className="form" action="#">
-        <div className="form__header">
-          <img className="form__header-icon" src={serverIcon} alt="" />
-          Add server
-        </div>
         <div className="form-row">
           <div className="form__field">
             <label className="form-field__label" htmlFor="server-name">

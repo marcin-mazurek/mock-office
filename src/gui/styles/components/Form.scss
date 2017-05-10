@@ -1,6 +1,4 @@
 .form {
-  padding: 15px;
-  max-width: 600px;
   width: 100%;
 }
 
@@ -9,6 +7,14 @@
   margin: 40px auto;
   width: 100%;
   justify-content: center;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .form__col {
