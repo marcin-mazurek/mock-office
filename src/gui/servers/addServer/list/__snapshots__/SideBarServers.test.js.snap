@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideBarServers should render 1`] = `
+<div
+  className="sidebar-servers"
+>
+  <div
+    className="sidebar-servers__header"
+  >
+    <div>
+      <div>
+        Servers
+      </div>
+    </div>
+    <button
+      className="sidebar-servers-add-server-button"
+    >
+      <img
+        className="sidebar-servers-add-server-button__icon"
+        role="presentation"
+        src=""
+      />
+      <span
+        className="sidebar-servers-add-server-button__bubble"
+      />
+    </button>
+  </div>
+  <ul
+    className="sidebar-servers-list"
+  />
+</div>
+`;
