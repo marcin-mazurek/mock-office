@@ -6,8 +6,8 @@ import AddServerModalConnect from '../servers/addServer/modal/AddServerModal';
 const App = ({ children }) => (
   <div className="app">
     { children }
-    <NotificationsListConnect />
     <AddServerModalConnect />
+    <NotificationsListConnect />
   </div>
 );
 

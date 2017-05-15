@@ -74,10 +74,12 @@ export const createAppServer = (serversManager) => {
       type: 'object',
       properties: {
         name: {
-          type: 'string'
+          type: 'string',
+          minLength: 1
         },
         port: {
-          type: 'number'
+          type: 'number',
+          minimum: 3000
         },
         type: {
           type: 'string',
@@ -116,7 +118,7 @@ export const createAppServer = (serversManager) => {
       return;
     }
 
-    res.json(ajv.errors);
+    res.status(400).json({ error: ajv.errors[0].message });
   });
 
   app.post('/remove-server', bodyParser.json(), (req, res) => {
