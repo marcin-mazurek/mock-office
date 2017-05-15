@@ -6,16 +6,6 @@ exports[`AddServerForm default snapshot 1`] = `
   className="form"
 >
   <div
-    className="form__header"
-  >
-    <img
-      alt=""
-      className="form__header-icon"
-      src=""
-    />
-    Add server
-  </div>
-  <div
     className="form-row"
   >
     <div

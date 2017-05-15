@@ -1,6 +1,6 @@
 import ServersManager from './ServersManager';
-import HttpServer from '../httpMockServer';
-import WsServer from '../wsMockServer';
+import HttpServer from '../mockServers/httpMockServer';
+import WsServer from '../mockServers/wsMockServer/index';
 import { Emitter } from './emitter';
 
 describe('ServerHub', () => {

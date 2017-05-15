@@ -74,7 +74,7 @@ const schema = {
   }
 };
 
-export default function createPersistentState(serversManager) {
+export default function configurePersistentState(serversManager) {
   const ajv = Ajv();
   function save() {
     fs.writeFileSync(PATH_TO_FILE, JSON.stringify(serversManager.getState()), 'utf8');

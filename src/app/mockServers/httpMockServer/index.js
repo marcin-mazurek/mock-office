@@ -3,7 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import unique from 'cuid';
-import Scenario from '../scenario';
+import Scenario from '../../scenario/index';
 
 export const send = (req, res) => (params) => {
   if (req.headers.origin) {

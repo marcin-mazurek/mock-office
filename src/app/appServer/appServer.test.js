@@ -1,5 +1,5 @@
 import { handleEditServer } from './appServer';
-import ServersManager from './servers-manager';
+import ServersManager from '../serversManager/index';
 
 describe('handleEditServer', () => {
   it('should change name', () => {

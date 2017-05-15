@@ -1,5 +1,5 @@
-import HttpMockServer from '../httpMockServer';
-import WSMockServer from '../wsMockServer';
+import HttpMockServer from '../mockServers/httpMockServer';
+import WSMockServer from '../mockServers/wsMockServer/index';
 import { Emitter } from './emitter';
 
 const serverTypes = {

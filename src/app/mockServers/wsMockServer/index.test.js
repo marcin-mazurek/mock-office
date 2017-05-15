@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import WsMockServer from './index';
-import { Emitter } from '../servers-manager/emitter';
-import Scenario from '../scenario';
+import { Emitter } from '../../serversManager/emitter';
+import Scenario from '../../scenario/index';
 
 describe('WsMockServer', () => {
   it('should initAction scenario', () => {
