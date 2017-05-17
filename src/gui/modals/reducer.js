@@ -1,17 +1,19 @@
 import { Record } from 'immutable';
-import { OPEN_MODAL, CLOSE_MODAL } from './actions';
+import { OPEN, CLOSE } from './actions';
 
 const InitialState = new Record({
-  isOpen: false
+  component: ''
 });
 
 export default function addServerReducer(state = new InitialState(), action) {
   switch (action.type) {
-    case OPEN_MODAL: {
-      return state.set('isOpen', true);
+    case OPEN: {
+      return state
+        .set('component', action.component);
     }
-    case CLOSE_MODAL: {
-      return state.set('isOpen', false);
+    case CLOSE: {
+      return state
+        .delete('component');
     }
     default: {
       return state;

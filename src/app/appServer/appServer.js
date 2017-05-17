@@ -112,13 +112,19 @@ export const createAppServer = (serversManager) => {
       );
 
       res.json({
+        name: req.body.name,
+        port: req.body.port,
+        type: req.body.type,
+        isSecure: req.body.isSecure,
         id
       });
 
       return;
     }
 
-    res.status(400).json({ error: ajv.errors[0].message });
+    const splitPath = ajv.errors[0].dataPath.split('.');
+    const param = splitPath[splitPath.length - 1];
+    res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
   });
 
   app.post('/remove-server', bodyParser.json(), (req, res) => {

@@ -12,8 +12,18 @@ export default function createNotification(params) {
   const config = {};
 
   config.id = unique();
-  if (params.type === 'info' || params.type === 'error') {
-    config.type = params.type;
+  switch (params.type) {
+    case 'error': {
+      config.type = 'error';
+      break;
+    }
+    case 'success': {
+      config.type = 'success';
+      break;
+    }
+    default: {
+      config.type = 'info';
+    }
   }
   config.text = params.text;
 

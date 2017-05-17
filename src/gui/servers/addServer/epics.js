@@ -1,26 +1,46 @@
 import { Observable } from 'rxjs';
+import { ifElse, has } from 'ramda';
 import { add } from '../../entities/servers/actions';
-import { INIT } from './actions';
+import { SUBMIT } from './actions';
 import requestAddServer from './rest';
 import { add as addNotification } from '../../entities/notifications/actions';
+import { closeAction as closeModalAction } from '../../modals/actions';
+
+const preparePayload = (action) => {
+  const payload = {
+    name: action.values.name,
+    port: parseInt(action.values.port, 10),
+    type: action.values.type,
+    isSecure: action.values.isSecure
+  };
+
+  if (payload.isSecure === true) {
+    payload.keyPath = action.values.keyPath;
+    payload.certPath = action.values.certPath;
+  }
+
+  return payload;
+};
+
+const makeRequest = payload => Observable.from(requestAddServer(payload));
+
+const fail = result => [addNotification({ type: 'error', text: result.error })];
+const success = result => [
+  addNotification({ type: 'success', text: 'Server added' }),
+  closeModalAction(),
+  add(result.data.name, result.data.port, result.data.type, result.data.id, result.data.isSecure)
+];
+
+const hasError = has('error');
 
 export default action$ =>
-  action$.ofType(INIT)
-    .flatMap((action) => {
-      const { name, port, serverType, isSecure, keyPath, certPath } = action;
-      return Observable.from(requestAddServer(name, port, serverType, isSecure, keyPath, certPath))
-        .flatMap((response) => {
-          const { data, error } = response;
-          if (error) {
-            return [addNotification({ type: 'error', text: error })];
-          }
-
-          const serverId = data.id;
-
-          return [
-            { type: 'addServer/CLOSE_MODAL' },
-            add(name, port, serverType, serverId, isSecure)
-          ];
-        })
-        .catch(error => [addNotification({ type: 'error', text: error.message })]);
-    });
+  action$.ofType(SUBMIT)
+    .map(preparePayload)
+    .flatMap(makeRequest)
+    .flatMap(
+      ifElse(
+        hasError,
+        fail,
+        success
+      )
+    );

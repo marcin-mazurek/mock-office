@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal no component snapshot 1`] = `null`;
+
+exports[`Modal rendering addServerModal snapshot 1`] = `
+<div
+  className="modal"
+>
+  <button
+    className="modal__overlay"
+    onClick={[Function]}
+  />
+  <div
+    className="modal__content"
+  >
+    <AddServerModal />
+  </div>
+</div>
+`;

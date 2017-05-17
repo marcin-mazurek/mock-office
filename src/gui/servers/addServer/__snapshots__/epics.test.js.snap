@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addServerEpic actions dispatched on API response with error 1`] = `
+Array [
+  Object {
+    "type": "addServer/SUBMIT",
+    "values": Object {
+      "isSecure": false,
+      "name": "name",
+      "port": 3000,
+      "type": "http",
+    },
+  },
+  Object {
+    "notification": Object {
+      "text": "error message",
+      "type": "error",
+    },
+    "type": "notifications/ADD",
+  },
+]
+`;
+
+exports[`addServerEpic actions dispatched on API response without error 1`] = `
+Array [
+  Object {
+    "type": "addServer/SUBMIT",
+    "values": Object {
+      "isSecure": false,
+      "name": "name",
+      "port": 3000,
+      "type": "http",
+    },
+  },
+  Object {
+    "notification": Object {
+      "text": "Server added",
+      "type": "success",
+    },
+    "type": "notifications/ADD",
+  },
+  Object {
+    "type": "modals/CLOSE",
+  },
+  Object {
+    "id": "some id",
+    "name": "name",
+    "port": 3000,
+    "secure": false,
+    "serverType": "http",
+    "type": "servers/ADD",
+  },
+]
+`;
