@@ -12,7 +12,7 @@ const schema = {
       'name',
       'type',
       'id',
-      'scenes'
+      'mocks'
     ],
     properties: {
       running: {
@@ -30,7 +30,7 @@ const schema = {
       id: {
         type: 'string'
       },
-      scenes: {
+      mocks: {
         type: 'array',
         items: {
           type: 'object',
@@ -44,7 +44,7 @@ const schema = {
             reuse: {
               type: 'string'
             },
-            parts: {
+            tasks: {
               type: 'array',
               minItems: 1,
               items: {
@@ -67,7 +67,7 @@ const schema = {
               }
             }
           },
-          required: ['parts']
+          required: ['tasks']
         }
       }
     }

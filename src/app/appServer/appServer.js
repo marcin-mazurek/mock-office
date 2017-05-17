@@ -156,13 +156,13 @@ export const createAppServer = (serversManager) => {
     }
   });
 
-  app.post('/add-scene', bodyParser.json(), (req, res) => {
+  app.post('/add-mock', bodyParser.json(), (req, res) => {
     const schema = {
       properties: {
         serverId: {
           type: 'string'
         },
-        scene: {
+        mock: {
           type: 'object',
           properties: {
             title: {
@@ -174,7 +174,7 @@ export const createAppServer = (serversManager) => {
             reuse: {
               type: 'string'
             },
-            parts: {
+            tasks: {
               type: 'array',
               minItems: 1,
               items: {
@@ -197,10 +197,10 @@ export const createAppServer = (serversManager) => {
               }
             }
           },
-          required: ['parts']
+          required: ['tasks']
         }
       },
-      required: ['serverId', 'scene']
+      required: ['serverId', 'mock']
     };
 
     if (ajv.validate(schema, req.body)) {
@@ -211,12 +211,12 @@ export const createAppServer = (serversManager) => {
         return;
       }
 
-      const sceneId = server.getScenario().addScene(req.body.scene);
-      const parts = server.getScenario().find(sceneId).parts.map(part => part.id);
+      const mockId = server.getScenario().addMock(req.body.mock);
+      const tasks = server.getScenario().find(mockId).tasks.map(part => part.id);
 
       res.status(200).json({
-        id: sceneId,
-        parts
+        id: mockId,
+        tasks
       });
       return;
     }
@@ -226,17 +226,17 @@ export const createAppServer = (serversManager) => {
     res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
   });
 
-  app.post('/remove-scene', bodyParser.json(), (req, res) => {
+  app.post('/remove-mock', bodyParser.json(), (req, res) => {
     const schema = {
       properties: {
-        sceneId: {
+        mockId: {
           type: 'string'
         },
         serverId: {
           type: 'string'
         }
       },
-      required: ['sceneId', 'serverId']
+      required: ['mockId', 'serverId']
     };
 
     if (!ajv.validate(schema, req.body)) {
@@ -250,9 +250,9 @@ export const createAppServer = (serversManager) => {
       return;
     }
 
-    const sceneRemoved = server.getScenario().removeScene(req.body.sceneId);
+    const mockRemoved = server.getScenario().removeMock(req.body.mockId);
 
-    if (sceneRemoved) {
+    if (mockRemoved) {
       res.end();
     } else {
       res.status(404).end();

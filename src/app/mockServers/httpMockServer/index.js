@@ -64,7 +64,7 @@ export default class HttpMockServer {
   }
 
   respond(req, res) {
-    const scene = this.scenario.findScene(
+    const mock = this.scenario.findMock(
       {
         event: 'RECEIVED_REQUEST',
         request: {
@@ -75,11 +75,11 @@ export default class HttpMockServer {
       }
     );
 
-    if (scene) {
-      this.scenario.play(scene.id, send(req, res));
+    if (mock) {
+      this.scenario.play(mock.id, send(req, res));
     } else {
       res.set('Access-Control-Allow-Origin', req.headers.origin)
-        .status(404).send('Sorry, we cannot find scene.');
+        .status(404).send('Sorry, we cannot find mock.');
     }
   }
 
@@ -102,7 +102,7 @@ export default class HttpMockServer {
   }
 
   stop(cb) {
-    this.scenario.cancelPendingScenes();
+    this.scenario.cancelPendingMocks();
     // Browsers can keep connection open, thus callback after
     // HttpMockServer.stop cant be called if there are sockets
     // still open, thus we need to ensure that all sockets are

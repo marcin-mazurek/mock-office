@@ -78,43 +78,43 @@ describe('Scenario', () => {
   describe('constructor', () => {
     it('should initialize list of mocks', () => {
       const scenario = new Scenario({ emitter: new Emitter() });
-      expect(scenario).toHaveProperty('scenes');
+      expect(scenario).toHaveProperty('mocks');
     });
   });
 
-  describe('addScene', () => {
-    it('should add scene to scenario', () => {
+  describe('addMock', () => {
+    it('should add mock to scenario', () => {
       const scenario = new Scenario({ emitter: new Emitter() });
-      scenario.addScene({ parts: [] });
-      expect(scenario.scenes).toHaveLength(1);
-      scenario.addScene({ parts: [] });
-      expect(scenario.scenes).toHaveLength(2);
+      scenario.addMock({ tasks: [] });
+      expect(scenario.mocks).toHaveLength(1);
+      scenario.addMock({ tasks: [] });
+      expect(scenario.mocks).toHaveLength(2);
     });
   });
 
-  describe('removeScene', () => {
-    it('should remove scene from scenario mocks list', () => {
+  describe('removeMock', () => {
+    it('should remove mock from scenario mocks list', () => {
       const scenario = new Scenario({ emitter: new Emitter() });
-      scenario.addScene({
-        parts: []
+      scenario.addMock({
+        tasks: []
       });
-      scenario.removeScene(scenario.scenes[0].id);
-      expect(scenario.scenes).toHaveLength(0);
+      scenario.removeMock(scenario.mocks[0].id);
+      expect(scenario.mocks).toHaveLength(0);
     });
   });
 
-  describe('findScene', () => {
-    it('should find scene scene if not yet scheduled', () => {
-      const mockScene = jest.fn();
+  describe('findMock', () => {
+    it('should find mock mock if not yet scheduled', () => {
+      const mockMock = jest.fn();
       const scenario = new Scenario({ emitter: new Emitter() });
-      const scene = {
+      const mock = {
         id: 'some id',
-        scene: mockScene
+        mock: mockMock
       };
-      scenario.scenes = [
-        scene
+      scenario.mocks = [
+        mock
       ];
-      expect(scenario.findScene()).toBe(scene);
+      expect(scenario.findMock()).toBe(mock);
 
       const scenario2 = new Scenario({ emitter: new Emitter() });
       const desc2 = {
@@ -123,25 +123,25 @@ describe('Scenario', () => {
           key: 'value'
         }
       };
-      scenario2.scenes = [
+      scenario2.mocks = [
         desc2
       ];
-      expect(scenario2.findScene({
+      expect(scenario2.findMock({
         key: 'value'
       })).toBe(desc2);
 
-      expect(scenario2.findScene({
+      expect(scenario2.findMock({
         key: 'value2'
       })).toBe(undefined);
     });
   });
 
-  describe('cancelPendingScenes', () => {
-    it('should cancel all active scene parts', (done) => {
+  describe('cancelPendingMocks', () => {
+    it('should cancel all active mock tasks', (done) => {
       const scenario = new Scenario({ emitter: new Emitter() });
 
-      const futureScene = {
-        parts: [
+      const futureMock = {
+        tasks: [
           {
             type: 'future',
             payload: {},
@@ -150,46 +150,46 @@ describe('Scenario', () => {
         ]
       };
 
-      scenario.addScene(futureScene);
-      scenario.addScene(futureScene);
-      scenario.addScene(futureScene);
+      scenario.addMock(futureMock);
+      scenario.addMock(futureMock);
+      scenario.addMock(futureMock);
       Promise.all([
-        scenario.play(scenario.scenes[0].id, () => {}),
-        scenario.play(scenario.scenes[1].id, () => {}),
-        scenario.play(scenario.scenes[2].id, () => {})
+        scenario.play(scenario.mocks[0].id, () => {}),
+        scenario.play(scenario.mocks[1].id, () => {}),
+        scenario.play(scenario.mocks[2].id, () => {})
       ]).then((statuses) => {
         expect(statuses.every(finished => !finished)).toBeTruthy();
-        expect(scenario.scenes.every(scene => scene.pending === false));
+        expect(scenario.mocks.every(mock => mock.pending === false));
         done();
       });
-      expect(scenario.scenes.every(scene => scene.pending === true)).toBeTruthy();
-      scenario.cancelPendingScenes();
+      expect(scenario.mocks.every(mock => mock.pending === true)).toBeTruthy();
+      scenario.cancelPendingMocks();
     });
   });
 
   describe('play', () => {
-    it('should remove scene if it shouldn\'t be reused', () => {
+    it('should remove mock if it shouldn\'t be reused', () => {
       const scenario = new Scenario({ emitter: new Emitter() });
-      scenario.scenes = [
+      scenario.mocks = [
         {
           id: 'some id',
           toRemove: true,
-          parts: [],
+          tasks: [],
           play: () => Promise.resolve()
         },
         {
           id: 'another id',
           toRemove: false,
-          parts: [],
+          tasks: [],
           play: () => Promise.resolve()
         }
       ];
 
       scenario.play('some id').then(() => {
-        expect(scenario.scenes).toHaveLength(1);
+        expect(scenario.mocks).toHaveLength(1);
 
         scenario.play('another id').then(() => {
-          expect(scenario.scenes).toHaveLength(0);
+          expect(scenario.mocks).toHaveLength(0);
         });
       });
     });

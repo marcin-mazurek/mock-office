@@ -96,15 +96,15 @@ class ServersManager {
         type: server.type,
         port: server.port,
         id: server.id,
-        scenes: server.getScenario().scenes.map(scene => ({
-          id: scene.id,
-          title: scene.title,
-          interval: scene.interval,
-          reuse: scene.reuse,
-          quantity: scene.quantity,
-          delay: scene.delay,
-          requirements: scene.requirements,
-          parts: scene.parts.map(part => ({
+        mocks: server.getScenario().mocks.map(mock => ({
+          id: mock.id,
+          title: mock.title,
+          interval: mock.interval,
+          reuse: mock.reuse,
+          quantity: mock.quantity,
+          delay: mock.delay,
+          requirements: mock.requirements,
+          tasks: mock.tasks.map(part => ({
             id: part.id,
             pending: part.pending,
             title: part.scheduleDetails.title,
@@ -122,8 +122,8 @@ class ServersManager {
         s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false
       );
       const server = this.find(id);
-      s.scenes.forEach((scene) => {
-        server.getScenario().addScene(scene);
+      s.mocks.forEach((mock) => {
+        server.getScenario().addMock(mock);
       });
     });
   }

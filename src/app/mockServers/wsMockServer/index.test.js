@@ -54,13 +54,13 @@ describe('WsMockServer', () => {
     });
   });
 
-  it('should play scene on CLIENT_CONNECTED', (done) => {
+  it('should play mock on CLIENT_CONNECTED', (done) => {
     const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
-    wsDouble.getScenario().addScene({
+    wsDouble.getScenario().addMock({
       requirements: {
         event: 'CLIENT_CONNECTED'
       },
-      parts: [
+      tasks: [
         {
           type: 'immediate',
           payload: {
@@ -81,13 +81,13 @@ describe('WsMockServer', () => {
     });
   });
 
-  it('should play scene on RECEIVED_MESSAGE', (done) => {
+  it('should play mock on RECEIVED_MESSAGE', (done) => {
     const wsDouble = new WsMockServer({ port: 4000, emitter: new Emitter() });
-    wsDouble.getScenario().addScene({
+    wsDouble.getScenario().addMock({
       requirements: {
         event: 'RECEIVED_MESSAGE'
       },
-      parts: [
+      tasks: [
         {
           type: 'immediate',
           payload: {

@@ -1,7 +1,7 @@
 import unique from 'cuid';
 import deepEqual from 'deep-equal';
 import btoa from 'btoa';
-import Scene from './Scene';
+import Mock from './Mock';
 
 export const extractSubTree = (source, target, result) => {
   const res = result || {};
@@ -27,49 +27,49 @@ export default class Scenario {
   constructor(args) {
     this.id = unique();
     this.emitter = args.emitter.extend({ scenarioId: this.id });
-    this.scenes = [];
+    this.mocks = [];
     this.find = this.find.bind(this);
-    this.addScene = this.addScene.bind(this);
-    this.removeScene = this.removeScene.bind(this);
+    this.addMock = this.addMock.bind(this);
+    this.removeMock = this.removeMock.bind(this);
     this.play = this.play.bind(this);
-    this.findScene = this.findScene.bind(this);
-    this.cancelPendingScenes = this.cancelPendingScenes.bind(this);
+    this.findMock = this.findMock.bind(this);
+    this.cancelPendingMocks = this.cancelPendingMocks.bind(this);
   }
 
   find(id) {
-    return this.scenes.find(desc => desc.id === id);
+    return this.mocks.find(desc => desc.id === id);
   }
 
-  addScene(sceneConfig) {
-    const scene = new Scene(Object.assign(sceneConfig, { emitter: this.emitter }));
-    this.scenes.push(scene);
+  addMock(mockConfig) {
+    const mock = new Mock(Object.assign(mockConfig, { emitter: this.emitter }));
+    this.mocks.push(mock);
 
-    return scene.id;
+    return mock.id;
   }
 
-  removeScene(sceneId) {
-    const sceneIndex = this.scenes.findIndex(scene => scene.id === sceneId);
+  removeMock(mockId) {
+    const mockIndex = this.mocks.findIndex(mock => mock.id === mockId);
 
-    if (sceneIndex < 0) {
+    if (mockIndex < 0) {
       return false;
     }
 
-    const scene = this.scenes[sceneIndex];
-    scene.cancel();
-    this.scenes.splice(sceneIndex, 1);
+    const mock = this.mocks[mockIndex];
+    mock.cancel();
+    this.mocks.splice(mockIndex, 1);
 
     return true;
   }
 
   // (String, Function) -> Promise
   play(id, action) {
-    const scene = this.find(id);
+    const mock = this.find(id);
 
-    return scene.play(action).then(
+    return mock.play(action).then(
       (finished) => {
-        if (finished && scene.toRemove) {
-          this.removeScene(id);
-          this.emitter.emit('SCENE_REMOVED_AFTER_USE', { sceneId: id });
+        if (finished && mock.toRemove) {
+          this.removeMock(id);
+          this.emitter.emit('MOCK_REMOVED_AFTER_USE', { mockId: id });
         }
 
         return finished;
@@ -77,19 +77,19 @@ export default class Scenario {
     );
   }
 
-  findScene(requirements) {
-    return this.scenes.find((scene) => {
-      if (!scene.pending) {
-        if (scene.requirements) {
+  findMock(requirements) {
+    return this.mocks.find((mock) => {
+      if (!mock.pending) {
+        if (mock.requirements) {
           const req = requirements;
           if (requirements) {
-            if (scene.requirements.type === 'b64') {
+            if (mock.requirements.type === 'b64') {
               req.message = btoa(requirements.message);
               req.type = 'b64';
             }
 
             if (
-              deepEqual(scene.requirements, extractSubTree(req, scene.requirements))
+              deepEqual(mock.requirements, extractSubTree(req, mock.requirements))
             ) {
               return true;
             }
@@ -103,7 +103,7 @@ export default class Scenario {
     });
   }
 
-  cancelPendingScenes() {
-    this.scenes.forEach(scene => scene.cancel());
+  cancelPendingMocks() {
+    this.mocks.forEach(mock => mock.cancel());
   }
 }

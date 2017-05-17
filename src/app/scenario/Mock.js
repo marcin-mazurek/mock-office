@@ -1,18 +1,18 @@
 import unique from 'cuid';
-import ScenePart from './ScenePart';
+import Task from './Task';
 
-export default class Scene {
+export default class Mock {
   constructor(args) {
     this.title = args.title;
     this.requirements = args.requirements;
     this.id = unique();
-    this.emitter = args.emitter.extend({ sceneId: this.id });
-    this.parts = [];
+    this.emitter = args.emitter.extend({ mockId: this.id });
+    this.tasks = [];
     this.pending = false;
     this.reuse = args.reuse;
     this.quantity = args.quantity || 0;
-    this.parts = args.parts.map(
-      partConfig => new ScenePart(
+    this.tasks = args.tasks.map(
+      partConfig => new Task(
         {
           scheduleDetails: partConfig,
           emitter: this.emitter
@@ -36,17 +36,17 @@ export default class Scene {
   // Function -> Promise
   play(action) {
     this.pending = true;
-    this.emitter.emit('SCENE_START');
+    this.emitter.emit('MOCK_START');
 
-    return Promise.all(this.parts.map(part => part.play(action))).then(
-      (scenePartStatuses) => {
-        const finished = scenePartStatuses.every(partFinished => partFinished);
+    return Promise.all(this.tasks.map(part => part.play(action))).then(
+      (taskStatuses) => {
+        const finished = taskStatuses.every(partFinished => partFinished);
 
         if (finished) {
           this.updateReuseStatus();
-          this.emitter.emit('SCENE_END');
+          this.emitter.emit('MOCK_END');
         } else {
-          this.emitter.emit('SCENE_CANCEL');
+          this.emitter.emit('MOCK_CANCEL');
         }
 
         this.pending = false;
@@ -58,7 +58,7 @@ export default class Scene {
   // void -> void
   cancel() {
     if (this.pending) {
-      this.parts.forEach(part => part.cancel());
+      this.tasks.forEach(part => part.cancel());
     }
   }
 }

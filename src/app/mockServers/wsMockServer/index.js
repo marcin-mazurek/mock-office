@@ -54,15 +54,15 @@ export default class WsMockServer {
       this.ws = ws;
 
       this.ws.on('message', (message) => {
-        const scene = this.scenario.findScene(
+        const mock = this.scenario.findMock(
           {
             event: 'RECEIVED_MESSAGE',
             message
           }
         );
 
-        if (scene) {
-          this.scenario.play(scene.id, (params) => {
+        if (mock) {
+          this.scenario.play(mock.id, (params) => {
             this.ws.send(params.payload.message, (err) => {
               if (err) {
                 // eslint-disable-next-line no-console
@@ -74,18 +74,18 @@ export default class WsMockServer {
       });
 
       this.ws.on('close', () => {
-        this.scenario.cancelPendingScenes();
+        this.scenario.cancelPendingMocks();
         this.ws = undefined;
       });
 
-      const scene = this.scenario.findScene(
+      const mock = this.scenario.findMock(
         {
           event: 'CLIENT_CONNECTED'
         }
       );
 
-      if (scene) {
-        this.scenario.play(scene.id, (params) => {
+      if (mock) {
+        this.scenario.play(mock.id, (params) => {
           this.ws.send(params.payload.message);
         });
       }

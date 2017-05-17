@@ -1,17 +1,17 @@
 import { Subscription } from 'rxjs';
-import ScenePart from './ScenePart';
+import Task from './Task';
 import { Emitter } from '../serversManager/emitter';
 
-describe('ScenePart', () => {
+describe('Task', () => {
   it('should setup emitter', () => {
-    const scenePart = new ScenePart({ emitter: new Emitter() });
-    expect(scenePart.emitter).toBeInstanceOf(Emitter);
-    expect(scenePart.emitter.params.scenePartId).toEqual(scenePart.id);
+    const task = new Task({ emitter: new Emitter() });
+    expect(task.emitter).toBeInstanceOf(Emitter);
+    expect(task.emitter.params.taskId).toEqual(task.id);
   });
 
   describe('play', () => {
     it('should change pending state if it is not pending yet', () => {
-      const scenePart = new ScenePart({
+      const task = new Task({
         emitter: new Emitter(),
         scheduleDetails: {
           type: 'immediate',
@@ -23,14 +23,14 @@ describe('ScenePart', () => {
         }
       });
 
-      scenePart.play(() => {
+      task.play(() => {
       }).then(() => {
-        expect(scenePart.pending).toBeTruthy();
+        expect(task.pending).toBeTruthy();
       });
     });
 
     it('should setup functions for canceling if it is not pending yet', () => {
-      const scenePart = new ScenePart({
+      const task = new Task({
         emitter: new Emitter(),
         scheduleDetails: {
           type: 'immediate',
@@ -42,15 +42,15 @@ describe('ScenePart', () => {
         }
       });
 
-      scenePart.play(() => {
+      task.play(() => {
       }).then(() => {
-        expect(scenePart.subscription).toBeInstanceOf(Subscription);
-        expect(scenePart.stop).toBeInstanceOf(Function);
+        expect(task.subscription).toBeInstanceOf(Subscription);
+        expect(task.stop).toBeInstanceOf(Function);
       });
     });
 
     it('should return rejected promise if is pending', (done) => {
-      const scenePart = new ScenePart({
+      const task = new Task({
         emitter: new Emitter(),
         scheduleDetails: {
           type: 'immediate',
@@ -60,11 +60,11 @@ describe('ScenePart', () => {
         }
       });
 
-      scenePart.pending = true;
+      task.pending = true;
 
-      scenePart.play(() => {})
+      task.play(() => {})
         .catch((reason) => {
-          expect(reason).toEqual('Pending ScenePart cant be played.');
+          expect(reason).toEqual('Pending Task cant be played.');
         })
         .then(() => {
           done();
@@ -72,8 +72,8 @@ describe('ScenePart', () => {
     });
   });
   describe('cancel', () => {
-    it('should call stop only if scene part is pending', () => {
-      const scenePart = new ScenePart({
+    it('should call stop only if mock part is pending', () => {
+      const task = new Task({
         emitter: new Emitter(),
         scheduleDetails: {
           type: 'immediate',
@@ -82,15 +82,15 @@ describe('ScenePart', () => {
           }
         }
       });
-      scenePart.play = function play() {
+      task.play = function play() {
         this.pending = true;
         this.stop = jest.fn();
       };
-      scenePart.play(() => {});
-      scenePart.cancel();
-      expect(scenePart.stop).toHaveBeenCalled();
+      task.play(() => {});
+      task.cancel();
+      expect(task.stop).toHaveBeenCalled();
 
-      const scenePartNotPending = new ScenePart({
+      const taskNotPending = new Task({
         emitter: new Emitter(),
         scheduleDetails: {
           type: 'immediate',
@@ -99,9 +99,9 @@ describe('ScenePart', () => {
           }
         }
       });
-      scenePartNotPending.stop = jest.fn();
-      scenePartNotPending.cancel();
-      expect(scenePartNotPending.stop).not.toHaveBeenCalled();
+      taskNotPending.stop = jest.fn();
+      taskNotPending.cancel();
+      expect(taskNotPending.stop).not.toHaveBeenCalled();
     });
   });
 });

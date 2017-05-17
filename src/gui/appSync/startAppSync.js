@@ -19,28 +19,23 @@ export default function startAppSync(store) {
   ).subscribe(
     (message) => {
       const data = JSON.parse(message.data);
-      // compatibility after renaming
-      // scene -> mock
-      // scene part -> task
-      data.taskId = data.scenePartId;
-      data.mockId = data.sceneId;
 
       switch (data.event) {
-        case 'SCENE_STOP': {
+        case 'MOCK_STOP': {
           store.dispatch(stop(...eventArgs2ActionPayload(data)));
           break;
         }
-        case 'SCENE_END': {
+        case 'MOCK_END': {
           store.dispatch(finish(...eventArgs2ActionPayload(data)));
           break;
         }
-        case 'SCENE_REMOVED_AFTER_USE': {
+        case 'MOCK_REMOVED_AFTER_USE': {
           setTimeout(() => {
             store.dispatch(removeAfterUse(...eventArgs2ActionPayload(data)));
           }, 5000);
           break;
         }
-        case 'SCENE_START': {
+        case 'MOCK_START': {
           store.dispatch(run(...eventArgs2ActionPayload(data)));
           break;
         }
@@ -52,7 +47,7 @@ export default function startAppSync(store) {
               store.dispatch(start(server.id));
             }
 
-            server.scenes.forEach((mock) => {
+            server.mocks.forEach((mock) => {
               store.dispatch(
                 addMock(
                   server.id,
@@ -63,7 +58,7 @@ export default function startAppSync(store) {
                   mock.quantity,
                   mock.delay,
                   mock.requirements,
-                  mock.parts
+                  mock.tasks
                 )
               );
             });

@@ -122,7 +122,7 @@ describe('HttpMockServer', () => {
   });
 
   describe('respond', () => {
-    it('should call scenario.play if found scene', () => {
+    it('should call scenario.play if found mock', () => {
       const server = new HttpMockServer({
         id: 'some id',
         emitter: new Emitter()
@@ -130,7 +130,7 @@ describe('HttpMockServer', () => {
       const playMock = jest.fn();
 
       server.scenario = {
-        findScene() {
+        findMock() {
           return {};
         },
         play: playMock
@@ -149,12 +149,12 @@ describe('HttpMockServer', () => {
         emitter: new Emitter()
       });
 
-      server.getScenario().addScene({
+      server.getScenario().addMock({
         title: 'request for some-url',
         requirements: {
           event: 'RECEIVED_REQUEST'
         },
-        parts: [
+        tasks: [
           {
             title: 'response for /some-url request',
             type: 'immediate',
@@ -207,14 +207,14 @@ describe('HttpMockServer', () => {
       emitter: new Emitter()
     });
 
-    server.getScenario().addScene({
+    server.getScenario().addMock({
       requirements: {
         event: 'RECEIVED_REQUEST',
         request: {
           method: 'POST'
         }
       },
-      parts: [
+      tasks: [
         {
           type: 'immediate',
           payload: {
@@ -228,14 +228,14 @@ describe('HttpMockServer', () => {
       request.post('http://127.0.0.1:4000', (err, res) => {
         expect(JSON.parse(res.body)).toEqual({ message: 'its working!' });
 
-        server.getScenario().addScene({
+        server.getScenario().addMock({
           requirements: {
             event: 'RECEIVED_REQUEST',
             request: {
               method: 'POST'
             }
           },
-          parts: [
+          tasks: [
             {
               type: 'immediate',
               payload: {
@@ -246,7 +246,7 @@ describe('HttpMockServer', () => {
         });
 
         request.get('http://127.0.0.1:4000', (error, response) => {
-          expect(response.body).toEqual('Sorry, we cannot find scene.');
+          expect(response.body).toEqual('Sorry, we cannot find mock.');
           server.stop(done);
         });
       });
@@ -259,7 +259,7 @@ describe('HttpMockServer', () => {
       emitter: new Emitter()
     });
 
-    server.getScenario().addScene({
+    server.getScenario().addMock({
       requirements: {
         event: 'RECEIVED_REQUEST',
         request: {
@@ -268,7 +268,7 @@ describe('HttpMockServer', () => {
           }
         }
       },
-      parts: [
+      tasks: [
         {
           type: 'immediate',
           payload: {
@@ -287,7 +287,7 @@ describe('HttpMockServer', () => {
       }, (err, res) => {
         expect(JSON.parse(res.body)).toEqual({ message: 'its working!' });
 
-        server.getScenario().addScene({
+        server.getScenario().addMock({
           requirements: {
             event: 'RECEIVED_REQUEST',
             request: {
@@ -296,7 +296,7 @@ describe('HttpMockServer', () => {
               }
             }
           },
-          parts: [
+          tasks: [
             {
               type: 'immediate',
               payload: {
@@ -314,7 +314,7 @@ describe('HttpMockServer', () => {
         };
 
         request.get(options, (error, response) => {
-          expect(response.body).toEqual('Sorry, we cannot find scene.');
+          expect(response.body).toEqual('Sorry, we cannot find mock.');
           server.stop(done);
         });
       });

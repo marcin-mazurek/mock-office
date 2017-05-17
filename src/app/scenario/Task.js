@@ -1,10 +1,10 @@
 import unique from 'cuid';
 import createSchedule from './createSchedule';
 
-export default class ScenePart {
+export default class Task {
   constructor(args) {
     this.id = unique();
-    this.emitter = args.emitter.extend({ scenePartId: this.id });
+    this.emitter = args.emitter.extend({ taskId: this.id });
     this.pending = false;
     this.scheduleDetails = args.scheduleDetails;
   }
@@ -12,7 +12,7 @@ export default class ScenePart {
   // Function -> Promise
   play(action) {
     if (this.pending) {
-      return Promise.reject('Pending ScenePart cant be played.');
+      return Promise.reject('Pending Task cant be played.');
     }
 
     return new Promise((resolve) => {
@@ -21,10 +21,10 @@ export default class ScenePart {
       this.subscription = schedule(
         action,
         () => {
-          this.emitter.emit('SCENE_PART_START');
+          this.emitter.emit('MOCK_PART_START');
         },
         () => {
-          this.emitter.emit('SCENE_PART_END');
+          this.emitter.emit('MOCK_PART_END');
           this.pending = false;
           resolve(true);
         }
@@ -34,7 +34,7 @@ export default class ScenePart {
 
       this.stop = () => {
         this.subscription.unsubscribe();
-        this.emitter.emit('SCENE_PART_CANCEL');
+        this.emitter.emit('MOCK_PART_CANCEL');
         this.pending = false;
         resolve(false);
       };

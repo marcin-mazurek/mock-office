@@ -44,36 +44,36 @@ export function configureGuiEventsServer(serversManager, persistentState) {
     });
   });
 
-  addListener('SCENE_REMOVED',
-    args => broadcast('SCENE_REMOVED', args)
+  addListener('MOCK_REMOVED',
+    args => broadcast('MOCK_REMOVED', args)
   );
 
-  addListener('SCENE_START',
-    args => broadcast('SCENE_START', args)
+  addListener('MOCK_START',
+    args => broadcast('MOCK_START', args)
   );
 
-  addListener('SCENE_END',
-    args => broadcast('SCENE_END', args)
+  addListener('MOCK_END',
+    args => broadcast('MOCK_END', args)
   );
 
-  addListener('SCENE_CANCEL',
-    args => broadcast('SCENE_CANCEL', args)
+  addListener('MOCK_CANCEL',
+    args => broadcast('MOCK_CANCEL', args)
   );
 
-  addListener('SCENE_REMOVED_AFTER_USE',
-    args => broadcast('SCENE_REMOVED_AFTER_USE', args)
+  addListener('MOCK_REMOVED_AFTER_USE',
+    args => broadcast('MOCK_REMOVED_AFTER_USE', args)
   );
 
-  addListener('SCENE_PART_START',
-    args => broadcast('SCENE_PART_START', args)
+  addListener('MOCK_PART_START',
+    args => broadcast('MOCK_PART_START', args)
   );
 
-  addListener('SCENE_PART_END',
-    args => broadcast('SCENE_PART_END', args)
+  addListener('MOCK_PART_END',
+    args => broadcast('MOCK_PART_END', args)
   );
 
-  addListener('SCENE_PART_CANCEL',
-    args => broadcast('SCENE_PART_CANCEL', args)
+  addListener('MOCK_PART_CANCEL',
+    args => broadcast('MOCK_PART_CANCEL', args)
   );
 
   return httpServer;
