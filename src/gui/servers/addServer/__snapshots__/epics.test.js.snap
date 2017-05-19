@@ -43,11 +43,20 @@ Array [
     "type": "modals/CLOSE",
   },
   Object {
-    "id": "some id",
-    "name": "name",
-    "port": 3000,
-    "secure": false,
-    "serverType": "http",
+    "scenarioId": "server-id",
+    "serverId": "server-id",
+    "type": "scenarios/ADD",
+  },
+  Object {
+    "id": "server-id",
+    "params": Object {
+      "id": "server-id",
+      "isSecure": false,
+      "name": "name",
+      "port": 3000,
+      "scenario": "server-id",
+      "type": "http",
+    },
     "type": "servers/ADD",
   },
 ]

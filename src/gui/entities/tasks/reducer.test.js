@@ -1,32 +1,46 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
-import { ADD } from '../../mocks/addMock/actions';
+import {
+  ADD,
+  REMOVE,
+  remove,
+  add
+} from './actions';
 
 describe('mocks reducer', () => {
-  test(`${ADD}`, () => {
+  test(`on ${ADD} action`, () => {
     const state = reducer(fromJS({
       ids: [],
       entities: {}
-    }), {
-      type: ADD,
-      id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
-      tasks: [
-        {
-          id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
-          interval: null,
-          reuse: null,
-          quantity: null,
-          title: '',
-          delay: null,
-          requirements: null
-        }
-      ]
-    });
+    }), add('mock-id', 'task-id', {
+      interval: 0,
+      reuse: 'infinite',
+      quantity: 1,
+      title: 'task title',
+      delay: 1000,
+      requirements: {}
+    }));
 
     expect(state.toJS()).toEqual({
       entities: {
-        'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==': {
-          id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
+        'task-id': {
+          id: 'task-id',
+          interval: 0,
+          reuse: 'infinite',
+          quantity: 1,
+          title: 'task title',
+          delay: 1000,
+          requirements: {}
+        }
+      },
+      ids: ['task-id']
+    });
+  });
+
+  test(`on ${REMOVE} action`, () => {
+    const state = fromJS({
+      entities: {
+        'task-id': {
           interval: null,
           reuse: null,
           quantity: null,
@@ -35,7 +49,12 @@ describe('mocks reducer', () => {
           requirements: null
         }
       },
-      ids: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
+      ids: ['task-id']
+    });
+
+    expect(reducer(state, remove('mock-id', 'task-id')).toJS()).toEqual({
+      entities: {},
+      ids: []
     });
   });
 });

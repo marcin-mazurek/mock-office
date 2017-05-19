@@ -1,26 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
-import { getMock } from '../../entities/mocks/selectors';
 import { init } from '../removeMock/actions';
-import { getMocks } from '../../entities/scenarios/selectors';
 import TasksConnect from '../../tasks/browse/TaskList';
+import MockRecord from '../../entities/mocks/Mock'
+import { scenarioSelector } from '../../entities/scenarios/selectors';
+import { mockSelector } from '../../entities/mocks/selectors';
 
 export const Mock = ({
-                        id,
-                        title,
-                        serverId,
-                        remove,
-                        reuse,
-                        quantity,
-                        requirements,
-                        runCount,
-                        lastDuration,
-                        finished,
-                        running
-                      }) => {
+                       id,
+                       title,
+                       server,
+                       scenario,
+                       remove,
+                       reuse,
+                       quantity,
+                       requirements,
+                       runCount,
+                       lastDuration,
+                       finished,
+                       running,
+                       tasks
+                     }) => {
   let quantityInfo = null;
 
   if (reuse) {
@@ -51,89 +54,92 @@ export const Mock = ({
           {
             runCount > 0
               ? (
-                <div className="mock-status__tag" title="Run count">
-                  <i className="fa fa-flash" /> {runCount}
-                </div>
-              )
+              <div className="mock-status__tag" title="Run count">
+                <i className="fa fa-flash" /> {runCount}
+              </div>
+            )
               : null
           }
           {
             lastDuration
               ? (
-                <div className="mock-status__tag" title="Last duration">
-                  <i className="fa fa-clock-o" /> {lastDuration}{'ms'}
-                </div>
-              )
+              <div className="mock-status__tag" title="Last duration">
+                <i className="fa fa-clock-o" /> {lastDuration}{'ms'}
+              </div>
+            )
               : null
           }
         </div>
-        <button className="mock__remove-button" onClick={() => remove(serverId, id)}>
+        <button className="mock__remove-button" onClick={() => remove(server, scenario, id, tasks)}>
           remove
         </button>
       </div>
       <div className="mock__tasks">
-        <TasksConnect mockId={id} />
+        <TasksConnect mock={id} />
       </div>
     </div>
   );
 };
-
 Mock.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  serverId: PropTypes.string.isRequired,
-  remove: PropTypes.func.isRequired,
   reuse: PropTypes.string,
-  quantity: PropTypes.number,
-  requirements: PropTypes.shape({}),
+  quantity: PropTypes.number.isRequired,
   runCount: PropTypes.number.isRequired,
   lastDuration: PropTypes.number,
   finished: PropTypes.bool.isRequired,
-  running: PropTypes.bool.isRequired
+  running: PropTypes.bool.isRequired,
+  tasks: ImmutablePropTypes.listOf(PropTypes.string),
+  server: PropTypes.string.isRequired,
+  scenario: PropTypes.string.isRequired,
+  requirements: PropTypes.shape({})
 };
 
-const mockSelector = createSelector(
-  getMock,
-  mock => ({
+const mockMapStateToProps = (state, ownProps) => {
+  const mock = mockSelector(state, ownProps.id);
+
+  return {
+    id: mock.id,
     title: mock.title,
     reuse: mock.reuse,
     quantity: mock.quantity,
     requirements: mock.requirements,
-    finished: mock.finished,
     runCount: mock.runCount,
     lastDuration: mock.lastDuration,
-    running: mock.running
-  })
-);
-
-const mockMapStateToProps = (initialState, ownProps) => state => mockSelector(state, ownProps);
-
+    finished: mock.finished,
+    running: mock.running,
+    tasks: mock.tasks
+  };
+};
 const mockMapDispatchToProps = {
   remove: init
 };
-
 export const MockConnect =
   connect(mockMapStateToProps, mockMapDispatchToProps)(Mock);
 
-export const Mocks = ({ mockIds, serverId }) => (
+export const Mocks = ({ mocks, server, scenario }) => (
   <ul className="mocks">
     {
-      mockIds.map(mockId =>
-        <li className="mocks__item" key={mockId}>
-          <MockConnect serverId={serverId} id={mockId} />
+      mocks.map(mock =>
+        <li className="mocks__item" key={mock}>
+          <MockConnect server={server} scenario={scenario} id={mock} />
         </li>
       )
     }
   </ul>
 );
-
 Mocks.propTypes = {
-  mockIds: PropTypes.shape({}).isRequired,
-  serverId: PropTypes.string.isRequired
+  mocks: PropTypes.shape({}).isRequired,
+  server: PropTypes.string.isRequired,
+  scenario: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  mockIds: getMocks(ownProps.serverId, state)
-});
+const mapStateToProps = (state, ownProps) => {
+  const scenario = scenarioSelector(state, ownProps.scenario);
+
+  return {
+    mocks: scenario.mocks
+  };
+};
 
 export default connect(mapStateToProps)(Mocks);

@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
 import { removeAfterUse, finish } from '../mocks/removeMock/actions';
-import { run, stop } from '../mocks/runMock/actions';
+import { run, stop, add as addMock } from '../entities/mocks/actions';
 import { add, start } from '../entities/servers/actions';
-import { add as addMock } from '../mocks/addMock/actions';
+import { add as addScenario } from '../entities/scenarios/actions';
+import { add as addTask } from '../entities/tasks/actions';
 
 const eventArgs2ActionPayload = data => [data.serverId, data.mockId];
 
@@ -41,7 +42,15 @@ export default function startAppSync(store) {
         }
         case 'RESTORE_STATE': {
           data.state.forEach((server) => {
-            store.dispatch(add(server.name, server.port, server.type, server.id, server.isSecure));
+            store.dispatch(add(server.id, {
+              name: server.name,
+              port: server.port,
+              type: server.type,
+              isSecure: server.isSecure,
+              scenario: server.id
+            }));
+
+            store.dispatch(addScenario(server.id));
 
             if (server.running) {
               store.dispatch(start(server.id));
@@ -50,17 +59,17 @@ export default function startAppSync(store) {
             server.mocks.forEach((mock) => {
               store.dispatch(
                 addMock(
-                  server.id,
-                  mock.id,
-                  mock.title,
-                  mock.interval,
-                  mock.reuse,
-                  mock.quantity,
-                  mock.delay,
-                  mock.requirements,
-                  mock.tasks
+                  server.id, mock.id, {
+                    title: mock.title,
+                    interval: mock.interval,
+                    reuse: mock.reuse,
+                    quantity: mock.quantity,
+                    delay: mock.delay,
+                    requirements: mock.requirements
+                  }
                 )
               );
+              mock.tasks.forEach(task => store.dispatch(addTask(mock.id, task.id, task)));
             });
           });
 

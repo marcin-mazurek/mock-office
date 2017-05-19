@@ -22,21 +22,4 @@ export const requestAddMock = (serverId, mock) =>
       }
 
       return payload;
-    }))
-    .then(
-      res => [
-        serverId,
-        res.id,
-        mock.title,
-        mock.interval,
-        mock.reuse,
-        mock.quantity,
-        mock.delay,
-        mock.requirements,
-        mock.tasks.map((task, index) => {
-          // eslint-disable-next-line no-param-reassign
-          task.id = res.tasks[index];
-          return task;
-        })
-      ]
-    );
+    }));

@@ -25,14 +25,16 @@ exports[`AddMock default snapshot 1`] = `
       className="add-mock__back-button"
       onlyActiveOnIndex={false}
       style={Object {}}
-      to="/server/AVoOVEFMUlrzP+XqRbO2VYXFeAw78w=="
+      to="/server/server-id"
     >
       <i
         className="fa fa-arrow-left"
       />
        Server details
     </Link>
-    <Connect(ReduxForm) />
+    <Connect(ReduxForm)
+      scenarioId="scenario-id"
+    />
   </div>
 </Scrollbars>
 `;

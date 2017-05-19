@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`addMockFromFileEpic 1`] = `
+exports[`importMockEpic snapshot of success flow 1`] = `
 Array [
   Object {
     "files": Array [
@@ -8,33 +8,20 @@ Array [
         Symbol(impl): BlobImpl {
           "_buffer": Object {
             "data": Array [
+              91,
               123,
               34,
-              112,
+              116,
               97,
-              121,
-              108,
-              111,
-              97,
-              100,
+              115,
+              107,
+              115,
               34,
               58,
-              32,
-              34,
-              109,
-              111,
-              99,
-              107,
-              32,
-              112,
-              97,
-              121,
-              108,
-              111,
-              97,
-              100,
-              34,
+              91,
+              93,
               125,
+              93,
             ],
             "type": "Buffer",
           },
@@ -44,8 +31,18 @@ Array [
         },
       },
     ],
-    "serverId": "server id",
+    "scenarioId": "scenario-id",
+    "serverId": "server-id",
     "type": "importMock/INIT",
+  },
+  Object {
+    "mockId": "mock-id",
+    "params": Object {
+      "id": "mock-id",
+      "tasks": Array [],
+    },
+    "scenarioId": "scenario-id",
+    "type": "mocks/ADD",
   },
 ]
 `;

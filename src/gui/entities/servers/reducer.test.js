@@ -6,11 +6,12 @@ import {
   START,
   STOP,
   REMOVE,
-  RENAME
+  RENAME,
+  add
 } from './actions';
 
 describe('servers reducer', () => {
-  test(`${SELECT} mock`, () => {
+  test(`on ${SELECT} action`, () => {
     const state = reducer(fromJS({
       selected: null,
     }), { type: SELECT, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
@@ -20,7 +21,7 @@ describe('servers reducer', () => {
     });
   });
 
-  test(`${START} mock`, () => {
+  test(`on ${START} action`, () => {
     const state = reducer(fromJS({
       running: new Set()
     }), { type: START, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
@@ -30,33 +31,37 @@ describe('servers reducer', () => {
     });
   });
 
-  test(`${ADD} mock`, () => {
-    const state = reducer(fromJS({
-      entities: {},
-      ids: []
-    }), {
-      type: ADD,
-      name: 'Server name',
-      port: 3000,
-      id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
-      serverType: 'http',
-      secure: false
-    });
+  test(`on ${ADD} action`, () => {
+    const state = reducer(
+      fromJS({
+        entities: {},
+        ids: []
+      }),
+      add('server-id', {
+        name: 'Server name',
+        port: 3000,
+        secure: false,
+        type: 'http',
+        scenario: 'scenario-id'
+      })
+    );
     expect(state.toJS()).toEqual({
       entities: {
-        'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==': {
+        'server-id': {
           name: 'Server name',
           port: 3000,
-          id: 'AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==',
+          id: 'server-id',
           type: 'http',
-          secure: false
+          secure: false,
+          running: false,
+          scenario: 'scenario-id'
         }
       },
-      ids: ['AVoOVEFMUlrzP+XqRbO2VYXFeAw78w==']
+      ids: ['server-id']
     });
   });
 
-  test(`${STOP} mock`, () => {
+  test(`on ${STOP} action`, () => {
     const state = reducer(fromJS(
       {
         running: new Set(['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA=='])
@@ -73,7 +78,7 @@ describe('servers reducer', () => {
     expect(reducer(state, { type: 'unknown mock type' })).toBe(state);
   });
 
-  test(`${REMOVE} mock`, () => {
+  test(`on ${REMOVE} action`, () => {
     const state = reducer(fromJS({
       entities: {
         'some id': {
@@ -96,7 +101,7 @@ describe('servers reducer', () => {
     });
   });
 
-  test(`${RENAME} mock`, () => {
+  test(`on ${RENAME} action`, () => {
     const state = reducer(fromJS({
       entities: {
         'some id': {

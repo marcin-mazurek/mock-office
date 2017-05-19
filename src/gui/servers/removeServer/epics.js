@@ -3,6 +3,8 @@ import { push } from 'react-router-redux';
 import { INIT } from './actions';
 import { remove } from '../../entities/servers/actions';
 import getCurrentDisplayedServerId from '../../sidebar/selectors';
+import { remove as removeMock } from '../../entities/mocks/actions';
+import { mockSelector } from '../../entities/mocks/selectors';
 
 export default (action$, store) =>
   action$.ofType(INIT)
@@ -27,6 +29,12 @@ export default (action$, store) =>
         actions.push(push('/'));
       }
       actions.push(remove(id));
+      const server = state.getIn(['servers', 'entities', id]);
+      server.get('mocks').forEach((mockId) => {
+        actions.push(removeMock(id, mockId));
+        const mock = mockSelector(mockId);
+        //mock.get('tasks').forEach(taskId => actions.push(removeTask(taskId)));
+      });
 
       return Observable.from(actions);
     });

@@ -2,17 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { createSelector } from 'reselect';
-import getTasks, { getTask } from '../../entities/tasks/selectors';
+import { taskSelector } from '../../entities/tasks/selectors';
 import expandIcon from '../../assets/icons_green_expand@3x.svg';
+import { mockSelector } from '../../entities/mocks/selectors';
 
 export const TaskListItem = ({
-                                    title,
-                                    interval,
-                                    reuse,
-                                    quantity,
-                                    delay
-                                  }) => {
+                               title,
+                               interval,
+                               reuse,
+                               quantity,
+                               delay
+                             }) => {
   let quantityInfo = null;
 
   if (reuse) {
@@ -23,7 +23,7 @@ export const TaskListItem = ({
     }
   }
   return (
-    <li className="task-list-item">
+    <div className="task-list-item">
       <button className="task-expand-button">
         <img src={expandIcon} role="presentation" />
       </button>
@@ -53,7 +53,7 @@ export const TaskListItem = ({
             : null
         }
       </div>
-    </li>
+    </div>
   );
 };
 
@@ -65,19 +65,16 @@ TaskListItem.propTypes = {
   delay: PropTypes.number
 };
 
-const taskSelector = createSelector(
-  getTask,
-  task => ({
+const TaskListItemMapStateToProps = (state, ownProps) => {
+  const task = taskSelector(state, ownProps.id);
+  return {
     title: task.title,
     interval: task.interval,
     reuse: task.reuse,
     quantity: task.quantity,
     delay: task.delay,
-  })
-);
-
-const TaskListItemMapStateToProps = (state, ownProps) =>
-  taskSelector(state, ownProps);
+  };
+};
 
 export const TaskListItemConnect =
   connect(TaskListItemMapStateToProps)(TaskListItem);
@@ -85,8 +82,10 @@ export const TaskListItemConnect =
 export const TaskList = ({ tasks }) => (
   <ul className="task-list">
     {
-      tasks.map(taskId =>
-        <TaskListItemConnect key={taskId} id={taskId} />
+      tasks.map(task =>
+        <li className="task-list__item" key={task}>
+          <TaskListItemConnect id={task} />
+        </li>
       )
     }
   </ul>
@@ -97,7 +96,7 @@ TaskList.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  tasks: getTasks(state, ownProps)
+  tasks: mockSelector(state, ownProps.mock).tasks
 });
 
 export default connect(mapStateToProps)(TaskList);

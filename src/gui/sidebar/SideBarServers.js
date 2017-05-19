@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { getServerList } from '../entities/servers/selectors';
+import { allServerSelector } from '../entities/servers/selectors';
 import { init as createInitExportAction } from '../exportState/actions';
 import plusIcon from '../assets/icons_white_add.svg';
 import lockIcon from '../assets/icons_general_locked@3x.svg';
@@ -71,13 +71,13 @@ SideBarServers.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  servers: getServerList(state),
+  servers: allServerSelector(state),
   selected: getCurrentDisplayedServerId(state)
 });
 
 const mapDispatchToProps = {
   initExport: createInitExportAction,
-  openModal: () => openAction('addServerModal')
+  openModal() { return openAction('addServerModal'); }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarServers);

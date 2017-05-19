@@ -2,13 +2,14 @@ import { Observable } from 'rxjs';
 import { INIT, failAction } from './actions';
 import { requestAddMock } from '../../api/api';
 import { add as addNotification } from '../../entities/notifications/actions';
-import { add } from '../addMock/actions';
+import { add } from '../../entities/mocks/actions';
+import { add as addTask } from '../../entities/tasks/actions';
 
 export default action$ =>
   action$.ofType(INIT)
     .flatMap((action) => {
       try {
-        const { serverId, files } = action;
+        const { scenarioId, serverId, files } = action;
         const file = files[0];
 
         if (file) {
@@ -23,10 +24,37 @@ export default action$ =>
               Observable.from(
                 Promise.all(mocks.map(mock => requestAddMock(serverId, mock)))
               )
-            )
-            .flatMap(mocks => Observable.from(mocks))
-            .map(mock => add(...mock))
-            .catch(err => Observable.of(addNotification({ text: err.message, type: 'error' })));
+                .flatMap((responses, index) => {
+                  const actions = [];
+
+                  responses.forEach((response) => {
+                    const mock = Object.assign(
+                      { id: response.id },
+                      Object.assign(
+                        {},
+                        mocks[index]
+                      )
+                    );
+
+                    actions.push(add(
+                      scenarioId,
+                      response.id,
+                      mock
+                    ));
+
+                    mocks[index].tasks.forEach((task, taskIndex) => {
+                      task.id = response.tasks[taskIndex];
+                      actions.push(addTask(
+                        response.tasks[taskIndex],
+                        Object.assign({}, task, { id: response.tasks[taskIndex] })
+                      ))
+                    });
+                  });
+
+                  return actions;
+                })
+                .catch(err => Observable.of(addNotification({ text: err.message, type: 'error' })))
+            );
         }
       } catch (parseError) {
         // eslint-disable-next-line no-console

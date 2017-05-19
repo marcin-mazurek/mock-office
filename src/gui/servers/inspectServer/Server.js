@@ -6,16 +6,14 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
 import createStartAction from '../startServer/actions';
 import createStopAction from '../stopServer/actions';
-import {
-  isRunning,
-  getServerDetails
-} from '../../entities/servers/selectors';
+import { serverSelector } from '../../entities/servers/selectors';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
 import { init as createRemoveServerAction } from '../removeServer/actions';
 import { init as createRenameServerAction } from '../renameServer/actions';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../assets/icons_gray_add@3x.svg';
+import ServerRecord from '../../entities/servers/Server';
 
 const ServerToggle = ({ toggled, serverId, stop, start }) => {
   let handleClick;
@@ -94,9 +92,7 @@ const serverToggleMapDispatchToProps = {
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
 
-export const Server = ({ running, serverDetails, removeServer }) => {
-  const { name, port, type, id } = serverDetails;
-
+export const Server = ({ running, name, port, removeServer, scenario, id, type }) => {
   return (
     <div className="inspect-server">
       <div className="inspect-server__header inspect-server-header">
@@ -184,12 +180,12 @@ export const Server = ({ running, serverDetails, removeServer }) => {
             <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
             Add mock
           </Link>
-          <FilePickerConnect serverId={id} />
+          <FilePickerConnect scenario={scenario} server={id} />
         </div>
         <div className="inspect-server__mocks">
           <div className="inspect-server__mocks-scroll-container">
             <Scrollbars>
-              <MocksConnect serverId={id} />
+              <MocksConnect server={id} scenario={scenario} />
             </Scrollbars>
           </div>
         </div>
@@ -199,9 +195,13 @@ export const Server = ({ running, serverDetails, removeServer }) => {
 };
 
 Server.propTypes = {
-  running: React.PropTypes.bool.isRequired,
-  serverDetails: React.PropTypes.shape({}),
-  removeServer: React.PropTypes.func.isRequired
+  running: PropTypes.bool.isRequired,
+  removeServer: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  port: PropTypes.number.isRequired,
+  scenario: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 };
 
 const serverMapDispatchToProps = {
@@ -209,10 +209,18 @@ const serverMapDispatchToProps = {
   serverNameChange: createRenameServerAction
 };
 
-const serverMapStateToProps = (state, ownProps) => ({
-  running: isRunning(state, ownProps.params.id),
-  serverDetails: getServerDetails(state, ownProps.params.id)
-});
+const serverMapStateToProps = (state, ownProps) => {
+  const server = serverSelector(state, ownProps.params.id);
+
+  return {
+    id: server.id,
+    type: server.type,
+    name: server.name,
+    port: server.port,
+    scenario: server.scenario,
+    running: server.running
+  };
+};
 
 export default connect(
   serverMapStateToProps, serverMapDispatchToProps

@@ -14,7 +14,7 @@ describe('addServerEpic', () => {
     jest.mock('./rest', () => () =>
       Promise.resolve({
         data: {
-          id: 'some id',
+          id: 'server-id',
           port: 3000,
           name: 'name',
           type: 'http',

@@ -1,9 +1,11 @@
 import { Record } from 'immutable';
 
 export default new Record({
-  id: '',
+  id: null,
   name: 'New Server',
-  port: null,
-  type: '',
-  secure: false
+  port: 3000,
+  type: 'http',
+  secure: false,
+  scenario: null,
+  running: false
 });

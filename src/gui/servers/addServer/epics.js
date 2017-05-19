@@ -5,6 +5,7 @@ import { SUBMIT } from './actions';
 import requestAddServer from './rest';
 import { add as addNotification } from '../../entities/notifications/actions';
 import { closeAction as closeModalAction } from '../../modals/actions';
+import { add as addScenario } from '../../entities/scenarios/actions';
 
 const preparePayload = (action) => {
   const payload = {
@@ -28,7 +29,15 @@ const fail = result => [addNotification({ type: 'error', text: result.error })];
 const success = result => [
   addNotification({ type: 'success', text: 'Server added' }),
   closeModalAction(),
-  add(result.data.name, result.data.port, result.data.type, result.data.id, result.data.isSecure)
+  addScenario(result.data.id, result.data.id),
+  add(result.data.id, {
+    name: result.data.name,
+    port: result.data.port,
+    type: result.data.type,
+    id: result.data.id,
+    isSecure: result.data.isSecure,
+    scenario: result.data.id
+  })
 ];
 
 const hasError = has('error');

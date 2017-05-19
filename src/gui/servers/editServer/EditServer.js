@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router';
 import serverIcon from '../../assets/icons_gray_server.svg';
 import { init } from './actions';
-import { getServerDetails } from '../../entities/servers/selectors';
+import { serverSelector } from '../../entities/servers/selectors';
 
 export const EditServerForm = props =>
   <form className="form" action="#" onSubmit={props.handleSubmit}>
@@ -68,12 +68,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const serverDetails = getServerDetails(state, ownProps.serverId);
+  const server = serverSelector(state, ownProps.serverId);
 
   return {
     initialValues: {
-      name: serverDetails.name,
-      port: serverDetails.port
+      name: server.name,
+      port: server.port
     }
   };
 };

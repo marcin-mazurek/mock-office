@@ -1,18 +1,16 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
-import { REMOVE } from '../../mocks/removeMock/actions';
-import { ADD } from '../../mocks/addMock/actions';
+import { ADD, REMOVE, add, remove } from './actions';
 
 describe('mocks reducer', () => {
-  test(`${ADD}`, () => {
-    const state = reducer(fromJS({}), {
-      type: ADD,
-      id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ=='
-    });
-
-    expect(state.toJS()).toEqual({
-      'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==': {
-        id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
+  test(`on ${ADD} action`, () => {
+    const state = reducer(fromJS({
+      ids: [],
+      entities: {}
+    }), add(
+      'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==1',
+      'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
+      {
         interval: null,
         reuse: null,
         quantity: null,
@@ -26,21 +24,43 @@ describe('mocks reducer', () => {
         lastRunTimestamp: null,
         lastDuration: null
       }
+    ));
+
+    expect(state.toJS()).toEqual({
+      entities: {
+        'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==': {
+          id: 'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
+          interval: null,
+          reuse: null,
+          quantity: null,
+          title: '',
+          delay: null,
+          requirements: null,
+          tasks: [],
+          finished: false,
+          running: false,
+          runCount: 0,
+          lastRunTimestamp: null,
+          lastDuration: null
+        }
+      },
+      ids: ['AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==']
     });
   });
 
-  test(`${REMOVE}`, () => {
+  test(`on ${REMOVE} action`, () => {
     const state = reducer(fromJS({
-      'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==': {
-        id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
-      }
-    }), { type: REMOVE, mockId: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==' });
+      entities: {
+        'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==': {
+          id: 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='
+        }
+      },
+      ids: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
+    }), remove('AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==', 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='));
 
-    expect(state.toJS()).toEqual({});
-  });
-
-  test('unknown mock', () => {
-    const state = {};
-    expect(reducer(state, { type: 'unknown mock type' })).toBe(state);
+    expect(state.toJS()).toEqual({
+      entities: {},
+      ids: []
+    });
   });
 });

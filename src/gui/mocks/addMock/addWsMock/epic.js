@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { requestAddMock } from '../../../api/api';
 import { add as addNotification } from '../../../entities/notifications/actions';
-import { add } from '../actions';
+import { add } from '../../../entities/mocks/actions';
 
 export const SUBMIT = 'addWsMock/SUBMIT';
 
@@ -57,7 +57,7 @@ const processFormValues = (formValues) => {
   }
 
   return {
-    mock: {
+    data: {
       title: fV.title,
       requirements,
       tasks: fV.tasks
@@ -69,22 +69,55 @@ export default function addWsMockEpic(action$) {
   return action$.ofType(SUBMIT)
     .flatMap((action) => {
       try {
-        const { mock, error } = processFormValues(action.formValues);
+        const { data, error } = processFormValues(action.formValues);
 
         if (error) {
           return Observable.of(addNotification({ text: error.message, type: 'error' }))
         }
 
+        const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
+
         return Observable.from(
-          Promise.all(
-            [mock].map(
-              mock => requestAddMock(action.scenarioId, mock)
-            )
-          )
+          requestAddMock(action.scenarioId, Object.assign(data,
+            {
+              requirements: reqWithEvent
+            }
+          ))
+            .then(result => ({
+              id: result.id,
+              params: {
+                title: data.title,
+                interval: data.interval,
+                reuse: data.reuse,
+                quantity: data.quantity,
+                delay: data.delay,
+                requirements: reqWithEvent,
+                tasks: data.tasks.map((task, index) => {
+                  // eslint-disable-next-line no-param-reassign
+                  task.id = result.tasks[index];
+                  return task;
+                })
+              }
+            }))
         )
-          .flatMap(mocks => Observable.from(mocks))
-          .map(mock => add(...mock))
-          .catch(error => Observable.of(addNotification({ text: error.message, type: 'error' })))
+          .flatMap(result => {
+            const actions = [];
+
+            actions.push(add(action.scenarioId, result.id,
+              // add mock action needs only ids of tasks
+              Object.assign(
+                {},
+                result.params,
+                { tasks: result.params.tasks.map(task => task.id) }
+              )
+            ));
+            result.params.tasks.forEach(task =>
+              // add task action uses original full params object
+              actions.push(addTask(result.id, task.id, task))
+            );
+
+            return actions;
+          });
       } catch (error) {
         return Observable.of(addNotification({ text: error.message, type: 'error' }));
       }

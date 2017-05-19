@@ -6,13 +6,10 @@ export const REMOVE = 'servers/REMOVE';
 export const RENAME = 'servers/RENAME';
 export const UPDATE = 'server/UPDATE';
 
-export const add = (name, port, serverType, id, secure) => ({
+export const add = (id, params) => ({
   type: ADD,
-  name,
-  port,
-  id,
-  serverType,
-  secure
+  params,
+  id
 });
 
 export const select = id => ({

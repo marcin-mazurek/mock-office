@@ -15,7 +15,8 @@ describe('EditServerPage', () => {
 
 describe('EditServerForm', () => {
   test('default snapshot', () => {
-    const wrapper = shallow(<EditServerForm handleSubmit={() => {}} serverId={'id'} />);
+    const wrapper = shallow(<EditServerForm handleSubmit={() => {
+    }} serverId={'id'} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
@@ -23,7 +24,11 @@ describe('EditServerForm', () => {
 describe('EditServerFormConnect', () => {
   it('should be connected to store', () => {
     const store = configureStore();
-    store.dispatch(add('name', 3000, 'http', 'id'));
+    store.dispatch(add('id', {
+      name: 'name',
+      port: 3000,
+      type: 'http'
+    }));
     const wrapper = mount(
       <Provider store={store}>
         <EditServerFormConnect serverId="id" />

@@ -7,8 +7,9 @@ import { Mocks } from './Mocks';
 describe('Mocks', () => {
   test('default snapshot', () => {
     const props = {
-      mockIds: new List(),
-      scenarioId: 'some id',
+      mocks: new List(),
+      server: 'server-id',
+      scenario: 'scenario-id',
       remove: () => {}
     };
     const wrapper = shallow(<Mocks {...props} serverId={'server id'} />);
