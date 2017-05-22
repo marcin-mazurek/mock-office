@@ -3,10 +3,10 @@ export const REMOVE = 'mocks/REMOVE';
 export const FINISH = 'mocks/FINISH';
 export const REMOVE_AFTER_USE = 'mocks/REMOVE_AFTER_USE';
 
-export const add = (scenarioId, mockId, params) => ({
+export const add = (scenario, id, params) => ({
   type: ADD,
-  scenarioId,
-  mockId,
+  id,
+  scenario,
   params
 });
 

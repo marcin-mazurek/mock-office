@@ -19,20 +19,18 @@ const EventTypeField = field =>
       { value: 'CLIENT_CONNECTED', label: 'on connect' }
     ]}
   />;
-
+// eslint-disable-next-line react/prop-types
 const renderTasks = ({ fields }) =>
   <div>
     <ul className="add-ws-mock-tasks-list">
       {
-        fields.map((field, index) => {
-          return (
-            <li className="add-ws-mock-tasks-list__item" key={index}>
-              <FormSection name={field}>
-                <TaskFormSection />
-              </FormSection>
-            </li>
-          );
-        })
+        fields.map((field, index) =>
+          <li className="add-ws-mock-tasks-list__item" key={index}>
+            <FormSection name={field}>
+              <TaskFormSection />
+            </FormSection>
+          </li>
+        )
       }
     </ul>
     <button
@@ -98,7 +96,7 @@ AddMockForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(submit(ownProps.scenarioId, values.toJS()))
+  onSubmit: values => dispatch(submit(ownProps.server, ownProps.scenario, values.toJS()))
 });
 
 export default connect(null, mapDispatchToProps)(

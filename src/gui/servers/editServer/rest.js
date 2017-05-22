@@ -1,4 +1,4 @@
-import { ConnectionError } from '../../errors/types';
+import { ConnectionError } from '../../api/errors';
 
 export default function requestEditServer(id, params) {
   return fetch('http://127.0.0.1:3060/edit-server', {

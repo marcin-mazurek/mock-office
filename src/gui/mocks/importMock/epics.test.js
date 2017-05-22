@@ -13,10 +13,12 @@ describe('importMockEpic', () => {
 
   test.only('snapshot of success flow', (done) => {
     jest.mock('../../api/api', () => ({
-      requestAddMock() { return Promise.resolve({
-        id: 'mock-id',
-        tasks: []
-      });}
+      requestAddMock() {
+        return Promise.resolve({
+          id: 'mock-id',
+          tasks: []
+        });
+      }
     }));
     const addMockFromFileEpic = require('./epics').default;
     const epicMiddleware = createEpicMiddleware(addMockFromFileEpic);
@@ -43,6 +45,6 @@ describe('importMockEpic', () => {
     setTimeout(() => {
       expect(store.getActions()).toMatchSnapshot();
       done();
-    }, 100)
+    }, 100);
   });
 });

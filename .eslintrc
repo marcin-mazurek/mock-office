@@ -14,7 +14,8 @@
       "devDependencies": true,
       "optionalDependencies": false
     }],
-    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+    "global-require": "off"
   },
   "parserOptions": {
     "ecmaFeatures": {

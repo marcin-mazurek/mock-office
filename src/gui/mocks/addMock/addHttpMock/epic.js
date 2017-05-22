@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { requestAddMock } from '../../../api/api';
+import api from '../../../api';
 import { add as addNotification } from '../../../entities/notifications/actions';
 import { add } from '../../../entities/mocks/actions';
 import { add as addTask } from '../../../entities/tasks/actions';
@@ -63,7 +63,7 @@ export default function addMockEpic(action$) {
         const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
 
         return Observable.from(
-          requestAddMock(action.server, action.scenario, Object.assign(data,
+          api.addMock(action.server, action.scenario, Object.assign(data,
             {
               requirements: reqWithEvent
             }

@@ -43,8 +43,8 @@ Array [
     "type": "modals/CLOSE",
   },
   Object {
-    "scenarioId": "server-id",
-    "serverId": "server-id",
+    "id": "server-id",
+    "server": "server-id",
     "type": "scenarios/ADD",
   },
   Object {

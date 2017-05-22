@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
-import { removeAfterUse, finish } from '../mocks/removeMock/actions';
-import { run, stop, add as addMock } from '../entities/mocks/actions';
+import { run, stop, add as addMock, removeAfterUse, finish } from '../entities/mocks/actions';
 import { add, start } from '../entities/servers/actions';
 import { add as addScenario } from '../entities/scenarios/actions';
 import { add as addTask } from '../entities/tasks/actions';

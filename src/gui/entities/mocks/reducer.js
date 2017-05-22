@@ -11,19 +11,19 @@ const initialState = new Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { mockId, params } = action;
+      const { id, params } = action;
 
       params.tasks = new List();
       const mock = new Mock(
         Object.assign(
-          { id: mockId },
+          { id },
           Object.assign({}, params)
         )
       );
 
       return state
-        .setIn(['entities', mockId], mock)
-        .update('ids', ids => ids.push(mockId));
+        .setIn(['entities', id], mock)
+        .update('ids', ids => ids.push(id));
     }
     case REMOVE: {
       const { mockId } = action;

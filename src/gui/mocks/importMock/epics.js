@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { INIT, failAction } from './actions';
-import { requestAddMock } from '../../api/api';
+import api from '../../api';
 import { add as addNotification } from '../../entities/notifications/actions';
 import { add } from '../../entities/mocks/actions';
 import { add as addTask } from '../../entities/tasks/actions';
@@ -22,7 +22,7 @@ export default action$ =>
           return Observable.fromPromise(fileRead)
             .flatMap(mocks =>
               Observable.from(
-                Promise.all(mocks.map(mock => requestAddMock(server, scenario, mock)))
+                Promise.all(mocks.map(mock => api.addMock(server, scenario, mock)))
               )
                 .flatMap((responses, index) => {
                   const actions = [];

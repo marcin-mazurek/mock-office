@@ -1,6 +1,7 @@
 import { Map, List, Set } from 'immutable';
 import { ADD, SELECT, START, STOP, REMOVE, RENAME, UPDATE } from './actions';
 import Server from './Server';
+import { ADD as ADD_SCENARIO } from '../scenarios/actions';
 
 const initialState = new Map({
   entities: new Map(),
@@ -49,6 +50,9 @@ export default (state = initialState, action) => {
     }
     case UPDATE: {
       return state.mergeIn(['entities', action.id], action.params);
+    }
+    case ADD_SCENARIO: {
+      return state.setIn(['entities', action.server, 'scenario'], action.id);
     }
     default: {
       return state;

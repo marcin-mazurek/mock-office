@@ -11,17 +11,19 @@ describe('addServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const createSubmitAction = require('./actions').submit;
-    jest.mock('./rest', () => () =>
-      Promise.resolve({
-        data: {
-          id: 'server-id',
-          port: 3000,
-          name: 'name',
-          type: 'http',
-          isSecure: false
-        }
-      })
-    );
+    jest.mock('../../api', () => ({
+      addServer() {
+        return Promise.resolve({
+          data: {
+            id: 'server-id',
+            port: 3000,
+            name: 'name',
+            type: 'http',
+            isSecure: false
+          }
+        });
+      }
+    }));
     // eslint-disable-next-line global-require
     const addServerEpic = require('./epics').default;
     const epicMiddleware = createEpicMiddleware(addServerEpic);
@@ -47,8 +49,12 @@ describe('addServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const createSubmitAction = require('./actions').submit;
-    jest.mock('./rest', () => () => Promise.resolve({
-      error: 'error message'
+    jest.mock('../../api', () => ({
+      addServer() {
+        return Promise.resolve({
+          error: 'error message'
+        });
+      }
     }));
     // eslint-disable-next-line global-require
     const addServerEpic = require('./epics').default;

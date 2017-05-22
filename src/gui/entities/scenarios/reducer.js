@@ -33,8 +33,8 @@ export default (state = initialState, action) => {
         .deleteIn(['entities', id]);
     }
     case ADD_MOCK: {
-      return state.updateIn(['entities', action.scenarioId, 'mocks'],
-        mocks => mocks.push(action.mockId)
+      return state.updateIn(['entities', action.scenario, 'mocks'],
+        mocks => mocks.push(action.id)
       );
     }
     case REMOVE_MOCK: {

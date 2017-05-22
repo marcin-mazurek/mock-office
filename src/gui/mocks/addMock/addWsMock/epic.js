@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
-import { requestAddMock } from '../../../api/api';
+import api from '../../../api';
 import { add as addNotification } from '../../../entities/notifications/actions';
 import { add } from '../../../entities/mocks/actions';
+import { add as addTask } from '../../../entities/tasks/actions';
 
 export const SUBMIT = 'addWsMock/SUBMIT';
 
@@ -20,7 +21,7 @@ const processFormValues = (formValues) => {
   if (requirementsSubmitted) {
     try {
       requirements = JSON.parse(requirementsSubmitted);
-    } catch (error) {
+    } catch (e) {
       throw new Error('Requirements JSON is broken');
     }
     requirements = Object.assign({}, requirements);
@@ -31,6 +32,7 @@ const processFormValues = (formValues) => {
   Object.assign(requirements, { event: fV.event });
 
   fV.tasks.forEach((task) => {
+    /* eslint-disable no-param-reassign */
     if (error) {
       return;
     }
@@ -49,6 +51,7 @@ const processFormValues = (formValues) => {
       }
 
       task.delay = parseInt(task.delay, 10);
+      /* eslint-enable no-param-reassign */
     }
   });
 
@@ -72,13 +75,13 @@ export default function addWsMockEpic(action$) {
         const { data, error } = processFormValues(action.formValues);
 
         if (error) {
-          return Observable.of(addNotification({ text: error.message, type: 'error' }))
+          return Observable.of(addNotification({ text: error.message, type: 'error' }));
         }
 
         const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
 
         return Observable.from(
-          requestAddMock(action.scenarioId, Object.assign(data,
+          api.addMock(action.server, action.scenario, Object.assign(data,
             {
               requirements: reqWithEvent
             }
@@ -100,10 +103,10 @@ export default function addWsMockEpic(action$) {
               }
             }))
         )
-          .flatMap(result => {
+          .flatMap((result) => {
             const actions = [];
 
-            actions.push(add(action.scenarioId, result.id,
+            actions.push(add(action.scenario, result.id,
               // add mock action needs only ids of tasks
               Object.assign(
                 {},
