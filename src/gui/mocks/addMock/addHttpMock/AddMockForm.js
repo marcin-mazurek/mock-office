@@ -55,10 +55,10 @@ AddMockForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(submit(ownProps.scenarioId, values.toJS()))
+  onSubmit: values => dispatch(submit(ownProps.server, ownProps.scenario, values.toJS()))
 });
 
-export default connect(null, mapDispatchToProps)(
+const AddMockFormConnect = connect(null, mapDispatchToProps)(
   reduxForm(
     {
       form: 'addHttpMock',
@@ -70,3 +70,5 @@ export default connect(null, mapDispatchToProps)(
     }
   )(AddMockForm)
 );
+
+export default AddMockFormConnect;

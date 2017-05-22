@@ -2,7 +2,7 @@ import { ConnectionError } from '../errors/types';
 import { ValidationError, ServerNotFoundError } from '../servers/startServer/errors';
 
 /* eslint-disable import/prefer-default-export */
-export const requestAddMock = (serverId, mock) =>
+export const requestAddMock = (serverId, scenarioId, mock) =>
   fetch('http://127.0.0.1:3060/add-mock', {
     headers: {
       Accept: 'application/json, text/plain, */*',

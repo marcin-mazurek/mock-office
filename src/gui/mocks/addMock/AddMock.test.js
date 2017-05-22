@@ -12,7 +12,8 @@ describe('AddMock', () => {
     const props = {
       serverType: 'server type',
       scenarioId: 'scenario-id',
-      params: { id: 'server-id' }
+      params: { id: 'server-id' },
+      onSubmit: () => {}
     };
     const wrapper = shallow(<AddMock {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();

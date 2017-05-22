@@ -6,7 +6,9 @@ import { FilePicker } from './FilePicker';
 describe('FilePicker', () => {
   test('default snapshot', () => {
     const props = {
-      init: () => {}
+      init: () => {},
+      server: 'server',
+      scenario: 'scenario'
     };
 
     const wrapper = shallow(<FilePicker {...props} serverId={'server id'} />);
@@ -17,7 +19,9 @@ describe('FilePicker', () => {
     const mockedHandleChange = jest.fn();
 
     const props = {
-      init: mockedHandleChange
+      init: mockedHandleChange,
+      server: 'server',
+      scenario: 'scenario'
     };
 
     const wrapper = mount(<FilePicker {...props} serverId={'server id'} />);
@@ -44,7 +48,9 @@ describe('FilePicker', () => {
 
   it('should clean input value after file pick', () => {
     const props = {
-      init: () => {}
+      init: () => {},
+      server: 'server',
+      scenario: 'scenario'
     };
     const wrapper = mount(<FilePicker {...props} serverId={'server id'} />);
     const fileInput = wrapper.find('input');

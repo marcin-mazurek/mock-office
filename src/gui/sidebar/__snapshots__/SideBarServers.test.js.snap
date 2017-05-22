@@ -13,12 +13,14 @@ exports[`SideBarServers should render 1`] = `
       </div>
       <button
         className="sidebar-servers__header-export-button"
+        onClick={[Function]}
       >
         Export
       </button>
     </div>
     <button
       className="sidebar-servers__add-server-button"
+      onClick={[Function]}
     >
       <img
         role="presentation"

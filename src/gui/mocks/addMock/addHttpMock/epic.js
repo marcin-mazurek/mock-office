@@ -6,9 +6,10 @@ import { add as addTask } from '../../../entities/tasks/actions';
 
 export const SUBMIT = 'addHttpMock/SUBMIT';
 
-export const submit = (scenarioId, formValues) => ({
+export const submit = (server, scenario, formValues) => ({
   type: SUBMIT,
-  scenarioId,
+  server,
+  scenario,
   formValues
 });
 
@@ -42,7 +43,7 @@ const processFormValues = (formValues) => {
         error: {
           message: 'Delay is < 0'
         }
-      }
+      };
     }
 
     fV.task.delay = parseInt(fV.task.delay, 10);
@@ -64,13 +65,13 @@ export default function addMockEpic(action$) {
         const { data, error } = processFormValues(action.formValues);
 
         if (error) {
-          return Observable.of(addNotification({ text: error.message, type: 'error' }))
+          return Observable.of(addNotification({ text: error.message, type: 'error' }));
         }
 
         const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
 
         return Observable.from(
-          requestAddMock(action.scenarioId, Object.assign(data,
+          requestAddMock(action.serverId, action.scenarioId, Object.assign(data,
             {
               requirements: reqWithEvent
             }
@@ -92,7 +93,7 @@ export default function addMockEpic(action$) {
               }
             }))
         )
-          .flatMap(result => {
+          .flatMap((result) => {
             const actions = [];
 
             actions.push(add(action.scenarioId, result.id,

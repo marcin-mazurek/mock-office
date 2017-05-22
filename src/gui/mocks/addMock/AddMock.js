@@ -40,4 +40,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(AddMock);
+const AddMockConnect = connect(mapStateToProps)(AddMock);
+
+export default AddMockConnect;
