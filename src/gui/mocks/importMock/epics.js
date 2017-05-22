@@ -9,7 +9,7 @@ export default action$ =>
   action$.ofType(INIT)
     .flatMap((action) => {
       try {
-        const { scenarioId, serverId, files } = action;
+        const { scenario, server, files } = action;
         const file = files[0];
 
         if (file) {
@@ -22,11 +22,10 @@ export default action$ =>
           return Observable.fromPromise(fileRead)
             .flatMap(mocks =>
               Observable.from(
-                Promise.all(mocks.map(mock => requestAddMock(serverId, mock)))
+                Promise.all(mocks.map(mock => requestAddMock(server, mock)))
               )
                 .flatMap((responses, index) => {
                   const actions = [];
-
                   responses.forEach((response) => {
                     const mock = Object.assign(
                       { id: response.id },
@@ -35,19 +34,17 @@ export default action$ =>
                         mocks[index]
                       )
                     );
-
                     actions.push(add(
-                      scenarioId,
+                      scenario,
                       response.id,
                       mock
                     ));
-
                     mocks[index].tasks.forEach((task, taskIndex) => {
-                      task.id = response.tasks[taskIndex];
+                      Object.assign(task, { id: response.tasks[taskIndex] });
                       actions.push(addTask(
                         response.tasks[taskIndex],
                         Object.assign({}, task, { id: response.tasks[taskIndex] })
-                      ))
+                      ));
                     });
                   });
 

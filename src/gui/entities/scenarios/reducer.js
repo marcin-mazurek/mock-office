@@ -15,22 +15,22 @@ const Scenario = new Record({
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { scenarioId } = action;
+      const { id } = action;
       const params = {
-        scenarioId
+        id
       };
 
-      const scenario = new Scenario(Object.assign(params, { id: scenarioId }));
+      const scenario = new Scenario(Object.assign(params, { id }));
 
       return state
-        .setIn(['entities', scenarioId], scenario)
-        .update('ids', ids => ids.push(scenarioId));
+        .setIn(['entities', id], scenario)
+        .update('ids', ids => ids.push(id));
     }
     case REMOVE: {
-      const { id: scenarioId } = action;
+      const { id } = action;
       return state
-        .update('ids', ids => ids.filter(id => id !== scenarioId))
-        .deleteIn(['entities', scenarioId]);
+        .update('ids', ids => ids.filter(scenarioId => scenarioId !== id))
+        .deleteIn(['entities', id]);
     }
     case ADD_MOCK: {
       return state.updateIn(['entities', action.scenarioId, 'mocks'],

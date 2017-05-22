@@ -50,7 +50,7 @@ export default function startAppSync(store) {
               scenario: server.id
             }));
 
-            store.dispatch(addScenario(server.id));
+            store.dispatch(addScenario(server.id, server.id));
 
             if (server.running) {
               store.dispatch(start(server.id));

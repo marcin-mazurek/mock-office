@@ -1,10 +1,10 @@
 export const ADD = 'scenarios/ADD';
 export const REMOVE = 'scenarios/REMOVE';
 
-export const add = (serverId, scenarioId) => ({
+export const add = (server, id) => ({
   type: ADD,
-  serverId,
-  scenarioId
+  server,
+  id
 });
 
 export const remove = id => ({

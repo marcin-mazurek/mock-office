@@ -1,10 +1,10 @@
 export const INIT = 'importMock/INIT';
 export const FAILED = 'importMock/FAILED';
 
-export const initAction = (serverId, scenarioId, files) => ({
+export const initAction = (server, scenario, files) => ({
   type: INIT,
-  serverId,
-  scenarioId,
+  server,
+  scenario,
   files
 });
 
