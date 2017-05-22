@@ -1,4 +1,4 @@
-import { fromJS, Set } from 'immutable';
+import { fromJS } from 'immutable';
 import reducer from './reducer';
 import {
   ADD,
@@ -14,20 +14,30 @@ describe('servers reducer', () => {
   test(`on ${SELECT} action`, () => {
     const state = reducer(fromJS({
       selected: null,
-    }), { type: SELECT, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
+    }), { type: SELECT, id: 'server-id' });
 
     expect(state.toJS()).toEqual({
-      selected: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA=='
+      selected: 'server-id'
     });
   });
 
   test(`on ${START} action`, () => {
     const state = reducer(fromJS({
-      running: new Set()
-    }), { type: START, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
+      entities: {
+        'server-id': {
+          running: false
+        }
+      },
+      ids: []
+    }), { type: START, id: 'server-id' });
 
     expect(state.toJS()).toEqual({
-      running: ['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==']
+      entities: {
+        'server-id': {
+          running: true
+        }
+      },
+      ids: []
     });
   });
 
@@ -62,14 +72,22 @@ describe('servers reducer', () => {
   });
 
   test(`on ${STOP} action`, () => {
-    const state = reducer(fromJS(
-      {
-        running: new Set(['AVn5T880aJDt/Sk2SBSBDtTSTNXMmA=='])
-      }
-    ), { type: STOP, id: 'AVn5T880aJDt/Sk2SBSBDtTSTNXMmA==' });
+    const state = reducer(fromJS({
+      entities: {
+        'server-id': {
+          running: true
+        }
+      },
+      ids: []
+    }), { type: STOP, id: 'server-id' });
 
     expect(state.toJS()).toEqual({
-      running: []
+      entities: {
+        'server-id': {
+          running: false
+        }
+      },
+      ids: []
     });
   });
 

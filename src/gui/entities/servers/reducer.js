@@ -31,10 +31,10 @@ export default (state = initialState, action) => {
       return state.set('selected', action.id);
     }
     case START: {
-      return state.update('running', running => running.add(action.id));
+      return state.setIn(['entities', action.id, 'running'], true);
     }
     case STOP: {
-      return state.update('running', running => running.delete(action.id));
+      return state.setIn(['entities', action.id, 'running'], false);
     }
     case REMOVE: {
       let newState = state.update('ids', ids => ids.filter(id => id !== action.id));
