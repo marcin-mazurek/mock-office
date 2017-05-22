@@ -8,7 +8,11 @@ describe('startServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('./actions').default;
-    jest.mock('./rest', () => () => Promise.resolve({ id: 'some id' }));
+    jest.mock('../../api', () => ({
+      startServer() {
+        return Promise.resolve({ id: 'some id' });
+      }
+    }));
     // eslint-disable-next-line global-require
     const startServerEpic = require('./epics').default;
 
@@ -27,7 +31,11 @@ describe('startServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('./actions').default;
-    jest.mock('./rest', () => () => Promise.resolve({ error: 'error message' }));
+    jest.mock('../../api', () => ({
+      startServer() {
+        return Promise.resolve({ error: 'error message' });
+      }
+    }));
     const startServerEpic = require('./epics').default;
 
     const epicMiddleware = createEpicMiddleware(startServerEpic);

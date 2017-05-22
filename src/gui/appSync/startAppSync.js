@@ -33,6 +33,7 @@ export default function startAppSync(store) {
           setTimeout(() => {
             store.dispatch(removeAfterUse(...eventArgs2ActionPayload(data)));
           }, 5000);
+
           break;
         }
         case 'MOCK_START': {

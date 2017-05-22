@@ -26,7 +26,7 @@ export default {
           return res.json().then(resPayload => ({ error: resPayload.error }));
         }
 
-        throw new Error(`Unsupported API status: ${res.status}`);
+        throw new Error('Unknown server response');
       })
       .catch((error) => {
         let errorMessage;
@@ -51,18 +51,47 @@ export default {
       })
     )
       .catch(() => {
-        throw new ConnectionError('Connection failed.');
+        throw new ConnectionError('Connection failed');
       })
       .then(res =>
         res.json().then((payload) => {
-          if (res.status === 400) {
+          if (res.status === 200) {
+            return res.json();
+          } else if (res.status === 400) {
             throw new ValidationError(payload.error);
           } else if (res.status === 404) {
             throw new ServerNotFoundError('Server not found');
           }
 
-          return payload;
+          throw new Error('Unknown server response');
         })
       );
+  },
+  startServer(params) {
+    return catchConnectionErrors(
+      fetch('http://127.0.0.1:3060/start-server',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(params)
+        })
+    )
+      .catch(() => {
+        throw new Error('Connection failed');
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json().then(payload => ({ data: payload }));
+        } else if (res.status === 400) {
+          return res.json().then(payload => ({ error: payload.error }));
+        } else if (res.status === 404) {
+          return { error: 'Server not found' };
+        }
+
+        throw new Error('Unknown server response');
+      });
   }
 };
