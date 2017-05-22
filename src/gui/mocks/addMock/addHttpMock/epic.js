@@ -3,15 +3,7 @@ import { requestAddMock } from '../../../api/api';
 import { add as addNotification } from '../../../entities/notifications/actions';
 import { add } from '../../../entities/mocks/actions';
 import { add as addTask } from '../../../entities/tasks/actions';
-
-export const SUBMIT = 'addHttpMock/SUBMIT';
-
-export const submit = (server, scenario, formValues) => ({
-  type: SUBMIT,
-  server,
-  scenario,
-  formValues
-});
+import { SUBMIT } from './actions';
 
 const processFormValues = (formValues) => {
   const fV = formValues;
@@ -71,7 +63,7 @@ export default function addMockEpic(action$) {
         const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
 
         return Observable.from(
-          requestAddMock(action.serverId, action.scenarioId, Object.assign(data,
+          requestAddMock(action.server, action.scenario, Object.assign(data,
             {
               requirements: reqWithEvent
             }
@@ -96,7 +88,7 @@ export default function addMockEpic(action$) {
           .flatMap((result) => {
             const actions = [];
 
-            actions.push(add(action.scenarioId, result.id,
+            actions.push(add(action.scenario, result.id,
               // add mock action needs only ids of tasks
               Object.assign(
                 {},

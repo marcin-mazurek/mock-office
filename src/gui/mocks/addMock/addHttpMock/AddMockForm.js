@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import TaskFormSection from './TaskFormSection';
-import { submit } from './epic';
+import { submit } from './actions';
 
 export const AddMockForm = props => (
   <form className="form" onSubmit={props.handleSubmit}>

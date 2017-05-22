@@ -7,7 +7,7 @@ import { serverSelector } from '../../entities/servers/selectors';
 import AddHttpMockFormConnect from './addHttpMock/AddMockForm';
 import AddWsMockFormConnect from './addWsMock/AddWsMockForm';
 
-export const AddMock = ({ serverType, scenarioId, params }) => (
+export const AddMock = ({ serverType, scenario, params }) => (
   <Scrollbars>
     <div className="add-mock">
       <Link to={`/server/${params.id}`} className="add-mock__back-button">
@@ -15,8 +15,8 @@ export const AddMock = ({ serverType, scenarioId, params }) => (
       </Link>
       {
         serverType === 'http'
-          ? <AddHttpMockFormConnect scenarioId={scenarioId} />
-          : <AddWsMockFormConnect scenarioId={scenarioId} />
+          ? <AddHttpMockFormConnect scenario={scenario} server={params.id} />
+          : <AddWsMockFormConnect scenario={scenario} server={params.id} />
       }
     </div>
   </Scrollbars>
@@ -25,7 +25,7 @@ export const AddMock = ({ serverType, scenarioId, params }) => (
 
 AddMock.propTypes = {
   serverType: PropTypes.string.isRequired,
-  scenarioId: PropTypes.string.isRequired,
+  scenario: PropTypes.string.isRequired,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired
@@ -36,7 +36,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     serverType: serverDetails.type,
-    scenarioId: serverDetails.id
+    scenario: serverDetails.id
   };
 };
 
