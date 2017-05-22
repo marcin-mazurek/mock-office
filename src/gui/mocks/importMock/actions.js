@@ -1,5 +1,5 @@
 export const INIT = 'importMock/INIT';
-export const FAILED = 'importMock/FAILED';
+export const CANCELLED = 'importMock/CANCELLED';
 
 export const initAction = (server, scenario, files) => ({
   type: INIT,
@@ -8,6 +8,6 @@ export const initAction = (server, scenario, files) => ({
   files
 });
 
-export const failAction = () => ({
-  type: FAILED
+export const cancelAction = () => ({
+  type: CANCELLED
 });

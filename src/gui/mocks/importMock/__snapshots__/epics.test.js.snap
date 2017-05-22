@@ -36,12 +36,12 @@ Array [
     "type": "importMock/INIT",
   },
   Object {
-    "mockId": "mock-id",
+    "id": "mock-id",
     "params": Object {
       "id": "mock-id",
       "tasks": Array [],
     },
-    "scenarioId": "scenario-id",
+    "scenario": "scenario-id",
     "type": "mocks/ADD",
   },
 ]

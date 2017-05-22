@@ -1,4 +1,4 @@
-import { Map, Set } from 'immutable';
+import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import 'rxjs';
 import { createEpicMiddleware } from 'redux-observable';
@@ -12,11 +12,13 @@ describe('importMockEpic', () => {
   });
 
   test.only('snapshot of success flow', (done) => {
-    jest.mock('../../api/api', () => ({
-      requestAddMock() {
+    jest.mock('../../api', () => ({
+      addMock() {
         return Promise.resolve({
-          id: 'mock-id',
-          tasks: []
+          data: {
+            id: 'mock-id',
+            tasks: []
+          }
         });
       }
     }));
@@ -24,19 +26,16 @@ describe('importMockEpic', () => {
     const epicMiddleware = createEpicMiddleware(addMockFromFileEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     store = mockStore(new Map({
-      servers: new Map({
+      mocks: new Map({
         entities: new Map({
-          'server id': {
+          'mock-id': {
             type: 'server type',
             name: 'server name',
             port: 3000,
-            id: 'server-id'
+            id: 'mock-id'
           }
-        }),
-        selected: 'server id',
-        running: new Set()
-      }),
-      mocks: new Map()
+        })
+      })
     }));
 
     store.dispatch(initAction('server-id', 'scenario-id', [

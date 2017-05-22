@@ -1,5 +1,4 @@
 import { ConnectionError } from './errors';
-import { ValidationError, ServerNotFoundError } from '../servers/startServer/errors';
 
 function catchConnectionErrors(promise) {
   return promise.catch(() => {
@@ -26,7 +25,7 @@ export default {
           return res.json().then(resPayload => ({ error: resPayload.error }));
         }
 
-        throw new Error('Unknown server response');
+        return { error: 'Unknown server response' };
       })
       .catch((error) => {
         let errorMessage;
@@ -53,19 +52,17 @@ export default {
       .catch(() => {
         throw new ConnectionError('Connection failed');
       })
-      .then(res =>
-        res.json().then((payload) => {
-          if (res.status === 200) {
-            return res.json();
-          } else if (res.status === 400) {
-            throw new ValidationError(payload.error);
-          } else if (res.status === 404) {
-            throw new ServerNotFoundError('Server not found');
-          }
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json().then(payload => ({ data: payload }));
+        } else if (res.status === 400) {
+          return res.json().then(payload => ({ error: payload.error }));
+        } else if (res.status === 404) {
+          return { error: 'Server not found' };
+        }
 
-          throw new Error('Unknown server response');
-        })
-      );
+        return { error: 'Unknown server response' };
+      });
   },
   startServer(params) {
     return catchConnectionErrors(
@@ -91,7 +88,7 @@ export default {
           return { error: 'Server not found' };
         }
 
-        throw new Error('Unknown server response');
+        return { error: 'Unknown server response' };
       });
   }
 };

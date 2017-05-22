@@ -1,8 +1,8 @@
 export const INIT = 'addMock/INIT';
 
-export const init = (serverId, scenarioId, mock) => ({
+export const init = (server, scenario, mock) => ({
   type: INIT,
-  serverId,
-  scenarioId,
+  server,
+  scenario,
   mock
 });

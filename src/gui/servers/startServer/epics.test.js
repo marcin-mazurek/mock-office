@@ -10,7 +10,9 @@ describe('startServerEpic', () => {
     const initStart = require('./actions').default;
     jest.mock('../../api', () => ({
       startServer() {
-        return Promise.resolve({ id: 'some id' });
+        return Promise.resolve({
+          data: { id: 'some id' }
+        });
       }
     }));
     // eslint-disable-next-line global-require
