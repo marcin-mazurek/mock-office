@@ -33,7 +33,7 @@ exports[`AddMock default snapshot 1`] = `
        Server details
     </Link>
     <Connect(ReduxForm)
-      scenarioId="scenario-id"
+      server="server-id"
     />
   </div>
 </Scrollbars>

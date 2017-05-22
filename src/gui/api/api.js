@@ -9,7 +9,7 @@ export const requestAddMock = (server, scenario, mock) =>
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify({ server, mock })
+    body: JSON.stringify({ server, scenario, mock })
   })
     .catch(() => {
       throw new ConnectionError('Connection failed.');

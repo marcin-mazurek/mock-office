@@ -47,10 +47,10 @@ export default function startAppSync(store) {
               port: server.port,
               type: server.type,
               isSecure: server.isSecure,
-              scenario: server.id
+              scenario: server.scenario
             }));
 
-            store.dispatch(addScenario(server.id, server.id));
+            store.dispatch(addScenario(server.id, server.scenario));
 
             if (server.running) {
               store.dispatch(start(server.id));
@@ -59,7 +59,7 @@ export default function startAppSync(store) {
             server.mocks.forEach((mock) => {
               store.dispatch(
                 addMock(
-                  server.id, mock.id, {
+                  server.scenario, mock.id, {
                     title: mock.title,
                     interval: mock.interval,
                     reuse: mock.reuse,

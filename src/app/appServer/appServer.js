@@ -159,7 +159,10 @@ export const createAppServer = (serversManager) => {
   app.post('/add-mock', bodyParser.json(), (req, res) => {
     const schema = {
       properties: {
-        serverId: {
+        server: {
+          type: 'string'
+        },
+        scenario: {
           type: 'string'
         },
         mock: {
@@ -200,12 +203,11 @@ export const createAppServer = (serversManager) => {
           required: ['tasks']
         }
       },
-      required: ['serverId', 'mock']
+      required: ['server', 'scenario', 'mock']
     };
 
     if (ajv.validate(schema, req.body)) {
-      const server = serversManager.find(req.body.serverId);
-
+      const server = serversManager.find(req.body.server);
       if (!server) {
         res.status(404).end();
         return;
@@ -213,7 +215,6 @@ export const createAppServer = (serversManager) => {
 
       const mockId = server.getScenario().addMock(req.body.mock);
       const tasks = server.getScenario().find(mockId).tasks.map(part => part.id);
-
       res.status(200).json({
         id: mockId,
         tasks

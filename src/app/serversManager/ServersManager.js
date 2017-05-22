@@ -96,6 +96,7 @@ class ServersManager {
         type: server.type,
         port: server.port,
         id: server.id,
+        scenario: server.getScenario().id,
         mocks: server.getScenario().mocks.map(mock => ({
           id: mock.id,
           title: mock.title,

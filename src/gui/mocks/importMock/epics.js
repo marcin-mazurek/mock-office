@@ -22,7 +22,7 @@ export default action$ =>
           return Observable.fromPromise(fileRead)
             .flatMap(mocks =>
               Observable.from(
-                Promise.all(mocks.map(mock => requestAddMock(server, mock)))
+                Promise.all(mocks.map(mock => requestAddMock(server, scenario, mock)))
               )
                 .flatMap((responses, index) => {
                   const actions = [];
@@ -42,6 +42,7 @@ export default action$ =>
                     mocks[index].tasks.forEach((task, taskIndex) => {
                       Object.assign(task, { id: response.tasks[taskIndex] });
                       actions.push(addTask(
+                        response.id,
                         response.tasks[taskIndex],
                         Object.assign({}, task, { id: response.tasks[taskIndex] })
                       ));

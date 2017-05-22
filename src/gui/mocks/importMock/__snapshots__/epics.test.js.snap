@@ -31,8 +31,8 @@ Array [
         },
       },
     ],
-    "scenarioId": "scenario-id",
-    "serverId": "server-id",
+    "scenario": "scenario-id",
+    "server": "server-id",
     "type": "importMock/INIT",
   },
   Object {
