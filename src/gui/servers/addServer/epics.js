@@ -8,16 +8,17 @@ import { closeAction as closeModalAction } from '../../modals/actions';
 import { add as addScenario } from '../../entities/scenarios/actions';
 
 const preparePayload = (action) => {
+  const { values } = action;
   const payload = {
-    name: action.values.name,
-    port: parseInt(action.values.port, 10),
-    type: action.values.type,
-    isSecure: action.values.isSecure
+    name: values.get('name'),
+    port: parseInt(values.get('port'), 10),
+    type: values.get('type'),
+    isSecure: values.get('isSecure')
   };
 
   if (payload.isSecure === true) {
-    payload.keyPath = action.values.keyPath;
-    payload.certPath = action.values.certPath;
+    payload.keyPath = values.get('keyPath');
+    payload.certPath = values.get('certPath');
   }
 
   return payload;
