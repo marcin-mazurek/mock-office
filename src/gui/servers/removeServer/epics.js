@@ -25,17 +25,13 @@ const onSuccess = store => (result) => {
   if (displayedServerId === data.id) {
     actions.push(push('/'));
   }
-  // dipatch remove server action
   actions.push(removeServerAction(data.id));
-  // dispatch remove scenario action
   const server = serverSelector(state, data.id);
   actions.push(removeScenarioAction(server.scenario));
-  // dispatch remove mock actions
   const scenario = scenarioSelector(state, server.scenario);
   scenario.mocks.forEach(
     mock => actions.push(removeMockAction(server.scenario, mock))
   );
-  // dispatch remove task actions
   scenario.mocks
     .forEach((mockId) => {
       mockSelector(state, mockId).tasks
@@ -43,7 +39,6 @@ const onSuccess = store => (result) => {
           actions.push(removeTaskAction(mockId, task))
         );
     });
-  // display success message
   actions.push(addNotification({ type: 'success', text: 'Server removed' }));
   return Observable.from(actions);
 };
