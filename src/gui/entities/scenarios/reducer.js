@@ -7,7 +7,7 @@ const initialState = new Map({
   ids: new List()
 });
 
-const Scenario = new Record({
+export const Scenario = new Record({
   id: '',
   mocks: new List()
 });

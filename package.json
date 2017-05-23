@@ -124,7 +124,8 @@
       "\\.(css|scss)$": "<rootDir>/jest/stylesMock.js"
     },
     "setupFiles": [
-      "./jest/fetchMock.js"
+      "./jest/fetchMock.js",
+      "./jest/rxSetup.js"
     ],
     "roots": [
       "<rootDir>/src",

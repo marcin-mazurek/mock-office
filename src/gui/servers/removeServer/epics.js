@@ -43,17 +43,18 @@ const onSuccess = store => (result) => {
           actions.push(removeTaskAction(mockId, task))
         );
     });
-  // diaplay success message
+  // display success message
   actions.push(addNotification({ type: 'success', text: 'Server removed' }));
   return Observable.from(actions);
 };
+const hasError = has('error');
 
 export default (action$, store) =>
   action$.ofType(INIT)
     .flatMap(makeRequest)
     .flatMap(
       ifElse(
-        has('error'),
+        hasError,
         onFail,
         onSuccess(store)
       )

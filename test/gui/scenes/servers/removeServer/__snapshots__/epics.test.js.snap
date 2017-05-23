@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`removeServerEpic fail path actions snapshot 1`] = `
+Array [
+  Object {
+    "id": "server-id",
+    "type": "removeServer/INIT",
+  },
+  Object {
+    "notification": Object {
+      "text": "Error message",
+      "type": "error",
+    },
+    "type": "notifications/ADD",
+  },
+]
+`;
+
+exports[`removeServerEpic success path actions snapshot 1`] = `
+Array [
+  Object {
+    "id": "server-id",
+    "type": "removeServer/INIT",
+  },
+  Object {
+    "id": "server-id",
+    "type": "servers/REMOVE",
+  },
+  Object {
+    "id": "scenario-id",
+    "type": "scenarios/REMOVE",
+  },
+  Object {
+    "notification": Object {
+      "text": "Server removed",
+      "type": "success",
+    },
+    "type": "notifications/ADD",
+  },
+]
+`;
