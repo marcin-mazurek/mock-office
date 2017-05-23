@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
-import { add } from '../../entities/servers/actions';
+import { addAction } from '../../entities/servers/actions';
 import { SUBMIT } from './actions';
 import api from '../../api';
-import { add as addNotification } from '../../entities/notifications/actions';
+import { addAction as addNotification } from '../../entities/notifications/actions';
 import { closeAction as closeModalAction } from '../../modals/actions';
-import { add as addScenario } from '../../entities/scenarios/actions';
+import { addAction as addScenario } from '../../entities/scenarios/actions';
 
 const preparePayload = (action) => {
   const { values } = action;
@@ -30,7 +30,7 @@ const createSuccessActions = result => [
   addNotification({ type: 'success', text: 'Server added' }),
   closeModalAction(),
   addScenario(result.data.id, result.data.id),
-  add(result.data.id, {
+  addAction(result.data.id, {
     name: result.data.name,
     port: result.data.port,
     type: result.data.type,

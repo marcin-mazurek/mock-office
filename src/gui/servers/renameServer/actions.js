@@ -1,6 +1,6 @@
 export const INIT = 'renameServer/INIT';
 
-export const init = (id, name) => ({
+export const initAction = (id, name) => ({
   type: INIT,
   id,
   name

@@ -5,7 +5,6 @@ import serversReducer from '../entities/servers/reducer';
 import scenariosReducer from '../entities/scenarios/reducer';
 import mocksReducer from '../entities/mocks/reducer';
 import tasksReducer from '../entities/tasks/reducer';
-import errorsReducer from '../entities/errors/reducer';
 import notificationsReducer from '../entities/notifications/reducer';
 import sidebarReducer from '../sidebar/reducer';
 import modalsReducer from '../modals/reducer';
@@ -16,7 +15,6 @@ export default combineReducers({
   scenarios: scenariosReducer,
   mocks: mocksReducer,
   tasks: tasksReducer,
-  errors: errorsReducer,
   notifications: notificationsReducer,
   form: formReducer,
   sidebar: sidebarReducer,

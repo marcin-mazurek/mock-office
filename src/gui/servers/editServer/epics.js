@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { INIT } from './actions';
-import { update } from '../../entities/servers/actions';
-import { add } from '../../entities/notifications/actions';
+import { updateAction } from '../../entities/servers/actions';
+import { addAction } from '../../entities/notifications/actions';
 import requestEditServer from './rest';
 
 export default function editServerEpic(action$) {
@@ -15,10 +15,10 @@ export default function editServerEpic(action$) {
     .map((res) => {
       if (res.data) {
         const { id, ...params } = res.data;
-        return update(id, params);
+        return updateAction(id, params);
       }
 
-      return add({
+      return addAction({
         text: res.error,
         type: 'error'
       });

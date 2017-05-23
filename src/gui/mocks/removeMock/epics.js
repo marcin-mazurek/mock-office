@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { REMOVE_AFTER_USE, INIT } from './actions';
-import { getTasks } from '../../entities/mocks/selectors';
+import { mockSelector } from '../../entities/mocks/selectors';
 import { remove } from '../../entities/mocks/actions';
 import { remove as removeTask } from '../../entities/tasks/actions';
 
-export const removeMockEpic = (action$, store) =>
+export const removeMockEpic = action$ =>
   action$.ofType(INIT)
     .flatMap(action => Observable.from(
       fetch('http://127.0.0.1:3060/remove-mock', {
@@ -14,9 +14,9 @@ export const removeMockEpic = (action$, store) =>
         },
         method: 'POST',
         body: JSON.stringify({ mockId: action.mockId, serverId: action.serverId })
-      }).then(() => {
-        return [remove(action.scenarioId, action.mockId)].concat(action.tasks.map(removeTask).toJS());
-      })
+      }).then(() =>
+        [remove(action.scenarioId, action.mockId)].concat(action.tasks.map(removeTask).toJS())
+      )
       )
         .flatMap(actions => actions)
     );
@@ -27,7 +27,7 @@ export const removeMockAfterUseEpic = (action$, store) =>
     .map(
       ({ serverId, mockId }) => {
         const state = store.getState();
-        const tasks = getTasks(state, mockId);
-        return remove(serverId, mockId, tasks);
+        const mock = mockSelector(state, mockId);
+        return remove(serverId, mockId, mock.tasks);
       }
     );

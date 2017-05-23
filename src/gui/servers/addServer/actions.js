@@ -1,6 +1,6 @@
 export const SUBMIT = 'addServer/SUBMIT';
 
-export const submit = values => ({
+export const submitAction = values => ({
   type: SUBMIT,
   values
 });

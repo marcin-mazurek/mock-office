@@ -7,7 +7,7 @@ import { allServerSelector } from '../entities/servers/selectors';
 import { init as createInitExportAction } from '../exportState/actions';
 import plusIcon from '../assets/icons_white_add.svg';
 import lockIcon from '../assets/icons_general_locked@3x.svg';
-import getCurrentDisplayedServerId from './selectors';
+import currentDisplayedServerSelector from './selectors';
 import { openAction } from '../modals/actions';
 
 export const SideBarServers = ({ servers, selected, initExport, openModal }) => (
@@ -72,7 +72,7 @@ SideBarServers.propTypes = {
 
 const mapStateToProps = state => ({
   servers: allServerSelector(state),
-  selected: getCurrentDisplayedServerId(state)
+  selected: currentDisplayedServerSelector(state)
 });
 
 const mapDispatchToProps = {

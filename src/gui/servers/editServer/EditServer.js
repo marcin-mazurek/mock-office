@@ -5,7 +5,7 @@ import { reduxForm, Field } from 'redux-form/immutable';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router';
 import serverIcon from '../../assets/icons_gray_server.svg';
-import { init } from './actions';
+import { initAction } from './actions';
 import { serverSelector } from '../../entities/servers/selectors';
 
 export const EditServerForm = props =>
@@ -64,7 +64,7 @@ EditServerForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(init(ownProps.serverId, values.toJS()))
+  onSubmit: values => dispatch(initAction(ownProps.serverId, values.toJS()))
 });
 
 const mapStateToProps = (state, ownProps) => {

@@ -6,5 +6,5 @@
 //     .map((action) => {
 //       const { id, name } = action;
 //       return [id, name];
-//     }).map(renameConfig => rename(...renameConfig)
+//     }).map(renameConfig => renameAction(...renameConfig)
 //   );

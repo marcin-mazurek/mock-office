@@ -1,13 +1,13 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
-import { ADD, REMOVE, add, removeAction } from './actions';
+import { ADD, REMOVE, addAction, removeAction } from './actions';
 
 describe('mocks reducer', () => {
   test(`on ${ADD} action`, () => {
     const state = reducer(fromJS({
       ids: [],
       entities: {}
-    }), add(
+    }), addAction(
       'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==1',
       'AVn5d/fWdqw6Cki7TYu1mFutjHiDEQ==',
       {

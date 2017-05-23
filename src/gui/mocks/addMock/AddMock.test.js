@@ -4,8 +4,8 @@ import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
 import configureStore from '../../store';
 import AddMockConnect, { AddMock } from './AddMock';
-import { add } from '../../entities/servers/actions';
-import { add as addScenario } from '../../entities/scenarios/actions';
+import { addAction } from '../../entities/servers/actions';
+import { addAction as addScenario } from '../../entities/scenarios/actions';
 
 describe('AddMock', () => {
   test('default snapshot', () => {
@@ -23,7 +23,7 @@ describe('AddMock', () => {
 describe('AddMockConnect', () => {
   it('should render AddMock', () => {
     const store = configureStore();
-    store.dispatch(add(
+    store.dispatch(addAction(
       'server-id',
       {
         name: 'Server name',

@@ -1,7 +1,7 @@
 export const ADD = 'tasks/ADD';
 export const REMOVE = 'tasks/REMOVE';
 
-export const add = (mockId, taskId, params) => ({
+export const addAction = (mockId, taskId, params) => ({
   type: ADD,
   mockId,
   taskId,

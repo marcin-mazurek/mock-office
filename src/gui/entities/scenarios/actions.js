@@ -1,7 +1,7 @@
 export const ADD = 'scenarios/ADD';
 export const REMOVE = 'scenarios/REMOVE';
 
-export const add = (server, id) => ({
+export const addAction = (server, id) => ({
   type: ADD,
   server,
   id

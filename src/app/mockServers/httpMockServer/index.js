@@ -39,7 +39,6 @@ export default class HttpMockServer {
     this.getScenario = this.getScenario.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changePort = this.changePort.bind(this);
-
     const httpServer = this.isSecure ? https : http;
     const app = express();
     app.use('*', this.respond);

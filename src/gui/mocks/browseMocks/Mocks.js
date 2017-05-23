@@ -5,7 +5,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import { init } from '../removeMock/actions';
 import TasksConnect from '../../tasks/browse/TaskList';
-import MockRecord from '../../entities/mocks/Mock'
 import { scenarioSelector } from '../../entities/scenarios/selectors';
 import { mockSelector } from '../../entities/mocks/selectors';
 
@@ -54,19 +53,19 @@ export const Mock = ({
           {
             runCount > 0
               ? (
-              <div className="mock-status__tag" title="Run count">
-                <i className="fa fa-flash" /> {runCount}
-              </div>
-            )
+                <div className="mock-status__tag" title="Run count">
+                  <i className="fa fa-flash" /> {runCount}
+                </div>
+              )
               : null
           }
           {
             lastDuration
               ? (
-              <div className="mock-status__tag" title="Last duration">
-                <i className="fa fa-clock-o" /> {lastDuration}{'ms'}
-              </div>
-            )
+                <div className="mock-status__tag" title="Last duration">
+                  <i className="fa fa-clock-o" /> {lastDuration}{'ms'}
+                </div>
+              )
               : null
           }
         </div>
@@ -92,7 +91,8 @@ Mock.propTypes = {
   tasks: ImmutablePropTypes.listOf(PropTypes.string),
   server: PropTypes.string.isRequired,
   scenario: PropTypes.string.isRequired,
-  requirements: PropTypes.shape({})
+  requirements: PropTypes.shape({}),
+  remove: PropTypes.func.isRequired
 };
 
 const mockMapStateToProps = (state, ownProps) => {

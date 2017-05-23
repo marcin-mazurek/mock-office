@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import api from '../../../api';
-import { add as addNotification } from '../../../entities/notifications/actions';
-import { add } from '../../../entities/mocks/actions';
-import { add as addTask } from '../../../entities/tasks/actions';
+import { addAction as addNotification } from '../../../entities/notifications/actions';
+import { addAction } from '../../../entities/mocks/actions';
+import { addAction as addTaskAction } from '../../../entities/tasks/actions';
 
 export const SUBMIT = 'addWsMock/SUBMIT';
 
@@ -106,8 +106,8 @@ export default function addWsMockEpic(action$) {
           .flatMap((result) => {
             const actions = [];
 
-            actions.push(add(action.scenario, result.id,
-              // add mock action needs only ids of tasks
+            actions.push(addAction(action.scenario, result.id,
+              // addAction mock action needs only ids of tasks
               Object.assign(
                 {},
                 result.params,
@@ -115,8 +115,8 @@ export default function addWsMockEpic(action$) {
               )
             ));
             result.params.tasks.forEach(task =>
-              // add task action uses original full params object
-              actions.push(addTask(result.id, task.id, task))
+              // addAction task action uses original full params object
+              actions.push(addTaskAction(result.id, task.id, task))
             );
 
             return actions;

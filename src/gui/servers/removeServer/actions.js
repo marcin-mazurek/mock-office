@@ -1,6 +1,6 @@
 export const INIT = 'removeServer/INIT';
 
-export const init = id => ({
+export const initAction = id => ({
   type: INIT,
   id
 });

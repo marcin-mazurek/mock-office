@@ -1,5 +1,5 @@
 import reducer, { NotificationsState } from './reducer';
-import { remove, add, ADD, REMOVE } from './actions';
+import { removeAction, addAction, ADD, REMOVE } from './actions';
 
 jest.mock('cuid', () => () => 'id');
 
@@ -11,7 +11,7 @@ describe('notifications reducer', () => {
   it(`should add notification on ${ADD} action only if notification params are provided`, () => {
     const successAddState = reducer(
       undefined,
-      add({
+      addAction({
         text: 'notification text'
       })
     );
@@ -31,12 +31,12 @@ describe('notifications reducer', () => {
   it(`should remove notification on ${REMOVE} action`, () => {
     const stateAfterAdd = reducer(
       undefined,
-      add({
+      addAction({
         text: 'notification text'
       })
     );
 
-    const stateAfterRemove = reducer(stateAfterAdd, remove('id'));
+    const stateAfterRemove = reducer(stateAfterAdd, removeAction('id'));
 
     expect(stateAfterRemove.toJS()).toEqual({
       ids: [],

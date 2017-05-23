@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
-import { run, stop, add as addMock, removeAfterUse, finish } from '../entities/mocks/actions';
-import { add, start } from '../entities/servers/actions';
-import { add as addScenario } from '../entities/scenarios/actions';
-import { add as addTask } from '../entities/tasks/actions';
+import { runAction, stopAction, addAction as addMockAction, removeAfterUseAction, finishAction } from '../entities/mocks/actions';
+import { addAction, startAction } from '../entities/servers/actions';
+import { addAction as addScenarioAction } from '../entities/scenarios/actions';
+import { addAction as addTaskAction } from '../entities/tasks/actions';
 
 const eventArgs2ActionPayload = data => [data.serverId, data.mockId];
 
@@ -22,27 +22,27 @@ export default function startAppSync(store) {
 
       switch (data.event) {
         case 'MOCK_STOP': {
-          store.dispatch(stop(...eventArgs2ActionPayload(data)));
+          store.dispatch(stopAction(...eventArgs2ActionPayload(data)));
           break;
         }
         case 'MOCK_END': {
-          store.dispatch(finish(...eventArgs2ActionPayload(data)));
+          store.dispatch(finishAction(...eventArgs2ActionPayload(data)));
           break;
         }
         case 'MOCK_REMOVED_AFTER_USE': {
           setTimeout(() => {
-            store.dispatch(removeAfterUse(...eventArgs2ActionPayload(data)));
+            store.dispatch(removeAfterUseAction(...eventArgs2ActionPayload(data)));
           }, 5000);
 
           break;
         }
         case 'MOCK_START': {
-          store.dispatch(run(...eventArgs2ActionPayload(data)));
+          store.dispatch(runAction(...eventArgs2ActionPayload(data)));
           break;
         }
         case 'RESTORE_STATE': {
           data.state.forEach((server) => {
-            store.dispatch(add(server.id, {
+            store.dispatch(addAction(server.id, {
               name: server.name,
               port: server.port,
               type: server.type,
@@ -50,15 +50,15 @@ export default function startAppSync(store) {
               scenario: server.scenario
             }));
 
-            store.dispatch(addScenario(server.id, server.scenario));
+            store.dispatch(addScenarioAction(server.id, server.scenario));
 
             if (server.running) {
-              store.dispatch(start(server.id));
+              store.dispatch(startAction(server.id));
             }
 
             server.mocks.forEach((mock) => {
               store.dispatch(
-                addMock(
+                addMockAction(
                   server.scenario, mock.id, {
                     title: mock.title,
                     interval: mock.interval,
@@ -69,7 +69,7 @@ export default function startAppSync(store) {
                   }
                 )
               );
-              mock.tasks.forEach(task => store.dispatch(addTask(mock.id, task.id, task)));
+              mock.tasks.forEach(task => store.dispatch(addTaskAction(mock.id, task.id, task)));
             });
           });
 

@@ -7,7 +7,7 @@ import { mockSelector } from '../../entities/mocks/selectors';
 import { serverSelector } from '../../entities/servers/selectors';
 import { scenarioSelector } from '../../entities/scenarios/selectors';
 import api from '../../api';
-import { add as addNotification } from '../../entities/notifications/actions';
+import { addAction as addNotification } from '../../entities/notifications/actions';
 import { removeAction as removeServerAction } from '../../entities/servers/actions';
 import { removeAction as removeScenarioAction } from '../../entities/scenarios/actions';
 import { removeAction as removeMockAction } from '../../entities/mocks/actions';

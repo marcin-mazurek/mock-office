@@ -1,3 +1,3 @@
-const getCurrentDisplayedServerId = state => state.getIn(['sidebar', 'currentDisplayedServerId']);
+const currentDisplayedServerSelector = state => state.getIn(['sidebar', 'currentDisplayedServerId']);
 
-export default getCurrentDisplayedServerId;
+export default currentDisplayedServerSelector;

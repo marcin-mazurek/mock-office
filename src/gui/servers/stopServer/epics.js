@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
-import { stop } from '../../entities/servers/actions';
+import { stopAction } from '../../entities/servers/actions';
 import { INIT } from './actions';
 
 export default action$ =>
   action$.ofType(INIT)
     .flatMap(action => Observable.from(
-      fetch('http://127.0.0.1:3060/stop-server', {
+      fetch('http://127.0.0.1:3060/stopAction-server', {
         method: 'POST',
         headers: {
           Accept: 'application/json, text/plain, */*',
@@ -14,4 +14,4 @@ export default action$ =>
         body: JSON.stringify({ id: action.id })
       }).then(() => action.id)
     ))
-    .map(stop);
+    .map(stopAction);

@@ -1,12 +1,12 @@
 export const ADD = 'notifications/ADD';
 export const REMOVE = 'notifications/REMOVE';
 
-export const remove = id => ({
+export const removeAction = id => ({
   type: REMOVE,
   id
 });
 
-export const add = notification => ({
+export const addAction = notification => ({
   type: ADD,
   notification
 });

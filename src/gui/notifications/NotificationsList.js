@@ -3,8 +3,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Notification } from '../entities/notifications/createNotification';
-import { getNotifications } from '../entities/notifications/selectors';
-import { remove as createRemoveAction } from '../entities/notifications/actions';
+import { allNotificationsSelector } from '../entities/notifications/selectors';
+import { removeAction as createRemoveAction } from '../entities/notifications/actions';
 
 // eslint-disable-next-line import/prefer-default-export
 export const NotificationsList = ({ notifications, remove }) => (
@@ -30,7 +30,7 @@ NotificationsList.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  notifications: getNotifications(state)
+  notifications: allNotificationsSelector(state)
 });
 const mapDispatchToProps = {
   remove: createRemoveAction

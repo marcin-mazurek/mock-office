@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { init } from '../../../../../src/gui/servers/removeServer/actions';
+import { initAction } from '../../../../../src/gui/servers/removeServer/actions';
 import Server from '../../../../../src/gui/entities/servers/Server';
 import { Scenario } from '../../../../../src/gui/entities/scenarios/reducer';
 
@@ -42,7 +42,7 @@ describe('removeServerEpic', () => {
         ids: []
       }
     }));
-    store.dispatch(init('server-id'));
+    store.dispatch(initAction('server-id'));
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();
       done();
@@ -78,7 +78,7 @@ describe('removeServerEpic', () => {
         ids: []
       }
     }));
-    store.dispatch(init('server-id'));
+    store.dispatch(initAction('server-id'));
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();
       done();

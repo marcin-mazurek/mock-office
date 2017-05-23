@@ -3,68 +3,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import colors from 'colors/safe';
-import configureAddServerMiddleware from './addServerMiddleware';
-import configureRemoveServerMiddleware from './removeServerMiddleware';
-
-export const handleEditServer = serversManager => (req, res) => {
-  const ajv = new Ajv();
-  const schema = {
-    properties: {
-      name: {
-        type: 'string',
-        minLength: 1
-      },
-      port: {
-        type: 'number',
-        minimum: 3000
-      },
-      id: {
-        type: 'string'
-      }
-    },
-    required: ['id']
-  };
-
-  if (!ajv.validate(schema, req.body)) {
-    const splitPath = ajv.errors[0].dataPath.split('.');
-    const param = splitPath[splitPath.length - 1];
-    res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
-    return;
-  }
-
-  const { id, name, port } = req.body;
-  const server = serversManager.find(id);
-  if (!server) {
-    res.status(404).end();
-    return;
-  }
-
-  const response = {
-    id
-  };
-  if (name) {
-    server.changeName(name);
-    response.name = name;
-  }
-
-  if (port) {
-    if (server.isLive()) {
-      server.stop(() => {
-        server.changePort(port);
-        server.start(() => {
-          response.port = port;
-          res.status(200).json(response);
-        });
-      });
-    } else {
-      server.changePort(port);
-      response.port = port;
-      res.status(200).json(response);
-    }
-  } else {
-    res.status(200).json(response);
-  }
-};
+import configureAddServerMiddleware from './middlewares/addServerMiddleware';
+import configureRemoveServerMiddleware from './middlewares/removeServerMiddleware';
+import configureStartServerMiddleware from './middlewares/startServerMiddleware';
+import configureStopServerMiddleware from './middlewares/stopServerMiddleware';
+import configureEditServerMiddleware from './middlewares/editServerMiddleware';
+import configureAddMockMiddleware from './middlewares/addMockMiddleware';
+import configureRemoveMockMiddleware from './middlewares/removeMockMiddleware';
+import configureExportMiddleware from './middlewares/exportMiddleware';
 
 export const createAppServer = (serversManager) => {
   const ajv = new Ajv();
@@ -73,179 +19,13 @@ export const createAppServer = (serversManager) => {
 
   app.post('/add-server', bodyParser.json(), configureAddServerMiddleware(ajv, serversManager));
   app.post('/remove-server', bodyParser.json(), configureRemoveServerMiddleware(ajv, serversManager));
-
-  app.post('/start-server', bodyParser.json(), (req, res) => {
-    const schema = {
-      properties: {
-        id: {
-          type: 'string'
-        }
-      },
-      required: ['id']
-    };
-
-    if (ajv.validate(schema, req.body)) {
-      serversManager.start(req.body.id)
-        .then(
-          (started) => {
-            if (started) {
-              res.status(200).json({ id: req.body.id });
-            } else {
-              res.status(404).end();
-            }
-          },
-          (err) => {
-            res.status(400).json({ error: err });
-          }
-        );
-    } else {
-      res.status(400).json({ error: ajv.errors[0].message });
-    }
-  });
-
-  app.post('/stop-server', bodyParser.json(), (req, res) => {
-    const schema = {
-      properties: {
-        id: {
-          type: 'string'
-        }
-      },
-      required: ['id']
-    };
-
-    if (ajv.validate(schema, req.body)) {
-      const serverToStop = serversManager.find(req.body.id);
-
-      if (!serverToStop) {
-        res.status(404).end();
-      } else {
-        serverToStop.stop(
-          () => {
-            res.status(200).end();
-          }
-        );
-      }
-    } else {
-      res.json(ajv.errors);
-    }
-  });
-
-  app.post('/add-mock', bodyParser.json(), (req, res) => {
-    const schema = {
-      properties: {
-        server: {
-          type: 'string'
-        },
-        scenario: {
-          type: 'string'
-        },
-        mock: {
-          type: 'object',
-          properties: {
-            title: {
-              type: 'string'
-            },
-            requirements: {
-              type: 'object'
-            },
-            reuse: {
-              type: 'string'
-            },
-            tasks: {
-              type: 'array',
-              minItems: 1,
-              items: {
-                type: 'object',
-                properties: {
-                  title: {
-                    type: 'string'
-                  },
-                  type: {
-                    type: 'string'
-                  },
-                  payload: {
-                    type: 'object'
-                  },
-                  delay: {
-                    type: 'number'
-                  }
-                },
-                required: ['type']
-              }
-            }
-          },
-          required: ['tasks']
-        }
-      },
-      required: ['server', 'scenario', 'mock']
-    };
-
-    if (ajv.validate(schema, req.body)) {
-      const server = serversManager.find(req.body.server);
-      if (!server) {
-        res.status(404).end();
-        return;
-      }
-
-      const mockId = server.getScenario().addMock(req.body.mock);
-      const tasks = server.getScenario().find(mockId).tasks.map(part => part.id);
-      res.status(200).json({
-        id: mockId,
-        tasks
-      });
-      return;
-    }
-
-    const splitPath = ajv.errors[0].dataPath.split('.');
-    const param = splitPath[splitPath.length - 1];
-    res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
-  });
-
-  app.post('/remove-mock', bodyParser.json(), (req, res) => {
-    const schema = {
-      properties: {
-        mockId: {
-          type: 'string'
-        },
-        serverId: {
-          type: 'string'
-        }
-      },
-      required: ['mockId', 'serverId']
-    };
-
-    if (!ajv.validate(schema, req.body)) {
-      res.json(ajv.errors);
-    }
-
-    const server = serversManager.find(req.body.serverId);
-
-    if (!server) {
-      res.status(404).end();
-      return;
-    }
-
-    const mockRemoved = server.getScenario().removeMock(req.body.mockId);
-
-    if (mockRemoved) {
-      res.end();
-    } else {
-      res.status(404).end();
-    }
-  });
-
-  app.get('/export', (req, res) => {
-    res
-      .set({
-        'Content-Type': 'text/plain',
-        'Content-Disposition': 'attachment; filename=export.json'
-      })
-      .write(JSON.stringify(serversManager.getState()), 'utf-8', () => {
-        res.end();
-      });
-  });
-
-  app.post('/edit-server', bodyParser.json(), handleEditServer(serversManager));
+  app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv, serversManager));
+  app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv, serversManager));
+  app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv, serversManager));
+  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv, serversManager));
+  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv, serversManager));
+  app.post('/remove-mock', bodyParser.json(), configureRemoveMockMiddleware(ajv, serversManager));
+  app.get('/export', configureExportMiddleware(serversManager));
 
   return app;
 };

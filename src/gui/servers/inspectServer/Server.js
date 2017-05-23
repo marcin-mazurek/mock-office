@@ -4,16 +4,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
-import createStartAction from '../startServer/actions';
-import createStopAction from '../stopServer/actions';
+import startServerAction from '../startServer/actions';
+import stopServerAction from '../stopServer/actions';
 import { serverSelector } from '../../entities/servers/selectors';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
-import { init as createRemoveServerAction } from '../removeServer/actions';
-import { init as createRenameServerAction } from '../renameServer/actions';
+import { initAction as removeServerInitAction } from '../removeServer/actions';
+import { initAction as renameServerInitAction } from '../renameServer/actions';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../assets/icons_gray_add@3x.svg';
-import ServerRecord from '../../entities/servers/Server';
 
 const ServerToggle = ({ toggled, serverId, stop, start }) => {
   let handleClick;
@@ -86,113 +85,110 @@ ServerToggle.propTypes = {
 };
 
 const serverToggleMapDispatchToProps = {
-  start: createStartAction,
-  stop: createStopAction
+  start: startServerAction,
+  stop: stopServerAction
 };
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
 
-export const Server = ({ running, name, port, removeServer, scenario, id, type }) => {
-  return (
-    <div className="inspect-server">
-      <div className="inspect-server__header inspect-server-header">
-        <div className="inspect-server-header__toggle">
-          <ServerToggleConnect toggled={running} serverId={id} />
-        </div>
-        <div className="inspect-server-details">
-          <div className="inspect-server-details__name">
-            {name}
-          </div>
-          <div className="inspect-server-details__spec inspect-server-spec">
-            <div className="inspect-server-spec__item">
-              <span className="inspect-server-spec__label">Port:</span>
-              <span className="inspect-server-spec__value">{port}</span>
-            </div>
-            <div className="inspect-server-spec__item">
-              <span className="inspect-server-spec__label">Type:</span>
-              <span className="inspect-server-spec__value">{type}</span>
-            </div>
-          </div>
-        </div>
-        <button
-          className="inspect-server__remove-button button"
-          onClick={() => (
-            // eslint-disable-next-line no-alert
-            confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
-              ? removeServer(id)
-              : false
-          )
-          }
-        >
-          <img src={trashIcon} role="presentation" />
-        </button>
-        <Link className="inspect-server__edit-button" to={`/server/${id}/edit`}>
-          Edit
-        </Link>
+export const Server = ({ running, name, port, removeServer, scenario, id, type }) =>
+  <div className="inspect-server">
+    <div className="inspect-server__header inspect-server-header">
+      <div className="inspect-server-header__toggle">
+        <ServerToggleConnect toggled={running} serverId={id} />
       </div>
-      <main className="inspect-server-main inspect-server__main">
-        <div className="inspect-server-mocks-header">
-          <div className="inspect-server-mocks-header__label">
-            Mocks:
-          </div>
-          <ul className="inspect-server-mocks-legend inspect-server__mocks-legend">
-            <li
-              className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
-            >
-              <i
-                className="inspect-server-mocks-legend__icon
-                inspect-server-mocks-legend__icon--finished"
-              />
-              Finished
-            </li>
-            <li
-              className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
-            >
-              <i
-                className="inspect-server-mocks-legend__icon
-                inspect-server-mocks-legend__icon--in-progress"
-              />
-              In progress
-            </li>
-            <li
-              className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
-            >
-              <i
-                className="inspect-server-mocks-legend__icon
-                inspect-server-mocks-legend__icon--cancelled"
-              />
-              Cancelled
-            </li>
-            <li
-              className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
-            >
-              <i className="inspect-server-mocks-legend__icon" />Ready
-            </li>
-          </ul>
-          <Link
-            to={`${id}/add-mock`}
-            className="inspect-server__add-mock-button inspect-server-mocks-header__button"
-          >
-            <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
-            Add mock
-          </Link>
-          <FilePickerConnect scenario={scenario} server={id} />
+      <div className="inspect-server-details">
+        <div className="inspect-server-details__name">
+          {name}
         </div>
-        <div className="inspect-server__mocks">
-          <div className="inspect-server__mocks-scroll-container">
-            <Scrollbars>
-              <MocksConnect server={id} scenario={scenario} />
-            </Scrollbars>
+        <div className="inspect-server-details__spec inspect-server-spec">
+          <div className="inspect-server-spec__item">
+            <span className="inspect-server-spec__label">Port:</span>
+            <span className="inspect-server-spec__value">{port}</span>
+          </div>
+          <div className="inspect-server-spec__item">
+            <span className="inspect-server-spec__label">Type:</span>
+            <span className="inspect-server-spec__value">{type}</span>
           </div>
         </div>
-      </main>
+      </div>
+      <button
+        className="inspect-server__remove-button button"
+        onClick={() => (
+          // eslint-disable-next-line no-alert
+          confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
+            ? removeServer(id)
+            : false
+        )
+        }
+      >
+        <img src={trashIcon} role="presentation" />
+      </button>
+      <Link className="inspect-server__edit-button" to={`/server/${id}/edit`}>
+        Edit
+      </Link>
     </div>
-  );
-};
+    <main className="inspect-server-main inspect-server__main">
+      <div className="inspect-server-mocks-header">
+        <div className="inspect-server-mocks-header__label">
+          Mocks:
+        </div>
+        <ul className="inspect-server-mocks-legend inspect-server__mocks-legend">
+          <li
+            className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
+          >
+            <i
+              className="inspect-server-mocks-legend__icon
+                inspect-server-mocks-legend__icon--finished"
+            />
+            Finished
+          </li>
+          <li
+            className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
+          >
+            <i
+              className="inspect-server-mocks-legend__icon
+                inspect-server-mocks-legend__icon--in-progress"
+            />
+            In progress
+          </li>
+          <li
+            className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
+          >
+            <i
+              className="inspect-server-mocks-legend__icon
+                inspect-server-mocks-legend__icon--cancelled"
+            />
+            Cancelled
+          </li>
+          <li
+            className="inspect-server-mocks-legend__item
+              inspect-server-mocks-legend-item"
+          >
+            <i className="inspect-server-mocks-legend__icon" />Ready
+          </li>
+        </ul>
+        <Link
+          to={`${id}/add-mock`}
+          className="inspect-server__add-mock-button inspect-server-mocks-header__button"
+        >
+          <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
+          Add mock
+        </Link>
+        <FilePickerConnect scenario={scenario} server={id} />
+      </div>
+      <div className="inspect-server__mocks">
+        <div className="inspect-server__mocks-scroll-container">
+          <Scrollbars>
+            <MocksConnect server={id} scenario={scenario} />
+          </Scrollbars>
+        </div>
+      </div>
+    </main>
+  </div>;
 
 Server.propTypes = {
   running: PropTypes.bool.isRequired,
@@ -205,8 +201,8 @@ Server.propTypes = {
 };
 
 const serverMapDispatchToProps = {
-  removeServer: createRemoveServerAction,
-  serverNameChange: createRenameServerAction
+  removeServer: removeServerInitAction,
+  serverNameChange: renameServerInitAction
 };
 
 const serverMapStateToProps = (state, ownProps) => {

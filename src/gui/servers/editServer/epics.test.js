@@ -7,7 +7,7 @@ describe('editServerEpic', () => {
   test('actions snapshot on success response', (done) => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-    const initEdit = require('./actions').init;
+    const initEdit = require('./actions').initAction;
     jest.mock('./rest', () => () =>
       Promise.resolve({
         data: {
@@ -34,7 +34,7 @@ describe('editServerEpic', () => {
   it('actions snapshot on failed response', (done) => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-    const initEdit = require('./actions').init;
+    const initEdit = require('./actions').initAction;
     jest.mock('./rest', () => () => Promise.resolve({ error: 'error message' }));
     const editServerEpic = require('./epics').default;
 

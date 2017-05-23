@@ -1,5 +1,5 @@
 import { Map, List, Set } from 'immutable';
-import { ADD, SELECT, START, STOP, REMOVE, RENAME, UPDATE } from './actions';
+import { ADD, START, STOP, REMOVE, RENAME, UPDATE } from './actions';
 import Server from './Server';
 import { ADD as ADD_SCENARIO } from '../scenarios/actions';
 
@@ -26,9 +26,6 @@ export default (state = initialState, action) => {
       newState = newState.setIn(['entities', action.id], server);
       newState = newState.update('ids', ids => ids.push(action.id));
       return newState;
-    }
-    case SELECT: {
-      return state.set('selected', action.id);
     }
     case START: {
       return state.setIn(['entities', action.id, 'running'], true);

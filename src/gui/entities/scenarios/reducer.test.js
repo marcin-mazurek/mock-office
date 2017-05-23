@@ -3,7 +3,7 @@ import reducer from './reducer';
 import {
   ADD,
   REMOVE,
-  add,
+  addAction,
   removeAction
 } from './actions';
 
@@ -16,7 +16,7 @@ describe('scenarios reducer', () => {
 
     expect(reducer(
       state,
-      add('server-id', 'scenario-id')).toJS()).toEqual({
+      addAction('server-id', 'scenario-id')).toJS()).toEqual({
         entities: {
           'scenario-id': {
             id: 'scenario-id',

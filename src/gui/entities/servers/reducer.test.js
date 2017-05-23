@@ -2,25 +2,14 @@ import { fromJS } from 'immutable';
 import reducer from './reducer';
 import {
   ADD,
-  SELECT,
   START,
   STOP,
   REMOVE,
   RENAME,
-  add
+  addAction
 } from './actions';
 
 describe('servers reducer', () => {
-  test(`on ${SELECT} action`, () => {
-    const state = reducer(fromJS({
-      selected: null,
-    }), { type: SELECT, id: 'server-id' });
-
-    expect(state.toJS()).toEqual({
-      selected: 'server-id'
-    });
-  });
-
   test(`on ${START} action`, () => {
     const state = reducer(fromJS({
       entities: {
@@ -47,7 +36,7 @@ describe('servers reducer', () => {
         entities: {},
         ids: []
       }),
-      add('server-id', {
+      addAction('server-id', {
         name: 'Server name',
         port: 3000,
         secure: false,

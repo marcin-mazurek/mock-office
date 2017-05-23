@@ -10,7 +10,7 @@ describe('addServerEpic', () => {
   test('actions dispatched on API response without error', (done) => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-    const createSubmitAction = require('./actions').submit;
+    const createSubmitAction = require('./actions').submitAction;
     jest.mock('../../api', () => ({
       addServer() {
         return Promise.resolve({
@@ -48,7 +48,7 @@ describe('addServerEpic', () => {
   test('actions dispatched on API response with error', (done) => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-    const createSubmitAction = require('./actions').submit;
+    const createSubmitAction = require('./actions').submitAction;
     jest.mock('../../api', () => ({
       addServer() {
         return Promise.resolve({

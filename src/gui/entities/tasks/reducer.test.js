@@ -4,7 +4,7 @@ import {
   ADD,
   REMOVE,
   removeAction,
-  add
+  addAction
 } from './actions';
 
 describe('mocks reducer', () => {
@@ -12,7 +12,7 @@ describe('mocks reducer', () => {
     const state = reducer(fromJS({
       ids: [],
       entities: {}
-    }), add('mock-id', 'task-id', {
+    }), addAction('mock-id', 'task-id', {
       interval: 0,
       reuse: 'infinite',
       quantity: 1,

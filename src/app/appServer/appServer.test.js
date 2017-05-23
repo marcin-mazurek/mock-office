@@ -1,7 +1,10 @@
-import { handleEditServer } from './appServer';
+import Ajv from 'ajv';
+import configureEditServerMiddleware from './middlewares/editServerMiddleware';
 import ServersManager from '../serversManager/index';
 
-describe('handleEditServer', () => {
+describe('configureEditServerMiddleware', () => {
+  const ajv = new Ajv();
+
   it('should change name', () => {
     const changeNameMock = jest.fn();
     const serversManager = {
@@ -21,7 +24,7 @@ describe('handleEditServer', () => {
         name: 'new name'
       }
     };
-    handleEditServer(serversManager)(req, res);
+    configureEditServerMiddleware(ajv, serversManager)(req, res);
     expect(changeNameMock).toHaveBeenCalledWith('new name');
     expect(res.status).toHaveBeenCalledWith(200);
   });
@@ -38,7 +41,7 @@ describe('handleEditServer', () => {
         name: 1232
       }
     };
-    handleEditServer(serversManager)(req, res);
+    configureEditServerMiddleware(ajv, serversManager)(req, res);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({ error: 'name should be string' });
   });
@@ -63,7 +66,7 @@ describe('handleEditServer', () => {
         port: 3000
       }
     };
-    handleEditServer(serversManager)(req, res);
+    configureEditServerMiddleware(ajv, serversManager)(req, res);
     expect(changePortMock).toHaveBeenCalledWith(3000);
     expect(res.status).toHaveBeenCalledWith(200);
   });
@@ -80,7 +83,7 @@ describe('handleEditServer', () => {
         port: 'dsadsa'
       }
     };
-    handleEditServer(serversManager)(req, res);
+    configureEditServerMiddleware(ajv, serversManager)(req, res);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({ error: 'port should be number' });
   });
@@ -98,7 +101,7 @@ describe('handleEditServer', () => {
         id: 'id'
       }
     };
-    handleEditServer(serversManager)(req, res);
+    configureEditServerMiddleware(ajv, serversManager)(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
   });
 
@@ -115,7 +118,7 @@ describe('handleEditServer', () => {
         name: 'new name'
       }
     };
-    handleEditServer(serversManager)(req, res);
+    configureEditServerMiddleware(ajv, serversManager)(req, res);
     expect(serversManager.find(serverId).name).toEqual('new name');
   });
 
@@ -132,7 +135,7 @@ describe('handleEditServer', () => {
         port: 3001
       }
     };
-    handleEditServer(serversManager)(req, res);
+    configureEditServerMiddleware(ajv, serversManager)(req, res);
     expect(serversManager.find(serverId).port).toEqual(3001);
   });
 
@@ -151,7 +154,7 @@ describe('handleEditServer', () => {
           port: 3001
         }
       };
-      handleEditServer(serversManager)(req, res);
+      configureEditServerMiddleware(ajv, serversManager)(req, res);
       setTimeout(() => {
         expect(server.port).toEqual(3001);
         expect(server.isLive()).toBeTruthy();
