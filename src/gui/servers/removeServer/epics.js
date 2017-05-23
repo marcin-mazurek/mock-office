@@ -1,40 +1,60 @@
 import { Observable } from 'rxjs';
 import { push } from 'react-router-redux';
+import { ifElse, has } from 'ramda';
 import { INIT } from './actions';
-import { remove } from '../../entities/servers/actions';
 import getCurrentDisplayedServerId from '../../sidebar/selectors';
-import { remove as removeMock } from '../../entities/mocks/actions';
 import { mockSelector } from '../../entities/mocks/selectors';
+import { serverSelector } from '../../entities/servers/selectors';
+import { scenarioSelector } from '../../entities/scenarios/selectors';
+import api from '../../api';
+import { add as addNotification } from '../../entities/notifications/actions';
+import { removeAction as removeServerAction } from '../../entities/servers/actions';
+import { removeAction as removeScenarioAction } from '../../entities/scenarios/actions';
+import { removeAction as removeMockAction } from '../../entities/mocks/actions';
+import { removeAction as removeTaskAction } from '../../entities/tasks/actions';
+
+const makeRequest = action => api.removeServer({ id: action.id });
+const onFail = result => [addNotification({ type: 'error', text: result.error })];
+const onSuccess = store => (result) => {
+  const state = store.getState();
+  const { data } = result;
+  const actions = [];
+
+  // Change route to prevent errors when trying to display removed server
+  const displayedServerId = getCurrentDisplayedServerId(state);
+  if (displayedServerId === data.id) {
+    actions.push(push('/'));
+  }
+  // dipatch remove server action
+  actions.push(removeServerAction(data.id));
+  // dispatch remove scenario action
+  const server = serverSelector(state, data.id);
+  actions.push(removeScenarioAction(server.scenario));
+  // dispatch remove mock actions
+  const scenario = scenarioSelector(state, server.scenario);
+  scenario.mocks.forEach(
+    mock => actions.push(removeMockAction(server.scenario, mock))
+  );
+  // dispatch remove task actions
+  scenario.mocks
+    .forEach((mockId) => {
+      mockSelector(state, mockId).tasks
+        .forEach(task =>
+          actions.push(removeTaskAction(mockId, task))
+        );
+    });
+  // diaplay success message
+  actions.push(addNotification({ type: 'success', text: 'Server removed' }));
+  return Observable.from(actions);
+};
 
 export default (action$, store) =>
   action$.ofType(INIT)
-    .flatMap(action => Observable.from(
-      fetch('http://127.0.0.1:3060/remove-server', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id: action.id })
-      })
-        .then(() => action.id)
-    ))
-    .flatMap((id) => {
-      const actions = [];
-
-      // Change route to prevent errors when trying to display removed server
-      const state = store.getState();
-      const displayedServerId = getCurrentDisplayedServerId(state);
-      if (displayedServerId === id) {
-        actions.push(push('/'));
-      }
-      actions.push(remove(id));
-      const server = state.getIn(['servers', 'entities', id]);
-      server.get('mocks').forEach((mockId) => {
-        actions.push(removeMock(id, mockId));
-        const mock = mockSelector(mockId);
-        //mock.get('tasks').forEach(taskId => actions.push(removeTask(taskId)));
-      });
-
-      return Observable.from(actions);
-    });
+    .flatMap(makeRequest)
+    .flatMap(
+      ifElse(
+        has('error'),
+        onFail,
+        onSuccess(store)
+      )
+    );

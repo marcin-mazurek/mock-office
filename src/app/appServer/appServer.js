@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import colors from 'colors/safe';
 import configureAddServerMiddleware from './addServerMiddleware';
+import configureRemoveServerMiddleware from './removeServerMiddleware';
 
 export const handleEditServer = serversManager => (req, res) => {
   const ajv = new Ajv();
@@ -70,35 +71,8 @@ export const createAppServer = (serversManager) => {
   const app = express();
   app.use(cors());
 
-  const addServerMiddleware = configureAddServerMiddleware(ajv, serversManager);
-
-  app.post('/add-server', bodyParser.json(), addServerMiddleware);
-
-  app.post('/remove-server', bodyParser.json(), (req, res) => {
-    const schema = {
-      type: 'object',
-      properties: {
-        id: {
-          type: 'string'
-        }
-      },
-      required: ['id']
-    };
-
-    if (ajv.validate(schema, req.body)) {
-      serversManager.remove(req.body.id)
-        .then(
-          () => {
-            res.status(200).end();
-          },
-          () => {
-            res.status(404).end();
-          }
-        );
-    } else {
-      res.json(ajv.errors);
-    }
-  });
+  app.post('/add-server', bodyParser.json(), configureAddServerMiddleware(ajv, serversManager));
+  app.post('/remove-server', bodyParser.json(), configureRemoveServerMiddleware(ajv, serversManager));
 
   app.post('/start-server', bodyParser.json(), (req, res) => {
     const schema = {

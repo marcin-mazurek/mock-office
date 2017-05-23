@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 import reducer from './reducer';
-import { ADD, REMOVE, add, remove } from './actions';
+import { ADD, REMOVE, add, removeAction } from './actions';
 
 describe('mocks reducer', () => {
   test(`on ${ADD} action`, () => {
@@ -56,7 +56,7 @@ describe('mocks reducer', () => {
         }
       },
       ids: ['AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==']
-    }), remove('AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==', 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='));
+    }), removeAction('AVn5tu8eSu3b1GmqQvG+5cDaoORotQ==', 'AVn5tu8eSu3b1GmqQvG+5cDaoORotQ=='));
 
     expect(state.toJS()).toEqual({
       entities: {},

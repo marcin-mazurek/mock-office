@@ -4,7 +4,7 @@ import {
   ADD,
   REMOVE,
   add,
-  remove
+  removeAction
 } from './actions';
 
 describe('scenarios reducer', () => {
@@ -38,7 +38,7 @@ describe('scenarios reducer', () => {
       ids: ['scenario-id']
     });
 
-    expect(reducer(state, remove('scenario-id')).toJS()).toEqual({
+    expect(reducer(state, removeAction('scenario-id')).toJS()).toEqual({
       entities: {},
       ids: []
     });

@@ -16,7 +16,7 @@ export const finish = (scenarioId, mockId) => ({
   mockId
 });
 
-export const remove = (scenarioId, mockId) => ({
+export const removeAction = (scenarioId, mockId) => ({
   type: REMOVE,
   scenarioId,
   mockId

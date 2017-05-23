@@ -3,7 +3,7 @@ import reducer from './reducer';
 import {
   ADD,
   REMOVE,
-  remove,
+  removeAction,
   add
 } from './actions';
 
@@ -52,7 +52,7 @@ describe('mocks reducer', () => {
       ids: ['task-id']
     });
 
-    expect(reducer(state, remove('mock-id', 'task-id')).toJS()).toEqual({
+    expect(reducer(state, removeAction('mock-id', 'task-id')).toJS()).toEqual({
       entities: {},
       ids: []
     });

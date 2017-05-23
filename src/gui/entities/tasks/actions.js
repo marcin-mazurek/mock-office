@@ -8,7 +8,7 @@ export const add = (mockId, taskId, params) => ({
   params
 });
 
-export const remove = (mockId, taskId) => ({
+export const removeAction = (mockId, taskId) => ({
   type: REMOVE,
   mockId,
   taskId

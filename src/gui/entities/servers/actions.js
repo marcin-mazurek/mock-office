@@ -27,7 +27,7 @@ export const stop = id => ({
   id
 });
 
-export const remove = id => ({
+export const removeAction = id => ({
   type: REMOVE,
   id
 });

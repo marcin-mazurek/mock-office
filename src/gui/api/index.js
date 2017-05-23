@@ -28,14 +28,11 @@ export default {
         return { error: 'Unknown server response' };
       })
       .catch((error) => {
-        let errorMessage;
         if (error instanceof ConnectionError) {
-          errorMessage = error.message;
-        } else {
-          throw new Error(error.message);
+          return { error: error.message };
         }
 
-        return { error: errorMessage };
+        throw new Error(error.message);
       });
   },
   addMock(server, scenario, mock) {
@@ -49,9 +46,6 @@ export default {
         body: JSON.stringify({ server, scenario, mock })
       })
     )
-      .catch(() => {
-        throw new ConnectionError('Connection failed');
-      })
       .then((res) => {
         if (res.status === 200) {
           return res.json().then(payload => ({ data: payload }));
@@ -62,6 +56,13 @@ export default {
         }
 
         return { error: 'Unknown server response' };
+      })
+      .catch((error) => {
+        if (error instanceof ConnectionError) {
+          return { error: error.message };
+        }
+
+        throw new Error(error.message);
       });
   },
   startServer(params) {
@@ -76,9 +77,6 @@ export default {
           body: JSON.stringify(params)
         })
     )
-      .catch(() => {
-        throw new Error('Connection failed');
-      })
       .then((res) => {
         if (res.status === 200) {
           return res.json().then(payload => ({ data: payload }));
@@ -89,6 +87,52 @@ export default {
         }
 
         return { error: 'Unknown server response' };
+      })
+      .catch((error) => {
+        if (error instanceof ConnectionError) {
+          return { error: error.message };
+        }
+
+        throw new Error(error.message);
+      });
+  },
+  removeServer(params) {
+    return catchConnectionErrors(
+      fetch('http://127.0.0.1:3060/remove-server', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      })
+    )
+      .then((res) => {
+        if (res.status === 200) {
+          return {
+            data: {
+              id: params.id
+            }
+          };
+        } else if (res.status === 400) {
+          return res.json()
+            .then(payload => ({
+              error: payload[0].message
+            }));
+        } else if (res.status === 404) {
+          return {
+            error: 'Wrong id provided when removing server'
+          };
+        }
+
+        return { error: 'Unknown server response' };
+      })
+      .catch((error) => {
+        if (error instanceof ConnectionError) {
+          return { error: error.message };
+        }
+
+        throw new Error(error.message);
       });
   }
 };
