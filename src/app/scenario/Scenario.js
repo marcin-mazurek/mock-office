@@ -69,7 +69,7 @@ export default class Scenario {
       (finished) => {
         if (finished && mock.toRemove) {
           this.removeMock(id);
-          this.emitter.emit('MOCK_REMOVED_AFTER_USE', { mockId: id });
+          this.emitter.emit('MOCK_REMOVED_AFTER_USE', { mockId: id, scenario: this.id, tasks: mock.tasks.map(task => task.id) });
         }
 
         return finished;
