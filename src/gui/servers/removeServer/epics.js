@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { push } from 'react-router-redux';
 import { ifElse, has } from 'ramda';
-import { INIT } from './actions';
+import { INITIALIZED } from './actions';
 import getCurrentDisplayedServerId from '../../sidebar/selectors';
 import { mockSelector } from '../../entities/mocks/selectors';
 import { serverSelector } from '../../entities/servers/selectors';
@@ -45,7 +45,7 @@ const onSuccess = store => (result) => {
 const hasError = has('error');
 
 export default (action$, store) =>
-  action$.ofType(INIT)
+  action$.ofType(INITIALIZED)
     .flatMap(makeRequest)
     .flatMap(
       ifElse(

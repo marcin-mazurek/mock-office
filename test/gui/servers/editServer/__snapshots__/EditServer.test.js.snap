@@ -55,7 +55,7 @@ exports[`EditServerForm default snapshot 1`] = `
           className="form-field__input"
           component="input"
           name="port"
-          type="text"
+          type="number"
         />
       </div>
     </div>
@@ -562,7 +562,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                       className="form-field__input"
                       component="input"
                       name="port"
-                      type="text"
+                      type="number"
                     >
                       <Connect(ConnectedField)
                         _reduxForm={
@@ -665,7 +665,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                         component="input"
                         name="port"
                         normalize={[Function]}
-                        type="text"
+                        type="number"
                       >
                         <ConnectedField
                           _reduxForm={
@@ -773,7 +773,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                           name="port"
                           normalize={[Function]}
                           pristine={true}
-                          type="text"
+                          type="number"
                           value={3000}
                         >
                           <input
@@ -784,7 +784,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                             onDragStart={[Function]}
                             onDrop={[Function]}
                             onFocus={[Function]}
-                            type="text"
+                            type="number"
                             value={3000}
                           />
                         </ConnectedField>

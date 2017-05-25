@@ -1,6 +1,6 @@
-export const INIT = 'removeServer/INIT';
+export const INITIALIZED = 'removeServer/INITIALIZED';
 
-export const initAction = id => ({
-  type: INIT,
+export const initializedAction = id => ({
+  type: INITIALIZED,
   id
 });

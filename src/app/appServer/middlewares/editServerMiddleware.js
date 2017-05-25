@@ -1,4 +1,14 @@
 export default function configure(ajv, serversManager) {
+  const createResponseBody = server => ({
+    name: server.name,
+    port: server.port,
+    type: server.type,
+    secure: server.secure,
+    id: server.id,
+    scenario: server.getScenario().id,
+    running: server.isLive(),
+  });
+
   return (req, res) => {
     const schema = {
       properties: {
@@ -30,13 +40,8 @@ export default function configure(ajv, serversManager) {
       res.status(404).end();
       return;
     }
-
-    const response = {
-      id
-    };
     if (name) {
       server.changeName(name);
-      response.name = name;
     }
 
     if (port) {
@@ -44,17 +49,15 @@ export default function configure(ajv, serversManager) {
         server.stop(() => {
           server.changePort(port);
           server.start(() => {
-            response.port = port;
-            res.status(200).json(response);
+            res.status(200).json(createResponseBody(server));
           });
         });
       } else {
         server.changePort(port);
-        response.port = port;
-        res.status(200).json(response);
+        res.status(200).json(createResponseBody(server));
       }
     } else {
-      res.status(200).json(response);
+      res.status(200).json(createResponseBody(server));
     }
   };
 }

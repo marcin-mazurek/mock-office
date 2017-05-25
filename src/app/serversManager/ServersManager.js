@@ -20,10 +20,10 @@ class ServersManager {
     this.emitter = new Emitter();
   }
 
-  add(name, port, type, isSecure, keyPath, certPath) {
+  add(name, port, type, secure, keyPath, certPath) {
     const ServerConstructor = serverTypes[type];
     const server = new ServerConstructor(
-      { name, port, isSecure, keyPath, certPath, emitter: this.emitter }
+      { name, port, secure, keyPath, certPath, emitter: this.emitter }
     );
     this.servers.push(server);
     return server.id;
@@ -120,7 +120,7 @@ class ServersManager {
   setState(state) {
     state.forEach((s) => {
       const id = this.add(
-        s.name, s.port, s.type, s.isSecure, s.keyPath, s.certPath, false
+        s.name, s.port, s.type, s.secure, s.keyPath, s.certPath, false
       );
       const server = this.find(id);
       s.mocks.forEach((mock) => {

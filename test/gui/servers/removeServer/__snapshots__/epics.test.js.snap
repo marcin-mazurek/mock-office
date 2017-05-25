@@ -4,7 +4,7 @@ exports[`removeServerEpic fail path actions snapshot 1`] = `
 Array [
   Object {
     "id": "server-id",
-    "type": "removeServer/INIT",
+    "type": "removeServer/INITIALIZED",
   },
   Object {
     "notification": Object {
@@ -20,7 +20,7 @@ exports[`removeServerEpic success path actions snapshot 1`] = `
 Array [
   Object {
     "id": "server-id",
-    "type": "removeServer/INIT",
+    "type": "removeServer/INITIALIZED",
   },
   Object {
     "id": "server-id",

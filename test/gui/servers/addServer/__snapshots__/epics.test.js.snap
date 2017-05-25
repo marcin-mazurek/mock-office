@@ -3,11 +3,11 @@
 exports[`addServerEpic actions dispatched on API response with error 1`] = `
 Array [
   Object {
-    "type": "addServer/SUBMIT",
+    "type": "addServer/FORM_SUBMITTED",
     "values": Object {
-      "isSecure": false,
       "name": "name",
       "port": 3000,
+      "secure": false,
       "type": "http",
     },
   },
@@ -24,11 +24,11 @@ Array [
 exports[`addServerEpic actions dispatched on API response without error 1`] = `
 Array [
   Object {
-    "type": "addServer/SUBMIT",
+    "type": "addServer/FORM_SUBMITTED",
     "values": Object {
-      "isSecure": false,
       "name": "name",
       "port": 3000,
+      "secure": false,
       "type": "http",
     },
   },
@@ -51,10 +51,10 @@ Array [
     "id": "server-id",
     "params": Object {
       "id": "server-id",
-      "isSecure": false,
       "name": "name",
       "port": 3000,
       "scenario": "server-id",
+      "secure": false,
       "type": "http",
     },
     "type": "servers/ADD",

@@ -15,7 +15,7 @@ export default function configure(ajv, serversManager) {
           type: 'string',
           enum: ['http', 'ws']
         },
-        isSecure: {
+        secure: {
           type: 'boolean'
         },
         keyPath: {
@@ -36,7 +36,7 @@ export default function configure(ajv, serversManager) {
         req.body.name,
         req.body.port,
         req.body.type,
-        req.body.isSecure,
+        req.body.secure,
         req.body.keyPath,
         req.body.certPath
       );
@@ -46,7 +46,9 @@ export default function configure(ajv, serversManager) {
         name: server.name,
         port: server.port,
         type: server.type,
-        isSecure: server.isSecure,
+        secure: server.secure,
+        scenario: server.getScenario().id,
+        running: server.isLive(),
         id
       });
 

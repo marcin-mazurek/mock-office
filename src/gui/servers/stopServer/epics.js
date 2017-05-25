@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { stopAction } from '../../entities/servers/actions';
-import { INIT } from './actions';
+import { INITIALIZED } from './actions';
 
 export default action$ =>
-  action$.ofType(INIT)
+  action$.ofType(INITIALIZED)
     .flatMap(action => Observable.from(
       fetch('http://127.0.0.1:3060/stop-server', {
         method: 'POST',

@@ -13,10 +13,10 @@ const preparePayload = (action) => {
     name: values.get('name'),
     port: parseInt(values.get('port'), 10),
     type: values.get('type'),
-    isSecure: values.get('isSecure')
+    secure: values.get('secure')
   };
 
-  if (payload.isSecure === true) {
+  if (payload.secure === true) {
     payload.keyPath = values.get('keyPath');
     payload.certPath = values.get('certPath');
   }
@@ -35,7 +35,7 @@ const onSuccess = result => [
     port: result.data.port,
     type: result.data.type,
     id: result.data.id,
-    isSecure: result.data.isSecure,
+    secure: result.data.secure,
     scenario: result.data.id
   })
 ];

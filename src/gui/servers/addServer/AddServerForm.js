@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import Switch from 'rc-switch';
 import { Field, reduxForm } from 'redux-form/immutable';
-import { submitAction } from './actions';
+import { formSubmittedAction } from './actions';
 import plusIcon from '../../assets/icons_white_add.svg';
 
 const INITIAL_VALUES = {
   name: 'Awesome server',
   port: 3000,
   type: 'http',
-  isSecure: false
+  secure: false
 };
 
 const FORM_NAME = 'addServer';
@@ -30,7 +30,7 @@ const ServerTypeField = field =>
     ]}
   />;
 
-const IsSecureField = field =>
+const secureField = field =>
   <Switch
     checked={field.input.value}
     onChange={value => field.input.onChange(value)}
@@ -79,10 +79,10 @@ export const AddServerForm = ({ handleSubmit }) =>
       </div>
       <div className="form__col form__col--small">
         <div className="form__field">
-          <label className="form-field__label" htmlFor="isSecure">
+          <label className="form-field__label" htmlFor="secure">
             Secure:
           </label>
-          <Field name="isSecure" component={IsSecureField} />
+          <Field name="secure" component={secureField} />
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ AddServerForm.propTypes = {
 };
 
 const mapDispatchToProps = {
-  onSubmit: submitAction
+  onSubmit: formSubmittedAction
 };
 
 export default connect(null, mapDispatchToProps)(

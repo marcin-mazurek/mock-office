@@ -1,7 +1,7 @@
-export const INIT = 'editServer/INIT';
+export const INITIALIZED = 'editServer/INITIALIZED';
 
-export const initAction = (id, values) => ({
-  type: 'editServer/INIT',
+export const initializedAction = (id, values) => ({
+  type: INITIALIZED,
   id,
   values
 });

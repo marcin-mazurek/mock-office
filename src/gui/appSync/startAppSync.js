@@ -42,7 +42,7 @@ export default function startAppSync(ws, store) {
               name: server.name,
               port: server.port,
               type: server.type,
-              isSecure: server.isSecure,
+              secure: server.secure,
               scenario: server.scenario
             }));
 

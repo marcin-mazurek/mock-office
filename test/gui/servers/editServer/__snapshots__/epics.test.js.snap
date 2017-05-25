@@ -4,7 +4,7 @@ exports[`editServerEpic actions snapshot on failed response 1`] = `
 Array [
   Object {
     "id": "some id",
-    "type": "editServer/INIT",
+    "type": "editServer/INITIALIZED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -24,7 +24,7 @@ exports[`editServerEpic actions snapshot on success response 1`] = `
 Array [
   Object {
     "id": "some id",
-    "type": "editServer/INIT",
+    "type": "editServer/INITIALIZED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -33,6 +33,7 @@ Array [
   Object {
     "id": "some id",
     "params": Object {
+      "id": "some id",
       "name": "name",
       "port": 3000,
     },

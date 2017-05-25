@@ -1,5 +1,8 @@
 /* eslint-disable global-require */
 import { Map } from 'immutable';
+import configureMockStore from 'redux-mock-store';
+import { createEpicMiddleware } from 'redux-observable';
+import { formSubmittedAction } from '../../../../src/gui/servers/addServer/actions';
 
 describe('addServerEpic', () => {
   beforeEach(() => {
@@ -8,9 +11,6 @@ describe('addServerEpic', () => {
   });
 
   test('actions dispatched on API response without error', (done) => {
-    const configureMockStore = require('redux-mock-store').default;
-    const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-    const createSubmitAction = require('../../../../src/gui/servers/addServer/actions').submitAction;
     jest.mock('../../../../src/gui/resources/api', () => ({
       addServer() {
         return Promise.resolve({
@@ -19,7 +19,7 @@ describe('addServerEpic', () => {
             port: 3000,
             name: 'name',
             type: 'http',
-            isSecure: false
+            secure: false
           }
         });
       }
@@ -29,15 +29,15 @@ describe('addServerEpic', () => {
     const epicMiddleware = createEpicMiddleware(addServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
-    const submitAction = createSubmitAction(
+    const action = formSubmittedAction(
       new Map({
         port: 3000,
         name: 'name',
         type: 'http',
-        isSecure: false
+        secure: false
       })
     );
-    store.dispatch(submitAction);
+    store.dispatch(action);
 
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();
@@ -46,9 +46,6 @@ describe('addServerEpic', () => {
   });
 
   test('actions dispatched on API response with error', (done) => {
-    const configureMockStore = require('redux-mock-store').default;
-    const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-    const createSubmitAction = require('../../../../src/gui/servers/addServer/actions').submitAction;
     jest.mock('../../../../src/gui/resources/api', () => ({
       addServer() {
         return Promise.resolve({
@@ -61,15 +58,15 @@ describe('addServerEpic', () => {
     const epicMiddleware = createEpicMiddleware(addServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
-    const submitAction = createSubmitAction(
+    const action = formSubmittedAction(
       new Map({
         port: 3000,
         name: 'name',
         type: 'http',
-        isSecure: false
+        secure: false
       })
     );
-    store.dispatch(submitAction);
+    store.dispatch(action);
 
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();

@@ -4,7 +4,7 @@ exports[`startServerEpic actions snapshot when on api request errors 1`] = `
 Array [
   Object {
     "id": "some id",
-    "type": "startServer/INIT",
+    "type": "startServer/INITIALIZED",
   },
   Object {
     "notification": Object {
@@ -20,7 +20,7 @@ exports[`startServerEpic actions snapshot when response object hasn't got errors
 Array [
   Object {
     "id": "some id",
-    "type": "startServer/INIT",
+    "type": "startServer/INITIALIZED",
   },
   Object {
     "id": "some id",

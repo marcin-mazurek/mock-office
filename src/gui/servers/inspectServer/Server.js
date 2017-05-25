@@ -9,8 +9,7 @@ import stopServerAction from '../stopServer/actions';
 import { serverSelector } from '../../entities/servers/selectors';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
-import { initAction as removeServerInitAction } from '../removeServer/actions';
-import { initAction as renameServerInitAction } from '../renameServer/actions';
+import { initializedAction as removeServerInitAction } from '../removeServer/actions';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../assets/icons_gray_add@3x.svg';
 
@@ -201,8 +200,7 @@ Server.propTypes = {
 };
 
 const serverMapDispatchToProps = {
-  removeServer: removeServerInitAction,
-  serverNameChange: renameServerInitAction
+  removeServer: removeServerInitAction
 };
 
 const serverMapStateToProps = (state, ownProps) => {

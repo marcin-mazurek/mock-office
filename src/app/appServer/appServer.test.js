@@ -10,7 +10,13 @@ describe('configureEditServerMiddleware', () => {
     const serversManager = {
       find() {
         return {
-          changeName: changeNameMock
+          changeName: changeNameMock,
+          isLive() {
+            return false;
+          },
+          getScenario() {
+            return {};
+          }
         };
       }
     };
@@ -52,6 +58,9 @@ describe('configureEditServerMiddleware', () => {
       find() {
         return {
           isLive: () => false,
+          getScenario() {
+            return {};
+          },
           changePort: changePortMock
         };
       }
@@ -90,7 +99,16 @@ describe('configureEditServerMiddleware', () => {
 
   it('should work even with no params', () => {
     const serversManager = {
-      find() { return {}; }
+      find() {
+        return {
+          isLive() {
+            return false;
+          },
+          getScenario() {
+            return {};
+          }
+        };
+      }
     };
     const res = {
       status: jest.fn().mockReturnThis(),

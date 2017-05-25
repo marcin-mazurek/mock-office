@@ -46,7 +46,9 @@ export default (state = initialState, action) => {
       return state.setIn(['entities', action.id, 'name'], action.name);
     }
     case UPDATE: {
-      return state.mergeIn(['entities', action.id], action.params);
+      return state.setIn(['entities', action.id],
+        new Server(Object.assign({ id: action.id, }, action.params))
+      );
     }
     case ADD_SCENARIO: {
       return state.setIn(['entities', action.server, 'scenario'], action.id);

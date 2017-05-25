@@ -14,7 +14,7 @@ export default class WsMockServer {
     this.emitter = config.emitter.extend({ serverId: this.id });
     this.scenario = new Scenario({ emitter: this.emitter });
     this.listening = false;
-    this.isSecure = config.isSecure;
+    this.secure = config.secure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
     this.emitter = config.emitter;
@@ -27,7 +27,7 @@ export default class WsMockServer {
 
     const httpServer = this.secure ? https : http;
 
-    if (this.isSecure) {
+    if (this.secure) {
       const options = {
         key: fs.readFileSync(this.keyPath),
         cert: fs.readFileSync(this.certPath)

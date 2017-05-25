@@ -26,7 +26,7 @@ export default class HttpMockServer {
     this.type = 'http';
     this.port = config.port || 3000;
     this.name = config.name;
-    this.isSecure = config.isSecure;
+    this.secure = config.secure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
     this.saveSocketRef = this.saveSocketRef.bind(this);
@@ -39,11 +39,11 @@ export default class HttpMockServer {
     this.getScenario = this.getScenario.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changePort = this.changePort.bind(this);
-    const httpServer = this.isSecure ? https : http;
+    const httpServer = this.secure ? https : http;
     const app = express();
     app.use('*', this.respond);
 
-    if (this.isSecure) {
+    if (this.secure) {
       const credentials = {
         key: fs.readFileSync(this.keyPath),
         cert: fs.readFileSync(this.certPath)
