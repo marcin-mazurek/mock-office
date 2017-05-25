@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import { addAction } from '../../entities/servers/actions';
-import { SUBMIT } from './actions';
+import { FORM_SUBMITTED } from './actions';
 import api from '../../resources/api';
 import { addAction as addNotification } from '../../entities/notifications/actions';
 import { closeAction as closeModalAction } from '../../modals/actions';
@@ -25,8 +25,8 @@ const preparePayload = (action) => {
 };
 const makeRequest = payload => Observable.from(api.addServer(payload));
 const hasError = has('error');
-const createFailActions = result => [addNotification({ type: 'error', text: result.error })];
-const createSuccessActions = result => [
+const onFail = result => [addNotification({ type: 'error', text: result.error })];
+const onSuccess = result => [
   addNotification({ type: 'success', text: 'Server added' }),
   closeModalAction(),
   addScenario(result.data.id, result.data.id),
@@ -41,13 +41,13 @@ const createSuccessActions = result => [
 ];
 
 export default action$ =>
-  action$.ofType(SUBMIT)
+  action$.ofType(FORM_SUBMITTED)
     .map(preparePayload)
     .flatMap(makeRequest)
     .flatMap(
       ifElse(
         hasError,
-        createFailActions,
-        createSuccessActions
+        onFail,
+        onSuccess
       )
     );
