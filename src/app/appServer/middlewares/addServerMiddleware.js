@@ -41,11 +41,12 @@ export default function configure(ajv, serversManager) {
         req.body.certPath
       );
 
+      const server = serversManager.find(id);
       res.json({
-        name: req.body.name,
-        port: req.body.port,
-        type: req.body.type,
-        isSecure: req.body.isSecure,
+        name: server.name,
+        port: server.port,
+        type: server.type,
+        isSecure: server.isSecure,
         id
       });
 
@@ -54,6 +55,6 @@ export default function configure(ajv, serversManager) {
 
     const splitPath = ajv.errors[0].dataPath.split('.');
     const param = splitPath[splitPath.length - 1];
-    res.status(400).json({ error: `${param} ${ajv.errors[0].message}` });
+    res.status(400).json({ error: `${param} ${[0].message}` });
   };
 }
