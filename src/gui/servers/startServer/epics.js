@@ -3,7 +3,7 @@ import { ifElse, has } from 'ramda';
 import { INIT } from './actions';
 import { startAction } from '../../entities/servers/actions';
 import { addAction } from '../../entities/notifications/actions';
-import api from '../../api';
+import api from '../../resources/api';
 
 const preparePayload = action => ({ id: action.id });
 const makeRequest = action => Observable.from(api.startServer({ id: action.id }));

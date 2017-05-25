@@ -6,7 +6,7 @@ import getCurrentDisplayedServerId from '../../sidebar/selectors';
 import { mockSelector } from '../../entities/mocks/selectors';
 import { serverSelector } from '../../entities/servers/selectors';
 import { scenarioSelector } from '../../entities/scenarios/selectors';
-import api from '../../api';
+import api from '../../resources/api';
 import { addAction as addNotification } from '../../entities/notifications/actions';
 import { removeAction as removeServerAction } from '../../entities/servers/actions';
 import { removeAction as removeScenarioAction } from '../../entities/scenarios/actions';

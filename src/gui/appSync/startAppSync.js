@@ -4,11 +4,7 @@ import { addAction, startAction } from '../entities/servers/actions';
 import { addAction as addScenarioAction } from '../entities/scenarios/actions';
 import { addAction as addTaskAction } from '../entities/tasks/actions';
 
-const eventArgs2ActionPayload = data => [data.serverId, data.mockId];
-
-export default function startAppSync(store) {
-  const ws = new WebSocket('ws://127.0.0.1:3061');
-
+export default function startAppSync(ws, store) {
   Observable.fromEventPattern(
     (handler) => {
       ws.addEventListener('message', handler);
@@ -22,22 +18,22 @@ export default function startAppSync(store) {
 
       switch (data.event) {
         case 'MOCK_STOP': {
-          store.dispatch(stopAction(...eventArgs2ActionPayload(data)));
+          store.dispatch(stopAction(data.mockId));
           break;
         }
         case 'MOCK_END': {
-          store.dispatch(finishAction(...eventArgs2ActionPayload(data)));
+          store.dispatch(finishAction(data.mockId));
           break;
         }
         case 'MOCK_REMOVED_AFTER_USE': {
           setTimeout(() => {
-            store.dispatch(removeAfterUseAction(...eventArgs2ActionPayload(data)));
+            store.dispatch(removeAfterUseAction(data.scenario, data.mockId, data.tasks));
           }, 5000);
 
           break;
         }
         case 'MOCK_START': {
-          store.dispatch(runAction(...eventArgs2ActionPayload(data)));
+          store.dispatch(runAction(data.mockId));
           break;
         }
         case 'RESTORE_STATE': {

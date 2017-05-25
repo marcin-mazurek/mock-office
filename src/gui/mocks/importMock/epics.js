@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ifElse } from 'ramda';
 import { INIT, cancelAction } from './actions';
-import api from '../../api';
+import api from '../../resources/api';
 import { addAction as addNotification } from '../../entities/notifications/actions';
 import { addAction } from '../../entities/mocks/actions';
 import { addAction as addTaskAction } from '../../entities/tasks/actions';

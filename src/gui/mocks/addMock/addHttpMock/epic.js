@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import api from '../../../api';
+import api from '../../../resources/api';
 import { addAction as addNotification } from '../../../entities/notifications/actions';
 import { addAction } from '../../../entities/mocks/actions';
 import { addAction as addTaskActionAction } from '../../../entities/tasks/actions';
@@ -69,7 +69,7 @@ export default function addMockEpic(action$) {
             }
           ))
             .then(result => ({
-              id: result.id,
+              id: result.data.id,
               params: {
                 title: data.title,
                 interval: data.interval,
@@ -79,7 +79,7 @@ export default function addMockEpic(action$) {
                 requirements: reqWithEvent,
                 tasks: data.tasks.map((task, index) => {
                   // eslint-disable-next-line no-param-reassign
-                  task.id = result.tasks[index];
+                  task.id = result.data.tasks[index];
                   return task;
                 })
               }

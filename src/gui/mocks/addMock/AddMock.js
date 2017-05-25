@@ -36,7 +36,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     serverType: serverDetails.type,
-    scenario: serverDetails.id
+    scenario: serverDetails.scenario
   };
 };
 

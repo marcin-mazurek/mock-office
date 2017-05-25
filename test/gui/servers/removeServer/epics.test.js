@@ -1,9 +1,9 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { initAction } from '../../../../../src/gui/servers/removeServer/actions';
-import Server from '../../../../../src/gui/entities/servers/Server';
-import { Scenario } from '../../../../../src/gui/entities/scenarios/reducer';
+import { initAction } from '../../../../src/gui/servers/removeServer/actions';
+import Server from '../../../../src/gui/entities/servers/Server';
+import { Scenario } from '../../../../src/gui/entities/scenarios/reducer';
 
 describe('removeServerEpic', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('removeServerEpic', () => {
   });
 
   test('success path actions snapshot', (done) => {
-    jest.mock('../../../../../src/gui/api', () => ({
+    jest.mock('../../../../src/gui/resources/api', () => ({
       removeServer() {
         return Promise.resolve({
           data: {
@@ -21,7 +21,7 @@ describe('removeServerEpic', () => {
         });
       }
     }));
-    const removeServerEpic = require('../../../../../src/gui/servers/removeServer/epics').default;
+    const removeServerEpic = require('../../../../src/gui/servers/removeServer/epics').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({
@@ -50,14 +50,14 @@ describe('removeServerEpic', () => {
   });
 
   test('fail path actions snapshot', (done) => {
-    jest.mock('../../../../../src/gui/api', () => ({
+    jest.mock('../../../../src/gui/resources/api', () => ({
       removeServer() {
         return Promise.resolve({
           error: 'Error message'
         });
       }
     }));
-    const removeServerEpic = require('../../../../../src/gui/servers/removeServer/epics').default;
+    const removeServerEpic = require('../../../../src/gui/servers/removeServer/epics').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({

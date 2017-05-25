@@ -11,7 +11,7 @@ describe('addServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const createSubmitAction = require('../../../../src/gui/servers/addServer/actions').submitAction;
-    jest.mock('../../../../src/gui/api', () => ({
+    jest.mock('../../../../src/gui/resources/api', () => ({
       addServer() {
         return Promise.resolve({
           data: {
@@ -49,7 +49,7 @@ describe('addServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const createSubmitAction = require('../../../../src/gui/servers/addServer/actions').submitAction;
-    jest.mock('../../../../src/gui/api', () => ({
+    jest.mock('../../../../src/gui/resources/api', () => ({
       addServer() {
         return Promise.resolve({
           error: 'error message'

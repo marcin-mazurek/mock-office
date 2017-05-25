@@ -8,7 +8,7 @@ describe('startServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('../../../../src/gui/servers/startServer/actions').default;
-    jest.mock('../../../../src/gui/api', () => ({
+    jest.mock('../../../../src/gui/resources/api', () => ({
       startServer() {
         return Promise.resolve({
           data: { id: 'some id' }
@@ -33,7 +33,7 @@ describe('startServerEpic', () => {
     const configureMockStore = require('redux-mock-store').default;
     const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
     const initStart = require('../../../../src/gui/servers/startServer/actions').default;
-    jest.mock('../../../../src/gui/api', () => ({
+    jest.mock('../../../../src/gui/resources/api', () => ({
       startServer() {
         return Promise.resolve({ error: 'error message' });
       }

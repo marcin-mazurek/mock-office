@@ -5,7 +5,7 @@ import { INIT } from './actions';
 export default action$ =>
   action$.ofType(INIT)
     .flatMap(action => Observable.from(
-      fetch('http://127.0.0.1:3060/stopAction-server', {
+      fetch('http://127.0.0.1:3060/stop-server', {
         method: 'POST',
         headers: {
           Accept: 'application/json, text/plain, */*',

@@ -12,7 +12,7 @@ describe('importMockEpic', () => {
   });
 
   test.only('snapshot of success flow', (done) => {
-    jest.mock('../../../../src/gui/api', () => ({
+    jest.mock('../../../../src/gui/resources/api', () => ({
       addMock() {
         return Promise.resolve({
           data: {

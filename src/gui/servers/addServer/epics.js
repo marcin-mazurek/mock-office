@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import { addAction } from '../../entities/servers/actions';
 import { SUBMIT } from './actions';
-import api from '../../api';
+import api from '../../resources/api';
 import { addAction as addNotification } from '../../entities/notifications/actions';
 import { closeAction as closeModalAction } from '../../modals/actions';
 import { addAction as addScenario } from '../../entities/scenarios/actions';

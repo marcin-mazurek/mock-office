@@ -24,10 +24,11 @@ export const removeAction = (scenarioId, mockId) => ({
   mockId
 });
 
-export const removeAfterUseAction = (scenarioId, mockId) => ({
+export const removeAfterUseAction = (scenario, id, tasks) => ({
   type: REMOVE_AFTER_USE,
-  scenarioId,
-  mockId
+  scenario,
+  id,
+  tasks
 });
 
 export const runAction = id => ({
