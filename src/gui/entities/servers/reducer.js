@@ -2,7 +2,7 @@ import { Map, List, Set } from 'immutable';
 import { ADD, START, STOP, REMOVE, RENAME, UPDATE } from './actions';
 import Server from './Server';
 import { ADD as ADD_SCENARIO } from '../scenarios/actions';
-import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/actions';
+import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/epics';
 
 const initialState = new Map({
   entities: new Map(),

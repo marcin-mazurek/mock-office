@@ -1,7 +1,7 @@
 import { Map, Record, List } from 'immutable';
 import { ADD, REMOVE } from './actions';
 import { ADD as ADD_MOCK, REMOVE as REMOVE_MOCK } from '../mocks/actions';
-import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/actions';
+import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/epics';
 
 const initialState = new Map({
   entities: new Map(),

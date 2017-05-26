@@ -1,5 +1,5 @@
 import { OVERLAY_CLICKED } from './Modal';
-import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/actions';
+import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
 import { ADD_BUTTON_CLICKED } from '../sidebar/actions';
 import { initialState, openModal, closeModal } from './module';
 

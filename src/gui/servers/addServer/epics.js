@@ -1,7 +1,20 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
-import { SUBMIT_BUTTON_CLICKED, succeedAction, failedAction } from './actions';
+import { SUBMIT_BUTTON_CLICKED } from './AddServerForm';
 import api from '../../resources/api';
+
+export const SUCCEED = 'addServer/SUCCEED';
+export const FAILED = 'addServer/FAILED';
+
+export const succeedAction = params => ({
+  type: SUCCEED,
+  params
+});
+
+export const failedAction = params => ({
+  type: FAILED,
+  params
+});
 
 const preparePayload = (action) => {
   const { values } = action;

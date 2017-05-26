@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import Switch from 'rc-switch';
 import { Field, reduxForm } from 'redux-form/immutable';
-import { submitButtonClickAction } from './actions';
 import plusIcon from '../../assets/icons_white_add.svg';
+
+export const SUBMIT_BUTTON_CLICKED = 'ddServerForm/SUBMIT_BUTTON_CLICKED';
+export const submitButtonClickAction = values => ({
+  type: SUBMIT_BUTTON_CLICKED,
+  values
+});
 
 const INITIAL_VALUES = {
   name: 'Awesome server',

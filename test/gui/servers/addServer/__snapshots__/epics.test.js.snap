@@ -3,7 +3,7 @@
 exports[`addServerEpic actions dispatched on API response with error 1`] = `
 Array [
   Object {
-    "type": "addServer/SUBMIT_BUTTON_CLICKED",
+    "type": "ddServerForm/SUBMIT_BUTTON_CLICKED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -23,7 +23,7 @@ Array [
 exports[`addServerEpic actions dispatched on API response without error 1`] = `
 Array [
   Object {
-    "type": "addServer/SUBMIT_BUTTON_CLICKED",
+    "type": "ddServerForm/SUBMIT_BUTTON_CLICKED",
     "values": Object {
       "name": "name",
       "port": 3000,

@@ -1,7 +1,7 @@
 import { Map, List, Record } from 'immutable';
 import createNotification from './createNotification';
 import { REMOVE, ADD } from './actions';
-import { SUCCEED as ADD_SERVER_SUCCEED, FAILED as ADD_SERVER_FAILED } from '../../servers/addServer/actions';
+import { SUCCEED as ADD_SERVER_SUCCEED, FAILED as ADD_SERVER_FAILED } from '../../servers/addServer/epics';
 
 export const NotificationsState = new Record({
   entities: new Map(),
