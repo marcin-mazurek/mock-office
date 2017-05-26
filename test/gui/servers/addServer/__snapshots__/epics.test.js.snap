@@ -3,7 +3,7 @@
 exports[`addServerEpic actions dispatched on API response with error 1`] = `
 Array [
   Object {
-    "type": "addServer/FORM_SUBMITTED",
+    "type": "addServer/SUBMIT_BUTTON_CLICKED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -12,11 +12,10 @@ Array [
     },
   },
   Object {
-    "notification": Object {
-      "text": "error message",
-      "type": "error",
+    "params": Object {
+      "error": "error message",
     },
-    "type": "notifications/ADD",
+    "type": "addServer/FAILED",
   },
 ]
 `;
@@ -24,7 +23,7 @@ Array [
 exports[`addServerEpic actions dispatched on API response without error 1`] = `
 Array [
   Object {
-    "type": "addServer/FORM_SUBMITTED",
+    "type": "addServer/SUBMIT_BUTTON_CLICKED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -33,31 +32,16 @@ Array [
     },
   },
   Object {
-    "notification": Object {
-      "text": "Server added",
-      "type": "success",
-    },
-    "type": "notifications/ADD",
-  },
-  Object {
-    "type": "modals/CLOSE",
-  },
-  Object {
-    "id": "server-id",
-    "server": "server-id",
-    "type": "scenarios/ADD",
-  },
-  Object {
-    "id": "server-id",
     "params": Object {
-      "id": "server-id",
-      "name": "name",
-      "port": 3000,
-      "scenario": "server-id",
-      "secure": false,
-      "type": "http",
+      "data": Object {
+        "id": "server-id",
+        "name": "name",
+        "port": 3000,
+        "secure": false,
+        "type": "http",
+      },
     },
-    "type": "servers/ADD",
+    "type": "addServer/SUCCEED",
   },
 ]
 `;

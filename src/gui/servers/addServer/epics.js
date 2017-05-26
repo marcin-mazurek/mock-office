@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
-import { FORM_SUBMITTED, succeedAction, failedAction } from './actions';
+import { SUBMIT_BUTTON_CLICKED, succeedAction, failedAction } from './actions';
 import api from '../../resources/api';
 
 const preparePayload = (action) => {
@@ -25,7 +25,7 @@ const onSuccess = result => succeedAction(result);
 const onFail = result => failedAction(result);
 
 export default action$ =>
-  action$.ofType(FORM_SUBMITTED)
+  action$.ofType(SUBMIT_BUTTON_CLICKED)
     .map(preparePayload)
     .flatMap(makeRequest)
     .map(

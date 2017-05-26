@@ -2,7 +2,7 @@
 import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { formSubmittedAction } from '../../../../src/gui/servers/addServer/actions';
+import { submitButtonClickAction } from '../../../../src/gui/servers/addServer/actions';
 
 describe('addServerEpic', () => {
   beforeEach(() => {
@@ -29,7 +29,7 @@ describe('addServerEpic', () => {
     const epicMiddleware = createEpicMiddleware(addServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
-    const action = formSubmittedAction(
+    const action = submitButtonClickAction(
       new Map({
         port: 3000,
         name: 'name',
@@ -58,7 +58,7 @@ describe('addServerEpic', () => {
     const epicMiddleware = createEpicMiddleware(addServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
-    const action = formSubmittedAction(
+    const action = submitButtonClickAction(
       new Map({
         port: 3000,
         name: 'name',

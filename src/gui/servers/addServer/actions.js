@@ -1,9 +1,9 @@
-export const FORM_SUBMITTED = 'addServer/FORM_SUBMITTED';
+export const SUBMIT_BUTTON_CLICKED = 'addServer/SUBMIT_BUTTON_CLICKED';
 export const SUCCEED = 'addServer/SUCCEED';
 export const FAILED = 'addServer/FAILED';
 
-export const formSubmittedAction = values => ({
-  type: FORM_SUBMITTED,
+export const submitButtonClickAction = values => ({
+  type: SUBMIT_BUTTON_CLICKED,
   values
 });
 

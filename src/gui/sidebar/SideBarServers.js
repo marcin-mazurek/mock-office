@@ -8,9 +8,9 @@ import { init as createInitExportAction } from '../exportState/actions';
 import plusIcon from '../assets/icons_white_add.svg';
 import lockIcon from '../assets/icons_general_locked@3x.svg';
 import currentDisplayedServerSelector from './selectors';
-import { openAction } from '../modals/actions';
+import { addButtonClickedAction } from './actions';
 
-export const SideBarServers = ({ servers, selected, initExport, openModal }) => (
+export const SideBarServers = ({ servers, selected, initExport, onAddButtonClick }) => (
   <div className="sidebar-servers">
     <div className="sidebar-servers__header">
       <div>
@@ -22,7 +22,7 @@ export const SideBarServers = ({ servers, selected, initExport, openModal }) => 
           Export
         </button>
       </div>
-      <button className="sidebar-servers__add-server-button" onClick={openModal}>
+      <button className="sidebar-servers__add-server-button" onClick={onAddButtonClick}>
         <img src={plusIcon} role="presentation" />
       </button>
     </div>
@@ -67,7 +67,7 @@ SideBarServers.propTypes = {
   servers: PropTypes.shape().isRequired,
   selected: PropTypes.string,
   initExport: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired
+  onAddButtonClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -77,7 +77,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   initExport: createInitExportAction,
-  openModal() { return openAction('addServerModal'); }
+  onAddButtonClick: addButtonClickedAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarServers);

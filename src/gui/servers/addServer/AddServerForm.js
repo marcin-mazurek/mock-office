@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import Switch from 'rc-switch';
 import { Field, reduxForm } from 'redux-form/immutable';
-import { formSubmittedAction } from './actions';
+import { submitButtonClickAction } from './actions';
 import plusIcon from '../../assets/icons_white_add.svg';
 
 const INITIAL_VALUES = {
@@ -101,7 +101,7 @@ AddServerForm.propTypes = {
 };
 
 const mapDispatchToProps = {
-  onSubmit: formSubmittedAction
+  onSubmit: submitButtonClickAction
 };
 
 export default connect(null, mapDispatchToProps)(
