@@ -1,28 +1,18 @@
-import { Record } from 'immutable';
-import { OPEN, CLOSE } from './actions';
+import { OVERLAY_CLICKED } from './Modal';
 import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/actions';
 import { ADD_BUTTON_CLICKED } from '../sidebar/actions';
+import { initialState, openModal, closeModal } from './module';
 
-const InitialState = new Record({
-  component: ''
-});
-
-const openModal = (state, component) => state.set('component', component);
-const closeModal = state => state.delete('component');
-
-export default function addServerReducer(state = new InitialState(), action) {
+export default function addServerReducer(state = initialState(), action) {
   switch (action.type) {
-    case OPEN: {
-      return openModal(state, action.component);
-    }
-    case CLOSE: {
-      return closeModal(state);
-    }
     case ADD_SERVER_SUCCEED: {
       return closeModal(state);
     }
     case ADD_BUTTON_CLICKED: {
       return openModal(state, 'addServerModal');
+    }
+    case OVERLAY_CLICKED: {
+      return closeModal(state);
     }
     default: {
       return state;

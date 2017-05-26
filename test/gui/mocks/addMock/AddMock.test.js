@@ -11,7 +11,7 @@ describe('AddMock', () => {
   test('default snapshot', () => {
     const props = {
       serverType: 'server type',
-      scenarioId: 'scenario-id',
+      scenario: 'scenario-id',
       params: { id: 'server-id' },
       onSubmit: () => {}
     };

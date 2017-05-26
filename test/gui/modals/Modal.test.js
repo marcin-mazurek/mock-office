@@ -4,10 +4,10 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { ModalConnect, Modal } from '../../../src/gui/modals/Modal';
 import configureStore from '../../../src/gui/store/index';
-import { openAction, closeAction } from '../../../src/gui/modals/actions';
+import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../src/gui/sidebar/actions';
 
 describe('ModalConnect', () => {
-  it('should react properly to store changes', () => {
+  it(`should display AddServerModal on ${ADD_BUTTON_CLICKED} action`, () => {
     const store = configureStore();
     const wrapper = mount(
       <Provider store={store}>
@@ -15,9 +15,19 @@ describe('ModalConnect', () => {
       </Provider>
     );
 
-    store.dispatch(openAction('addServerModal'));
+    store.dispatch(addButtonClickedAction());
     expect(wrapper.find('AddServerModal')).toHaveLength(1);
-    store.dispatch(closeAction());
+  });
+
+  it(`should close modal on ${ADD_BUTTON_CLICKED} action`, () => {
+    const store = configureStore();
+    const wrapper = mount(
+      <Provider store={store}>
+        <ModalConnect />
+      </Provider>
+    );
+    store.dispatch(addButtonClickedAction());
+    wrapper.find(Modal).find('.modal__overlay').simulate('click');
     expect(wrapper.html()).toBeNull();
   });
 });
@@ -25,7 +35,7 @@ describe('ModalConnect', () => {
 describe('Modal', () => {
   test('no component snapshot', () => {
     const wrapper = shallow(
-      <Modal close={() => {}} />
+      <Modal onOverlayClick={() => {}} />
     );
 
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -33,7 +43,7 @@ describe('Modal', () => {
 
   test('rendering addServerModal snapshot', () => {
     const wrapper = shallow(
-      <Modal component="addServerModal" close={() => {}} />
+      <Modal component="addServerModal" onOverlayClick={() => {}} />
     );
 
     expect(toJson(wrapper)).toMatchSnapshot();

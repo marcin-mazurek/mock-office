@@ -2,7 +2,12 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddServerModal from './AddServerModal';
-import { closeAction } from './actions';
+
+export const OVERLAY_CLICKED = 'modals/OVERLAY_CLICKED';
+
+export const overlayClickedAction = () => ({
+  type: OVERLAY_CLICKED
+});
 
 const modalSelector = state => state.getIn(['modals', 'component']);
 
@@ -10,7 +15,7 @@ export const types = {
   addServerModal: AddServerModal,
 };
 
-export const Modal = ({ component, close }) => {
+export const Modal = ({ component, onOverlayClick }) => {
   const ModalComponent = types[component];
   const isOpen = !!ModalComponent;
 
@@ -19,7 +24,7 @@ export const Modal = ({ component, close }) => {
       <div
         className="modal"
       >
-        <button className="modal__overlay" onClick={close} />
+        <button className="modal__overlay" onClick={onOverlayClick} />
         <div className="modal__content">
           <ModalComponent />
         </div>
@@ -29,13 +34,13 @@ export const Modal = ({ component, close }) => {
 };
 Modal.propTypes = {
   component: PropTypes.string,
-  close: PropTypes.func.isRequired
+  onOverlayClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   component: modalSelector(state)
 });
 const mapDispatchToProps = {
-  close: closeAction
+  onOverlayClick: overlayClickedAction
 };
 export const ModalConnect = connect(mapStateToProps, mapDispatchToProps)(Modal);
