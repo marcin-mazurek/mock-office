@@ -1,6 +1,7 @@
 import { Map, Record, List } from 'immutable';
 import { ADD, REMOVE } from './actions';
 import { ADD as ADD_MOCK, REMOVE as REMOVE_MOCK } from '../mocks/actions';
+import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/actions';
 
 const initialState = new Map({
   entities: new Map(),
@@ -12,19 +13,18 @@ export const Scenario = new Record({
   mocks: new List()
 });
 
+const addScenario = (state, params) => {
+  const scenario = new Scenario(params);
+
+  return state
+    .setIn(['entities', params.id], scenario)
+    .update('ids', ids => ids.push(params.id));
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { id } = action;
-      const params = {
-        id
-      };
-
-      const scenario = new Scenario(Object.assign(params, { id }));
-
-      return state
-        .setIn(['entities', id], scenario)
-        .update('ids', ids => ids.push(id));
+      return addScenario(state, { id: action.id });
     }
     case REMOVE: {
       const { id } = action;
@@ -41,6 +41,10 @@ export default (state = initialState, action) => {
       return state.updateIn(['entities', action.scenarioId, 'mocks'],
         mocks => mocks.filter(mock => mock !== action.mockId)
       );
+    }
+    case ADD_SERVER_SUCCEED: {
+      const { params: { data } } = action;
+      return addScenario(state, { id: data.scenario });
     }
     default: {
       return state;

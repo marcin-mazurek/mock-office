@@ -1,11 +1,7 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
-import { addAction } from '../../entities/servers/actions';
-import { FORM_SUBMITTED } from './actions';
+import { FORM_SUBMITTED, succeedAction, failedAction } from './actions';
 import api from '../../resources/api';
-import { addAction as addNotification } from '../../entities/notifications/actions';
-import { closeAction as closeModalAction } from '../../modals/actions';
-import { addAction as addScenario } from '../../entities/scenarios/actions';
 
 const preparePayload = (action) => {
   const { values } = action;
@@ -25,26 +21,14 @@ const preparePayload = (action) => {
 };
 const makeRequest = payload => Observable.from(api.addServer(payload));
 const hasError = has('error');
-const onFail = result => [addNotification({ type: 'error', text: result.error })];
-const onSuccess = result => [
-  addNotification({ type: 'success', text: 'Server added' }),
-  closeModalAction(),
-  addScenario(result.data.id, result.data.id),
-  addAction(result.data.id, {
-    name: result.data.name,
-    port: result.data.port,
-    type: result.data.type,
-    id: result.data.id,
-    secure: result.data.secure,
-    scenario: result.data.id
-  })
-];
+const onSuccess = result => succeedAction(result);
+const onFail = result => failedAction(result);
 
 export default action$ =>
   action$.ofType(FORM_SUBMITTED)
     .map(preparePayload)
     .flatMap(makeRequest)
-    .flatMap(
+    .map(
       ifElse(
         hasError,
         onFail,

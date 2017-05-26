@@ -2,6 +2,7 @@ import { Map, List, Set } from 'immutable';
 import { ADD, START, STOP, REMOVE, RENAME, UPDATE } from './actions';
 import Server from './Server';
 import { ADD as ADD_SCENARIO } from '../scenarios/actions';
+import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/actions';
 
 const initialState = new Map({
   entities: new Map(),
@@ -10,10 +11,14 @@ const initialState = new Map({
   running: new Set()
 });
 
+const addServer = (state, server) =>
+  state
+    .setIn(['entities', server.id], server)
+    .update('ids', ids => ids.push(server.id));
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      let newState = state;
       const params = action.params;
       const server = new Server({
         id: action.id,
@@ -23,9 +28,7 @@ export default (state = initialState, action) => {
         secure: params.secure,
         scenario: params.scenario
       });
-      newState = newState.setIn(['entities', action.id], server);
-      newState = newState.update('ids', ids => ids.push(action.id));
-      return newState;
+      return addServer(state, server);
     }
     case START: {
       return state.setIn(['entities', action.id, 'running'], true);
@@ -52,6 +55,21 @@ export default (state = initialState, action) => {
     }
     case ADD_SCENARIO: {
       return state.setIn(['entities', action.server, 'scenario'], action.id);
+    }
+    case ADD_SERVER_SUCCEED: {
+      const { params: { data } } = action;
+      const server = new Server({
+        id: data.id,
+        name: data.name,
+        port: data.port,
+        type: data.type,
+        secure: data.secure,
+        scenario: data.scenario
+      });
+      return state
+        .setIn(['entities', data.id, 'scenario'], data.scenario)
+        .setIn(['entities', data.id], server)
+        .update('ids', ids => ids.push(data.id));
     }
     default: {
       return state;
