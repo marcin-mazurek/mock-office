@@ -1,8 +1,14 @@
 import { Map } from 'immutable';
 
-export const initialState = () => new Map({
+export const getInitialState = () => new Map({
   component: ''
 });
 
-export const openModal = (state, component) => state.set('component', component);
-export const closeModal = state => state.delete('component');
+export const reducers = {
+  openModal(state, component) {
+    return state.set('component', component);
+  },
+  closeModal(state) {
+    return state.delete('component');
+  }
+};
