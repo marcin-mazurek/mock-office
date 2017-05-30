@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
 import api from '../../../resources/api';
-import { addAction as addNotification } from '../../../entities/notifications/actions';
-import { addAction } from '../../../entities/mocks/actions';
-import { addAction as addTaskActionAction } from '../../../entities/tasks/actions';
+import { addAction as addNotification } from '../../../notifications/actions';
+import { actionCreators } from '../../../entities/module';
 import { SUBMIT } from './actions';
 
 const processFormValues = (formValues) => {
@@ -88,7 +87,7 @@ export default function addMockEpic(action$) {
           .flatMap((result) => {
             const actions = [];
 
-            actions.push(addAction(action.scenario, result.id,
+            actions.push(actionCreators.addMockAction(action.scenario, result.id,
               // addAction mock action needs only ids of tasks
               Object.assign(
                 {},
@@ -98,7 +97,7 @@ export default function addMockEpic(action$) {
             ));
             result.params.tasks.forEach(task =>
               // addAction task action uses original full params object
-              actions.push(addTaskActionAction(result.id, task.id, task))
+              actions.push(actionCreators.addServerAction(result.id, task.id, task))
             );
 
             return actions;

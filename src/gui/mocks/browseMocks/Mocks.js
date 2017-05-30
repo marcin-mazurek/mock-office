@@ -5,8 +5,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import { init } from '../removeMock/actions';
 import TasksConnect from '../../tasks/browse/TaskList';
-import { scenarioSelector } from '../../entities/scenarios/selectors';
-import { mockSelector } from '../../entities/mocks/selectors';
+import { selectors } from '../../entities/module';
 
 export const Mock = ({
                        id,
@@ -96,7 +95,7 @@ Mock.propTypes = {
 };
 
 const mockMapStateToProps = (state, ownProps) => {
-  const mock = mockSelector(state, ownProps.id);
+  const mock = selectors.mockSelector(state, ownProps.id);
 
   return {
     id: mock.id,
@@ -135,7 +134,7 @@ Mocks.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const scenario = scenarioSelector(state, ownProps.scenario);
+  const scenario = selectors.scenarioSelector(state, ownProps.scenario);
 
   return {
     mocks: scenario.mocks

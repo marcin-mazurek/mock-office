@@ -4,7 +4,7 @@ import toJson from 'enzyme-to-json';
 import { List } from 'immutable';
 import { Provider } from 'react-redux';
 import NotificationsListConnect, { NotificationsList } from '../../../src/gui/notifications/NotificationsList';
-import { Notification } from '../../../src/gui/entities/notifications/createNotification';
+import { Notification } from '../../../src/gui/notifications/createNotification';
 import configureStore from '../../../src/gui/store/index';
 
 jest.mock('cuid', () => () => 'id');

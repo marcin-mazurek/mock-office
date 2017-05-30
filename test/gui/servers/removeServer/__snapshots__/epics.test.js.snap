@@ -4,14 +4,11 @@ exports[`removeServerEpic fail path actions snapshot 1`] = `
 Array [
   Object {
     "id": "server-id",
-    "type": "removeServer/INITIALIZED",
+    "type": "component/Server/REMOVE_BUTTON_CLICKED",
   },
   Object {
-    "notification": Object {
-      "text": "Error message",
-      "type": "error",
-    },
-    "type": "notifications/ADD",
+    "reason": "Error message",
+    "type": "removeServer/DID_FAIL",
   },
 ]
 `;
@@ -20,22 +17,13 @@ exports[`removeServerEpic success path actions snapshot 1`] = `
 Array [
   Object {
     "id": "server-id",
-    "type": "removeServer/INITIALIZED",
+    "type": "component/Server/REMOVE_BUTTON_CLICKED",
   },
   Object {
-    "id": "server-id",
-    "type": "servers/REMOVE",
-  },
-  Object {
-    "id": "scenario-id",
-    "type": "scenarios/REMOVE",
-  },
-  Object {
-    "notification": Object {
-      "text": "Server removed",
-      "type": "success",
+    "result": Object {
+      "id": "server-id",
     },
-    "type": "notifications/ADD",
+    "type": "removeServer/DID_SUCCEED",
   },
 ]
 `;

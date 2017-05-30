@@ -2,9 +2,9 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Notification } from '../entities/notifications/createNotification';
-import { allNotificationsSelector } from '../entities/notifications/selectors';
-import { removeAction as createRemoveAction } from '../entities/notifications/actions';
+import { Notification } from './createNotification';
+import { allNotificationsSelector } from './selectors';
+import { removeAction as createRemoveAction } from './actions';
 
 // eslint-disable-next-line import/prefer-default-export
 export const NotificationsList = ({ notifications, remove }) => (

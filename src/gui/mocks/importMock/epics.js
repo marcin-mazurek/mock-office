@@ -2,9 +2,8 @@ import { Observable } from 'rxjs';
 import { ifElse } from 'ramda';
 import { INIT, cancelAction } from './actions';
 import api from '../../resources/api';
-import { addAction as addNotification } from '../../entities/notifications/actions';
-import { addAction } from '../../entities/mocks/actions';
-import { addAction as addTaskAction } from '../../entities/tasks/actions';
+import { addAction as addNotification } from '../../notifications/actions';
+import { actionCreators } from '../../entities/module';
 
 const preparePayload = (action) => {
   const { scenario, server, files } = action;
@@ -59,14 +58,14 @@ const onFileRead = requestParams =>
           ),
           { id: data.id }
         );
-        actions.push(addAction(
+        actions.push(actionCreators.addMockAction(
           requestParams.scenario,
           data.id,
           mock
         ));
         requestParams.mocks[index].tasks.forEach((task, taskIndex) => {
           Object.assign(task, { id: data.tasks[taskIndex] });
-          actions.push(addTaskAction(
+          actions.push(actionCreators.addTaskAction(
             data.id,
             data.tasks[taskIndex],
             Object.assign({}, task, { id: data.tasks[taskIndex] })

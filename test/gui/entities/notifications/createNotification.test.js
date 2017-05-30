@@ -1,4 +1,4 @@
-import createNotification from '../../../../src/gui/entities/notifications/createNotification';
+import createNotification from '../../../../src/gui/notifications/createNotification';
 
 describe('createNotification', () => {
   it('should not pass notification type if it is not valid', () => {

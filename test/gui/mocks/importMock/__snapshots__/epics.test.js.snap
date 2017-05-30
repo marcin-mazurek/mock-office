@@ -42,7 +42,7 @@ Array [
       "tasks": Array [],
     },
     "scenario": "scenario-id",
-    "type": "mocks/ADD",
+    "type": "entities/ADD_MOCK",
   },
 ]
 `;

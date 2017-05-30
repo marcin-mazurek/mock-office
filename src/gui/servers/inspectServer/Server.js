@@ -6,12 +6,17 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
 import startServerAction from '../startServer/actions';
 import stopServerAction from '../stopServer/actions';
-import { selectors } from '../../entities/servers/module';
+import { selectors } from '../../entities/module';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
-import { initializedAction as removeServerInitAction } from '../removeServer/actions';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../assets/icons_gray_add@3x.svg';
+
+export const REMOVE_BUTTON_CLICKED = 'component/Server/REMOVE_BUTTON_CLICKED';
+export const removeButtonClickedAction = id => ({
+  type: REMOVE_BUTTON_CLICKED,
+  id
+});
 
 const ServerToggle = ({ toggled, serverId, stop, start }) => {
   let handleClick;
@@ -90,7 +95,7 @@ const serverToggleMapDispatchToProps = {
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
 
-export const Server = ({ running, name, port, removeServer, scenario, id, type }) =>
+export const Server = ({ running, name, port, onRemoveButtonClick, scenario, id, type }) =>
   <div className="inspect-server">
     <div className="inspect-server__header inspect-server-header">
       <div className="inspect-server-header__toggle">
@@ -116,7 +121,7 @@ export const Server = ({ running, name, port, removeServer, scenario, id, type }
         onClick={() => (
           // eslint-disable-next-line no-alert
           confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
-            ? removeServer(id)
+            ? onRemoveButtonClick(id)
             : false
         )
         }
@@ -191,7 +196,7 @@ export const Server = ({ running, name, port, removeServer, scenario, id, type }
 
 Server.propTypes = {
   running: PropTypes.bool.isRequired,
-  removeServer: PropTypes.func.isRequired,
+  onRemoveButtonClick: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   port: PropTypes.number.isRequired,
   scenario: PropTypes.string.isRequired,
@@ -200,7 +205,7 @@ Server.propTypes = {
 };
 
 const serverMapDispatchToProps = {
-  removeServer: removeServerInitAction
+  onRemoveButtonClick: removeButtonClickedAction
 };
 
 const serverMapStateToProps = (state, ownProps) => {

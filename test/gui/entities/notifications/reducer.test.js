@@ -1,5 +1,5 @@
-import reducer, { NotificationsState } from '../../../../src/gui/entities/notifications/reducer';
-import { removeAction, addAction, ADD, REMOVE } from '../../../../src/gui/entities/notifications/actions';
+import reducer, { NotificationsState } from '../../../../src/gui/notifications/reducer';
+import { removeAction, addAction, ADD, REMOVE } from '../../../../src/gui/notifications/actions';
 
 jest.mock('cuid', () => () => 'id');
 

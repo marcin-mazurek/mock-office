@@ -1,9 +1,8 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { initializedAction } from '../../../../src/gui/servers/removeServer/actions';
-import Server from '../../../../src/gui/entities/servers/Server';
-import { Scenario } from '../../../../src/gui/entities/scenarios/reducer';
+import { types } from '../../../../src/gui/entities/module';
+import { removeButtonClickedAction } from '../../../../src/gui/servers/inspectServer/Server';
 
 describe('removeServerEpic', () => {
   beforeEach(() => {
@@ -27,13 +26,13 @@ describe('removeServerEpic', () => {
     const store = mockStore(fromJS({
       servers: {
         entities: {
-          'server-id': new Server({ id: 'server-id', scenario: 'scenario-id' })
+          'server-id': new types.Server({ id: 'server-id', scenario: 'scenario-id' })
         },
         ids: ['server-id']
       },
       scenarios: {
         entities: {
-          'scenario-id': new Scenario({ id: 'scenario-id' })
+          'scenario-id': new types.Scenario({ id: 'scenario-id' })
         },
         ids: ['scenario-id']
       },
@@ -42,7 +41,7 @@ describe('removeServerEpic', () => {
         ids: []
       }
     }));
-    store.dispatch(initializedAction('server-id'));
+    store.dispatch(removeButtonClickedAction('server-id'));
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();
       done();
@@ -63,13 +62,13 @@ describe('removeServerEpic', () => {
     const store = mockStore(fromJS({
       servers: {
         entities: {
-          'server-id': new Server({ id: 'server-id', scenario: 'scenario-id' })
+          'server-id': new types.Server({ id: 'server-id', scenario: 'scenario-id' })
         },
         ids: ['server-id']
       },
       scenarios: {
         entities: {
-          'scenario-id': new Scenario({ id: 'scenario-id' })
+          'scenario-id': new types.Scenario({ id: 'scenario-id' })
         },
         ids: ['scenario-id']
       },
@@ -78,7 +77,7 @@ describe('removeServerEpic', () => {
         ids: []
       }
     }));
-    store.dispatch(initializedAction('server-id'));
+    store.dispatch(removeButtonClickedAction('server-id'));
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();
       done();

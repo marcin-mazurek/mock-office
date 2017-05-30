@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { taskSelector } from '../../entities/tasks/selectors';
+import { selectors } from '../../entities/module';
 import expandIcon from '../../assets/icons_green_expand@3x.svg';
-import { mockSelector } from '../../entities/mocks/selectors';
 
 export const TaskListItem = ({
                                title,
@@ -66,7 +65,7 @@ TaskListItem.propTypes = {
 };
 
 const TaskListItemMapStateToProps = (state, ownProps) => {
-  const task = taskSelector(state, ownProps.id);
+  const task = selectors.taskSelector(state, ownProps.id);
   return {
     title: task.title,
     interval: task.interval,
@@ -96,7 +95,7 @@ TaskList.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  tasks: mockSelector(state, ownProps.mock).tasks
+  tasks: selectors.mockSelector(state, ownProps.mock).tasks
 });
 
 export default connect(mapStateToProps)(TaskList);

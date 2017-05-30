@@ -24,7 +24,7 @@ Array [
   },
   Object {
     "id": "some id",
-    "type": "servers/START",
+    "type": "entities/START_SERVER",
   },
 ]
 `;

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { stopAction } from '../../entities/servers/actions';
+import { actionCreators } from '../../entities/module';
 import { INITIALIZED } from './actions';
 
 export default action$ =>
@@ -14,4 +14,4 @@ export default action$ =>
         body: JSON.stringify({ id: action.id })
       }).then(() => action.id)
     ))
-    .map(stopAction);
+    .map(actionCreators.stopServerAction);

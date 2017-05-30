@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { runAction, stopAction, removeAfterUseAction, finishAction } from '../entities/mocks/actions';
+import { actionCreators } from '../entities/module';
 import { restoreStateAction } from './actions';
 
 export default function startAppSync(ws, store) {
@@ -16,22 +16,24 @@ export default function startAppSync(ws, store) {
 
       switch (data.event) {
         case 'MOCK_STOP': {
-          store.dispatch(stopAction(data.mockId));
+          store.dispatch(actionCreators.stopAction(data.mockId));
           break;
         }
         case 'MOCK_END': {
-          store.dispatch(finishAction(data.mockId));
+          store.dispatch(actionCreators.finishAction(data.mockId));
           break;
         }
         case 'MOCK_REMOVED_AFTER_USE': {
           setTimeout(() => {
-            store.dispatch(removeAfterUseAction(data.scenario, data.mockId, data.tasks));
+            store.dispatch(
+              actionCreators.removeAfterUseAction(data.scenario, data.mockId, data.tasks)
+            );
           }, 5000);
 
           break;
         }
         case 'MOCK_START': {
-          store.dispatch(runAction(data.mockId));
+          store.dispatch(actionCreators.runAction(data.mockId));
           break;
         }
         case 'RESTORE_STATE': {

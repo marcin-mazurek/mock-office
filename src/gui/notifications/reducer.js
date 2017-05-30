@@ -1,8 +1,12 @@
 import { Map, List, Record } from 'immutable';
 import createNotification from './createNotification';
 import { REMOVE, ADD } from './actions';
-import { SUCCEED as ADD_SERVER_SUCCEED, FAILED as ADD_SERVER_FAILED } from '../../servers/addServer/epics';
-import { DID_FAIL } from '../../servers/editServer/epics';
+import { SUCCEED as ADD_SERVER_SUCCEED, FAILED as ADD_SERVER_FAILED } from '../servers/addServer/epics';
+import { DID_FAIL as EDIT_SERVER_DID_FAIL } from '../servers/editServer/epics';
+import {
+  DID_FAIL as REMOVE_SERVER_DID_FAIL,
+  DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED
+} from '../servers/removeServer/epics';
 
 export const NotificationsState = new Record({
   entities: new Map(),
@@ -31,8 +35,14 @@ export default function notificationsReducer(state = new NotificationsState(), a
     case ADD_SERVER_FAILED: {
       return addNotification(state, createNotification({ type: 'error', text: action.params.error }));
     }
-    case DID_FAIL: {
+    case EDIT_SERVER_DID_FAIL: {
       return addNotification(state, action.reason);
+    }
+    case REMOVE_SERVER_DID_SUCCEED: {
+      return addNotification(state, createNotification({ type: 'success', text: 'Server removed' }));
+    }
+    case REMOVE_SERVER_DID_FAIL: {
+      return addNotification(state, createNotification({ text: action.reason }));
     }
     default: {
       return state;

@@ -5,7 +5,7 @@ import { reduxForm, Field } from 'redux-form/immutable';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router';
 import serverIcon from '../../assets/icons_gray_server.svg';
-import { selectors } from '../../entities/servers/module';
+import { selectors } from '../../entities/module';
 
 export const FORM_DID_SUBMIT = 'editServer/FORM_DID_SUBMIT';
 export const formDidSubmitAction = (id, values) => ({
@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const server = selectors.serverSelector(state, ownProps.serverId);
+  const server = selectors.entitySelector(state, ownProps.serverId);
 
   return {
     initialValues: {

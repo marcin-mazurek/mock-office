@@ -8,7 +8,7 @@ import LandingPageConnect from '../landingPage/LandingPage';
 
 export default function configureRoutes(store) {
   const checkIfServerExists = (nextState, replace) => {
-    if (!store.getState().getIn(['servers', 'ids']).includes(nextState.params.id)) {
+    if (!store.getState().getIn(['entities', 'servers', 'entities', nextState.params.id])) {
       replace('/');
     }
   };

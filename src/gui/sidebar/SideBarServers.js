@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { selectors } from '../entities/servers/module';
+import { selectors } from '../entities/module';
 import { init as createInitExportAction } from '../exportState/actions';
 import plusIcon from '../assets/icons_white_add.svg';
 import lockIcon from '../assets/icons_general_locked@3x.svg';
-import currentDisplayedServerSelector from './selectors';
+import currentDisplayedentitySelector from './selectors';
 import { addButtonClickedAction } from './actions';
 
 export const SideBarServers = ({ servers, selected, initExport, onAddButtonClick }) => (
@@ -71,8 +71,8 @@ SideBarServers.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  servers: selectors.allServerSelector(state),
-  selected: currentDisplayedServerSelector(state)
+  servers: selectors.allServersSelector(state),
+  selected: currentDisplayedentitySelector(state)
 });
 
 const mapDispatchToProps = {

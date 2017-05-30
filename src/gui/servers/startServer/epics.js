@@ -1,14 +1,14 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import { INITIALIZED } from './actions';
-import { startAction } from '../../entities/servers/actions';
-import { addAction } from '../../entities/notifications/actions';
+import { actionCreators } from '../../entities/module';
+import { addAction } from '../../notifications/actions';
 import api from '../../resources/api';
 
 const preparePayload = action => ({ id: action.id });
 const makeRequest = action => Observable.from(api.startServer({ id: action.id }));
 const onFail = result => addAction({ type: 'error', text: result.error });
-const onSuccess = result => startAction(result.data.id);
+const onSuccess = result => actionCreators.startServerAction(result.data.id);
 const hasError = has('error');
 
 export default action$ =>
