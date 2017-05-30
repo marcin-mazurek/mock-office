@@ -1,8 +1,6 @@
 import { Observable } from 'rxjs';
-import { runAction, stopAction, addAction as addMockAction, removeAfterUseAction, finishAction } from '../entities/mocks/actions';
-import { addAction, startAction } from '../entities/servers/actions';
-import { addAction as addScenarioAction } from '../entities/scenarios/actions';
-import { addAction as addTaskAction } from '../entities/tasks/actions';
+import { runAction, stopAction, removeAfterUseAction, finishAction } from '../entities/mocks/actions';
+import { restoreStateAction } from './actions';
 
 export default function startAppSync(ws, store) {
   Observable.fromEventPattern(
@@ -37,38 +35,7 @@ export default function startAppSync(ws, store) {
           break;
         }
         case 'RESTORE_STATE': {
-          data.state.forEach((server) => {
-            store.dispatch(addAction(server.id, {
-              name: server.name,
-              port: server.port,
-              type: server.type,
-              secure: server.secure,
-              scenario: server.scenario
-            }));
-
-            store.dispatch(addScenarioAction(server.id, server.scenario));
-
-            if (server.running) {
-              store.dispatch(startAction(server.id));
-            }
-
-            server.mocks.forEach((mock) => {
-              store.dispatch(
-                addMockAction(
-                  server.scenario, mock.id, {
-                    title: mock.title,
-                    interval: mock.interval,
-                    reuse: mock.reuse,
-                    quantity: mock.quantity,
-                    delay: mock.delay,
-                    requirements: mock.requirements
-                  }
-                )
-              );
-              mock.tasks.forEach(task => store.dispatch(addTaskAction(mock.id, task.id, task)));
-            });
-          });
-
+          store.dispatch(restoreStateAction(data.state));
           break;
         }
         default:

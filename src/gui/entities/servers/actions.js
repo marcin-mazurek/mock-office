@@ -2,7 +2,6 @@ export const ADD = 'servers/ADD';
 export const START = 'servers/START';
 export const STOP = 'servers/STOP';
 export const REMOVE = 'servers/REMOVE';
-export const RENAME = 'servers/RENAME';
 export const UPDATE = 'server/UPDATE';
 
 export const addAction = (id, params) => ({
@@ -24,12 +23,6 @@ export const stopAction = id => ({
 export const removeAction = id => ({
   type: REMOVE,
   id
-});
-
-export const renameAction = (id, name) => ({
-  type: RENAME,
-  id,
-  name
 });
 
 export const updateAction = (id, params) => ({

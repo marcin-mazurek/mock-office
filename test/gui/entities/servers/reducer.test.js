@@ -5,7 +5,6 @@ import {
   START,
   STOP,
   REMOVE,
-  RENAME,
   addAction
 } from '../../../../src/gui/entities/servers/actions';
 
@@ -95,43 +94,14 @@ describe('servers reducer', () => {
           type: 'http'
         }
       },
-      ids: ['some id'],
-      selected: 'some id'
+      ids: ['some id']
     }), {
       type: REMOVE,
       id: 'some id'
     });
     expect(state.toJS()).toEqual({
       entities: {},
-      ids: [],
-      selected: null
-    });
-  });
-
-  test(`on ${RENAME} action`, () => {
-    const state = reducer(fromJS({
-      entities: {
-        'some id': {
-          id: 'some id',
-          name: 'Server name',
-          port: 3000,
-          type: 'http'
-        }
-      }
-    }), {
-      type: RENAME,
-      id: 'some id',
-      name: 'New server name',
-    });
-    expect(state.toJS()).toEqual({
-      entities: {
-        'some id': {
-          id: 'some id',
-          name: 'New server name',
-          port: 3000,
-          type: 'http'
-        }
-      }
+      ids: []
     });
   });
 });

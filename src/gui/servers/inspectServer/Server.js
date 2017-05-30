@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
 import startServerAction from '../startServer/actions';
 import stopServerAction from '../stopServer/actions';
-import { serverSelector } from '../../entities/servers/selectors';
+import { selectors } from '../../entities/servers/module';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
 import { initializedAction as removeServerInitAction } from '../removeServer/actions';
@@ -204,7 +204,7 @@ const serverMapDispatchToProps = {
 };
 
 const serverMapStateToProps = (state, ownProps) => {
-  const server = serverSelector(state, ownProps.params.id);
+  const server = selectors.serverSelector(state, ownProps.params.id);
 
   return {
     id: server.id,

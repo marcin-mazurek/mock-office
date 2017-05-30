@@ -4,7 +4,7 @@ import { ifElse, has } from 'ramda';
 import { INITIALIZED } from './actions';
 import getCurrentDisplayedServerId from '../../sidebar/selectors';
 import { mockSelector } from '../../entities/mocks/selectors';
-import { serverSelector } from '../../entities/servers/selectors';
+import { selectors } from '../../entities/servers/module';
 import { scenarioSelector } from '../../entities/scenarios/selectors';
 import api from '../../resources/api';
 import { addAction as addNotification } from '../../entities/notifications/actions';
@@ -26,7 +26,7 @@ const onSuccess = store => (result) => {
     actions.push(push('/'));
   }
   actions.push(removeServerAction(data.id));
-  const server = serverSelector(state, data.id);
+  const server = selectors.serverSelector(state, data.id);
   actions.push(removeScenarioAction(server.scenario));
   const scenario = scenarioSelector(state, server.scenario);
   scenario.mocks.forEach(

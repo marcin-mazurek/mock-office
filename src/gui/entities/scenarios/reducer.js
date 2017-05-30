@@ -2,6 +2,7 @@ import { Map, Record, List } from 'immutable';
 import { ADD, REMOVE } from './actions';
 import { ADD as ADD_MOCK, REMOVE as REMOVE_MOCK } from '../mocks/actions';
 import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/epics';
+import { RESTORE_STATE as APP_RESTORE_STATE } from '../../appSync/actions';
 
 const initialState = new Map({
   entities: new Map(),
@@ -45,6 +46,23 @@ export default (state = initialState, action) => {
     case ADD_SERVER_SUCCEED: {
       const { params: { data } } = action;
       return addScenario(state, { id: data.scenario });
+    }
+    case APP_RESTORE_STATE: {
+      const { servers } = action;
+      let newState = state;
+
+      servers.forEach((serverParams) => {
+        newState = addScenario(newState, { id: serverParams.scenario });
+
+        serverParams.mocks.forEach((mock) => {
+          newState = newState.updateIn(
+            ['entities', serverParams.scenario, 'mocks'],
+            mocks => mocks.push(mock.id)
+          );
+        });
+      });
+
+      return newState;
     }
     default: {
       return state;

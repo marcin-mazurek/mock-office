@@ -2,28 +2,32 @@ import { Map, List } from 'immutable';
 import { ADD, REMOVE, FINISH, RUN, STOP } from './actions';
 import Mock from './Mock';
 import { ADD as ADD_TASK } from '../tasks/actions';
+import { RESTORE_STATE as APP_RESTORE_STATE } from '../../appSync/actions';
 
 const initialState = new Map({
   entities: new Map(),
   ids: new List()
 });
 
+const addMock = (state, id, params) => {
+  const mock = new Mock(
+    Object.assign(
+      { id },
+      Object.assign({}, params, { tasks: new List() })
+    )
+  );
+
+  return state
+    .setIn(['entities', id], mock)
+    .update('ids', ids => ids.push(id));
+};
+const addTask = (state, id, task) =>
+  state.updateIn(['entities', id, 'tasks'], tasks => tasks.push(task));
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD: {
-      const { id, params } = action;
-
-      params.tasks = new List();
-      const mock = new Mock(
-        Object.assign(
-          { id },
-          Object.assign({}, params)
-        )
-      );
-
-      return state
-        .setIn(['entities', id], mock)
-        .update('ids', ids => ids.push(id));
+      return addMock(state, action.id, action.params);
     }
     case REMOVE: {
       const { mockId } = action;
@@ -53,12 +57,26 @@ export default (state = initialState, action) => {
         lastDuration: null
       });
     }
-    default: {
-      return state;
+    case APP_RESTORE_STATE: {
+      let newState = state;
+
+      action.servers.forEach(server =>
+        server.mocks.forEach((mock) => {
+          newState = addMock(newState, mock.id, mock);
+
+          mock.tasks.forEach((task) => {
+            newState = addTask(newState, mock.id, task.id);
+          });
+        })
+      );
+
+      return newState;
     }
     case ADD_TASK: {
-      const { taskId, mockId } = action;
-      return state.updateIn(['entities', mockId, 'tasks'], tasks => tasks.push(taskId));
+      return addTask(state, action.mockId, action.taskId);
+    }
+    default: {
+      return state;
     }
   }
 };

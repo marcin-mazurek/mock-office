@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { serverSelector } from '../../entities/servers/selectors';
+import { selectors } from '../../entities/servers/module';
 import AddHttpMockFormConnect from './addHttpMock/AddMockForm';
 import AddWsMockFormConnect from './addWsMock/AddWsMockForm';
 
@@ -32,7 +32,7 @@ AddMock.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const serverDetails = serverSelector(state, ownProps.params.id);
+  const serverDetails = selectors.serverSelector(state, ownProps.params.id);
 
   return {
     serverType: serverDetails.type,
