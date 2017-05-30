@@ -6,7 +6,7 @@ import Switch from 'rc-switch';
 import { Field, reduxForm } from 'redux-form/immutable';
 import plusIcon from '../../assets/icons_white_add.svg';
 
-export const SUBMIT_BUTTON_CLICKED = 'ddServerForm/SUBMIT_BUTTON_CLICKED';
+export const SUBMIT_BUTTON_CLICKED = 'addServerForm/SUBMIT_BUTTON_CLICKED';
 export const submitButtonClickAction = values => ({
   type: SUBMIT_BUTTON_CLICKED,
   values
