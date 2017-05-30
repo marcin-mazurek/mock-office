@@ -2,7 +2,7 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { initializedAction } from '../../../../src/gui/servers/editServer/actions';
+import { formDidSubmitAction } from '../../../../src/gui/servers/editServer/EditServer';
 
 describe('editServerEpic', () => {
   beforeEach(() => {
@@ -27,7 +27,7 @@ describe('editServerEpic', () => {
     const epicMiddleware = createEpicMiddleware(editServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
-    store.dispatch(initializedAction('some id', fromJS({ port: 3000, name: 'name' })));
+    store.dispatch(formDidSubmitAction('some id', fromJS({ port: 3000, name: 'name' })));
 
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();
@@ -46,7 +46,7 @@ describe('editServerEpic', () => {
     const epicMiddleware = createEpicMiddleware(editServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
-    store.dispatch(initializedAction('some id', fromJS({ port: 3000, name: 'name' })));
+    store.dispatch(formDidSubmitAction('some id', fromJS({ port: 3000, name: 'name' })));
 
     Promise.resolve().then(() => {
       expect(store.getActions()).toMatchSnapshot();

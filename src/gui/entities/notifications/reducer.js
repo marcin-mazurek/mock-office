@@ -2,6 +2,7 @@ import { Map, List, Record } from 'immutable';
 import createNotification from './createNotification';
 import { REMOVE, ADD } from './actions';
 import { SUCCEED as ADD_SERVER_SUCCEED, FAILED as ADD_SERVER_FAILED } from '../../servers/addServer/epics';
+import { DID_FAIL } from '../../servers/editServer/epics';
 
 export const NotificationsState = new Record({
   entities: new Map(),
@@ -29,6 +30,9 @@ export default function notificationsReducer(state = new NotificationsState(), a
     }
     case ADD_SERVER_FAILED: {
       return addNotification(state, createNotification({ type: 'error', text: action.params.error }));
+    }
+    case DID_FAIL: {
+      return addNotification(state, action.reason);
     }
     default: {
       return state;

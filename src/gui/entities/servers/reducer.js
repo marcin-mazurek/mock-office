@@ -3,6 +3,7 @@ import { ADD as ADD_SCENARIO } from '../scenarios/actions';
 import { SUCCEED as ADD_SERVER_SUCCEED } from '../../servers/addServer/epics';
 import { getInitialState, reducers } from './module';
 import { RESTORE_STATE as APP_RESTORE_STATE } from '../../appSync/actions';
+import { DID_SUCCEED } from '../../servers/editServer/epics';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
@@ -42,6 +43,9 @@ export default (state = getInitialState(), action) => {
       });
 
       return newState;
+    }
+    case DID_SUCCEED: {
+      return reducers.updateServer(state, action.result.id, action.result);
     }
     default: {
       return state;
