@@ -29,32 +29,6 @@ const onSuccess = store => (result) => {
 
   return actions;
 };
-// const onSuccess = store => (result) => {
-//   const state = store.getState();
-//   const { data } = result;
-//   const actions = [];
-//
-//   // Change route to prevent errors when trying to display removed server
-//   const displayedServerId = getCurrentDisplayedServerId(state);
-//   if (displayedServerId === data.id) {
-//     actions.push(push('/'));
-//   }
-//   actions.push(removeServerAction(data.id));
-//   const server = selectors.entitySelector(state, data.id);
-//   actions.push(removeScenarioAction(server.scenario));
-//   const scenario = entitySelector(state, server.scenario);
-//   scenario.mocks.forEach(
-//     mock => actions.push(removeMockAction(server.scenario, mock))
-//   );
-//   scenario.mocks
-//     .forEach((mockId) => {
-//       entitySelector(state, mockId).tasks
-//         .forEach(task =>
-//           actions.push(removeTaskAction(mockId, task))
-//         );
-//     });
-//   return Observable.from(actions);
-// };
 const hasError = has('error');
 
 export default (action$, store) =>
