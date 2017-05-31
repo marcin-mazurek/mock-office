@@ -20,9 +20,7 @@ Array [
     "type": "component/Server/REMOVE_BUTTON_CLICKED",
   },
   Object {
-    "result": Object {
-      "id": "server-id",
-    },
+    "id": "server-id",
     "type": "removeServer/DID_SUCCEED",
   },
 ]

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
-import { init } from '../removeMock/actions';
 import TasksConnect from '../../tasks/browse/TaskList';
 import { selectors } from '../../entities/module';
 
@@ -12,15 +10,14 @@ export const Mock = ({
                        title,
                        server,
                        scenario,
-                       remove,
+                       onRemoveButtonClick,
                        reuse,
                        quantity,
                        requirements,
                        runCount,
                        lastDuration,
                        finished,
-                       running,
-                       tasks
+                       running
                      }) => {
   let quantityInfo = null;
 
@@ -68,7 +65,10 @@ export const Mock = ({
               : null
           }
         </div>
-        <button className="mock__remove-button" onClick={() => remove(server, scenario, id, tasks)}>
+        <button
+          className="mock__remove-button"
+          onClick={() => onRemoveButtonClick(server, scenario, id)}
+        >
           remove
         </button>
       </div>
@@ -87,11 +87,10 @@ Mock.propTypes = {
   lastDuration: PropTypes.number,
   finished: PropTypes.bool.isRequired,
   running: PropTypes.bool.isRequired,
-  tasks: ImmutablePropTypes.listOf(PropTypes.string),
   server: PropTypes.string.isRequired,
   scenario: PropTypes.string.isRequired,
   requirements: PropTypes.shape({}),
-  remove: PropTypes.func.isRequired
+  onRemoveButtonClick: PropTypes.func.isRequired
 };
 
 const mockMapStateToProps = (state, ownProps) => {
@@ -110,8 +109,17 @@ const mockMapStateToProps = (state, ownProps) => {
     tasks: mock.tasks
   };
 };
+
+export const REMOVE_BUTTON_CLICKED = 'component/Mock/REMOVE_BUTTON_CLICKED';
+const removeButtonClickedAction = (serverId, scenarioId, mockId) => ({
+  type: REMOVE_BUTTON_CLICKED,
+  serverId,
+  scenarioId,
+  mockId
+});
+
 const mockMapDispatchToProps = {
-  remove: init
+  onRemoveButtonClick: removeButtonClickedAction
 };
 export const MockConnect =
   connect(mockMapStateToProps, mockMapDispatchToProps)(Mock);

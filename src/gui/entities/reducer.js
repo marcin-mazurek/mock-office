@@ -3,16 +3,12 @@ import { RESTORE_STATE as APP_RESTORE_STATE } from '../appSync/actions';
 import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
 import { DID_SUCCEED as EDIT_SERVER_DID_SUCCEED } from '../servers/editServer/epics';
 import { DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED } from '../servers/removeServer/epics';
+import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../mocks/removeMock/epics';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
     case actions.ADD_MOCK: {
-      let newState = state;
-      newState = newState.updateIn(['scenarios', 'entities', action.scenario, 'mocks'],
-        mocks => mocks.push(action.id)
-      );
-      newState = reducers.addMock(newState, action.scenario, action.id, action.params);
-      return newState;
+      return reducers.addMock(state, action.scenario, action.id, action.params);
     }
     case actions.REMOVE_MOCK: {
       return reducers.removeMock(state, action.scenarioId, action.mockId);
@@ -119,6 +115,9 @@ export default (state = getInitialState(), action) => {
       });
 
       return newState;
+    }
+    case REMOVE_MOCK_DID_SUCCEED: {
+      return reducers.removeMock(state, action.scenario, action.id);
     }
     default: {
       return state;

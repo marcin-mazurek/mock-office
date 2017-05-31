@@ -7,6 +7,7 @@ import {
   DID_FAIL as REMOVE_SERVER_DID_FAIL,
   DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED
 } from '../servers/removeServer/epics';
+import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../mocks/removeMock/epics';
 
 export const NotificationsState = new Record({
   entities: new Map(),
@@ -42,7 +43,10 @@ export default function notificationsReducer(state = new NotificationsState(), a
       return addNotification(state, createNotification({ type: 'success', text: 'Server removed' }));
     }
     case REMOVE_SERVER_DID_FAIL: {
-      return addNotification(state, createNotification({ text: action.reason }));
+      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
+    }
+    case REMOVE_MOCK_DID_FAIL: {
+      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
     }
     default: {
       return state;

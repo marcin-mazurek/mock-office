@@ -32,7 +32,7 @@ AddMock.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const serverDetails = selectors.entitySelector(state, ownProps.params.id);
+  const serverDetails = selectors.serverSelector(state, ownProps.params.id);
 
   return {
     serverType: serverDetails.type,

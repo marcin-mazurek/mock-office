@@ -274,18 +274,29 @@ export const reducers = {
       .deleteIn(['scenarios', 'entities', id]);
   },
   removeMock(state, scenario, id) {
-    return state
-      .update('ids', ids => ids.filter(mockId => mockId !== id))
+    const tasks = state.getIn(['mocks', 'entities', id]).tasks;
+    let newState = state;
+
+    newState = newState
+      .updateIn(['mocks', 'ids'], ids => ids.filter(mockId => mockId !== id))
       .deleteIn(['mocks', 'entities', id])
-      .updateIn(['mocks', 'entities', scenario, 'mocks'],
+      .updateIn(['scenarios', 'entities', scenario, 'mocks'],
         mocks => mocks.filter(mock => mock !== id)
       );
+
+    tasks.forEach((task) => {
+      newState = newState
+        .deleteIn(['tasks', 'entities', task])
+        .updateIn(['tasks', 'ids'], ids => ids.filter(taskId => taskId !== task));
+    });
+
+    return newState;
   },
   removeTask(state, mock, id) {
     return state
       .updateIn(['tasks', 'ids'], ids => ids.filter(taskId => taskId !== id))
       .deleteIn(['tasks', 'entities', id])
-      .updateId(['mocks', 'entities', mock, 'tasks'], tasks => tasks.filter(taskId => taskId !== id));
+      .updateIn(['mocks', 'entities', mock, 'tasks'], tasks => tasks.filter(taskId => taskId !== id));
   }
 };
 

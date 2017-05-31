@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const server = selectors.entitySelector(state, ownProps.serverId);
+  const server = selectors.serverSelector(state, ownProps.serverId);
 
   return {
     initialValues: {

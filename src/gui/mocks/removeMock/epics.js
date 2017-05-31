@@ -1,33 +1,46 @@
-import { Observable } from 'rxjs';
-import { REMOVE_AFTER_USE, INIT } from './actions';
-import { selectors, actionCreators } from '../../entities/module';
+import { ifElse, has } from 'ramda';
+import api from '../../resources/api';
+import { REMOVE_BUTTON_CLICKED } from '../browseMocks/Mocks';
+
+export const DID_SUCCEED = 'removeMock/DID_SUCCEED';
+const didSucceedAction = (scenario, id) => ({
+  type: DID_SUCCEED,
+  scenario,
+  id
+});
+export const DID_FAIL = 'removeMock/DID_FAIL';
+const didFailAction = reason => ({
+  type: DID_FAIL,
+  reason
+});
+
+const makeRequest = action => api.removeMock({
+  mockId: action.mockId,
+  serverId: action.serverId,
+  scenarioId: action.scenarioId
+});
+const hasError = has('error');
+const onSuccess = result => didSucceedAction(result.scenarioId, result.mockId);
+const onFail = result => didFailAction(result.error);
 
 export const removeMockEpic = action$ =>
-  action$.ofType(INIT)
-    .flatMap(action => Observable.from(
-      fetch('http://127.0.0.1:3060/remove-mock', {
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({ mockId: action.mockId, serverId: action.serverId })
-      }).then(() =>
-        [actionCreators.removeMockAction(action.scenarioId, action.mockId)].concat(
-          action.tasks.map(actionCreators.removeTaskAction).toJS()
-        )
+  action$.ofType(REMOVE_BUTTON_CLICKED)
+    .flatMap(makeRequest)
+    .map(
+      ifElse(
+        hasError,
+        onFail,
+        onSuccess
       )
-      )
-        .flatMap(actions => actions)
     );
 
-export const removeMockAfterUseEpic = (action$, store) =>
-  action$.ofType(REMOVE_AFTER_USE)
-    .delay(5000)
-    .map(
-      ({ scenario, mockId }) => {
-        const state = store.getState();
-        const mock = selectors.entitySelector(state, mockId);
-        return actionCreators.removeMockAction(scenario, mockId, mock.tasks);
-      }
-    );
+// export const removeMockAfterUseEpic = (action$, store) =>
+//   action$.ofType(REMOVE_AFTER_USE)
+//     .delay(5000)
+//     .map(
+//       ({ scenario, mockId }) => {
+//         const state = store.getState();
+//         const mock = selectors.entitySelector(state, mockId);
+//         return actionCreators.removeMockAction(scenario, mockId, mock.tasks);
+//       }
+//     );

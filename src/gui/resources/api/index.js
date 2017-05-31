@@ -164,5 +164,39 @@ export default {
 
         throw new Error(error.message);
       });
+  },
+  removeMock(params) {
+    return fetch('http://127.0.0.1:3060/remove-mock', {
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(params)
+    })
+      .catch(() => {
+        throw new ConnectionError();
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return {
+            scenarioId: params.scenarioId,
+            mockId: params.mockId
+          };
+        } else if (res.status === 400) {
+          return res.json().then(payload => ({ error: payload.error }));
+        } else if (res.status === 404) {
+          return { error: 'That mock does\'nt exist' };
+        }
+
+        return { error: 'Server error' };
+      })
+      .catch((error) => {
+        if (error instanceof ConnectionError) {
+          return { error: error.message };
+        }
+
+        throw new Error(error.message);
+      });
   }
 };
