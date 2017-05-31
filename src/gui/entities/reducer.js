@@ -4,7 +4,12 @@ import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
 import { DID_SUCCEED as EDIT_SERVER_DID_SUCCEED } from '../servers/editServer/epics';
 import { DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED } from '../servers/removeServer/epics';
 import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../mocks/removeMock/epics';
-import { REMOVE_AFTER_USE_MESSAGE_RECEIVED } from '../appSync/startAppSync';
+import {
+  REMOVE_MOCK_MESSAGE_RECEIVED,
+  STOP_MOCK_MESSAGE_RECEIVED,
+  FINISH_MOCK_MESSAGE_RECEIVED,
+  RUN_MOCK_MESSAGE_RECEIVED
+} from '../appSync/startAppSync';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
@@ -14,28 +19,17 @@ export default (state = getInitialState(), action) => {
     case actions.REMOVE_MOCK: {
       return reducers.removeMock(state, action.scenarioId, action.mockId);
     }
-    case actions.FINISH_MOCK: {
-      return state
-        .setIn(['mocks', 'entities', action.id, 'running'], false)
-        .setIn(['mocks', 'entities', action.id, 'finished'], true);
-    }
-    case actions.STOP_MOCK: {
+    case STOP_MOCK_MESSAGE_RECEIVED: {
       const { id } = action;
-      const prevState = state.getIn(['mocks', 'entities', id]);
-      return state.mergeIn(['mocks', 'entities', id], {
-        running: false,
-        lastDuration: Date.now() - prevState.get('lastRunTimestamp')
-      });
+      return reducers.stopMock(state, id);
     }
-    case actions.RUN_MOCK: {
+    case FINISH_MOCK_MESSAGE_RECEIVED: {
       const { id } = action;
-      const prevState = state.getIn(['mocks', 'entities', id]);
-      return state.mergeIn(['mocks', 'entities', id], {
-        running: true,
-        runCount: prevState.get('runCount') + 1,
-        lastRunTimestamp: Date.now(),
-        lastDuration: null
-      });
+      return reducers.finishMock(state, id);
+    }
+    case RUN_MOCK_MESSAGE_RECEIVED: {
+      const { id } = action;
+      return reducers.runMock(state, id);
     }
     case actions.ADD_TASK: {
       return reducers.addTask(state, action.mockId, action.taskId);
@@ -122,7 +116,7 @@ export default (state = getInitialState(), action) => {
     case REMOVE_MOCK_DID_SUCCEED: {
       return reducers.removeMock(state, action.scenario, action.id);
     }
-    case REMOVE_AFTER_USE_MESSAGE_RECEIVED: {
+    case REMOVE_MOCK_MESSAGE_RECEIVED: {
       return reducers.removeMock(state, action.scenario, action.id);
     }
     default: {

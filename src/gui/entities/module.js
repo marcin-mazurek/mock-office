@@ -286,6 +286,27 @@ export const reducers = {
       .updateIn(['tasks', 'ids'], ids => ids.filter(taskId => taskId !== id))
       .deleteIn(['tasks', 'entities', id])
       .updateIn(['mocks', 'entities', mock, 'tasks'], tasks => tasks.filter(taskId => taskId !== id));
+  },
+  stopMock(state, id) {
+    const prevState = state.getIn(['mocks', 'entities', id]);
+    return state.mergeIn(['mocks', 'entities', id], {
+      running: false,
+      lastDuration: Date.now() - prevState.get('lastRunTimestamp')
+    });
+  },
+  finishMock(state, id) {
+    return state
+      .setIn(['mocks', 'entities', id, 'running'], false)
+      .setIn(['mocks', 'entities', id, 'finished'], true);
+  },
+  runMock(state, id) {
+    const prevState = state.getIn(['mocks', 'entities', id]);
+    return state.mergeIn(['mocks', 'entities', id], {
+      running: true,
+      runCount: prevState.get('runCount') + 1,
+      lastRunTimestamp: Date.now(),
+      lastDuration: null
+    });
   }
 };
 
