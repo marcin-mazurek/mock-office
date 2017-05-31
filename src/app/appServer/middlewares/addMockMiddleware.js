@@ -55,12 +55,18 @@ export default function configure(ajv, serversManager) {
         res.status(404).end();
         return;
       }
-
-      const mockId = server.getScenario().addMock(req.body.mock);
-      const tasks = server.getScenario().find(mockId).tasks.map(part => part.id);
+      const scenario = server.getScenario();
+      const mockId = scenario.addMock(req.body.mock);
+      const mock = scenario.find(mockId);
       res.status(200).json({
-        id: mockId,
-        tasks
+        mock: {
+          id: mock.id,
+          quantity: mock.quantity,
+          tasks: mock.tasks.map(task => Object.assign({ id: task.id }, task.scheduleDetails)),
+          title: mock.title,
+          requirements: mock.requirements
+        },
+        scenario: scenario.id
       });
       return;
     }

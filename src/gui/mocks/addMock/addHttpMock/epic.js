@@ -1,9 +1,22 @@
 import { Observable } from 'rxjs';
+import { ifElse, has } from 'ramda';
 import api from '../../../resources/api';
 import { addAction as addNotification } from '../../../notifications/actions';
-import { actionCreators } from '../../../entities/module';
 import { SUBMIT } from './actions';
 
+export const SUCCEED = 'addMock/SUCCEED';
+export const succeedAction = (scenario, mock) => ({
+  type: SUCCEED,
+  scenario,
+  mock
+});
+export const FAILED = 'addMock/FAILED';
+export const failedAction = reason => ({
+  type: FAILED,
+  reason
+});
+
+const hasError = has('error');
 const processFormValues = (formValues) => {
   const fV = formValues;
   let requirements;
@@ -49,6 +62,9 @@ const processFormValues = (formValues) => {
   };
 };
 
+const onFail = result => failedAction(result.error);
+const onSuccess = result => succeedAction(result.data.scenario, result.data.mock);
+
 export default function addMockEpic(action$) {
   return action$.ofType(SUBMIT)
     .flatMap((action) => {
@@ -56,7 +72,7 @@ export default function addMockEpic(action$) {
         const { data, error } = processFormValues(action.formValues);
 
         if (error) {
-          return Observable.of(addNotification({ text: error.message, type: 'error' }));
+          return Promise.resolve({ error });
         }
 
         const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
@@ -66,44 +82,16 @@ export default function addMockEpic(action$) {
             {
               requirements: reqWithEvent
             }
-          ))
-            .then(result => ({
-              id: result.data.id,
-              params: {
-                title: data.title,
-                interval: data.interval,
-                reuse: data.reuse,
-                quantity: data.quantity,
-                delay: data.delay,
-                requirements: reqWithEvent,
-                tasks: data.tasks.map((task, index) => {
-                  // eslint-disable-next-line no-param-reassign
-                  task.id = result.data.tasks[index];
-                  return task;
-                })
-              }
-            }))
-        )
-          .flatMap((result) => {
-            const actions = [];
-
-            actions.push(actionCreators.addMockAction(action.scenario, result.id,
-              // addAction mock action needs only ids of tasks
-              Object.assign(
-                {},
-                result.params,
-                { tasks: result.params.tasks.map(task => task.id) }
-              )
-            ));
-            result.params.tasks.forEach(task =>
-              // addAction task action uses original full params object
-              actions.push(actionCreators.addServerAction(result.id, task.id, task))
-            );
-
-            return actions;
-          });
+          )));
       } catch (error) {
         return Observable.of(addNotification({ text: error.message, type: 'error' }));
       }
-    });
+    })
+    .map(
+      ifElse(
+        hasError,
+        onFail,
+        onSuccess
+      )
+    );
 }

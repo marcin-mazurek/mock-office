@@ -10,6 +10,10 @@ import {
   FINISH_MOCK_MESSAGE_RECEIVED,
   RUN_MOCK_MESSAGE_RECEIVED
 } from '../appSync/startAppSync';
+import {
+  SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
+} from '../mocks/importMock/epics';
+import { SUCCEED as ADD_MOCK_SUCCEED } from '../mocks/addMock/addHttpMock/epic';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
@@ -118,6 +122,37 @@ export default (state = getInitialState(), action) => {
     }
     case REMOVE_MOCK_MESSAGE_RECEIVED: {
       return reducers.removeMock(state, action.scenario, action.id);
+    }
+    case IMPORT_MOCKS_SUCCEEDED: {
+      const { mocks, scenario } = action;
+      let newState = state;
+      mocks.forEach((mock) => {
+        newState = reducers.addMock(
+          newState,
+          scenario,
+          mock.id,
+          mock
+        );
+
+        mock.tasks.forEach((task) => {
+          newState = reducers.addTask(newState, mock.id, task.id, task);
+        });
+      });
+      return newState;
+    }
+    case ADD_MOCK_SUCCEED: {
+      const { mock, scenario } = action;
+      let newState = state;
+      newState = reducers.addMock(
+        newState,
+        scenario,
+        mock.id,
+        mock
+      );
+      mock.tasks.forEach((task) => {
+        newState = reducers.addTask(newState, mock.id, task.id, task);
+      });
+      return newState;
     }
     default: {
       return state;

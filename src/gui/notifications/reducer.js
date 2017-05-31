@@ -8,6 +8,14 @@ import {
   DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED
 } from '../servers/removeServer/epics';
 import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../mocks/removeMock/epics';
+import {
+  SUCCEEDED as IMPORT_MOCKS_SUCCEEDED,
+  FAILED as IMPORT_MOCKS_FAILED
+} from '../mocks/importMock/epics';
+import {
+  SUCCEED as ADD_MOCK_SUCCEED,
+  FAILED as ADD_MOCK_FAILED
+} from '../mocks/addMock/addHttpMock/epic';
 
 export const NotificationsState = new Record({
   entities: new Map(),
@@ -46,6 +54,18 @@ export default function notificationsReducer(state = new NotificationsState(), a
       return addNotification(state, createNotification({ type: 'error', text: action.reason }));
     }
     case REMOVE_MOCK_DID_FAIL: {
+      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
+    }
+    case IMPORT_MOCKS_SUCCEEDED: {
+      return addNotification(state, createNotification({ type: 'success', text: 'Mocks imported' }));
+    }
+    case IMPORT_MOCKS_FAILED: {
+      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
+    }
+    case ADD_MOCK_SUCCEED: {
+      return addNotification(state, createNotification({ type: 'success', text: 'Mock added' }));
+    }
+    case ADD_MOCK_FAILED: {
       return addNotification(state, createNotification({ type: 'error', text: action.reason }));
     }
     default: {

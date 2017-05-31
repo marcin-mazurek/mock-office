@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { initAction } from './actions';
 import uploadIcon from '../../assets/icons_gray_upload@3x.svg';
+
+export const FILE_PICK = 'component/FilePicker/FILE_PICK';
+export const filePickAction = (server, scenario, files) => ({
+  type: FILE_PICK,
+  scenario,
+  server,
+  files
+});
 
 export class FilePicker extends React.Component {
   constructor(props) {
@@ -12,7 +19,7 @@ export class FilePicker extends React.Component {
 
   handleChange(e) {
     if (e.target.files.length) {
-      this.props.init(this.props.server, this.props.scenario, e.target.files);
+      this.props.filePickAction(this.props.server, this.props.scenario, e.target.files);
     }
   }
 
@@ -41,11 +48,11 @@ export class FilePicker extends React.Component {
 }
 FilePicker.propTypes = {
   server: PropTypes.string.isRequired,
-  init: PropTypes.func.isRequired,
+  filePickAction: PropTypes.func.isRequired,
   scenario: PropTypes.string.isRequired
 };
 
 const mapDispatchToProps = {
-  init: initAction
+  filePickAction
 };
 export default connect(null, mapDispatchToProps)(FilePicker);
