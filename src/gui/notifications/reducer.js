@@ -41,32 +41,22 @@ export default function notificationsReducer(state = new NotificationsState(), a
     case ADD_SERVER_SUCCEED: {
       return addNotification(state, createNotification({ type: 'success', text: 'Server added' }));
     }
-    case ADD_SERVER_FAILED: {
-      return addNotification(state, createNotification({ type: 'error', text: action.params.error }));
-    }
-    case EDIT_SERVER_DID_FAIL: {
-      return addNotification(state, action.reason);
-    }
     case REMOVE_SERVER_DID_SUCCEED: {
       return addNotification(state, createNotification({ type: 'success', text: 'Server removed' }));
     }
-    case REMOVE_SERVER_DID_FAIL: {
-      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
-    }
-    case REMOVE_MOCK_DID_FAIL: {
+    case EDIT_SERVER_DID_FAIL:
+    case REMOVE_SERVER_DID_FAIL:
+    case REMOVE_MOCK_DID_FAIL:
+    case IMPORT_MOCKS_FAILED:
+    case ADD_MOCK_FAILED:
+    case ADD_SERVER_FAILED: {
       return addNotification(state, createNotification({ type: 'error', text: action.reason }));
     }
     case IMPORT_MOCKS_SUCCEEDED: {
       return addNotification(state, createNotification({ type: 'success', text: 'Mocks imported' }));
     }
-    case IMPORT_MOCKS_FAILED: {
-      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
-    }
     case ADD_MOCK_SUCCEED: {
       return addNotification(state, createNotification({ type: 'success', text: 'Mock added' }));
-    }
-    case ADD_MOCK_FAILED: {
-      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
     }
     default: {
       return state;

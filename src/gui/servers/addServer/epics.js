@@ -11,9 +11,9 @@ export const succeedAction = params => ({
   params
 });
 
-export const failedAction = params => ({
+export const failedAction = reason => ({
   type: FAILED,
-  params
+  reason
 });
 
 const preparePayload = (action) => {
@@ -35,7 +35,7 @@ const preparePayload = (action) => {
 const makeRequest = payload => Observable.from(api.addServer(payload));
 const hasError = has('error');
 const onSuccess = result => succeedAction(result);
-const onFail = result => failedAction(result);
+const onFail = result => failedAction(result.error);
 
 export default action$ =>
   action$.ofType(SUBMIT_BUTTON_CLICKED)
