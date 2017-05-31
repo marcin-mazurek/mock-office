@@ -4,7 +4,6 @@ import { createSelector } from 'reselect';
 const ADD_MOCK = 'entities/ADD_MOCK';
 const REMOVE_MOCK = 'entities/REMOVE_MOCK';
 const FINISH_MOCK = 'entities/FINISH_MOCK';
-const REMOVE_AFTER_USE_MOCK = 'entities/REMOVE_AFTER_USE_MOCK';
 const RUN_MOCK = 'entities/RUN_MOCK';
 const STOP_MOCK = 'entities/STOP_MOCK';
 const ADD_SCENARIO = 'entities/ADD_SCENARIO';
@@ -24,23 +23,15 @@ const addMockAction = (scenario, id, params) => ({
   params
 });
 
-const finishMockAction = (scenarioId, mockId) => ({
+const finishMockAction = id => ({
   type: FINISH_MOCK,
-  scenarioId,
-  mockId
+  id
 });
 
 const removeMockAction = (scenarioId, mockId) => ({
   type: REMOVE_MOCK,
   scenarioId,
   mockId
-});
-
-const removeAfterUseMockAction = (scenario, id, tasks) => ({
-  type: REMOVE_AFTER_USE_MOCK,
-  scenario,
-  id,
-  tasks
 });
 
 const runMockAction = id => ({
@@ -107,7 +98,6 @@ export const actions = {
   ADD_MOCK,
   REMOVE_MOCK,
   FINISH_MOCK,
-  REMOVE_AFTER_USE_MOCK,
   RUN_MOCK,
   STOP_MOCK,
   ADD_SCENARIO,
@@ -124,7 +114,6 @@ export const actionCreators = {
   addMockAction,
   finishMockAction,
   removeMockAction,
-  removeAfterUseMockAction,
   runMockAction,
   stopMockAction,
   addScenarioAction,

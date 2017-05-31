@@ -4,7 +4,7 @@ import startServerEpic from '../servers/startServer/epics';
 import stopServerEpic from '../servers/stopServer/epics';
 import addHttpMockEpic from '../mocks/addMock/addHttpMock/epic';
 import addWsMockEpic from '../mocks/addMock/addWsMock/epic';
-import { removeMockEpic, /*removeMockAfterUseEpic */} from '../mocks/removeMock/epics';
+import { removeMockEpic } from '../mocks/removeMock/epics';
 import addMockFromFileEpic from '../mocks/importMock/epics';
 import removeServerEpic from '../servers/removeServer/epics';
 import saveStateEpic from '../exportState/epics';
@@ -15,7 +15,6 @@ export default combineEpics(
   startServerEpic,
   stopServerEpic,
   removeMockEpic,
-  //removeMockAfterUseEpic,
   addMockFromFileEpic,
   removeServerEpic,
   saveStateEpic,

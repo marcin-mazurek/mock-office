@@ -33,14 +33,3 @@ export const removeMockEpic = action$ =>
         onSuccess
       )
     );
-
-// export const removeMockAfterUseEpic = (action$, store) =>
-//   action$.ofType(REMOVE_AFTER_USE)
-//     .delay(5000)
-//     .map(
-//       ({ scenario, mockId }) => {
-//         const state = store.getState();
-//         const mock = selectors.entitySelector(state, mockId);
-//         return actionCreators.removeMockAction(scenario, mockId, mock.tasks);
-//       }
-//     );
