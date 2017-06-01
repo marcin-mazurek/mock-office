@@ -1,6 +1,7 @@
 import { Map, List, Record } from 'immutable';
 import { createSelector } from 'reselect';
 import unique from 'cuid';
+import createModule from '../utils/reduxModule';
 import { NOTIFICATION_CLICKED } from './NotificationsList';
 
 export const Notification = new Record({
@@ -31,17 +32,12 @@ const createNotification = (params) => {
   return new Notification(config);
 };
 
-const initialState = () => new Map({
+const getInitialState = () => new Map({
   entities: new Map(),
   ids: new List()
 });
 
-const reducerActions = {
-  [NOTIFICATION_CLICKED]: (action, reducers, state) =>
-    reducers.removeNotification(state, action.id)
-};
-
-const moduleReducers = {
+const api = {
   addNotification(state, notificationParams) {
     const notification = createNotification(notificationParams);
     return state
@@ -55,27 +51,22 @@ const moduleReducers = {
   }
 };
 
-export const configureReducer = (actions) => {
-  const allActions = Object.assign(reducerActions, actions);
-
-  return (state = initialState(), action) => {
-    const actionTypes = Object.keys(allActions);
-
-    for (let i = 0; i < actionTypes.length; i += 1) {
-      if (action.type === actionTypes[i]) {
-        const transform = allActions[actionTypes[i]];
-        return transform(action, moduleReducers, state);
-      }
-    }
-
-    return state;
-  };
-};
-
-export const configureSelectors = stateGetter => ({
+const selectors = {
   allNotificationsSelector: createSelector(
-    state => stateGetter(state).get('ids'),
-    state => stateGetter(state).get('entities'),
+    state => state.get('ids'),
+    state => state.get('entities'),
     (ids, entities) => ids.map(id => entities.get(id))
   )
-});
+};
+
+const actionHandlers = {
+  [NOTIFICATION_CLICKED]: (action, moduleApi, state) =>
+    moduleApi.removeNotification(state, action.id)
+};
+
+export default createModule(
+  getInitialState,
+  actionHandlers,
+  api,
+  selectors
+);

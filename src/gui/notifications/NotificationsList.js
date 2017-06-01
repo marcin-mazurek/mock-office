@@ -2,8 +2,8 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Notification } from './createNotification';
-import { selectors } from './reducer';
+import { Notification } from './notificationsReduxModule';
+import { selectors } from './notifications';
 
 export const NOTIFICATION_CLICKED = 'component/NotificationsList/NOTIFICATION_CLICKED';
 export const notificationsClickedAction = id => ({
