@@ -1,14 +1,14 @@
 const createModule = (getInitialState, internalActionHandlers, moduleApi, internalSelectors) => {
   const createReducer = (customActionHandlers) => {
-    const allActions = Object.assign({}, internalActionHandlers, customActionHandlers);
+    const allActionHandlers = Object.assign({}, internalActionHandlers, customActionHandlers);
 
     return (state = getInitialState(), action) => {
-      const actionTypes = Object.keys(allActions);
+      const actionTypes = Object.keys(allActionHandlers);
 
       for (let i = 0; i < actionTypes.length; i += 1) {
         if (action.type === actionTypes[i]) {
-          const transform = allActions[actionTypes[i]];
-          return transform(action, moduleApi, state);
+          const handler = allActionHandlers[actionTypes[i]];
+          return handler(state, action, moduleApi);
         }
       }
 

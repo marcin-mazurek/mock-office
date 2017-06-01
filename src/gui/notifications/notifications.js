@@ -22,15 +22,15 @@ import {
 } from '../servers/startServer/epics';
 import notificationsReduxModule from './notificationsReduxModule';
 
-const showError = (action, module, state) =>
+const showError = (state, action, module) =>
   module.addNotification(state, { type: 'error', text: action.reason });
-const showAddMockSuccess = (action, module, state) =>
+const showAddMockSuccess = (state, action, module) =>
   module.addNotification(state, { type: 'success', text: 'Mock added' });
 
 export const reducer = notificationsReduxModule.createReducer({
-  [ADD_SERVER_DID_SUCCEED]: (action, module, state) =>
+  [ADD_SERVER_DID_SUCCEED]: (state, action, module) =>
     module.addNotification(state, { type: 'success', text: 'Server added' }),
-  [REMOVE_SERVER_DID_SUCCEED]: (action, module, state) =>
+  [REMOVE_SERVER_DID_SUCCEED]: (state, action, module) =>
     module.addNotification(state, { type: 'success', text: 'Server removed' }),
   [EDIT_SERVER_DID_FAIL]: showError,
   [REMOVE_SERVER_DID_FAIL]: showError,
@@ -40,7 +40,7 @@ export const reducer = notificationsReduxModule.createReducer({
   [ADD_WS_MOCK_FAILED]: showError,
   [ADD_SERVER_FAILED]: showError,
   [START_SERVER_FAILED]: showError,
-  [IMPORT_MOCKS_SUCCEEDED]: (action, module, state) =>
+  [IMPORT_MOCKS_SUCCEEDED]: (state, action, module) =>
     module.addNotification(state, { type: 'success', text: 'Mocks imported' }),
   [ADD_HTTP_MOCK_SUCCEED]: showAddMockSuccess,
   [ADD_WS_MOCK_SUCCEED]: showAddMockSuccess
