@@ -1,19 +1,25 @@
 import { Observable } from 'rxjs';
+import { ifElse, has } from 'ramda';
 import api from '../../../resources/api';
 import { addAction as addNotification } from '../../../notifications/actions';
-import { actionCreators } from '../../../entities/module';
+import { FORM_SUBMITTED } from './AddWsMockForm';
 
-export const SUBMIT = 'addWsMock/SUBMIT';
-
-export const submit = (scenarioId, formValues) => ({
-  type: SUBMIT,
-  scenarioId,
-  formValues
+export const SUCCEED = 'addWsMock/SUCCEED';
+export const succeedAction = (scenario, mock) => ({
+  type: SUCCEED,
+  scenario,
+  mock
+});
+export const FAILED = 'addWsMock/FAILED';
+export const failedAction = reason => ({
+  type: FAILED,
+  reason
 });
 
-const processFormValues = (formValues) => {
+const hasError = has('error');
+const processFormValues = (values) => {
   let error;
-  const fV = formValues;
+  const fV = values.toJS();
   let requirements;
 
   const requirementsSubmitted = fV.requirements;
@@ -66,62 +72,33 @@ const processFormValues = (formValues) => {
     }
   };
 };
+const onFail = result => failedAction(result.error);
+const onSuccess = result => succeedAction(result.data.scenario, result.data.mock);
 
 export default function addWsMockEpic(action$) {
-  return action$.ofType(SUBMIT)
+  return action$.ofType(FORM_SUBMITTED)
     .flatMap((action) => {
-      try {
-        const { data, error } = processFormValues(action.formValues);
+      const { data, error } = processFormValues(action.values);
 
-        if (error) {
-          return Observable.of(addNotification({ text: error.message, type: 'error' }));
-        }
-
-        const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
-
-        return Observable.from(
-          api.addMock(action.server, action.scenario, Object.assign(data,
-            {
-              requirements: reqWithEvent
-            }
-          ))
-            .then(result => ({
-              id: result.id,
-              params: {
-                title: data.title,
-                interval: data.interval,
-                reuse: data.reuse,
-                quantity: data.quantity,
-                delay: data.delay,
-                requirements: reqWithEvent,
-                tasks: data.tasks.map((task, index) => {
-                  // eslint-disable-next-line no-param-reassign
-                  task.id = result.tasks[index];
-                  return task;
-                })
-              }
-            }))
-        )
-          .flatMap((result) => {
-            const actions = [];
-
-            actions.push(actionCreators.addMockAction(action.scenario, result.id,
-              // addAction mock action needs only ids of tasks
-              Object.assign(
-                {},
-                result.params,
-                { tasks: result.params.tasks.map(task => task.id) }
-              )
-            ));
-            result.params.tasks.forEach(task =>
-              // addAction task action uses original full params object
-              actions.push(actionCreators.addTaskAction(result.id, task.id, task))
-            );
-
-            return actions;
-          });
-      } catch (error) {
+      if (error) {
         return Observable.of(addNotification({ text: error.message, type: 'error' }));
       }
-    });
+
+      const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
+
+      return Observable.from(
+        api.addMock(action.server, action.scenario, Object.assign(data,
+          {
+            requirements: reqWithEvent
+          }
+        ))
+      );
+    })
+    .map(
+      ifElse(
+        hasError,
+        onFail,
+        onSuccess
+      )
+    );
 }

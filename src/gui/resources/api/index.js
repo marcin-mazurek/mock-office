@@ -36,16 +36,17 @@ export default {
       });
   },
   addMock(server, scenario, mock) {
-    return catchConnectionErrors(
-      fetch('http://127.0.0.1:3060/add-mock', {
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({ server, scenario, mock })
+    return fetch('http://127.0.0.1:3060/add-mock', {
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ server, scenario, mock })
+    })
+      .catch(() => {
+        throw new ConnectionError();
       })
-    )
       .then((res) => {
         if (res.status === 200) {
           return res.json().then(payload => ({ data: payload }));

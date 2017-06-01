@@ -1,16 +1,15 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import api from '../../../resources/api';
-import { addAction as addNotification } from '../../../notifications/actions';
-import { SUBMIT } from './actions';
+import { FORM_SUBMITTED } from './AddMockForm';
 
-export const SUCCEED = 'addMock/SUCCEED';
+export const SUCCEED = 'addHttpMock/SUCCEED';
 export const succeedAction = (scenario, mock) => ({
   type: SUCCEED,
   scenario,
   mock
 });
-export const FAILED = 'addMock/FAILED';
+export const FAILED = 'addHttpMock/FAILED';
 export const failedAction = reason => ({
   type: FAILED,
   reason
@@ -18,7 +17,7 @@ export const failedAction = reason => ({
 
 const hasError = has('error');
 const processFormValues = (formValues) => {
-  const fV = formValues;
+  const fV = formValues.toJS();
   let requirements;
 
   const requirementsSubmitted = fV.requirements;
@@ -66,26 +65,23 @@ const onFail = result => failedAction(result.error);
 const onSuccess = result => succeedAction(result.data.scenario, result.data.mock);
 
 export default function addMockEpic(action$) {
-  return action$.ofType(SUBMIT)
+  return action$.ofType(FORM_SUBMITTED)
     .flatMap((action) => {
-      try {
-        const { data, error } = processFormValues(action.formValues);
+      const { data, error } = processFormValues(action.values);
 
-        if (error) {
-          return Promise.resolve({ error });
-        }
-
-        const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
-
-        return Observable.from(
-          api.addMock(action.server, action.scenario, Object.assign(data,
-            {
-              requirements: reqWithEvent
-            }
-          )));
-      } catch (error) {
-        return Observable.of(addNotification({ text: error.message, type: 'error' }));
+      if (error) {
+        return Promise.resolve({ error });
       }
+
+      const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
+
+      return Observable.from(
+        api.addMock(action.server, action.scenario,
+          Object.assign(data, {
+            requirements: reqWithEvent
+          })
+        )
+      );
     })
     .map(
       ifElse(

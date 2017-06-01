@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import TaskFormSection from './TaskFormSection';
-import { submit } from './actions';
+
+export const FORM_SUBMITTED = 'component/AddMockForm/FORM_SUBMITTED';
+export const formSubmittedAction = (server, scenario, values) => ({
+  type: FORM_SUBMITTED,
+  server,
+  scenario,
+  values
+});
 
 export const AddMockForm = props => (
   <form className="form" onSubmit={props.handleSubmit}>
@@ -55,7 +62,7 @@ AddMockForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(submit(ownProps.server, ownProps.scenario, values.toJS()))
+  onSubmit: values => dispatch(formSubmittedAction(ownProps.server, ownProps.scenario, values))
 });
 
 const AddMockFormConnect = connect(null, mapDispatchToProps)(

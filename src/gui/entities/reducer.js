@@ -13,7 +13,8 @@ import {
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
 } from '../mocks/importMock/epics';
-import { SUCCEED as ADD_MOCK_SUCCEED } from '../mocks/addMock/addHttpMock/epic';
+import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../mocks/addMock/addHttpMock/epic';
+import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../mocks/addMock/addWsMock/epic';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
@@ -140,7 +141,8 @@ export default (state = getInitialState(), action) => {
       });
       return newState;
     }
-    case ADD_MOCK_SUCCEED: {
+    case ADD_HTTP_MOCK_SUCCEED:
+    case ADD_WS_MOCK_SUCCEED: {
       const { mock, scenario } = action;
       let newState = state;
       newState = reducers.addMock(

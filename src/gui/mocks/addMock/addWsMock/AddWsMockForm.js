@@ -4,7 +4,14 @@ import { Field, reduxForm, FormSection, FieldArray } from 'redux-form/immutable'
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import TaskFormSection from './TaskFormSection';
-import { submit } from './epic';
+
+export const FORM_SUBMITTED = 'component/AddWsMockForm/FORM_SUBMITTED';
+export const formSubmittedAction = (server, scenario, values) => ({
+  type: FORM_SUBMITTED,
+  server,
+  scenario,
+  values
+});
 
 const EventTypeField = field =>
   <Select
@@ -96,7 +103,7 @@ AddMockForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(submit(ownProps.server, ownProps.scenario, values.toJS()))
+  onSubmit: values => dispatch(formSubmittedAction(ownProps.server, ownProps.scenario, values))
 });
 
 export default connect(null, mapDispatchToProps)(
@@ -104,7 +111,8 @@ export default connect(null, mapDispatchToProps)(
     {
       form: 'addWsMock',
       initialValues: {
-        event: 'RECEIVED_MESSAGE'
+        event: 'RECEIVED_MESSAGE',
+        tasks: [{}]
       }
     }
   )(AddMockForm)
