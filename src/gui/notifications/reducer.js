@@ -1,6 +1,3 @@
-import { Map, List, Record } from 'immutable';
-import createNotification from './createNotification';
-import { REMOVE, ADD } from './actions';
 import { SUCCEED as ADD_SERVER_SUCCEED, FAILED as ADD_SERVER_FAILED } from '../servers/addServer/epics';
 import { DID_FAIL as EDIT_SERVER_DID_FAIL } from '../servers/editServer/epics';
 import {
@@ -20,52 +17,33 @@ import {
   SUCCEED as ADD_WS_MOCK_SUCCEED,
   FAILED as ADD_WS_MOCK_FAILED
 } from '../mocks/addMock/addWsMock/epic';
+import {
+  FAILED as START_SERVER_FAILED
+} from '../servers/startServer/epics';
+import { configureReducer, configureSelectors } from './module';
 
-export const NotificationsState = new Record({
-  entities: new Map(),
-  ids: new List()
+const showError = (action, reducers, state) =>
+  reducers.addNotification(state, { type: 'error', text: action.reason });
+const showAddMockSuccess = (action, reducers, state) =>
+  reducers.addNotification(state, { type: 'success', text: 'Mock added' });
+
+const reducer = configureReducer({
+  [ADD_SERVER_SUCCEED]: (action, reducers, state) =>
+    reducers.addNotification(state, { type: 'success', text: 'Server added' }),
+  [REMOVE_SERVER_DID_SUCCEED]: (action, reducers, state) =>
+    reducers.addNotification(state, { type: 'success', text: 'Server removed' }),
+  [EDIT_SERVER_DID_FAIL]: showError,
+  [REMOVE_SERVER_DID_FAIL]: showError,
+  [REMOVE_MOCK_DID_FAIL]: showError,
+  [IMPORT_MOCKS_FAILED]: showError,
+  [ADD_HTTP_MOCK_FAILED]: showError,
+  [ADD_WS_MOCK_FAILED]: showError,
+  [ADD_SERVER_FAILED]: showError,
+  [START_SERVER_FAILED]: showError,
+  [IMPORT_MOCKS_SUCCEEDED]: (action, reducers, state) =>
+    reducers.addNotification(state, { type: 'success', text: 'Mocks imported' }),
+  [ADD_HTTP_MOCK_SUCCEED]: showAddMockSuccess,
+  [ADD_WS_MOCK_SUCCEED]: showAddMockSuccess
 });
-
-const addNotification = (state, notification) =>
-  state
-  .update('entities', entities => entities.set(notification.id, notification))
-  .update('ids', ids => ids.push(notification.id));
-
-// notificationsReducer :: (NotificationsState, Object) -> NotificationsState
-export default function notificationsReducer(state = new NotificationsState(), action) {
-  switch (action.type) {
-    case ADD: {
-      return addNotification(state, createNotification(action.notification));
-    }
-    case REMOVE: {
-      return state
-        .update('ids', ids => ids.filter(id => id !== action.id))
-        .update('entities', entities => entities.delete(action.id));
-    }
-    case ADD_SERVER_SUCCEED: {
-      return addNotification(state, createNotification({ type: 'success', text: 'Server added' }));
-    }
-    case REMOVE_SERVER_DID_SUCCEED: {
-      return addNotification(state, createNotification({ type: 'success', text: 'Server removed' }));
-    }
-    case EDIT_SERVER_DID_FAIL:
-    case REMOVE_SERVER_DID_FAIL:
-    case REMOVE_MOCK_DID_FAIL:
-    case IMPORT_MOCKS_FAILED:
-    case ADD_HTTP_MOCK_FAILED:
-    case ADD_WS_MOCK_FAILED:
-    case ADD_SERVER_FAILED: {
-      return addNotification(state, createNotification({ type: 'error', text: action.reason }));
-    }
-    case IMPORT_MOCKS_SUCCEEDED: {
-      return addNotification(state, createNotification({ type: 'success', text: 'Mocks imported' }));
-    }
-    case ADD_HTTP_MOCK_SUCCEED:
-    case ADD_WS_MOCK_SUCCEED: {
-      return addNotification(state, createNotification({ type: 'success', text: 'Mock added' }));
-    }
-    default: {
-      return state;
-    }
-  }
-}
+export const selectors = configureSelectors(state => state.get('notifications'));
+export default reducer;

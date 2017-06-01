@@ -3,11 +3,16 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Notification } from './createNotification';
-import { allNotificationsSelector } from './selectors';
-import { removeAction as createRemoveAction } from './actions';
+import { selectors } from './reducer';
+
+export const NOTIFICATION_CLICKED = 'component/NotificationsList/NOTIFICATION_CLICKED';
+export const notificationsClickedAction = id => ({
+  type: NOTIFICATION_CLICKED,
+  id
+});
 
 // eslint-disable-next-line import/prefer-default-export
-export const NotificationsList = ({ notifications, remove }) => (
+export const NotificationsList = ({ notifications, onNotificationClick }) => (
   <ul className="notifications-list">
     {
       notifications.map(
@@ -15,7 +20,7 @@ export const NotificationsList = ({ notifications, remove }) => (
           <li className="notifications-list-item" key={id}>
             <button
               className={`notifications-bubble notifications-bubble--${type}`}
-              onClick={() => remove(id)}
+              onClick={() => onNotificationClick(id)}
             >
               {text}
             </button>
@@ -26,14 +31,14 @@ export const NotificationsList = ({ notifications, remove }) => (
 );
 NotificationsList.propTypes = {
   notifications: ImmutablePropTypes.listOf(PropTypes.instanceOf(Notification)),
-  remove: PropTypes.func.isRequired
+  onNotificationClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  notifications: allNotificationsSelector(state)
+  notifications: selectors.allNotificationsSelector(state)
 });
 const mapDispatchToProps = {
-  remove: createRemoveAction
+  onNotificationClick: notificationsClickedAction
 };
 
 const NotificationsListConnect = connect(mapStateToProps, mapDispatchToProps)(NotificationsList);

@@ -15,6 +15,7 @@ import {
 } from '../mocks/importMock/epics';
 import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../mocks/addMock/addHttpMock/epic';
 import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../mocks/addMock/addWsMock/epic';
+import { SUCCEED as START_SERVER_SUCCEED } from '../servers/startServer/epics';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
@@ -155,6 +156,9 @@ export default (state = getInitialState(), action) => {
         newState = reducers.addTask(newState, mock.id, task.id, task);
       });
       return newState;
+    }
+    case START_SERVER_SUCCEED: {
+      return reducers.startServer(state, action.id);
     }
     default: {
       return state;

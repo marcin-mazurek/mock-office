@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import api from '../../../resources/api';
-import { addAction as addNotification } from '../../../notifications/actions';
 import { FORM_SUBMITTED } from './AddWsMockForm';
 
 export const SUCCEED = 'addWsMock/SUCCEED';
@@ -61,7 +60,7 @@ const processFormValues = (values) => {
   });
 
   if (error) {
-    return error;
+    return { error: error.message };
   }
 
   return {
@@ -81,7 +80,7 @@ export default function addWsMockEpic(action$) {
       const { data, error } = processFormValues(action.values);
 
       if (error) {
-        return Observable.of(addNotification({ text: error.message, type: 'error' }));
+        return { error };
       }
 
       const reqWithEvent = Object.assign({}, data.requirements, { event: 'RECEIVED_REQUEST' });
