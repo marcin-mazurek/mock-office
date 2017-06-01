@@ -4,20 +4,27 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { selectors } from '../entities/module';
-import { init as createInitExportAction } from '../exportState/actions';
 import plusIcon from '../assets/icons_white_add.svg';
 import lockIcon from '../assets/icons_general_locked@3x.svg';
 import currentDisplayedentitySelector from './selectors';
-import { addButtonClickedAction } from './actions';
 
-export const SideBarServers = ({ servers, selected, initExport, onAddButtonClick }) => (
+export const EXPORT_BUTTON_CLICKED = 'component/sidebarServers/EXPORT_BUTTON_CLICKED';
+export const exportButtonClickedAction = () => ({
+  type: EXPORT_BUTTON_CLICKED
+});
+export const ADD_BUTTON_CLICKED = 'component/sidebarServers/ADD_BUTTON_CLICKED';
+export const addButtonClickedAction = () => ({
+  type: ADD_BUTTON_CLICKED
+});
+
+export const SideBarServers = ({ servers, selected, onExportButtonClick, onAddButtonClick }) => (
   <div className="sidebar-servers">
     <div className="sidebar-servers__header">
       <div>
         <div>Servers</div>
         <button
           className="sidebar-servers__header-export-button"
-          onClick={initExport}
+          onClick={onExportButtonClick}
         >
           Export
         </button>
@@ -66,7 +73,7 @@ export const SideBarServers = ({ servers, selected, initExport, onAddButtonClick
 SideBarServers.propTypes = {
   servers: PropTypes.shape().isRequired,
   selected: PropTypes.string,
-  initExport: PropTypes.func.isRequired,
+  onExportButtonClick: PropTypes.func.isRequired,
   onAddButtonClick: PropTypes.func.isRequired
 };
 
@@ -76,7 +83,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  initExport: createInitExportAction,
+  onExportButtonClick: exportButtonClickedAction,
   onAddButtonClick: addButtonClickedAction
 };
 

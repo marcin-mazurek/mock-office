@@ -1,6 +1,6 @@
 import { OVERLAY_CLICKED } from './Modal';
 import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
-import { ADD_BUTTON_CLICKED } from '../sidebar/actions';
+import { ADD_BUTTON_CLICKED } from '../sidebar/SideBarServers';
 import { getInitialState, reducers } from './module';
 
 export default function addServerReducer(state = getInitialState(), action) {
