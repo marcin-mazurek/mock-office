@@ -1,8 +1,7 @@
 import { Map, List, Record } from 'immutable';
 import { createSelector } from 'reselect';
 import unique from 'cuid';
-import createModule from '../utils/reduxModule';
-import { NOTIFICATION_CLICKED } from './NotificationsList';
+import createReduxModule from '../utils/createReduxModule';
 
 export const Notification = new Record({
   id: '',
@@ -32,12 +31,12 @@ const createNotification = (params) => {
   return new Notification(config);
 };
 
-const getInitialState = () => new Map({
+const initialState = new Map({
   entities: new Map(),
   ids: new List()
 });
 
-const api = {
+const reducers = {
   addNotification(state, notificationParams) {
     const notification = createNotification(notificationParams);
     return state
@@ -59,14 +58,8 @@ const selectors = {
   )
 };
 
-const actionHandlers = {
-  [NOTIFICATION_CLICKED]: (state, action, moduleApi) =>
-    moduleApi.removeNotification(state, action.id)
-};
-
-export default createModule(
-  getInitialState,
-  actionHandlers,
-  api,
+export default createReduxModule({
+  initialState,
+  reducers,
   selectors
-);
+});

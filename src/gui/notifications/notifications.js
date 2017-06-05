@@ -20,18 +20,19 @@ import {
 import {
   FAILED as START_SERVER_FAILED
 } from '../servers/startServer/epics';
+import { NOTIFICATION_CLICKED } from './NotificationsList';
 import notificationsReduxModule from './notificationsReduxModule';
 
-const showError = (state, action, module) =>
-  module.addNotification(state, { type: 'error', text: action.reason });
-const showAddMockSuccess = (state, action, module) =>
-  module.addNotification(state, { type: 'success', text: 'Mock added' });
+const showError = (state, action, reducers) =>
+  reducers.addNotification(state, { type: 'error', text: action.reason });
+const showAddMockSuccess = (state, action, reducers) =>
+  reducers.addNotification(state, { type: 'success', text: 'Mock added' });
 
 export const reducer = notificationsReduxModule.createReducer({
-  [ADD_SERVER_DID_SUCCEED]: (state, action, module) =>
-    module.addNotification(state, { type: 'success', text: 'Server added' }),
-  [REMOVE_SERVER_DID_SUCCEED]: (state, action, module) =>
-    module.addNotification(state, { type: 'success', text: 'Server removed' }),
+  [ADD_SERVER_DID_SUCCEED]: (state, action, reducers) =>
+    reducers.addNotification(state, { type: 'success', text: 'Server added' }),
+  [REMOVE_SERVER_DID_SUCCEED]: (state, action, reducers) =>
+    reducers.addNotification(state, { type: 'success', text: 'Server removed' }),
   [EDIT_SERVER_DID_FAIL]: showError,
   [REMOVE_SERVER_DID_FAIL]: showError,
   [REMOVE_MOCK_DID_FAIL]: showError,
@@ -40,9 +41,11 @@ export const reducer = notificationsReduxModule.createReducer({
   [ADD_WS_MOCK_FAILED]: showError,
   [ADD_SERVER_FAILED]: showError,
   [START_SERVER_FAILED]: showError,
-  [IMPORT_MOCKS_SUCCEEDED]: (state, action, module) =>
-    module.addNotification(state, { type: 'success', text: 'Mocks imported' }),
+  [IMPORT_MOCKS_SUCCEEDED]: (state, action, reducers) =>
+    reducers.addNotification(state, { type: 'success', text: 'Mocks imported' }),
   [ADD_HTTP_MOCK_SUCCEED]: showAddMockSuccess,
-  [ADD_WS_MOCK_SUCCEED]: showAddMockSuccess
+  [ADD_WS_MOCK_SUCCEED]: showAddMockSuccess,
+  [NOTIFICATION_CLICKED]: (state, action, reducers) =>
+    reducers.removeNotification(state, action.id)
 });
 export const selectors = notificationsReduxModule.createSelectors(state => state.get('notifications'));

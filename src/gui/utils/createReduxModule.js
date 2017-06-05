@@ -1,14 +1,16 @@
-const createModule = (getInitialState, internalActionHandlers, moduleApi, internalSelectors) => {
-  const createReducer = (customActionHandlers) => {
-    const allActionHandlers = Object.assign({}, internalActionHandlers, customActionHandlers);
+const createModule = (config) => {
+  const { initialState, actionHandlers, reducers, selectors } = config;
 
-    return (state = getInitialState(), action) => {
+  const createReducer = (customActionHandlers) => {
+    const allActionHandlers = Object.assign({}, actionHandlers, customActionHandlers);
+
+    return (state = initialState, action) => {
       const actionTypes = Object.keys(allActionHandlers);
 
       for (let i = 0; i < actionTypes.length; i += 1) {
         if (action.type === actionTypes[i]) {
           const handler = allActionHandlers[actionTypes[i]];
-          return handler(state, action, moduleApi);
+          return handler(state, action, reducers);
         }
       }
 
@@ -17,12 +19,12 @@ const createModule = (getInitialState, internalActionHandlers, moduleApi, intern
   };
 
   const createSelectors = (stateGetter) => {
-    const selectorsNames = Object.keys(internalSelectors);
+    const selectorsNames = Object.keys(selectors);
     const adaptedSelectors = {};
 
     selectorsNames.forEach((selectorName) => {
       adaptedSelectors[selectorName] = (state, ...rest) =>
-        internalSelectors[selectorName](stateGetter(state), ...rest);
+        selectors[selectorName](stateGetter(state), ...rest);
     });
 
     return adaptedSelectors;
