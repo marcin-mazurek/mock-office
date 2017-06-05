@@ -15,7 +15,7 @@ const reducers = {
 };
 
 const selectors = {
-  modalSelector: state => state.get(['component'])
+  modalSelector: state => state.get('component')
 };
 
 export default createReduxModule({
