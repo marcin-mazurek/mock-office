@@ -60,7 +60,7 @@ const selectors = {
 };
 
 const actionHandlers = {
-  [NOTIFICATION_CLICKED]: (action, moduleApi, state) =>
+  [NOTIFICATION_CLICKED]: (state, action, moduleApi) =>
     moduleApi.removeNotification(state, action.id)
 };
 
