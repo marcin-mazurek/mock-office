@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddServerModal from './AddServerModal';
-import { selectors } from './modals';
+import selectors from './selectors';
 
 export const OVERLAY_CLICKED = 'modals/OVERLAY_CLICKED';
 

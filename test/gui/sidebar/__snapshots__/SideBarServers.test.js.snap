@@ -20,6 +20,7 @@ exports[`SideBarServers should render 1`] = `
     </div>
     <button
       className="sidebar-servers__add-server-button"
+      onClick={[Function]}
     >
       <img
         role="presentation"

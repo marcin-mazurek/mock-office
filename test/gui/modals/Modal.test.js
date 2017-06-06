@@ -2,9 +2,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { ModalConnect, Modal } from '../../../src/gui/modals/Modal';
+import { ModalConnect, Modal, OVERLAY_CLICKED } from '../../../src/gui/modals/Modal';
 import configureStore from '../../../src/gui/store/index';
-import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../src/gui/sidebar/actions';
+import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../src/gui/sidebar/SideBarServers';
+import AddServerModal from '../../../src/gui/modals/AddServerModal';
 
 describe('ModalConnect', () => {
   it(`should display AddServerModal on ${ADD_BUTTON_CLICKED} action`, () => {
@@ -16,19 +17,20 @@ describe('ModalConnect', () => {
     );
 
     store.dispatch(addButtonClickedAction());
-    expect(wrapper.find('AddServerModal')).toHaveLength(1);
+    expect(wrapper.find(AddServerModal)).toHaveLength(1);
   });
 
-  it(`should close modal on ${ADD_BUTTON_CLICKED} action`, () => {
+  it(`should close modal on ${OVERLAY_CLICKED} action`, () => {
     const store = configureStore();
     const wrapper = mount(
       <Provider store={store}>
         <ModalConnect />
       </Provider>
     );
+    const modalWrapper = wrapper.find(Modal);
     store.dispatch(addButtonClickedAction());
-    wrapper.find(Modal).find('.modal__overlay').simulate('click');
-    expect(wrapper.html()).toBeNull();
+    modalWrapper.find('.modal__overlay').simulate('click');
+    expect(modalWrapper.html()).toBeNull();
   });
 });
 

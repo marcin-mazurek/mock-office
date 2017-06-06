@@ -4,7 +4,7 @@ import routingReducer from './utils';
 import entitiesReducer from '../entities/reducer';
 import { reducer as notificationsReducer } from '../notifications/notifications';
 import sidebarReducer from '../sidebar/reducer';
-import { reducer as modalsReducer } from '../modals/modals';
+import modalsReducer from '../modals/reducer';
 
 export default combineReducers({
   routing: routingReducer,

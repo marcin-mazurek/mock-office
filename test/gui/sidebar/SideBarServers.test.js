@@ -10,8 +10,8 @@ test('SideBarServers should render', () => {
       servers={new List()}
       select={() => {}}
       goToServerPage={() => {}}
-      initExport={() => {}}
-      openModal={() => {}}
+      onExportButtonClick={() => {}}
+      onAddButtonClick={() => {}}
     />
   );
   expect(toJson(wrapper)).toMatchSnapshot();
