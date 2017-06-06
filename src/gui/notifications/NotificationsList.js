@@ -2,8 +2,7 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Notification } from './notificationsReduxModule';
-import { selectors } from './notifications';
+import { Notification } from './index';
 
 export const NOTIFICATION_CLICKED = 'component/NotificationsList/NOTIFICATION_CLICKED';
 export const notificationsClickedAction = id => ({
@@ -34,13 +33,12 @@ NotificationsList.propTypes = {
   onNotificationClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  notifications: selectors.allNotificationsSelector(state)
-});
-const mapDispatchToProps = {
-  onNotificationClick: notificationsClickedAction
+export const createNotificationsListConnect = (selectors) => {
+  const mapStateToProps = state => ({
+    notifications: selectors.allNotificationsSelector(state)
+  });
+  const mapDispatchToProps = {
+    onNotificationClick: notificationsClickedAction
+  };
+  return connect(mapStateToProps, mapDispatchToProps)(NotificationsList);
 };
-
-const NotificationsListConnect = connect(mapStateToProps, mapDispatchToProps)(NotificationsList);
-
-export default NotificationsListConnect;

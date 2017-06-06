@@ -1,4 +1,4 @@
-const createModule = (config) => {
+const configureModule = (config) => {
   const { initialState, actionHandlers, reducers, selectors } = config;
 
   const createReducer = (customActionHandlers) => {
@@ -30,10 +30,24 @@ const createModule = (config) => {
     return adaptedSelectors;
   };
 
-  return {
-    createSelectors,
-    createReducer
+  const createComponents = (componentFactories, adaptedSelectors) => {
+    const components = {};
+    const factoriesNames = Object.keys(componentFactories);
+    factoriesNames.forEach((factoryName) => {
+      components[factoryName] = componentFactories[factoryName](adaptedSelectors);
+    });
+
+    return components;
+  };
+
+  return function createModule(customActionHandlers, stateGetter, componentFactories) {
+    const adaptedSelectors = createSelectors(stateGetter);
+    return {
+      reducer: createReducer(customActionHandlers),
+      selectors: adaptedSelectors,
+      components: createComponents(componentFactories, adaptedSelectors)
+    };
   };
 };
 
-export default createModule;
+export default configureModule;
