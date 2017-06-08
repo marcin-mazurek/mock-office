@@ -1,8 +1,7 @@
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Notification } from './index';
+import { Notification } from '../createNotification';
 
 export const NOTIFICATION_CLICKED = 'component/NotificationsList/NOTIFICATION_CLICKED';
 export const notificationsClickedAction = id => ({
@@ -10,7 +9,6 @@ export const notificationsClickedAction = id => ({
   id
 });
 
-// eslint-disable-next-line import/prefer-default-export
 export const NotificationsList = ({ notifications, onNotificationClick }) => (
   <ul className="notifications-list">
     {
@@ -31,14 +29,4 @@ export const NotificationsList = ({ notifications, onNotificationClick }) => (
 NotificationsList.propTypes = {
   notifications: ImmutablePropTypes.listOf(PropTypes.instanceOf(Notification)),
   onNotificationClick: PropTypes.func.isRequired
-};
-
-export const createNotificationsListConnect = (selectors) => {
-  const mapStateToProps = state => ({
-    notifications: selectors.allNotificationsSelector(state)
-  });
-  const mapDispatchToProps = {
-    onNotificationClick: notificationsClickedAction
-  };
-  return connect(mapStateToProps, mapDispatchToProps)(NotificationsList);
 };

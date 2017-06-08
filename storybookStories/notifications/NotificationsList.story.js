@@ -12,7 +12,13 @@ storiesOf('Notifications', module)
         text: 'Hello I\'m info notification'
       })
     ]);
-    return <NotificationsList notifications={notifications} remove={() => {}} />;
+    return (
+      <NotificationsList
+        notifications={notifications}
+        onNotificationClick={() => {}}
+        remove={() => {}}
+      />
+    );
   })
   .add('multiple notification', () => {
     const notifications = new List([
@@ -26,5 +32,11 @@ storiesOf('Notifications', module)
         type: 'error'
       })
     ]);
-    return <NotificationsList notifications={notifications} remove={() => {}} />;
+    return (
+      <NotificationsList
+        notifications={notifications}
+        onNotificationClick={() => {}}
+        remove={() => {}}
+      />
+    );
   });

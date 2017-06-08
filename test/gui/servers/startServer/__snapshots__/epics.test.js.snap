@@ -7,11 +7,8 @@ Array [
     "type": "startServer/INITIALIZED",
   },
   Object {
-    "notification": Object {
-      "text": "error message",
-      "type": "error",
-    },
-    "type": "notifications/ADD",
+    "reason": "error message",
+    "type": "startServer/FAILED",
   },
 ]
 `;
@@ -24,7 +21,7 @@ Array [
   },
   Object {
     "id": "some id",
-    "type": "entities/START_SERVER",
+    "type": "startServer/SUCCEED",
   },
 ]
 `;

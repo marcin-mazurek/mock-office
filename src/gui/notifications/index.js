@@ -1,6 +1,3 @@
-import { Map, List, Record } from 'immutable';
-import { createSelector } from 'reselect';
-import unique from 'cuid';
 import {
   SUCCEED as ADD_SERVER_DID_SUCCEED,
   FAILED as ADD_SERVER_FAILED
@@ -26,100 +23,39 @@ import {
 import {
   FAILED as START_SERVER_FAILED
 } from '../servers/startServer/epics';
-import { NOTIFICATION_CLICKED, createNotificationsListConnect } from './NotificationsList';
-import createReduxModule from '../utils/createReduxModule';
+import { NOTIFICATION_CLICKED } from './NotificationsList';
+import notificationsReduxModule from './notificationsReduxModule';
+import createNotificationsListConnect from './createNotificationsListConnect';
 
-export const Notification = new Record({
-  id: '',
-  text: '',
-  type: 'info'
-});
+const showError = (state, action, reducers) =>
+  reducers.addNotification(state, { type: 'error', text: action.reason });
+const showAddMockSuccess = (state, action, reducers) =>
+  reducers.addNotification(state, { type: 'success', text: 'Mock added' });
 
-const createNotification = (params) => {
-  const config = {};
-
-  config.id = unique();
-  switch (params.type) {
-    case 'error': {
-      config.type = 'error';
-      break;
-    }
-    case 'success': {
-      config.type = 'success';
-      break;
-    }
-    default: {
-      config.type = 'info';
-    }
-  }
-  config.text = params.text;
-
-  return new Notification(config);
-};
-
-const initialState = new Map({
-  entities: new Map(),
-  ids: new List()
-});
-
-const reducers = {
-  addNotification(state, notificationParams) {
-    const notification = createNotification(notificationParams);
-    return state
-      .update('entities', entities => entities.set(notification.id, notification))
-      .update('ids', ids => ids.push(notification.id));
-  },
-  removeNotification(state, id) {
-    return state
-      .update('ids', ids => ids.filter(notificationId => notificationId !== id))
-      .update('entities', entities => entities.delete(id));
-  }
-};
-const showError = (state, action, partialReducers) =>
-  partialReducers.addNotification(state, { type: 'error', text: action.reason });
-const showAddMockSuccess = (state, action, partialReducers) =>
-  partialReducers.addNotification(state, { type: 'success', text: 'Mock added' });
-
-const selectors = {
-  allNotificationsSelector: createSelector(
-    state => state.get('ids'),
-    state => state.get('entities'),
-    (ids, entities) => ids.map(id => entities.get(id))
-  )
-};
-const stateGetter = state => state.get('notifications');
-const components = {
-  NotificationsListConnect: createNotificationsListConnect
-};
-const actionHandlers = {
-  [ADD_SERVER_DID_SUCCEED]: (state, action, partialReducers) =>
-    partialReducers.addNotification(state, { type: 'success', text: 'Server added' }),
-  [REMOVE_SERVER_DID_SUCCEED]: (state, action, partialReducers) =>
-    partialReducers.addNotification(state, { type: 'success', text: 'Server removed' }),
-  [EDIT_SERVER_DID_FAIL]: showError,
-  [REMOVE_SERVER_DID_FAIL]: showError,
-  [REMOVE_MOCK_DID_FAIL]: showError,
-  [IMPORT_MOCKS_FAILED]: showError,
-  [ADD_HTTP_MOCK_FAILED]: showError,
-  [ADD_WS_MOCK_FAILED]: showError,
-  [ADD_SERVER_FAILED]: showError,
-  [START_SERVER_FAILED]: showError,
-  [IMPORT_MOCKS_SUCCEEDED]: (state, action, partialReducers) =>
-    partialReducers.addNotification(state, { type: 'success', text: 'Mocks imported' }),
-  [ADD_HTTP_MOCK_SUCCEED]: showAddMockSuccess,
-  [ADD_WS_MOCK_SUCCEED]: showAddMockSuccess,
-  [NOTIFICATION_CLICKED]: (state, action, partialReducers) =>
-    partialReducers.removeNotification(state, action.id)
-};
-
-export default createReduxModule(
+const notifications = notificationsReduxModule(
   {
-    initialState,
-    reducers,
-    selectors
-  }
-)(
-  actionHandlers,
-  stateGetter,
-  components
+    [ADD_SERVER_DID_SUCCEED]: (state, action, reducers) =>
+      reducers.addNotification(state, { type: 'success', text: 'Server added' }),
+    [REMOVE_SERVER_DID_SUCCEED]: (state, action, reducers) =>
+      reducers.addNotification(state, { type: 'success', text: 'Server removed' }),
+    [EDIT_SERVER_DID_FAIL]: showError,
+    [REMOVE_SERVER_DID_FAIL]: showError,
+    [REMOVE_MOCK_DID_FAIL]: showError,
+    [IMPORT_MOCKS_FAILED]: showError,
+    [ADD_HTTP_MOCK_FAILED]: showError,
+    [ADD_WS_MOCK_FAILED]: showError,
+    [ADD_SERVER_FAILED]: showError,
+    [START_SERVER_FAILED]: showError,
+    [IMPORT_MOCKS_SUCCEEDED]: (state, action, reducers) =>
+      reducers.addNotification(state, { type: 'success', text: 'Mocks imported' }),
+    [ADD_HTTP_MOCK_SUCCEED]: showAddMockSuccess,
+    [ADD_WS_MOCK_SUCCEED]: showAddMockSuccess,
+    [NOTIFICATION_CLICKED]: (state, action, reducers) =>
+      reducers.removeNotification(state, action.id)
+  },
+  state => state.get('notifications')
 );
+
+export const reducer = notifications.reducer;
+export const selectors = notifications.selectors;
+export const NotificationsListConnect = createNotificationsListConnect(notifications.selectors);

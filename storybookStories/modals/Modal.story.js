@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import { Provider } from 'react-redux';
-import { Modal } from '../../src/gui/modals/Modal';
+import { Modal } from '../../src/gui/modals/Modal/Modal';
 import configureStore from '../../src/gui/store/index';
 
 storiesOf('Modal', module)
@@ -10,7 +10,7 @@ storiesOf('Modal', module)
 
     return (
       <Provider store={store}>
-        <Modal component="addServerModal" close={() => {}} />
+        <Modal component="addServerModal" onOverlayClick={() => {}} />
       </Provider>
     );
   });

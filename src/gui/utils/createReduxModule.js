@@ -30,22 +30,11 @@ const configureModule = (config) => {
     return adaptedSelectors;
   };
 
-  const createComponents = (componentFactories, adaptedSelectors) => {
-    const components = {};
-    const factoriesNames = Object.keys(componentFactories);
-    factoriesNames.forEach((factoryName) => {
-      components[factoryName] = componentFactories[factoryName](adaptedSelectors);
-    });
-
-    return components;
-  };
-
-  return function createModule(customActionHandlers, stateGetter, componentFactories) {
+  return function createModule(customActionHandlers, stateGetter) {
     const adaptedSelectors = createSelectors(stateGetter);
     return {
       reducer: createReducer(customActionHandlers),
-      selectors: adaptedSelectors,
-      components: createComponents(componentFactories, adaptedSelectors)
+      selectors: adaptedSelectors
     };
   };
 };

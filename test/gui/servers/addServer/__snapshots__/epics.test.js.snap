@@ -12,9 +12,7 @@ Array [
     },
   },
   Object {
-    "params": Object {
-      "error": "error message",
-    },
+    "reason": "error message",
     "type": "addServer/FAILED",
   },
 ]

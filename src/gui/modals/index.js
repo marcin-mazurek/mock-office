@@ -1,44 +1,21 @@
-import { Map } from 'immutable';
-import { OVERLAY_CLICKED, createModalConnect } from './Modal';
+import { OVERLAY_CLICKED } from './Modal';
 import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
 import { ADD_BUTTON_CLICKED } from '../sidebar/SideBarServers';
-import createReduxModule from '../utils/createReduxModule';
+import modalsReduxModule from './modalsReduxModule';
+import createModalConnect from './createModalConnect';
 
-const initialState = new Map({
-  component: ''
-});
-const reducers = {
-  openModal(state, component) {
-    return state.set('component', component);
-  },
-  closeModal(state) {
-    return state.delete('component');
-  }
-};
-const selectors = {
-  modalSelector: state => state.get('component')
-};
-const stateGetter = state => state.get('modals');
-const components = {
-  ModalConnect: createModalConnect
-};
-const actionHandlers = {
-  [ADD_SERVER_SUCCEED]: (state, action, partialReducers) =>
-    partialReducers.closeModal(state),
-  [ADD_BUTTON_CLICKED]: (state, action, partialReducers) =>
-    partialReducers.openModal(state, 'addServerModal'),
-  [OVERLAY_CLICKED]: (state, action, partialReducers) =>
-    partialReducers.closeModal(state)
-};
-
-export default createReduxModule(
+const modals = modalsReduxModule(
   {
-    initialState,
-    reducers,
-    selectors
-  }
-)(
-  actionHandlers,
-  stateGetter,
-  components
+    [ADD_SERVER_SUCCEED]: (state, action, reducers) =>
+      reducers.closeModal(state),
+    [ADD_BUTTON_CLICKED]: (state, action, reducers) =>
+      reducers.openModal(state, 'addServerModal'),
+    [OVERLAY_CLICKED]: (state, action, reducers) =>
+      reducers.closeModal(state)
+  },
+  state => state.get('modals')
 );
+export const ModalConnect = createModalConnect(modals.selectors);
+export const selectors = modals.selectors;
+export const reducer = modals.reducer;
+export { default as Modal } from './Modal';

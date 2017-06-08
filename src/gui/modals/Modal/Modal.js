@@ -1,17 +1,16 @@
-import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import AddServerModal from './AddServerModal';
+import AddServerModal from '../AddServerModal';
+
+export const types = {
+  addServerModal: AddServerModal,
+};
 
 export const OVERLAY_CLICKED = 'modals/OVERLAY_CLICKED';
 
 export const overlayClickedAction = () => ({
   type: OVERLAY_CLICKED
 });
-
-export const types = {
-  addServerModal: AddServerModal,
-};
 
 export const Modal = ({ component, onOverlayClick }) => {
   const ModalComponent = types[component];
@@ -33,15 +32,4 @@ export const Modal = ({ component, onOverlayClick }) => {
 Modal.propTypes = {
   component: PropTypes.string,
   onOverlayClick: PropTypes.func.isRequired
-};
-
-export const createModalConnect = (selectors) => {
-  const mapStateToProps = state => ({
-    component: selectors.modalSelector(state)
-  });
-  const mapDispatchToProps = {
-    onOverlayClick: overlayClickedAction
-  };
-
-  return connect(mapStateToProps, mapDispatchToProps)(Modal);
 };

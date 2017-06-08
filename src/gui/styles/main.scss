@@ -26,10 +26,10 @@
 @import 'components/FilePicker';
 @import 'components/TaskList';
 @import 'components/EditableField';
-@import 'components/Notifications';
+@import '../notifications/NotificationsList/NotificationsList';
 @import 'components/AddServerPage';
 @import 'components/Form';
 @import 'components/rc-switch-theme';
 @import 'components/EditServerPage';
 @import 'components/AddWsMockForm';
-@import 'components/Modal';
+@import '../modals/Modal/Modal';
