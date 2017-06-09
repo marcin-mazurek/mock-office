@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { has, ifElse } from 'ramda';
-import { FORM_DID_SUBMIT } from './EditServer';
+import { FORM_DID_SUBMIT } from './EditServerForm';
 import api from '../../resources/api';
 
 export const DID_SUCCEED = 'editServer/DID_SUCCEED';
@@ -22,7 +22,7 @@ const preparePayload = action => ({
 const makeRequest = payload => Observable.from(api.editServer(payload));
 const hasError = has('error');
 const onFail = result => didFailAction(result.error);
-const onSuccess = result => didSucceedAction(result);
+const onSuccess = result => didSucceedAction(result.data);
 
 export default function editServerEpic(action$) {
   return action$.ofType(FORM_DID_SUBMIT)

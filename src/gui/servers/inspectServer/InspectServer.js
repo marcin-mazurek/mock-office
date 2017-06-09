@@ -95,7 +95,7 @@ const serverToggleMapDispatchToProps = {
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
 
-export const Server = ({ running, name, port, onRemoveButtonClick, scenario, id, type }) =>
+export const InspectServer = ({ running, name, port, onRemoveButtonClick, scenario, id, type }) =>
   <div className="inspect-server">
     <div className="inspect-server__header inspect-server-header">
       <div className="inspect-server-header__toggle">
@@ -194,7 +194,7 @@ export const Server = ({ running, name, port, onRemoveButtonClick, scenario, id,
     </main>
   </div>;
 
-Server.propTypes = {
+InspectServer.propTypes = {
   running: PropTypes.bool.isRequired,
   onRemoveButtonClick: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
@@ -223,4 +223,4 @@ const serverMapStateToProps = (state, ownProps) => {
 
 export default connect(
   serverMapStateToProps, serverMapDispatchToProps
-)(Server);
+)(InspectServer);

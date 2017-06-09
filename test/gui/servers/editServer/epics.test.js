@@ -2,7 +2,7 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { formDidSubmitAction } from '../../../../src/gui/servers/editServer/EditServer';
+import { formDidSubmitAction } from '../../../../src/gui/servers/editServer/EditServerPage';
 
 describe('editServerEpic', () => {
   beforeEach(() => {

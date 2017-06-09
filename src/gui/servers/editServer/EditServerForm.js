@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form/immutable';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router';
 import serverIcon from '../../assets/icons_gray_server.svg';
 import { selectors } from '../../entities/module';
@@ -91,21 +90,3 @@ export const EditServerFormConnect = connect(mapStateToProps, mapDispatchToProps
     }
   )(EditServerForm)
 );
-
-const EditServerPage = props => (
-  <div className="edit-server-page">
-    <Scrollbars>
-      <div className="edit-server-page__form">
-        <EditServerFormConnect serverId={props.params.id} />
-      </div>
-    </Scrollbars>
-  </div>
-);
-
-EditServerPage.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
-};
-
-export default EditServerPage;
