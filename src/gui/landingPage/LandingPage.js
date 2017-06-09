@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { selectors } from '../entities/module';
 
 export const LandingPage = ({ serverExists }) =>
-  <div className="server-placeholder">
+  <div className="landing-page">
     {serverExists ? 'Select server' : 'Add server'}
   </div>;
 
