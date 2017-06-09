@@ -6,7 +6,7 @@ import { Modal, OVERLAY_CLICKED } from '../../../src/gui/modals/Modal/Modal';
 import { components } from '../../../src/gui/modals';
 import configureStore from '../../../src/gui/store/index';
 import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../src/gui/sidebar/SideBarServers';
-import AddServerModal from '../../../src/gui/modals/AddServerModal';
+import AddServerModal from '../../../src/gui/modals/Modal/AddServerModal';
 
 const ModalConnect = components.ModalConnect;
 

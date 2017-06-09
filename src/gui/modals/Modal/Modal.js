@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AddServerModal from '../AddServerModal';
+import AddServerModal from './AddServerModal';
 
 export const types = {
   addServerModal: AddServerModal,
