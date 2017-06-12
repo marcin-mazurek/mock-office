@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import SideBarServersConnect from './SideBarServers';
+import SideBarServersConnect from '../SidebarServers/SideBarServers';
 
 const SideBar = () => (
   <div className="sidebar">

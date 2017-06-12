@@ -24,21 +24,8 @@ describe('removeServerEpic', () => {
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({
-      servers: {
-        entities: {
-          'server-id': new types.Server({ id: 'server-id', scenario: 'scenario-id' })
-        },
-        ids: ['server-id']
-      },
-      scenarios: {
-        entities: {
-          'scenario-id': new types.Scenario({ id: 'scenario-id' })
-        },
-        ids: ['scenario-id']
-      },
-      mocks: {
-        entities: {},
-        ids: []
+      sidebar: {
+        currentDisplayedServerId: ''
       }
     }));
     store.dispatch(removeButtonClickedAction('server-id'));

@@ -1,4 +1,4 @@
-import { EXPORT_BUTTON_CLICKED } from '../sidebar/SideBarServers';
+import { EXPORT_BUTTON_CLICKED } from '../sidebar/SidebarServers/SideBarServers';
 
 const SUCCEED = 'export/SUCCEED';
 const succeedAction = () => ({ type: SUCCEED });

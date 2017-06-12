@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SideBar from '../sidebar/SideBar';
+import SideBar from '../sidebar/Sidebar';
 
 const Main = ({ children }) => (
   <div className="main">

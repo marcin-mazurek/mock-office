@@ -18,11 +18,11 @@
 // components
 @import '../routing/Main';
 @import '../app/App';
-@import '../sidebar/SideBar';
+@import '../sidebar/Sidebar/SideBar';
 @import '../servers/inspectServer/InspectServer';
 @import '../mocks/browseMocks/Mocks';
 @import '../mocks/addMock/AddMock';
-@import '../sidebar/SideBarServers';
+@import '../sidebar/SidebarServers/SideBarServers';
 @import '../landingPage/LandingPage';
 @import '../mocks/importMock/FilePicker';
 @import '../tasks/browse/TaskList';

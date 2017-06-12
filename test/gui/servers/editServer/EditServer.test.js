@@ -2,7 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import EditServerPage, { EditServerFormConnect, EditServerForm } from '../../../../src/gui/servers/editServer/EditServerPage';
+import EditServerPage from '../../../../src/gui/servers/editServer/EditServerPage';
+import { EditServerFormConnect, EditServerForm } from '../../../../src/gui/servers/editServer/EditServerForm';
 import configureStore from '../../../../src/gui/store/index';
 import { actionCreators } from '../../../../src/gui/entities/module';
 

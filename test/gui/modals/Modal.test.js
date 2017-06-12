@@ -3,12 +3,10 @@ import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { Modal, OVERLAY_CLICKED } from '../../../src/gui/modals/Modal/Modal';
-import { components } from '../../../src/gui/modals';
+import { ModalConnect } from '../../../src/gui/modals';
 import configureStore from '../../../src/gui/store/index';
-import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../src/gui/sidebar/SideBarServers';
+import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../src/gui/sidebar/SidebarServers/SideBarServers';
 import AddServerModal from '../../../src/gui/modals/Modal/AddServerModal';
-
-const ModalConnect = components.ModalConnect;
 
 describe('ModalConnect', () => {
   it(`should display AddServerModal on ${ADD_BUTTON_CLICKED} action`, () => {
