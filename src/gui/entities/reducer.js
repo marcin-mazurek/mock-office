@@ -1,5 +1,4 @@
 import { actions, getInitialState, reducers } from './module';
-import { RESTORE_STATE as APP_RESTORE_STATE } from '../appSync/actions';
 import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
 import { DID_SUCCEED as EDIT_SERVER_DID_SUCCEED } from '../servers/editServer/epics';
 import { DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED } from '../servers/removeServer/epics';
@@ -8,7 +7,8 @@ import {
   REMOVE_MOCK_MESSAGE_RECEIVED,
   STOP_MOCK_MESSAGE_RECEIVED,
   FINISH_MOCK_MESSAGE_RECEIVED,
-  RUN_MOCK_MESSAGE_RECEIVED
+  RUN_MOCK_MESSAGE_RECEIVED,
+  RESTORE_STATE as APP_RESTORE_STATE
 } from '../appSync/startAppSync';
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
