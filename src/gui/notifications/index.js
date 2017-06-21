@@ -1,11 +1,11 @@
 import {
-  SUCCEED as ADD_SERVER_DID_SUCCEED,
+  SUCCEEDED as ADD_SERVER_DID_SUCCEED,
   FAILED as ADD_SERVER_FAILED
 } from '../servers/addServer/epics';
-import { DID_FAIL as EDIT_SERVER_DID_FAIL } from '../servers/editServer/epics';
+import { FAILED as EDIT_SERVER_DID_FAIL } from '../servers/editServer/epics';
 import {
-  DID_FAIL as REMOVE_SERVER_DID_FAIL,
-  DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED
+  FAILED as REMOVE_SERVER_DID_FAIL,
+  SUCCEEDED as REMOVE_SERVER_DID_SUCCEED
 } from '../servers/removeServer/epics';
 import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../mocks/removeMock/epics';
 import {
@@ -22,7 +22,7 @@ import {
 } from '../mocks/addMock/addWsMock/epic';
 import {
   FAILED as START_SERVER_FAILED
-} from '../servers/startServer/epics';
+} from '../servers/startServer/startServer';
 import { NOTIFICATION_CLICKED } from './NotificationsList';
 import notificationsReduxModule from './notificationsReduxModule';
 import createNotificationsListConnect from './createNotificationsListConnect';

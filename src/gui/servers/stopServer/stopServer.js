@@ -1,9 +1,14 @@
 import { Observable } from 'rxjs';
-import { actionCreators } from '../../entities/module';
-import { INITIALIZED } from './actions';
+
+export const SUCCEEDED = 'stopServer/SUCCEEDED';
+
+export const succeededAction = id => ({
+  type: SUCCEEDED,
+  id
+});
 
 export default action$ =>
-  action$.ofType(INITIALIZED)
+  action$
     .flatMap(action => Observable.from(
       fetch('http://127.0.0.1:3060/stop-server', {
         method: 'POST',
@@ -14,4 +19,4 @@ export default action$ =>
         body: JSON.stringify({ id: action.id })
       }).then(() => action.id)
     ))
-    .map(actionCreators.stopServerAction);
+    .map(succeededAction);

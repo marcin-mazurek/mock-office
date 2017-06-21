@@ -6,9 +6,9 @@ import { Link } from 'react-router';
 import serverIcon from '../../assets/icons_gray_server.svg';
 import { selectors } from '../../entities/module';
 
-export const FORM_DID_SUBMIT = 'editServer/FORM_DID_SUBMIT';
-export const formDidSubmitAction = (id, values) => ({
-  type: FORM_DID_SUBMIT,
+export const FORM_SUBMITTED = 'editServer/FORM_SUBMITTED';
+export const formSubmittedAction = (id, values) => ({
+  type: FORM_SUBMITTED,
   id,
   values
 });
@@ -69,7 +69,7 @@ EditServerForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(formDidSubmitAction(ownProps.serverId, values))
+  onSubmit: values => dispatch(formSubmittedAction(ownProps.serverId, values))
 });
 
 const mapStateToProps = (state, ownProps) => {

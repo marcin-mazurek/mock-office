@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import 'rxjs';
 import { createEpicMiddleware } from 'redux-observable';
-import { initAction } from '../../../../src/gui/mocks/importMock/actions';
+import { filePickedAction } from '../../../../src/gui/mocks/importMock/FilePicker';
 
 describe('importMockEpic', () => {
   let store;
@@ -11,7 +11,7 @@ describe('importMockEpic', () => {
     store.clearActions();
   });
 
-  test.only('snapshot of success flow', (done) => {
+  test('snapshot of success flow', (done) => {
     jest.mock('../../../../src/gui/resources/api', () => ({
       addMock() {
         return Promise.resolve({
@@ -38,7 +38,7 @@ describe('importMockEpic', () => {
       })
     }));
 
-    store.dispatch(initAction('server-id', 'scenario-id', [
+    store.dispatch(filePickedAction('server-id', 'scenario-id', [
       new Blob(['[{"tasks":[]}]'])
     ]));
     setTimeout(() => {

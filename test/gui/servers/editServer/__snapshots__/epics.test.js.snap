@@ -4,7 +4,7 @@ exports[`editServerEpic actions snapshot on failed response 1`] = `
 Array [
   Object {
     "id": "some id",
-    "type": "editServer/FORM_DID_SUBMIT",
+    "type": "editServer/FORM_SUBMITTED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -12,7 +12,7 @@ Array [
   },
   Object {
     "reason": "error message",
-    "type": "editServer/DID_FAIL",
+    "type": "editServer/FAILED",
   },
 ]
 `;
@@ -21,7 +21,7 @@ exports[`editServerEpic actions snapshot on success response 1`] = `
 Array [
   Object {
     "id": "some id",
-    "type": "editServer/FORM_DID_SUBMIT",
+    "type": "editServer/FORM_SUBMITTED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -29,13 +29,11 @@ Array [
   },
   Object {
     "result": Object {
-      "data": Object {
-        "id": "some id",
-        "name": "name",
-        "port": 3000,
-      },
+      "id": "some id",
+      "name": "name",
+      "port": 3000,
     },
-    "type": "editServer/DID_SUCCEED",
+    "type": "editServer/SUCCEEDED",
   },
 ]
 `;

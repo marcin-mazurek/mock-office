@@ -3,9 +3,12 @@ import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import EditServerPage from '../../../../src/gui/servers/editServer/EditServerPage';
-import { EditServerFormConnect, EditServerForm } from '../../../../src/gui/servers/editServer/EditServerForm';
+import {
+  EditServerFormConnect,
+  EditServerForm
+} from '../../../../src/gui/servers/editServer/EditServerForm';
 import configureStore from '../../../../src/gui/store/index';
-import { actionCreators } from '../../../../src/gui/entities/module';
+import { succeededAction } from '../../../../src/gui/servers/addServer/epics';
 
 describe('EditServerPage', () => {
   test('default snapshot', () => {
@@ -30,14 +33,20 @@ describe('EditServerForm', () => {
 describe('EditServerFormConnect', () => {
   it('should be connected to store', () => {
     const store = configureStore();
-    store.dispatch(actionCreators.addServerAction('id', {
-      name: 'name',
-      port: 3000,
-      type: 'http'
+    store.dispatch(succeededAction({
+      data: {
+        name: 'Awesome server',
+        port: 3000,
+        type: 'http',
+        secure: false,
+        scenario: 'cj45fwix00001yrve66ecdxp0',
+        running: false,
+        id: 'server-id'
+      }
     }));
     const wrapper = mount(
       <Provider store={store}>
-        <EditServerFormConnect serverId="id" />
+        <EditServerFormConnect serverId="server-id" />
       </Provider>
     );
 

@@ -1,5 +1,5 @@
 import { ifElse, has } from 'ramda';
-import { FILE_PICK } from './FilePicker';
+import { FILE_PICKED } from './FilePicker';
 import api from '../../resources/api';
 
 export const SUCCEEDED = 'importMock/SUCCEEDED';
@@ -45,7 +45,7 @@ const onSuccess = (results) => {
 };
 
 export default action$ =>
-  action$.ofType(FILE_PICK)
+  action$.ofType(FILE_PICKED)
     .flatMap(readFromFile)
     .flatMap(makeRequests)
     .map(

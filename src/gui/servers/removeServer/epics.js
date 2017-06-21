@@ -4,19 +4,19 @@ import api from '../../resources/api';
 import { REMOVE_BUTTON_CLICKED } from '../inspectServer/InspectServer';
 import { selectors } from '../../sidebar';
 
-export const DID_SUCCEED = 'removeServer/DID_SUCCEED';
-export const DID_FAIL = 'removeServer/DID_FAIL';
-const didSucceedAction = id => ({
-  type: DID_SUCCEED,
+export const SUCCEEDED = 'removeServer/SUCCEEDED';
+export const FAILED = 'removeServer/FAILED';
+const succeededAction = id => ({
+  type: SUCCEEDED,
   id
 });
-const didFailAction = reason => ({
-  type: DID_FAIL,
+const failedAction = reason => ({
+  type: FAILED,
   reason
 });
 
 const makeRequest = action => api.removeServer({ id: action.id });
-const onFail = result => [didFailAction(result.error)];
+const onFail = result => [failedAction(result.error)];
 const onSuccess = store => (result) => {
   const state = store.getState();
   const { data } = result;
@@ -25,7 +25,7 @@ const onSuccess = store => (result) => {
   if (displayedServerId === data.id) {
     actions.push(push('/'));
   }
-  actions.push(didSucceedAction(result.data.id));
+  actions.push(succeededAction(result.data.id));
 
   return actions;
 };

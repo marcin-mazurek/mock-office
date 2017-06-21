@@ -8,7 +8,7 @@ Array [
   },
   Object {
     "reason": "Error message",
-    "type": "removeServer/DID_FAIL",
+    "type": "removeServer/FAILED",
   },
 ]
 `;
@@ -21,7 +21,7 @@ Array [
   },
   Object {
     "id": "server-id",
-    "type": "removeServer/DID_SUCCEED",
+    "type": "removeServer/SUCCEEDED",
   },
 ]
 `;

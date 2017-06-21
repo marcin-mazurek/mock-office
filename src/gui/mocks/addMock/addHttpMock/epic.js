@@ -3,7 +3,7 @@ import { ifElse, has } from 'ramda';
 import api from '../../../resources/api';
 import { FORM_SUBMITTED } from './AddMockForm';
 
-export const SUCCEED = 'addHttpMock/SUCCEED';
+export const SUCCEED = 'addHttpMock/SUCCEEDED';
 export const succeedAction = (scenario, mock) => ({
   type: SUCCEED,
   scenario,

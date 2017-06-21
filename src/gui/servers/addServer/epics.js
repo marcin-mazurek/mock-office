@@ -3,11 +3,11 @@ import { ifElse, has } from 'ramda';
 import { SUBMIT_BUTTON_CLICKED } from './AddServerForm';
 import api from '../../resources/api';
 
-export const SUCCEED = 'addServer/SUCCEED';
+export const SUCCEEDED = 'addServer/SUCCEED';
 export const FAILED = 'addServer/FAILED';
 
-export const succeedAction = params => ({
-  type: SUCCEED,
+export const succeededAction = params => ({
+  type: SUCCEEDED,
   params
 });
 
@@ -34,7 +34,7 @@ const preparePayload = (action) => {
 };
 const makeRequest = payload => Observable.from(api.addServer(payload));
 const hasError = has('error');
-const onSuccess = result => succeedAction(result);
+const onSuccess = result => succeededAction(result);
 const onFail = result => failedAction(result.error);
 
 export default action$ =>

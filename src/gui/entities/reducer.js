@@ -1,7 +1,7 @@
-import { actions, getInitialState, reducers } from './module';
-import { SUCCEED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
-import { DID_SUCCEED as EDIT_SERVER_DID_SUCCEED } from '../servers/editServer/epics';
-import { DID_SUCCEED as REMOVE_SERVER_DID_SUCCEED } from '../servers/removeServer/epics';
+import { getInitialState, reducers } from './module';
+import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
+import { SUCCEEDED as EDIT_SERVER_DID_SUCCEED } from '../servers/editServer/epics';
+import { SUCCEEDED as REMOVE_SERVER_DID_SUCCEED } from '../servers/removeServer/epics';
 import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../mocks/removeMock/epics';
 import {
   REMOVE_MOCK_MESSAGE_RECEIVED,
@@ -15,16 +15,11 @@ import {
 } from '../mocks/importMock/epics';
 import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../mocks/addMock/addHttpMock/epic';
 import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../mocks/addMock/addWsMock/epic';
-import { SUCCEED as START_SERVER_SUCCEED } from '../servers/startServer/epics';
+import { SUCCEEDED as START_SERVER_SUCCEED } from '../servers/startServer/startServer';
+import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../servers/stopServer/stopServer';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
-    case actions.ADD_MOCK: {
-      return reducers.addMock(state, action.scenario, action.id, action.params);
-    }
-    case actions.REMOVE_MOCK: {
-      return reducers.removeMock(state, action.scenarioId, action.mockId);
-    }
     case STOP_MOCK_MESSAGE_RECEIVED: {
       const { id } = action;
       return reducers.stopMock(state, id);
@@ -37,33 +32,6 @@ export default (state = getInitialState(), action) => {
       const { id } = action;
       return reducers.runMock(state, id);
     }
-    case actions.ADD_TASK: {
-      return reducers.addTask(state, action.mockId, action.taskId);
-    }
-    case actions.REMOVE_SCENARIO: {
-      const { id } = action;
-      return reducers.removeScenario(state, id);
-    }
-    case actions.ADD_SERVER: {
-      return reducers.addServer(state, action.id, action.params);
-    }
-    case actions.START_SERVER: {
-      return reducers.startServer(state, action.id);
-    }
-    case actions.STOP_SERVER: {
-      return reducers.stopServer(state, action.id);
-    }
-    case actions.REMOVE_SERVER: {
-      return reducers.removeServer(state, action.id);
-    }
-    case actions.UPDATE_SERVER: {
-      return reducers.updateServer(state, action.id, action.params);
-    }
-    case actions.ADD_SCENARIO: {
-      let newState = state;
-      newState = reducers.addScenario(newState, action.server, { id: action.id });
-      return newState;
-    }
     case ADD_SERVER_SUCCEED: {
       const { params: { data } } = action;
       let newState = state;
@@ -73,9 +41,6 @@ export default (state = getInitialState(), action) => {
     }
     case EDIT_SERVER_DID_SUCCEED: {
       return reducers.updateServer(state, action.result.id, action.result);
-    }
-    case actions.REMOVE_TASK: {
-      return reducers.removeTask(state, action.mockId, action.taskId);
     }
     case APP_RESTORE_STATE: {
       const { servers } = action;
@@ -159,6 +124,9 @@ export default (state = getInitialState(), action) => {
     }
     case START_SERVER_SUCCEED: {
       return reducers.startServer(state, action.id);
+    }
+    case STOP_SERVER_SUCCEED: {
+      return reducers.stopServer(state, action.id);
     }
     default: {
       return state;

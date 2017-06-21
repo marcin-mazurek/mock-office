@@ -94,17 +94,17 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
   }
 >
   <Connect(ReduxForm)
-    serverId="id"
+    serverId="server-id"
   >
     <ReduxForm
       initialValues={
         Object {
-          "name": "name",
+          "name": "Awesome server",
           "port": 3000,
         }
       }
       onSubmit={[Function]}
-      serverId="id"
+      serverId="server-id"
     >
       <Connect(Form(Component))
         destroyOnUnmount={true}
@@ -114,7 +114,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
         getFormState={[Function]}
         initialValues={
           Object {
-            "name": "name",
+            "name": "Awesome server",
             "port": 3000,
           }
         }
@@ -122,7 +122,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
         onSubmit={[Function]}
         persistentSubmitErrors={false}
         pure={true}
-        serverId="id"
+        serverId="server-id"
         shouldAsyncValidate={[Function]}
         shouldValidate={[Function]}
         touchOnBlur={true}
@@ -172,7 +172,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
           getFormState={[Function]}
           initialValues={
             Object {
-              "name": "name",
+              "name": "Awesome server",
               "port": 3000,
             }
           }
@@ -200,7 +200,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
             }
           }
           reset={[Function]}
-          serverId="id"
+          serverId="server-id"
           setSubmitFailed={[Function]}
           setSubmitSucceeded={[Function]}
           shouldAsyncValidate={[Function]}
@@ -226,7 +226,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
           validExceptSubmit={true}
           values={
             Object {
-              "name": "name",
+              "name": "Awesome server",
               "port": 3000,
             }
           }
@@ -262,7 +262,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
             handleSubmit={[Function]}
             initialValues={
               Object {
-                "name": "name",
+                "name": "Awesome server",
                 "port": 3000,
               }
             }
@@ -273,7 +273,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
             pristine={true}
             pure={true}
             reset={[Function]}
-            serverId="id"
+            serverId="server-id"
             submit={[Function]}
             submitFailed={false}
             submitSucceeded={false}
@@ -362,7 +362,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                           "getFormState": [Function],
                           "getValues": [Function],
                           "initialValues": Object {
-                            "name": "name",
+                            "name": "Awesome server",
                             "port": 3000,
                           },
                           "initialize": [Function],
@@ -379,7 +379,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                           "registeredFields": undefined,
                           "reset": [Function],
                           "sectionPrefix": undefined,
-                          "serverId": "id",
+                          "serverId": "server-id",
                           "setSubmitFailed": [Function],
                           "setSubmitSucceeded": [Function],
                           "shouldAsyncValidate": [Function],
@@ -406,7 +406,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                           "valid": true,
                           "validExceptSubmit": true,
                           "values": Object {
-                            "name": "name",
+                            "name": "Awesome server",
                             "port": 3000,
                           },
                           "warning": undefined,
@@ -465,7 +465,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                             "getFormState": [Function],
                             "getValues": [Function],
                             "initialValues": Object {
-                              "name": "name",
+                              "name": "Awesome server",
                               "port": 3000,
                             },
                             "initialize": [Function],
@@ -482,7 +482,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                             "registeredFields": undefined,
                             "reset": [Function],
                             "sectionPrefix": undefined,
-                            "serverId": "id",
+                            "serverId": "server-id",
                             "setSubmitFailed": [Function],
                             "setSubmitSucceeded": [Function],
                             "shouldAsyncValidate": [Function],
@@ -509,7 +509,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                             "valid": true,
                             "validExceptSubmit": true,
                             "values": Object {
-                              "name": "name",
+                              "name": "Awesome server",
                               "port": 3000,
                             },
                             "warning": undefined,
@@ -524,7 +524,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                         normalize={[Function]}
                         pristine={true}
                         type="text"
-                        value="name"
+                        value="Awesome server"
                       >
                         <input
                           className="form-field__input"
@@ -535,7 +535,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                           onDrop={[Function]}
                           onFocus={[Function]}
                           type="text"
-                          value="name"
+                          value="Awesome server"
                         />
                       </ConnectedField>
                     </Connect(ConnectedField)>
@@ -610,7 +610,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                             "getFormState": [Function],
                             "getValues": [Function],
                             "initialValues": Object {
-                              "name": "name",
+                              "name": "Awesome server",
                               "port": 3000,
                             },
                             "initialize": [Function],
@@ -627,7 +627,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                             "registeredFields": undefined,
                             "reset": [Function],
                             "sectionPrefix": undefined,
-                            "serverId": "id",
+                            "serverId": "server-id",
                             "setSubmitFailed": [Function],
                             "setSubmitSucceeded": [Function],
                             "shouldAsyncValidate": [Function],
@@ -654,7 +654,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                             "valid": true,
                             "validExceptSubmit": true,
                             "values": Object {
-                              "name": "name",
+                              "name": "Awesome server",
                               "port": 3000,
                             },
                             "warning": undefined,
@@ -713,7 +713,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                               "getFormState": [Function],
                               "getValues": [Function],
                               "initialValues": Object {
-                                "name": "name",
+                                "name": "Awesome server",
                                 "port": 3000,
                               },
                               "initialize": [Function],
@@ -730,7 +730,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                               "registeredFields": undefined,
                               "reset": [Function],
                               "sectionPrefix": undefined,
-                              "serverId": "id",
+                              "serverId": "server-id",
                               "setSubmitFailed": [Function],
                               "setSubmitSucceeded": [Function],
                               "shouldAsyncValidate": [Function],
@@ -757,7 +757,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                               "valid": true,
                               "validExceptSubmit": true,
                               "values": Object {
-                                "name": "name",
+                                "name": "Awesome server",
                                 "port": 3000,
                               },
                               "warning": undefined,
@@ -804,7 +804,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                   className="button form__button"
                   onlyActiveOnIndex={false}
                   style={Object {}}
-                  to="/server/id"
+                  to="/server/server-id"
                 >
                   <a
                     className="button form__button"

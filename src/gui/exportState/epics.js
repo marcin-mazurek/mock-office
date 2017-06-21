@@ -1,7 +1,7 @@
 import { EXPORT_BUTTON_CLICKED } from '../sidebar/SidebarServers/SideBarServers';
 
-const SUCCEED = 'export/SUCCEED';
-const succeedAction = () => ({ type: SUCCEED });
+const SUCCEEDED = 'export/SUCCEEDED';
+const succeedAction = () => ({ type: SUCCEEDED });
 
 export default action$ =>
   action$.ofType(EXPORT_BUTTON_CLICKED)

@@ -2,7 +2,7 @@ import { ifElse, has } from 'ramda';
 import api from '../../resources/api';
 import { REMOVE_BUTTON_CLICKED } from '../browseMocks/Mocks';
 
-export const DID_SUCCEED = 'removeMock/DID_SUCCEED';
+export const DID_SUCCEED = 'removeMock/SUCCEEDED';
 const didSucceedAction = (scenario, id) => ({
   type: DID_SUCCEED,
   scenario,

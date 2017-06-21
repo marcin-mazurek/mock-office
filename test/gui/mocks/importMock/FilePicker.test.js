@@ -8,7 +8,8 @@ describe('FilePicker', () => {
     const props = {
       init: () => {},
       server: 'server',
-      scenario: 'scenario'
+      scenario: 'scenario',
+      onFileChange: () => {}
     };
 
     const wrapper = shallow(<FilePicker {...props} serverId={'server id'} />);
@@ -16,10 +17,10 @@ describe('FilePicker', () => {
   });
 
   it('should dispatch mock if file has been selected', () => {
-    const mockedHandleChange = jest.fn();
+    const mockedOnFileChange = jest.fn();
 
     const props = {
-      init: mockedHandleChange,
+      onFileChange: mockedOnFileChange,
       server: 'server',
       scenario: 'scenario'
     };
@@ -33,7 +34,7 @@ describe('FilePicker', () => {
       }
     });
 
-    expect(mockedHandleChange.mock.calls.length).toEqual(0);
+    expect(mockedOnFileChange.mock.calls.length).toEqual(0);
 
     fileInput.simulate('change', {
       target: {
@@ -43,14 +44,15 @@ describe('FilePicker', () => {
       }
     });
 
-    expect(mockedHandleChange.mock.calls.length).toEqual(1);
+    expect(mockedOnFileChange.mock.calls.length).toEqual(1);
   });
 
   it('should clean input value after file pick', () => {
     const props = {
       init: () => {},
       server: 'server',
-      scenario: 'scenario'
+      scenario: 'scenario',
+      onFileChange: () => {}
     };
     const wrapper = mount(<FilePicker {...props} serverId={'server id'} />);
     const fileInput = wrapper.find('input');

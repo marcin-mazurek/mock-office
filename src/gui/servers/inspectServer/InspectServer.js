@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
-import startServerAction from '../startServer/actions';
-import stopServerAction from '../stopServer/actions';
 import { selectors } from '../../entities/module';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
@@ -17,20 +15,14 @@ export const removeButtonClickedAction = id => ({
   type: REMOVE_BUTTON_CLICKED,
   id
 });
+export const SWITCH_BUTTON_CLICKED = 'component/Server/SWITCH_BUTTON_CLICKED';
+export const switchButtonClickedAction = (id, isOn) => ({
+  type: SWITCH_BUTTON_CLICKED,
+  id,
+  isOn
+});
 
-const ServerToggle = ({ toggled, serverId, stop, start }) => {
-  let handleClick;
-
-  if (toggled) {
-    handleClick = () => {
-      stop(serverId);
-    };
-  } else {
-    handleClick = () => {
-      start(serverId);
-    };
-  }
-
+const ServerToggle = ({ toggled, serverId, onSwitchButtonClick }) => {
   const toggleClassNames = classnames({
     'inspect-server-header-toggle': true,
     'inspect-server-header-toggle--up': toggled
@@ -39,7 +31,7 @@ const ServerToggle = ({ toggled, serverId, stop, start }) => {
   return (
     <button
       className={toggleClassNames}
-      onClick={handleClick}
+      onClick={() => onSwitchButtonClick(serverId, toggled)}
     >
       <svg className="inspect-server-header-toggle-icon" width="60px" height="60px">
         <title>icons_power/on@3x</title>
@@ -84,13 +76,11 @@ const ServerToggle = ({ toggled, serverId, stop, start }) => {
 ServerToggle.propTypes = {
   toggled: PropTypes.bool.isRequired,
   serverId: PropTypes.string.isRequired,
-  stop: PropTypes.func.isRequired,
-  start: PropTypes.func.isRequired
+  onSwitchButtonClick: PropTypes.func.isRequired
 };
 
 const serverToggleMapDispatchToProps = {
-  start: startServerAction,
-  stop: stopServerAction
+  onSwitchButtonClick: switchButtonClickedAction
 };
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
