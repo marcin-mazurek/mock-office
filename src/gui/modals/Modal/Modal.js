@@ -5,14 +5,7 @@ import AddServerModal from './AddServerModal';
 export const types = {
   addServerModal: AddServerModal,
 };
-
-export const OVERLAY_CLICKED = 'modals/OVERLAY_CLICKED';
-
-export const overlayClickedAction = () => ({
-  type: OVERLAY_CLICKED
-});
-
-export const Modal = ({ component, onOverlayClick }) => {
+const Modal = ({ component, onOverlayClick }) => {
   const ModalComponent = types[component];
   const isOpen = !!ModalComponent;
 
@@ -33,3 +26,5 @@ Modal.propTypes = {
   component: PropTypes.string,
   onOverlayClick: PropTypes.func.isRequired
 };
+
+export default Modal;

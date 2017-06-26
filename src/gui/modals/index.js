@@ -1,8 +1,7 @@
-import { OVERLAY_CLICKED } from './Modal';
+import { OVERLAY_CLICKED, createModalConnect } from './Modal';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../servers/addServer/epics';
 import { ADD_BUTTON_CLICKED } from '../sidebar/SidebarServers/SideBarServers';
 import modalsReduxModule from './modalsReduxModule';
-import createModalConnect from './createModalConnect';
 
 const modals = modalsReduxModule(
   {

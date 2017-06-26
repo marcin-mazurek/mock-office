@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
-import { Modal, overlayClickedAction } from './Modal';
+import Modal from './Modal';
 
-const createModalConnect = (selectors) => {
+export const OVERLAY_CLICKED = 'modals/OVERLAY_CLICKED';
+export const overlayClickedAction = () => ({
+  type: OVERLAY_CLICKED
+});
+export const createModalConnect = (selectors) => {
   const mapStateToProps = state => ({
     component: selectors.modalSelector(state)
   });
@@ -11,5 +15,3 @@ const createModalConnect = (selectors) => {
 
   return connect(mapStateToProps, mapDispatchToProps)(Modal);
 };
-
-export default createModalConnect;
