@@ -26,6 +26,7 @@ import {
 import { NOTIFICATION_CLICKED } from './NotificationsList';
 import notificationsReduxModule from './notificationsReduxModule';
 import createNotificationsListConnect from './createNotificationsListConnect';
+import { FAILED as STOP_SERVER_FAILED } from '../servers/stopServer';
 
 const showError = (state, action, reducers) =>
   reducers.addNotification(state, { type: 'error', text: action.reason });
@@ -46,6 +47,7 @@ const notifications = notificationsReduxModule(
     [ADD_WS_MOCK_FAILED]: showError,
     [ADD_SERVER_FAILED]: showError,
     [START_SERVER_FAILED]: showError,
+    [STOP_SERVER_FAILED]: showError,
     [IMPORT_MOCKS_SUCCEEDED]: (state, action, reducers) =>
       reducers.addNotification(state, { type: 'success', text: 'Mocks imported' }),
     [ADD_HTTP_MOCK_SUCCEED]: showAddMockSuccess,

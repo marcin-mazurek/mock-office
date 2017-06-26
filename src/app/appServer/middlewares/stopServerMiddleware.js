@@ -13,7 +13,7 @@ export default function configure(ajv, serversManager) {
       serversManager.stop(req.body.id)
         .then(
           () => {
-            res.status(200).end();
+            res.status(200).json({ id: req.body.id });
           },
           (err) => {
             res.status(400).json({ error: err });

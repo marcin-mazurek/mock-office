@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { ifElse } from 'ramda';
 import { SWITCH_BUTTON_CLICKED } from '../inspectServer/InspectServer';
 import startServer from '../startServer/startServer';
-import stopServer from '../stopServer/stopServer';
+import stopServer from '../stopServer/index';
 
 const isOn = action => action.isOn;
 const onServerOn = action => stopServer(Observable.from([action]));

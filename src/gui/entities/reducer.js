@@ -16,7 +16,7 @@ import {
 import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../mocks/addMock/addHttpMock/epic';
 import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../mocks/addMock/addWsMock/epic';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../servers/startServer/startServer';
-import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../servers/stopServer/stopServer';
+import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../servers/stopServer/index';
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
