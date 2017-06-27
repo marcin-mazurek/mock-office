@@ -51,9 +51,6 @@ const renderTasks = ({ fields }) =>
 
 export const AddMockForm = props =>
   <form className="form" onSubmit={props.handleSubmit}>
-    <div className="form__header">
-      Add mock
-    </div>
     <div className="form-row">
       <div className="form__field">
         <label className="form-field__label" htmlFor="title">Title:</label>

@@ -21,6 +21,13 @@ export const switchButtonClickedAction = (id, isOn) => ({
   id,
   isOn
 });
+export const ADD_MOCK_BUTTON_CLICKED = 'component/Server/ADD_MOCK_BUTTON_CLICKED';
+export const addMockButtonClickedAction = (server, scenario, serverType) => ({
+  type: ADD_MOCK_BUTTON_CLICKED,
+  server,
+  scenario,
+  serverType
+});
 
 const ServerToggle = ({ toggled, serverId, onSwitchButtonClick }) => {
   const toggleClassNames = classnames({
@@ -85,7 +92,18 @@ const serverToggleMapDispatchToProps = {
 
 const ServerToggleConnect = connect(null, serverToggleMapDispatchToProps)(ServerToggle);
 
-export const InspectServer = ({ running, name, port, onRemoveButtonClick, scenario, id, type }) =>
+export const InspectServer = (
+  {
+    running,
+    name,
+    port,
+    onRemoveButtonClick,
+    scenario,
+    id,
+    type,
+    onAddMockButtonClickedAction
+  }
+) =>
   <div className="inspect-server">
     <div className="inspect-server__header inspect-server-header">
       <div className="inspect-server-header__toggle">
@@ -130,48 +148,48 @@ export const InspectServer = ({ running, name, port, onRemoveButtonClick, scenar
         <ul className="inspect-server-mocks-legend inspect-server__mocks-legend">
           <li
             className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
+                inspect-server-mocks-legend-item"
           >
             <i
               className="inspect-server-mocks-legend__icon
-                inspect-server-mocks-legend__icon--finished"
+                  inspect-server-mocks-legend__icon--finished"
             />
             Finished
           </li>
           <li
             className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
+                inspect-server-mocks-legend-item"
           >
             <i
               className="inspect-server-mocks-legend__icon
-                inspect-server-mocks-legend__icon--in-progress"
+                  inspect-server-mocks-legend__icon--in-progress"
             />
             In progress
           </li>
           <li
             className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
+                inspect-server-mocks-legend-item"
           >
             <i
               className="inspect-server-mocks-legend__icon
-                inspect-server-mocks-legend__icon--cancelled"
+                  inspect-server-mocks-legend__icon--cancelled"
             />
             Cancelled
           </li>
           <li
             className="inspect-server-mocks-legend__item
-              inspect-server-mocks-legend-item"
+                inspect-server-mocks-legend-item"
           >
             <i className="inspect-server-mocks-legend__icon" />Ready
           </li>
         </ul>
-        <Link
-          to={`${id}/add-mock`}
+        <button
           className="inspect-server__add-mock-button inspect-server-mocks-header__button"
+          onClick={() => onAddMockButtonClickedAction(id, scenario, type)}
         >
           <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
           Add mock
-        </Link>
+        </button>
         <FilePickerConnect scenario={scenario} server={id} />
       </div>
       <div className="inspect-server__mocks">
@@ -187,6 +205,7 @@ export const InspectServer = ({ running, name, port, onRemoveButtonClick, scenar
 InspectServer.propTypes = {
   running: PropTypes.bool.isRequired,
   onRemoveButtonClick: PropTypes.func.isRequired,
+  onAddMockButtonClickedAction: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   port: PropTypes.number.isRequired,
   scenario: PropTypes.string.isRequired,
@@ -195,7 +214,8 @@ InspectServer.propTypes = {
 };
 
 const serverMapDispatchToProps = {
-  onRemoveButtonClick: removeButtonClickedAction
+  onRemoveButtonClick: removeButtonClickedAction,
+  onAddMockButtonClickedAction: addMockButtonClickedAction
 };
 
 const serverMapStateToProps = (state, ownProps) => {

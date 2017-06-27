@@ -1,45 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { selectors } from '../../entities/module';
 import AddHttpMockFormConnect from './addHttpMock/AddMockForm';
 import AddWsMockFormConnect from './addWsMock/AddWsMockForm';
+import { paramsSelector } from './selectors';
 
-export const AddMock = ({ serverType, scenario, params }) => (
-  <Scrollbars>
-    <div className="add-mock">
-      <Link to={`/server/${params.id}`} className="add-mock__back-button">
-        <i className="fa fa-arrow-left" />{' Server details'}
-      </Link>
-      {
-        serverType === 'http'
-          ? <AddHttpMockFormConnect scenario={scenario} server={params.id} />
-          : <AddWsMockFormConnect scenario={scenario} server={params.id} />
-      }
-    </div>
-  </Scrollbars>
-
+export const AddMock = ({ serverType, scenario, server }) => (
+  <div className="add-mock">
+    <Scrollbars>
+      <div className="add-mock__form">
+        {
+          serverType === 'http'
+            ? <AddHttpMockFormConnect scenario={scenario} server={server} />
+            : <AddWsMockFormConnect scenario={scenario} server={server} />
+        }
+      </div>
+    </Scrollbars>
+  </div>
 );
 
 AddMock.propTypes = {
   serverType: PropTypes.string.isRequired,
   scenario: PropTypes.string.isRequired,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired
+  server: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const serverDetails = selectors.serverSelector(state, ownProps.params.id);
+const mapStateToProps = (state) => {
+  const params = paramsSelector(state);
 
   return {
-    serverType: serverDetails.type,
-    scenario: serverDetails.scenario
+    serverType: params.get('serverType'),
+    scenario: params.get('scenario'),
+    server: params.get('server')
   };
 };
 
-const AddMockConnect = connect(mapStateToProps)(AddMock);
-
-export default AddMockConnect;
+export const AddMockConnect = connect(mapStateToProps)(AddMock);
