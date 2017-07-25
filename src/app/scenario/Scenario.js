@@ -82,17 +82,13 @@ export default class Scenario {
       if (!mock.pending) {
         if (mock.requirements) {
           const req = requirements;
-          if (requirements) {
+          if (req) {
             if (mock.requirements.type === 'b64') {
               req.message = btoa(requirements.message);
               req.type = 'b64';
             }
 
-            if (
-              deepEqual(mock.requirements, extractSubTree(req, mock.requirements))
-            ) {
-              return true;
-            }
+            return deepEqual(mock.requirements, extractSubTree(req, mock.requirements));
           }
         } else {
           return true;

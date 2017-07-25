@@ -6,7 +6,7 @@
       "url": "/bet/slips/S00001067bec2425c4/?sortOrder=off"
     },
     "reuse": "infinite",
-    "parts": [
+    "tasks": [
       {
         "title": "response with bets",
         "type": "future",

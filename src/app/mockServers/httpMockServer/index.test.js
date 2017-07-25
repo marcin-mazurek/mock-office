@@ -320,4 +320,131 @@ describe('HttpMockServer', () => {
       });
     });
   });
-});
+
+  it('should filter mocks by request url', (done) => {
+    const server = new HttpMockServer({
+      port: 4000,
+      emitter: new Emitter()
+    });
+
+    server.getScenario().addMock({
+      requirements: {
+        event: 'RECEIVED_REQUEST',
+        request: {
+          url: '/test'
+        }
+      },
+      tasks: [
+        {
+          type: 'immediate',
+          payload: {
+            message: 'its working!'
+          }
+        }
+      ]
+    });
+
+    server.start(() => {
+      request.get({
+        url: 'http://127.0.0.1:4000/test'
+      }, (err, res) => {
+        expect(JSON.parse(res.body)).toEqual({ message: 'its working!' });
+
+        server.getScenario().addMock({
+          requirements: {
+            event: 'RECEIVED_REQUEST',
+            request: {
+              url: '/test2'
+            }
+          },
+          tasks: [
+            {
+              type: 'immediate',
+              payload: {
+                message: 'its working!'
+              }
+            }
+          ]
+        });
+
+        request.get({ url: 'http://127.0.0.1:4000/test' }, (error, response) => {
+          expect(response.body).toEqual('Sorry, we cannot find mock.');
+          server.stop(done);
+        });
+      });
+    });
+  });
+
+  it('should filter mocks by request json body', (done) => {
+    const server = new HttpMockServer({
+      port: 4000,
+      emitter: new Emitter()
+    });
+
+    server.getScenario().addMock({
+      requirements: {
+        event: 'RECEIVED_REQUEST',
+        request: {
+          body: {
+            key: 'value'
+          }
+        }
+      },
+      tasks: [
+        {
+          type: 'immediate',
+          payload: {
+            message: 'its working!'
+          }
+        }
+      ]
+    });
+
+    server.start(() => {
+      request.post({
+        url: 'http://127.0.0.1:4000',
+        json: true,
+        body: {
+          key: 'value'
+        }
+      }, (err, res) => {
+        expect(res.body).toEqual({ message: 'its working!' });
+
+        server.getScenario().addMock({
+          requirements: {
+            event: 'RECEIVED_REQUEST',
+            request: {
+              body: {
+                key: 'proper value'
+              }
+            }
+          },
+          tasks: [
+            {
+              type: 'immediate',
+              payload: {
+                message: 'its working!'
+              }
+            }
+          ]
+        });
+
+        request.post(
+          {
+            url: 'http://127.0.0.1:4000',
+            json: true,
+            body: {
+              key: 'invalid value'
+            }
+          },
+          (error, response) => {
+            expect(response.body).toEqual('Sorry, we cannot find mock.');
+            server.stop(done);
+          }
+        );
+      })
+      ;
+    });
+  })
+    ;
+  });

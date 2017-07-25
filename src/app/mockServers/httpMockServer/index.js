@@ -3,6 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import unique from 'cuid';
+import bodyParser from 'body-parser';
 import Scenario from '../../scenario/index';
 
 export const send = (req, res) => (params) => {
@@ -41,6 +42,7 @@ export default class HttpMockServer {
     this.changePort = this.changePort.bind(this);
     const httpServer = this.secure ? https : http;
     const app = express();
+    app.use(bodyParser.json());
     app.use('*', this.respond);
 
     if (this.secure) {
@@ -63,16 +65,19 @@ export default class HttpMockServer {
   }
 
   respond(req, res) {
-    const mock = this.scenario.findMock(
-      {
-        event: 'RECEIVED_REQUEST',
-        request: {
-          url: req.url,
-          method: req.method,
-          headers: req.headers
-        }
+    const requirements = {
+      event: 'RECEIVED_REQUEST',
+      request: {
+        url: req.originalUrl,
+        method: req.method,
+        headers: req.headers
       }
-    );
+    };
+
+    if (req.method === 'POST') {
+      requirements.request.body = req.body;
+    }
+    const mock = this.scenario.findMock(requirements);
 
     if (mock) {
       this.scenario.play(mock.id, send(req, res));

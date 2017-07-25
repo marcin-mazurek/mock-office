@@ -178,6 +178,8 @@ describe('configureEditServerMiddleware', () => {
         expect(server.isLive()).toBeTruthy();
         server.stop(done);
       }, 100);
+    }, (reason) => {
+      console.error(reason);
     });
   });
 });
