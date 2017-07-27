@@ -15,6 +15,10 @@ export const send = (req, res) => (params) => {
     res.set(params.headers);
   }
 
+  if (params.status) {
+    res.status(params.status);
+  }
+
   res.json(params.payload);
 };
 
