@@ -45,7 +45,7 @@ const secureField = field =>
   />;
 
 export const AddServerForm = ({ handleSubmit }) =>
-  <form className="form" onSubmit={handleSubmit}>
+  <form className="form add-server-form" onSubmit={handleSubmit}>
     <div className="form-row">
       <div className="form__field">
         <label className="form-field__label" htmlFor="name">

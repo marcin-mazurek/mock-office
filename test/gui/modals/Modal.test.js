@@ -2,8 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { Modal, OVERLAY_CLICKED, AddServerModal } from '../../../src/gui/modals/Modal';
-import { ModalConnect } from '../../../src/gui/modals';
+import { OVERLAY_CLICKED } from '../../../src/gui/modules/modals';
+import AddServerModal from '../../../src/gui/modals/AddServerModal';
+import { Modal, ModalConnect } from '../../../src/gui/modals';
 import configureStore from '../../../src/gui/store/index';
 import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../src/gui/sidebar/SidebarServers/SideBarServers';
 

@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import configureStore from '../../../../src/gui/store/index';
-import AddMockConnect, { AddMock } from '../../../../src/gui/mocks/addMock/AddMock';
+import { AddMock, AddMockConnect } from '../../../../src/gui/mocks/addMock/AddMock';
 import { reducers } from '../../../../src/gui/entities/module';
 
 describe('AddMock', () => {
@@ -15,7 +15,8 @@ describe('AddMock', () => {
       scenario: 'scenario-id',
       params: { id: 'server-id' },
       onSubmit: () => {
-      }
+      },
+      handleSubmit: () => {}
     };
     const wrapper = shallow(<AddMock {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
