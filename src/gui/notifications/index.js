@@ -27,6 +27,7 @@ import { NOTIFICATION_CLICKED } from './NotificationsList';
 import notificationsReduxModule from './notificationsReduxModule';
 import createNotificationsListConnect from './createNotificationsListConnect';
 import { FAILED as STOP_SERVER_FAILED } from '../servers/stopServer';
+import { NOTIFICATION_EXPIRED } from './clearExpiredNotificationsEpic';
 
 const showError = (state, action, reducers) =>
   reducers.addNotification(state, { type: 'error', text: action.reason });
@@ -53,6 +54,8 @@ const notifications = notificationsReduxModule(
     [ADD_HTTP_MOCK_SUCCEED]: showAddMockSuccess,
     [ADD_WS_MOCK_SUCCEED]: showAddMockSuccess,
     [NOTIFICATION_CLICKED]: (state, action, reducers) =>
+      reducers.removeNotification(state, action.id),
+    [NOTIFICATION_EXPIRED]: (state, action, reducers) =>
       reducers.removeNotification(state, action.id)
   },
   state => state.get('notifications')

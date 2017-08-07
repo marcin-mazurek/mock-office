@@ -5,11 +5,6 @@ exports[`HttpForm default snapshot 1`] = `
   className="form"
 >
   <div
-    className="form__header"
-  >
-    Add mock
-  </div>
-  <div
     className="form-row"
   >
     <div

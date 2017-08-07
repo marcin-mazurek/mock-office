@@ -8,6 +8,7 @@ import removeServerEpic from '../servers/removeServer/epics';
 import saveStateEpic from '../exportState/epics';
 import editServerEpic from '../servers/editServer/epics';
 import toggleServer from '../servers/toggleServer/epic';
+import clearExpiredNotificationsEpic from '../notifications/clearExpiredNotificationsEpic';
 
 export default combineEpics(
   addServerEpic,
@@ -18,5 +19,6 @@ export default combineEpics(
   addHttpMockEpic,
   addWsMockEpic,
   editServerEpic,
-  toggleServer
+  toggleServer,
+  clearExpiredNotificationsEpic
 );
