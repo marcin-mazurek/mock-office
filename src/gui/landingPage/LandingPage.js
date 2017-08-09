@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { selectors } from '../entities/module';
+import { allServersSelector } from '../appModules/entities';
 
 export const LandingPage = ({ serverExists }) =>
   <div className="landing-page">
@@ -13,7 +13,7 @@ LandingPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  serverExists: !selectors.allServersSelector(state).isEmpty()
+  serverExists: !allServersSelector(state).isEmpty()
 });
 
 export default connect(mapStateToProps)(LandingPage);

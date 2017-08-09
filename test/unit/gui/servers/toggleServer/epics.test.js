@@ -1,4 +1,4 @@
-import { switchButtonClickedAction } from '../../../../src/gui/servers/inspectServer/InspectServer';
+import { switchButtonClickedAction } from '../../../../../src/gui/servers/inspectServer/InspectServer';
 
 /* eslint-disable global-require */
 describe('toggleServerEpic', () => {
@@ -10,7 +10,7 @@ describe('toggleServerEpic', () => {
     test('actions snapshot when response object hasn\'t got errors', (done) => {
       const configureMockStore = require('redux-mock-store').default;
       const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-      jest.mock('../../../../src/gui/resources/api', () => ({
+      jest.mock('../../../../../src/gui/resources/api', () => ({
         startServer() {
           return Promise.resolve({
             data: { id: 'some id' }
@@ -18,7 +18,7 @@ describe('toggleServerEpic', () => {
         }
       }));
       // eslint-disable-next-line global-require
-      const toggleServerEpic = require('../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);
@@ -34,12 +34,12 @@ describe('toggleServerEpic', () => {
     test('actions snapshot when on api request errors', (done) => {
       const configureMockStore = require('redux-mock-store').default;
       const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-      jest.mock('../../../../src/gui/resources/api', () => ({
+      jest.mock('../../../../../src/gui/resources/api', () => ({
         startServer() {
           return Promise.resolve({ error: 'error message' });
         }
       }));
-      const toggleServerEpic = require('../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);
@@ -57,7 +57,7 @@ describe('toggleServerEpic', () => {
     test('actions snapshot when response object hasn\'t got errors', (done) => {
       const configureMockStore = require('redux-mock-store').default;
       const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-      jest.mock('../../../../src/gui/resources/api', () => ({
+      jest.mock('../../../../../src/gui/resources/api', () => ({
         stopServer() {
           return Promise.resolve({
             data: { id: 'some id' }
@@ -65,7 +65,7 @@ describe('toggleServerEpic', () => {
         }
       }));
       // eslint-disable-next-line global-require
-      const toggleServerEpic = require('../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);
@@ -81,12 +81,12 @@ describe('toggleServerEpic', () => {
     test('actions snapshot when on api request errors', (done) => {
       const configureMockStore = require('redux-mock-store').default;
       const createEpicMiddleware = require('redux-observable').createEpicMiddleware;
-      jest.mock('../../../../src/gui/resources/api', () => ({
+      jest.mock('../../../../../src/gui/resources/api', () => ({
         startServer() {
           return Promise.resolve({ error: 'error message' });
         }
       }));
-      const toggleServerEpic = require('../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);

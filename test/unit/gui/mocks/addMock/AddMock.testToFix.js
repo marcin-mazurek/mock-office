@@ -4,9 +4,9 @@ import { identity } from 'ramda';
 import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import configureStore from '../../../../src/gui/store/index';
-import { AddMock, AddMockConnect } from '../../../../src/gui/mocks/addMock/AddMock';
-import { reducers } from '../../../../src/gui/entities/module';
+import configureStore from '../../../../../src/gui/store/index';
+import { AddMock, AddMockConnect } from '../../../../../src/gui/mocks/addMock/AddMock';
+import { reducers } from '../../../../../src/gui/appModules/entities/reducer';
 
 describe('AddMock', () => {
   test('default snapshot', () => {

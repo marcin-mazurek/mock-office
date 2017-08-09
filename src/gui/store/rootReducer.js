@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form/immutable';
 import routingReducer from './utils';
-import entitiesReducer from '../entities/reducer';
+import { reducer as entitiesReducer } from '../appModules/entities';
 import { reducer as notificationsReducer } from '../notifications';
 import { reducer as sidebarReducer } from '../sidebar/sidebarModule';
 import { reducer as modalReducer } from '../appModules/modal';

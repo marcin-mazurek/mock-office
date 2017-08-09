@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
-import { selectors } from '../../entities/module';
+import { serverSelector } from '../../appModules/entities';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';
@@ -219,7 +219,7 @@ const serverMapDispatchToProps = {
 };
 
 const serverMapStateToProps = (state, ownProps) => {
-  const server = selectors.serverSelector(state, ownProps.params.id);
+  const server = serverSelector(state, ownProps.params.id);
 
   return {
     id: server.id,

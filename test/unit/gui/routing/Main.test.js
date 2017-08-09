@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Main from '../../../src/gui/routing/Main';
+import Main from '../../../../src/gui/routing/Main';
 
 describe('Main', () => {
   test('should render children', () => {

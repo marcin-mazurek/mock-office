@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form/immutable';
 import { Link } from 'react-router';
 import serverIcon from '../../assets/icons_gray_server.svg';
-import { selectors } from '../../entities/module';
+import { serverSelector } from '../../appModules/entities';
 
 export const FORM_SUBMITTED = 'editServer/FORM_SUBMITTED';
 export const formSubmittedAction = (id, values) => ({
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-  const server = selectors.serverSelector(state, ownProps.serverId);
+  const server = serverSelector(state, ownProps.serverId);
 
   return {
     initialValues: {

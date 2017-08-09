@@ -4,3 +4,4 @@ import './notifications/NotificationsList.story';
 import './Modal.story';
 import './AddServerModal.story';
 import './AddMockModal.story';
+import './TaskList.story';

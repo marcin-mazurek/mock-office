@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import TasksConnect from '../../tasks/browse/TaskList';
-import { selectors } from '../../entities/module';
+import TasksConnect from '../../components/TaskList/index';
+import { mockSelector, scenarioSelector } from '../../appModules/entities';
 
 export const Mock = ({
                        id,
@@ -94,7 +94,7 @@ Mock.propTypes = {
 };
 
 const mockMapStateToProps = (state, ownProps) => {
-  const mock = selectors.mockSelector(state, ownProps.id);
+  const mock = mockSelector(state, ownProps.id);
 
   return {
     id: mock.id,
@@ -142,7 +142,7 @@ Mocks.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const scenario = selectors.scenarioSelector(state, ownProps.scenario);
+  const scenario = scenarioSelector(state, ownProps.scenario);
 
   return {
     mocks: scenario.mocks
