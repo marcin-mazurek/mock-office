@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal no component snapshot 1`] = `null`;
+
+exports[`Modal rendering addServerModal snapshot 1`] = `null`;

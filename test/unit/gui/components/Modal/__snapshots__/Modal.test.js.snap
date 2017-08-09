@@ -13,7 +13,7 @@ exports[`Modal rendering addServerModal snapshot 1`] = `
   <div
     className="modal__content"
   >
-    <AddServerModal />
+    <TestModal />
   </div>
 </div>
 `;

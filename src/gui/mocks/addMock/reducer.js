@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 import { ADD_MOCK_BUTTON_CLICKED } from '../../servers/inspectServer/InspectServer';
-import { OVERLAY_CLICKED } from '../../modules/modals';
+import { OVERLAY_CLICKED } from '../../components/Modal/actions';
 
 const initialState = new Map({
   server: '',

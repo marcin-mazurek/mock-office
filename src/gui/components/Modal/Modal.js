@@ -27,4 +27,5 @@ const createModal = (types) => {
   return Modal;
 };
 
+
 export default createModal;

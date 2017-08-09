@@ -2,7 +2,7 @@ import { configure } from '@kadira/storybook';
 import '../src/gui/styles/main.scss';
 
 function loadStories() {
-  require('./stories');
+  require('../storybookStories');
 }
 
 configure(loadStories, module);

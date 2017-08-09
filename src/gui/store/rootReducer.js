@@ -4,7 +4,7 @@ import routingReducer from './utils';
 import entitiesReducer from '../entities/reducer';
 import { reducer as notificationsReducer } from '../notifications';
 import { reducer as sidebarReducer } from '../sidebar/sidebarModule';
-import { reducer as modalsReducer } from '../modals';
+import { reducer as modalReducer } from '../appModules/modal';
 import { reducer as addMockReducer } from '../mocks/addMock';
 
 export default combineReducers({
@@ -13,6 +13,6 @@ export default combineReducers({
   notifications: notificationsReducer,
   form: formReducer,
   sidebar: sidebarReducer,
-  modals: modalsReducer,
+  modal: modalReducer,
   addMock: addMockReducer
 });
