@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { allServersSelector } from '../appModules/entities';
+import { allServersSelector } from '../app/entities';
 
 export const LandingPage = ({ serverExists }) =>
   <div className="landing-page">

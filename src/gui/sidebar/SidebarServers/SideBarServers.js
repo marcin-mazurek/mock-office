@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { allServersSelector } from '../../appModules/entities';
+import { allServersSelector } from '../../app/entities';
 import plusIcon from '../../assets/icons_white_add.svg';
 import lockIcon from '../../assets/icons_general_locked@3x.svg';
 import { selectors as sidebarSelectors } from '../sidebarModule';

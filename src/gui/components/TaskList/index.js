@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { mockSelector, taskSelector } from '../../appModules/entities';
+import { mockSelector, taskSelector } from '../../app/entities';
 import expandIcon from '../../assets/icons_green_expand@3x.svg';
 
 export const TaskListItem = ({

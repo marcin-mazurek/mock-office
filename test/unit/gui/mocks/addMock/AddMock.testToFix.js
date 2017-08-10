@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import configureStore from '../../../../../src/gui/store/index';
 import { AddMock, AddMockConnect } from '../../../../../src/gui/mocks/addMock/AddMock';
-import { reducers } from '../../../../../src/gui/appModules/entities/reducer';
+import { reducers } from '../../../../../src/gui/app/entities/reducer';
 
 describe('AddMock', () => {
   test('default snapshot', () => {

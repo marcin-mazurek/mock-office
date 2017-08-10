@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
-import { serverSelector } from '../../appModules/entities';
+import { serverSelector } from '../../app/entities';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
 import trashIcon from '../../assets/icons_gray_trash@3x.svg';

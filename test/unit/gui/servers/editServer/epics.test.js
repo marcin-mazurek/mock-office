@@ -2,7 +2,7 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { formSubmittedAction } from '../../../../src/gui/servers/editServer/EditServerForm';
+import { formSubmittedAction } from '../../../../../src/gui/servers/editServer/EditServerForm';
 
 describe('editServerEpic', () => {
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('editServerEpic', () => {
   });
 
   test('actions snapshot on success response', (done) => {
-    jest.mock('../../../../src/gui/resources/api', () => ({
+    jest.mock('../../../../../src/gui/resources/api', () => ({
       editServer() {
         return Promise.resolve({
           data: {
@@ -22,7 +22,7 @@ describe('editServerEpic', () => {
       }
     }));
     // eslint-disable-next-line global-require
-    const editServerEpic = require('../../../../src/gui/servers/editServer/epics').default;
+    const editServerEpic = require('../../../../../src/gui/servers/editServer/epics').default;
 
     const epicMiddleware = createEpicMiddleware(editServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
@@ -36,12 +36,12 @@ describe('editServerEpic', () => {
   });
 
   it('actions snapshot on failed response', (done) => {
-    jest.mock('../../../../src/gui/resources/api', () => ({
+    jest.mock('../../../../../src/gui/resources/api', () => ({
       editServer() {
         return Promise.resolve({ error: 'error message' });
       }
     }));
-    const editServerEpic = require('../../../../src/gui/servers/editServer/epics').default;
+    const editServerEpic = require('../../../../../src/gui/servers/editServer/epics').default;
 
     const epicMiddleware = createEpicMiddleware(editServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);

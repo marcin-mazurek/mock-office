@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import TasksConnect from '../../components/TaskList/index';
-import { mockSelector, scenarioSelector } from '../../appModules/entities';
+import { mockSelector, scenarioSelector } from '../../app/entities';
 
 export const Mock = ({
                        id,

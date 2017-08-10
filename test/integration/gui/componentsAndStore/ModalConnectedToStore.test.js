@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { OVERLAY_CLICKED } from '../../../../src/gui/components/Modal/actions';
 import AddServerModal from '../../../../src/gui/components/AddServerModal/index';
 import { ModalConnect } from '../../../../src/gui/components/Modal/index';
-import configureStore from '../../../../src/gui/store/index';
+import configureStore from '../../../../src/gui/configureStore';
 import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../../src/gui/sidebar/SidebarServers/SideBarServers';
 
 describe('ModalConnect', () => {

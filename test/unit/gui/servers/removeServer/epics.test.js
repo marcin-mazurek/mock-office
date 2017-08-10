@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { types } from '../../../../src/gui/entities/module';
-import { removeButtonClickedAction } from '../../../../src/gui/servers/inspectServer/InspectServer';
+import { types } from '../../../../../src/gui/app/entities';
+import { removeButtonClickedAction } from '../../../../../src/gui/servers/inspectServer/InspectServer';
 
 describe('removeServerEpic', () => {
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('removeServerEpic', () => {
   });
 
   test('success path actions snapshot', (done) => {
-    jest.mock('../../../../src/gui/resources/api', () => ({
+    jest.mock('../../../../../src/gui/resources/api', () => ({
       removeServer() {
         return Promise.resolve({
           data: {
@@ -20,7 +20,7 @@ describe('removeServerEpic', () => {
         });
       }
     }));
-    const removeServerEpic = require('../../../../src/gui/servers/removeServer/epics').default;
+    const removeServerEpic = require('../../../../../src/gui/servers/removeServer/epics').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({
@@ -36,14 +36,14 @@ describe('removeServerEpic', () => {
   });
 
   test('fail path actions snapshot', (done) => {
-    jest.mock('../../../../src/gui/resources/api', () => ({
+    jest.mock('../../../../../src/gui/resources/api', () => ({
       removeServer() {
         return Promise.resolve({
           error: 'Error message'
         });
       }
     }));
-    const removeServerEpic = require('../../../../src/gui/servers/removeServer/epics').default;
+    const removeServerEpic = require('../../../../../src/gui/servers/removeServer/epics').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({
