@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router';
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 import { createEpicMiddleware } from 'redux-observable';
 import 'rxjs';
-import rootReducer from './app/rootReducer';
+import { reducer } from './app';
 import rootEpic from './store/rootEpic';
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
@@ -18,5 +18,5 @@ export default () => {
     applyMiddleware(routerMiddleware, epicMiddleware),
     (DEBUG && window.devToolsExtension) ? window.devToolsExtension() : f => f
   );
-  return createStore(rootReducer, initialState, enhancer);
+  return createStore(reducer, initialState, enhancer);
 };
