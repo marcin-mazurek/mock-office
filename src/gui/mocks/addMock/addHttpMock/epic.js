@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import api from '../../../resources/api';
-import { FORM_SUBMITTED } from './AddMockForm';
+import { FORM_SUBMITTED } from '../../../components/AddHttpMockForm/index';
 
 export const SUCCEED = 'addHttpMock/SUCCEEDED';
 export const succeedAction = (scenario, mock) => ({

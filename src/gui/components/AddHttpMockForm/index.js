@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection } from 'redux-form/immutable';
 import { connect } from 'react-redux';
-import TaskFormSection from './TaskFormSection';
+import TaskFormSection from '../AddHttpMockTaskFormSection/index';
 
-export const FORM_SUBMITTED = 'component/AddMockForm/FORM_SUBMITTED';
+export const FORM_SUBMITTED = 'component/AddHttpMockForm/FORM_SUBMITTED';
 export const formSubmittedAction = (server, scenario, values) => ({
   type: FORM_SUBMITTED,
   server,
@@ -12,7 +12,7 @@ export const formSubmittedAction = (server, scenario, values) => ({
   values
 });
 
-export const AddMockForm = props => (
+export const AddHttpMockForm = props => (
   <form className="form" onSubmit={props.handleSubmit}>
     <div className="form-row">
       <div className="form__field">
@@ -54,7 +54,7 @@ export const AddMockForm = props => (
   </form>
 );
 
-AddMockForm.propTypes = {
+AddHttpMockForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: values => dispatch(formSubmittedAction(ownProps.server, ownProps.scenario, values))
 });
 
-const AddMockFormConnect = connect(null, mapDispatchToProps)(
+const AddHttpMockFormConnect = connect(null, mapDispatchToProps)(
   reduxForm(
     {
       form: 'addHttpMock',
@@ -72,7 +72,7 @@ const AddMockFormConnect = connect(null, mapDispatchToProps)(
         }
       }
     }
-  )(AddMockForm)
+  )(AddHttpMockForm)
 );
 
-export default AddMockFormConnect;
+export default AddHttpMockFormConnect;

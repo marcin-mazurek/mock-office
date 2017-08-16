@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection, FieldArray } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import TaskFormSection from './TaskFormSection';
+import TaskFormSection from '../AddWsMockFormTaskFormSection/index';
 
 export const FORM_SUBMITTED = 'component/AddWsMockForm/FORM_SUBMITTED';
 export const formSubmittedAction = (server, scenario, values) => ({

@@ -17,7 +17,7 @@ const TaskType = field =>
   />
 ;
 
-const TaskFormSection = () => (
+const AddHttpMockTaskFormSection = () => (
   <div style={{ width: '100%' }}>
     <div className="form-row">
       <div className="form__field">
@@ -57,4 +57,4 @@ const TaskFormSection = () => (
   </div>
 );
 
-export default TaskFormSection;
+export default AddHttpMockTaskFormSection;

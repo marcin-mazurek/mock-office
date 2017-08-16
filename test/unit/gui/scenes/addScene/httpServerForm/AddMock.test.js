@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { AddMockForm } from '../../../../../../src/gui/mocks/addMock/addHttpMock/AddMockForm';
+import { AddHttpMockForm } from '../../../../../../src/gui/components/AddHttpMockForm/index';
 
 describe('HttpForm', () => {
   test('default snapshot', () => {
@@ -9,7 +9,7 @@ describe('HttpForm', () => {
       queueId: 'some id',
       handleSubmit: () => {}
     };
-    const wrapper = shallow(<AddMockForm {...props} />);
+    const wrapper = shallow(<AddHttpMockForm {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

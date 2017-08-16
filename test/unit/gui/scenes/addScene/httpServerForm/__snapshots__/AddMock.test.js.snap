@@ -67,7 +67,7 @@ exports[`HttpForm default snapshot 1`] = `
       component="div"
       name="task"
     >
-      <TaskFormSection />
+      <AddHttpMockTaskFormSection />
     </FormSection>
     <div
       className="form-row"

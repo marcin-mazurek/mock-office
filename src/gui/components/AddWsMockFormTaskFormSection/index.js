@@ -16,7 +16,7 @@ const TaskType = field =>
     ]}
   />;
 
-const TaskFormSection = () => (
+const AddWsMockFormTaskFormSection = () => (
   <div style={{ width: '100%' }}>
     <header className="form-section__header">Message:</header>
     <div className="form-row">
@@ -57,4 +57,4 @@ const TaskFormSection = () => (
   </div>
 );
 
-export default TaskFormSection;
+export default AddWsMockFormTaskFormSection;

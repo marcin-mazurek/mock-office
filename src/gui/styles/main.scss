@@ -17,7 +17,7 @@
 
 // components
 @import '../routing/Main';
-@import '../app/App';
+@import '../components/App/App';
 @import '../sidebar/Sidebar/SideBar';
 @import '../servers/inspectServer/InspectServer';
 @import '../mocks/browseMocks/Mocks';
@@ -30,6 +30,6 @@
 @import '../notifications/NotificationsList/NotificationsList';
 @import 'components/rc-switch-theme';
 @import '../servers/editServer/EditServerPage';
-@import '../mocks/addMock/addWsMock/AddWsMockForm';
+@import '../components/AddWsMockForm/AddWsMockForm';
 @import '../components/Modal/Modal';
 @import '../servers/addServer/AddServerForm';
