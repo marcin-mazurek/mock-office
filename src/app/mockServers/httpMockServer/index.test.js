@@ -445,6 +445,5 @@ describe('HttpMockServer', () => {
       })
       ;
     });
-  })
-    ;
   });
+});

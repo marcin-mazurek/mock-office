@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { NEW_NOTIFICATION_DISPLAYED } from './actions';
 
 export const NOTIFICATION_EXPIRED = 'notifications/NOTIFICATION_EXPIRED';

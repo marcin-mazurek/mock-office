@@ -7,8 +7,8 @@ import classnames from 'classnames';
 import { serverSelector } from '../../app/entities';
 import FilePickerConnect from '../../mocks/importMock/FilePicker';
 import MocksConnect from '../../mocks/browseMocks/Mocks';
-import trashIcon from '../../assets/icons_gray_trash@3x.svg';
-import plusIcon from '../../assets/icons_gray_add@3x.svg';
+import trashIcon from '../../../../assets/icons_gray_trash@3x.svg';
+import plusIcon from '../../../../assets/icons_gray_add@3x.svg';
 
 export const REMOVE_BUTTON_CLICKED = 'component/Server/REMOVE_BUTTON_CLICKED';
 export const removeButtonClickedAction = id => ({

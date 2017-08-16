@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form/immutable';
 import { Link } from 'react-router';
-import serverIcon from '../../assets/icons_gray_server.svg';
+import serverIcon from '../../../../assets/icons_gray_server.svg';
 import { serverSelector } from '../../app/entities';
 
 export const FORM_SUBMITTED = 'editServer/FORM_SUBMITTED';

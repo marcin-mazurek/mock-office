@@ -179,6 +179,7 @@ describe('configureEditServerMiddleware', () => {
         server.stop(done);
       }, 100);
     }, (reason) => {
+      // eslint-disable-next-line no-console
       console.error(reason);
     });
   });

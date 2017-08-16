@@ -58,7 +58,7 @@ export class NotificationsList extends React.Component {
       </ul>
     );
   }
-};
+}
 
 NotificationsList.propTypes = {
   notifications: ImmutablePropTypes.listOf(PropTypes.instanceOf(Notification)),

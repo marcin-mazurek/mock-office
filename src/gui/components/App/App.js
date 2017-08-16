@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ModalConnect } from '../components/Modal';
-import { NotificationsListConnect } from '../notifications';
+import { ModalConnect } from '../Modal';
+import { NotificationsListConnect } from '../../notifications';
 
 const App = ({ children }) => (
   <div className="app">
