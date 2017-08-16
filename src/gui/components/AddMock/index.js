@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import AddHttpMockFormConnect from '../AddHttpMockForm/index';
 import AddWsMockFormConnect from '../AddWsMockForm/index';
-import { paramsSelector } from '../../mocks/addMock/selectors';
+import { paramsSelector } from './selectors';
 
 export const AddMock = ({ serverType, scenario, server }) => (
   <div className="add-mock">
