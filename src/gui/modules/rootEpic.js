@@ -3,7 +3,7 @@ import addServerEpic from '../servers/addServer/epics';
 import addHttpMockEpic from './addHttpMock/epic';
 import addWsMockEpic from './addWsMock/epic';
 import { removeMockEpic } from '../mocks/removeMock/epics';
-import addMockFromFileEpic from '../mocks/importMock/epics';
+import addMockFromFileEpic from './importMock/epics';
 import removeServerEpic from '../servers/removeServer/epics';
 import saveStateEpic from '../exportState/epics';
 import editServerEpic from '../servers/editServer/epics';

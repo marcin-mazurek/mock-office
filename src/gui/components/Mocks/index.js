@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import TasksConnect from '../../components/TaskList/index';
-import { mockSelector, scenarioSelector } from '../../app/entities';
+import TasksConnect from '../TaskList/index';
+import { mockSelector, scenarioSelector } from '../../app/entities/index';
 
 export const Mock = ({
                        id,

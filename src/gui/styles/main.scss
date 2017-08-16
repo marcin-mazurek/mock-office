@@ -20,11 +20,11 @@
 @import '../components/App/App';
 @import '../sidebar/Sidebar/SideBar';
 @import '../servers/inspectServer/InspectServer';
-@import '../mocks/browseMocks/Mocks';
+@import '../components/Mocks/Mocks';
 @import '../components/AddMock/AddMock';
 @import '../sidebar/SidebarServers/SideBarServers';
 @import '../components/landingPage/LandingPage';
-@import '../mocks/importMock/FilePicker';
+@import '../components/FilePicker/FilePicker';
 @import '../components/TaskList/TaskList';
 @import '../components/EditableField/EditableField';
 @import '../notifications/NotificationsList/NotificationsList';

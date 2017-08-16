@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { List } from 'immutable';
-import { Mocks } from '../../../../../src/gui/mocks/browseMocks/Mocks';
+import { Mocks } from '../../../../../src/gui/components/Mocks/index';
 
 describe('Mocks', () => {
   test('default snapshot', () => {

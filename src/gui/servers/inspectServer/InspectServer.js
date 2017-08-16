@@ -5,8 +5,8 @@ import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
 import { serverSelector } from '../../app/entities';
-import FilePickerConnect from '../../mocks/importMock/FilePicker';
-import MocksConnect from '../../mocks/browseMocks/Mocks';
+import FilePickerConnect from '../../components/FilePicker/index';
+import MocksConnect from '../../components/Mocks/index';
 import trashIcon from '../../../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../../../assets/icons_gray_add@3x.svg';
 

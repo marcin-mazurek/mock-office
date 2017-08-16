@@ -11,7 +11,7 @@ import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../mocks/removeMock/epics';
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED,
   FAILED as IMPORT_MOCKS_FAILED
-} from '../mocks/importMock/epics';
+} from '../modules/importMock/epics';
 import {
   SUCCEED as ADD_HTTP_MOCK_SUCCEED,
   FAILED as ADD_HTTP_MOCK_FAILED

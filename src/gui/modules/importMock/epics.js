@@ -1,6 +1,6 @@
 import { ifElse, has } from 'ramda';
-import { FILE_PICKED } from './FilePicker';
-import api from '../../resources/api';
+import { FILE_PICKED } from '../../components/FilePicker/index';
+import api from '../../resources/api/index';
 
 export const SUCCEEDED = 'importMock/SUCCEEDED';
 export const succeededAction = (scenario, mocks) => ({
