@@ -1,6 +1,6 @@
 import React from 'react';
 import { action, storiesOf } from '@kadira/storybook';
-import EditableField from '../../src/gui/editableField/EditableField';
+import EditableField from '../../src/gui/components/EditableField/index';
 
 const props = {
   onSave: action('onSave'),

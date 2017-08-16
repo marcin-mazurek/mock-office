@@ -3,8 +3,8 @@ import { Route, Redirect } from 'react-router';
 import Main from './Main';
 import ServerPage from '../servers/inspectServer/InspectServer';
 import EditServerPage from '../servers/editServer/EditServerPage';
-import AddMockPage from '../mocks/addMock/AddMock';
-import LandingPageConnect from '../landingPage/LandingPage';
+import AddMockPage from '../components/AddMock/index';
+import LandingPageConnect from '../components/landingPage/LandingPage';
 
 export default function configureRoutes(store) {
   const checkIfServerExists = (nextState, replace) => {

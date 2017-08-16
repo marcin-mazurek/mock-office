@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import configureStore from '../../../../../src/gui/store/index';
-import { AddMock, AddMockConnect } from '../../../../../src/gui/mocks/addMock/AddMock';
+import { AddMock, AddMockConnect } from '../../../../../src/gui/components/AddMock/index';
 import { reducers } from '../../../../../src/gui/app/entities/reducer';
 
 describe('AddMock', () => {

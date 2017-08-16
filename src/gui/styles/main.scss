@@ -21,12 +21,12 @@
 @import '../sidebar/Sidebar/SideBar';
 @import '../servers/inspectServer/InspectServer';
 @import '../mocks/browseMocks/Mocks';
-@import '../mocks/addMock/AddMock';
+@import '../components/AddMock/AddMock';
 @import '../sidebar/SidebarServers/SideBarServers';
-@import '../landingPage/LandingPage';
+@import '../components/landingPage/LandingPage';
 @import '../mocks/importMock/FilePicker';
 @import '../components/TaskList/TaskList';
-@import '../editableField/EditableField';
+@import '../components/EditableField/EditableField';
 @import '../notifications/NotificationsList/NotificationsList';
 @import 'components/rc-switch-theme';
 @import '../servers/editServer/EditServerPage';

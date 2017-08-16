@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { types } from '../../../../../src/gui/app/entities';
+import { Scenario, Server } from '../../../../../src/gui/app/entities';
 import { removeButtonClickedAction } from '../../../../../src/gui/servers/inspectServer/InspectServer';
 
 describe('removeServerEpic', () => {
@@ -49,13 +49,13 @@ describe('removeServerEpic', () => {
     const store = mockStore(fromJS({
       servers: {
         entities: {
-          'server-id': new types.Server({ id: 'server-id', scenario: 'scenario-id' })
+          'server-id': new Server({ id: 'server-id', scenario: 'scenario-id' })
         },
         ids: ['server-id']
       },
       scenarios: {
         entities: {
-          'scenario-id': new types.Scenario({ id: 'scenario-id' })
+          'scenario-id': new Scenario({ id: 'scenario-id' })
         },
         ids: ['scenario-id']
       },
