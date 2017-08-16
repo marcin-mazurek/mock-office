@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddMockConnect } from '../../mocks/addMock/index';
+import { AddMockConnect } from '../AddMock';
 
 const AddMockModal = () => (
   <div>

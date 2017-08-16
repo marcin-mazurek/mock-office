@@ -4,8 +4,8 @@ import { identity } from 'ramda';
 import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import configureStore from '../../../../../src/gui/store/index';
-import { AddMock, AddMockConnect } from '../../../../../src/gui/components/AddMock/index';
+import configureStore from '../../../../../src/gui/configureStore';
+import { AddMock, AddMockConnect } from '../../../../../src/gui/components/AddMock';
 import { reducers } from '../../../../../src/gui/app/entities/reducer';
 
 describe('AddMock', () => {
@@ -13,7 +13,7 @@ describe('AddMock', () => {
     const props = {
       serverType: 'server type',
       scenario: 'scenario-id',
-      params: { id: 'server-id' },
+      server: 'server-id',
       onSubmit: () => {
       },
       handleSubmit: () => {}
@@ -40,10 +40,15 @@ describe('AddMockConnect', () => {
         entities => reducers.addScenario(entities, 'server-id', { id: 'scenario-id' })
       );
     const testStore = createStore(identity, state);
+    const props = {
+      serverType: 'http',
+      server: 'server-id',
+      scenario: 'scenario-id'
+    };
 
     const wrapper = mount(
       <Provider store={testStore}>
-        <AddMockConnect params={{ id: 'server-id' }} />
+        <AddMockConnect {...props} />
       </Provider>
     );
 
