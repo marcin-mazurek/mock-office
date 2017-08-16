@@ -15,11 +15,11 @@ import {
 import {
   SUCCEED as ADD_HTTP_MOCK_SUCCEED,
   FAILED as ADD_HTTP_MOCK_FAILED
-} from '../mocks/addMock/addHttpMock/epic';
+} from '../modules/addHttpMock/epic';
 import {
   SUCCEED as ADD_WS_MOCK_SUCCEED,
   FAILED as ADD_WS_MOCK_FAILED
-} from '../mocks/addMock/addWsMock/epic';
+} from '../modules/addWsMock/epic';
 import {
   FAILED as START_SERVER_FAILED
 } from '../servers/startServer/startServer';

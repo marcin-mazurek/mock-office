@@ -5,9 +5,9 @@ import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 import { createEpicMiddleware } from 'redux-observable';
 import 'rxjs';
 import { reducer } from './app';
-import rootEpic from './store/rootEpic';
+import { epic } from './modules';
 
-const epicMiddleware = createEpicMiddleware(rootEpic);
+const epicMiddleware = createEpicMiddleware(epic);
 
 const DEBUG = process.env.NODE_ENV !== 'production';
 

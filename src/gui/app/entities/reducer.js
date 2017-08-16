@@ -14,8 +14,8 @@ import {
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
 } from '../../mocks/importMock/epics';
-import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../../mocks/addMock/addHttpMock/epic';
-import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../../mocks/addMock/addWsMock/epic';
+import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../../modules/addHttpMock/epic';
+import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../../modules/addWsMock/epic';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../servers/startServer/startServer';
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../servers/stopServer/index';
 
