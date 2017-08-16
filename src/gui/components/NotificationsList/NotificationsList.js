@@ -2,7 +2,7 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-import { Notification } from '../createNotification';
+import { Notification } from '../../app/notifications/createNotification';
 
 export const NOTIFICATION_CLICKED = 'component/NotificationsList/NOTIFICATION_CLICKED';
 export const notificationsClickedAction = id => ({

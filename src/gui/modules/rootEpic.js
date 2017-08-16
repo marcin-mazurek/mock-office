@@ -8,7 +8,7 @@ import removeServerEpic from '../servers/removeServer/epics';
 import saveStateEpic from '../exportState/epics';
 import editServerEpic from '../servers/editServer/epics';
 import toggleServer from '../servers/toggleServer/epic';
-import clearExpiredNotificationsEpic from '../notifications/clearExpiredNotificationsEpic';
+import clearExpiredNotificationsEpic from './clearExpiredNotifications';
 
 export default combineEpics(
   addServerEpic,

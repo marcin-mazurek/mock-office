@@ -1,4 +1,4 @@
-import { NEW_NOTIFICATION_DISPLAYED } from './actions';
+import { NEW_NOTIFICATION_DISPLAYED } from '../../components/NotificationsList/actions';
 
 export const NOTIFICATION_EXPIRED = 'notifications/NOTIFICATION_EXPIRED';
 export const notificationExpiredAction = id => ({

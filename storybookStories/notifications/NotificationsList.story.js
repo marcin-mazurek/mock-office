@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import { List } from 'immutable';
-import { NotificationsList } from '../../src/gui/notifications/NotificationsList';
-import { Notification } from '../../src/gui/notifications/createNotification';
+import { NotificationsList } from '../../src/gui/components/NotificationsList';
+import { Notification } from '../../src/gui/app/notifications/createNotification';
 
 storiesOf('Notifications', module)
   .add('single notification', () => {
@@ -16,6 +16,7 @@ storiesOf('Notifications', module)
       <NotificationsList
         notifications={notifications}
         onNotificationClick={() => {}}
+        onNewNotificationDisplayed={() => {}}
         remove={() => {}}
       />
     );
@@ -36,6 +37,7 @@ storiesOf('Notifications', module)
       <NotificationsList
         notifications={notifications}
         onNotificationClick={() => {}}
+        onNewNotificationDisplayed={() => {}}
         remove={() => {}}
       />
     );
