@@ -7,19 +7,19 @@ import {
   FAILED as REMOVE_SERVER_DID_FAIL,
   SUCCEEDED as REMOVE_SERVER_DID_SUCCEED
 } from '../servers/removeServer/epics';
-import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../mocks/removeMock/epics';
+import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../modules/removeMock/index';
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED,
   FAILED as IMPORT_MOCKS_FAILED
-} from '../modules/importMock/epics';
+} from '../modules/importMock/index';
 import {
   SUCCEED as ADD_HTTP_MOCK_SUCCEED,
   FAILED as ADD_HTTP_MOCK_FAILED
-} from '../modules/addHttpMock/epic';
+} from '../modules/addHttpMock/index';
 import {
   SUCCEED as ADD_WS_MOCK_SUCCEED,
   FAILED as ADD_WS_MOCK_FAILED
-} from '../modules/addWsMock/epic';
+} from '../modules/addWsMock/index';
 import {
   FAILED as START_SERVER_FAILED
 } from '../servers/startServer/startServer';

@@ -3,7 +3,7 @@ import { Server, Scenario, Mock, Task } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../servers/addServer/epics';
 import { SUCCEEDED as EDIT_SERVER_DID_SUCCEED } from '../../servers/editServer/epics';
 import { SUCCEEDED as REMOVE_SERVER_DID_SUCCEED } from '../../servers/removeServer/epics';
-import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../../mocks/removeMock/epics';
+import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../../modules/removeMock';
 import {
   REMOVE_MOCK_MESSAGE_RECEIVED,
   STOP_MOCK_MESSAGE_RECEIVED,
@@ -13,11 +13,11 @@ import {
 } from '../../appSync/startAppSync';
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
-} from '../../modules/importMock/epics';
-import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../../modules/addHttpMock/epic';
-import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../../modules/addWsMock/epic';
+} from '../../modules/importMock';
+import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../../modules/addHttpMock';
+import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../../modules/addWsMock';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../servers/startServer/startServer';
-import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../servers/stopServer/index';
+import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../servers/stopServer';
 
 export const getInitialState = () => new Map({
   servers: new Map({
