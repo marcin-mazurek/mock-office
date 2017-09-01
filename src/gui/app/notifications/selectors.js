@@ -2,7 +2,7 @@
 import { createSelector } from 'reselect';
 
 export const allNotificationsSelector = createSelector(
-  state => state.get('ids'),
+  state => state.getIn(['notifications', 'ids']),
     state => state.get('entities'),
     (ids, entities) => ids.map(id => entities.get(id))
 );
