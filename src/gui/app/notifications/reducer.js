@@ -1,5 +1,6 @@
 import { List, Map } from 'immutable';
 import { createNotification } from './createNotification';
+import { ADD } from './actions';
 import {
   SUCCEEDED as ADD_SERVER_DID_SUCCEED,
   FAILED as ADD_SERVER_FAILED
@@ -53,6 +54,9 @@ const showAddMockSuccess = (state, action, reducers) =>
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD: {
+      return addNotification(state, action.params);
+    }
     case ADD_SERVER_DID_SUCCEED: {
       return addNotification(state, { type: 'success', text: 'Server added' });
     }
