@@ -5,7 +5,7 @@ import addWsMockEpic from './addWsMock';
 import { removeMockEpic } from './removeMock';
 import addMockFromFileEpic from './importMock';
 import removeServerEpic from '../servers/removeServer/epics';
-import saveStateEpic from '../exportState/epics';
+import exportStateEpic from './exportState/exportStateEpic';
 import editServerEpic from '../servers/editServer/epics';
 import toggleServer from '../servers/toggleServer/epic';
 import clearExpiredNotificationsEpic from './clearExpiredNotifications';
@@ -15,7 +15,7 @@ export default combineEpics(
   removeMockEpic,
   addMockFromFileEpic,
   removeServerEpic,
-  saveStateEpic,
+  exportStateEpic,
   addHttpMockEpic,
   addWsMockEpic,
   editServerEpic,
