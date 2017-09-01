@@ -9,25 +9,25 @@ import {
   FAILED as REMOVE_SERVER_DID_FAIL,
   SUCCEEDED as REMOVE_SERVER_DID_SUCCEED
 } from '../../servers/removeServer/epics';
-import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../../modules/removeMock';
+import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../../epics/removeMock';
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED,
   FAILED as IMPORT_MOCKS_FAILED
-} from '../../modules/importMock';
+} from '../../epics/importMock';
 import {
   SUCCEED as ADD_HTTP_MOCK_SUCCEED,
   FAILED as ADD_HTTP_MOCK_FAILED
-} from '../../modules/addHttpMock';
+} from '../../epics/addHttpMock';
 import {
   SUCCEED as ADD_WS_MOCK_SUCCEED,
   FAILED as ADD_WS_MOCK_FAILED
-} from '../../modules/addWsMock';
+} from '../../epics/addWsMock';
 import {
   FAILED as START_SERVER_FAILED
 } from '../../servers/startServer/startServer';
 import { NOTIFICATION_CLICKED } from '../../components/NotificationsList';
 import { FAILED as STOP_SERVER_FAILED } from '../../servers/stopServer';
-import { NOTIFICATION_EXPIRED } from '../../modules/clearExpiredNotifications';
+import { NOTIFICATION_EXPIRED } from '../../epics/clearExpiredNotifications';
 
 const initialState = new Map({
   ids: new List(),

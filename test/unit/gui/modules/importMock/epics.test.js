@@ -22,7 +22,7 @@ describe('importMockEpic', () => {
         });
       }
     }));
-    const addMockFromFileEpic = require('../../../../../src/gui/modules/importMock').default;
+    const addMockFromFileEpic = require('../../../../../src/gui/epics/importMock').default;
     const epicMiddleware = createEpicMiddleware(addMockFromFileEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     store = mockStore(new Map({
