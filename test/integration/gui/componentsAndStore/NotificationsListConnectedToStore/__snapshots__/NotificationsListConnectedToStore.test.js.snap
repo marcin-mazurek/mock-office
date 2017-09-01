@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationsList should display notifications from redux store 1`] = `
+<NotificationsList
+  notifications={
+    Array [
+      Object {
+        "id": "cj71zdore0000fzve5gmwovyh",
+        "text": "message",
+        "type": "info",
+      },
+    ]
+  }
+  onNewNotificationDisplayed={[Function]}
+  onNotificationClick={[Function]}
+>
+  <ul
+    className="notifications-list"
+  >
+    <li
+      className="notifications-list-item"
+    >
+      <button
+        className="notifications-bubble notifications-bubble--info"
+        onClick={[Function]}
+      >
+        message
+      </button>
+    </li>
+  </ul>
+</NotificationsList>
+`;

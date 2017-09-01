@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationsList snapshots with notification 1`] = `
+<ul
+  className="notifications-list"
+>
+  <li
+    className="notifications-list-item"
+  >
+    <button
+      className="notifications-bubble notifications-bubble--info"
+      onClick={[Function]}
+    >
+      message
+    </button>
+  </li>
+</ul>
+`;
+
+exports[`NotificationsList snapshots without notifications 1`] = `
+<ul
+  className="notifications-list"
+/>
+`;
