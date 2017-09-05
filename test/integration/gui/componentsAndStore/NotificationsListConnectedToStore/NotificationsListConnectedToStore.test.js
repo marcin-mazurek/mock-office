@@ -6,8 +6,8 @@ import {
   NotificationsListConnect,
   NotificationsList,
   NotificationListItem
-} from '../../../../../src/gui/components/NotificationsList/index';
-import { addNotificationAction } from '../../../../../src/gui/app/notifications/index';
+} from '../../../../../src/gui/components/NotificationsList';
+import { addNotificationAction } from '../../../../../src/gui/app/notifications';
 
 describe('NotificationsList', () => {
   test('should display notifications from redux store', () => {
