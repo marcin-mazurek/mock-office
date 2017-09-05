@@ -2,7 +2,7 @@
 import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { submitButtonClickAction } from '../../../../../src/gui/components/AddServerForm/AddServerForm';
+import { submitButtonClickAction } from '../../../../../src/gui/components/AddServerForm/actions';
 
 describe('addServerEpic', () => {
   beforeEach(() => {

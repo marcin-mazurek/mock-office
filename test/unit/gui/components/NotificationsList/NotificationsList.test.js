@@ -18,9 +18,11 @@ describe('NotificationsList', () => {
     });
 
     test('with notification', () => {
+      let notification = createNotification({ text: 'message' });
+      notification = notification.set('id', 'some-id');
       const props = {
         notifications: new List([
-          createNotification({ text: 'message' })
+          notification
         ]),
         onNotificationClick: () => {},
         onNewNotificationDisplayed: () => {}
