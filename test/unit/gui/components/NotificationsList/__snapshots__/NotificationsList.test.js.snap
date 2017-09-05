@@ -5,14 +5,14 @@ exports[`NotificationsList snapshots with notification 1`] = `
   className="notifications-list"
 >
   <li
-    className="notifications-list-item"
+    className="notification-list__item"
   >
-    <button
-      className="notifications-bubble notifications-bubble--info"
-      onClick={[Function]}
-    >
-      message
-    </button>
+    <NotificationListItem
+      id="cj77cllps0000rjvehhwuhwyc"
+      onNotificationClick={[Function]}
+      text="message"
+      type="info"
+    />
   </li>
 </ul>
 `;

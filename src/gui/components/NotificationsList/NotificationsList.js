@@ -3,6 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { Notification } from '../../app/notifications/createNotification';
+import NotificationListItem from './NotificationListItem';
 
 export const NOTIFICATION_CLICKED = 'component/NotificationsList/NOTIFICATION_CLICKED';
 export const notificationsClickedAction = id => ({
@@ -45,13 +46,13 @@ export class NotificationsList extends React.Component {
         {
           notifications.map(
             ({ id, text, type }) =>
-              <li className="notifications-list-item" key={id}>
-                <button
-                  className={`notifications-bubble notifications-bubble--${type}`}
-                  onClick={() => onNotificationClick(id)}
-                >
-                  {text}
-                </button>
+              <li className="notification-list__item" key={id}>
+                <NotificationListItem
+                  id={id}
+                  text={text}
+                  type={type}
+                  onNotificationClick={onNotificationClick}
+                />
               </li>
           )
         }

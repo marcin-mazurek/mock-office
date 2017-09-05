@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import enzymeToJson from 'enzyme-to-json';
 import configureStore from '../../../../../src/gui/configureStore';
 import {
   NotificationsListConnect,
-  NotificationsList
+  NotificationsList,
+  NotificationListItem
 } from '../../../../../src/gui/components/NotificationsList/index';
 import { addNotificationAction } from '../../../../../src/gui/app/notifications/index';
 
@@ -24,6 +24,6 @@ describe('NotificationsList', () => {
         text: 'message'
       })
     );
-    expect(enzymeToJson(wrapper.find(NotificationsList))).toMatchSnapshot();
+    expect(wrapper.find(NotificationListItem)).toHaveLength(1);
   });
 });
