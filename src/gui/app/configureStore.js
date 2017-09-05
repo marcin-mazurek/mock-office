@@ -4,8 +4,8 @@ import { hashHistory } from 'react-router';
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 import { createEpicMiddleware } from 'redux-observable';
 import 'rxjs';
-import { reducer } from './app';
-import { epic } from './epics';
+import { reducer } from './index';
+import { epic } from '../epics/index';
 
 const epicMiddleware = createEpicMiddleware(epic);
 

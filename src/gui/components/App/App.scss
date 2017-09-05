@@ -5,4 +5,15 @@
   position: absolute;
   top: 0;
   width: 100%;
+  display: flex;
+}
+
+.app__sidebar {
+  flex: none;
+}
+
+.app__content {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
 }

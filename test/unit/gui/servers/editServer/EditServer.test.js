@@ -7,7 +7,7 @@ import {
   EditServerFormConnect,
   EditServerForm
 } from '../../../../../src/gui/servers/editServer/EditServerForm';
-import configureStore from '../../../../../src/gui/configureStore';
+import configureStore from '../../../../../src/gui/app/configureStore';
 import { succeededAction } from '../../../../../src/gui/servers/addServer/epics';
 
 describe('EditServerPage', () => {

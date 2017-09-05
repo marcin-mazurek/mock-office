@@ -1,8 +1,8 @@
 import { render } from 'react-dom';
 import startAppSync from './appSync/startAppSync';
-import configureStore from './configureStore';
-import configureRoutes from './routing/routes';
-import configureApp from './configureApp';
+import configureStore from './app/configureStore';
+import configureRoutes from './app/router/configureRoutes';
+import configureApp from './app/configureApp';
 import connectEventsServer from './resources/eventsServer';
 
 const store = configureStore();

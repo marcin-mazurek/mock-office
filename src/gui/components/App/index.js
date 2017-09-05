@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ModalConnect } from '../Modal';
 import { NotificationsListConnect } from '../NotificationsList';
+import Sidebar from '../../sidebar/Sidebar';
 
 const App = ({ children }) => (
   <div className="app">
-    { children }
+    <div className="app__sidebar">
+      <Sidebar />
+    </div>
+    <div className="app__content">
+      { children }
+    </div>
     <ModalConnect />
     <NotificationsListConnect />
   </div>

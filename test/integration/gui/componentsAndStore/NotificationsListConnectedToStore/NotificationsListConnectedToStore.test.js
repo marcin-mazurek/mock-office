@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import configureStore from '../../../../../src/gui/configureStore';
+import configureStore from '../../../../../src/gui/app/configureStore';
 import {
   NotificationsListConnect,
   NotificationsList,

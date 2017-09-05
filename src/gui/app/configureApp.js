@@ -2,22 +2,21 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import App from './components/App';
+import configureRoutes from './router/configureRoutes';
 
-export default (store, routes) => {
+export default (store) => {
   const history = syncHistoryWithStore(hashHistory, store, {
     selectLocationState(state) {
       return state.get('routing').toJS();
     }
   });
+  const routes = configureRoutes(store);
 
   return (
     <Provider store={store}>
-      <App>
-        <Router history={history}>
-          {routes}
-        </Router>
-      </App>
+      <Router history={history}>
+        {routes}
+      </Router>
     </Provider>
   );
 };

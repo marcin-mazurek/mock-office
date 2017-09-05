@@ -4,7 +4,7 @@ import { identity } from 'ramda';
 import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import configureStore from '../../../../../src/gui/configureStore';
+import configureStore from '../../../../../src/gui/app/configureStore';
 import { AddMock, AddMockConnect } from '../../../../../src/gui/components/AddMock';
 import { reducers } from '../../../../../src/gui/app/entities/reducer';
 
