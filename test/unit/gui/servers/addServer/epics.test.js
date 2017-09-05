@@ -25,7 +25,7 @@ describe('addServerEpic', () => {
       }
     }));
     // eslint-disable-next-line global-require
-    const addServerEpic = require('../../../../../src/gui/servers/addServer/epics').default;
+    const addServerEpic = require('../../../../../src/gui/epics/addServer').default;
     const epicMiddleware = createEpicMiddleware(addServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();
@@ -54,7 +54,7 @@ describe('addServerEpic', () => {
       }
     }));
     // eslint-disable-next-line global-require
-    const addServerEpic = require('../../../../../src/gui/servers/addServer/epics').default;
+    const addServerEpic = require('../../../../../src/gui/epics/addServer').default;
     const epicMiddleware = createEpicMiddleware(addServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore();

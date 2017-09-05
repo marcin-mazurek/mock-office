@@ -4,7 +4,7 @@ import { storiesOf } from '@kadira/storybook';
 import TaskListConnect from '../src/gui/components/TaskList';
 import configureStore from '../src/gui/app/configureStore';
 import { succeededAction } from '../src/gui/epics/importMock/index';
-import { succeededAction as addServerSucceded } from '../src/gui/servers/addServer/epics';
+import { succeededAction as addServerSucceded } from '../src/gui/epics/addServer/actions';
 
 storiesOf('TaskList', module)
   .add('default', () => {

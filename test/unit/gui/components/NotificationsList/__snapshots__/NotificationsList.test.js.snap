@@ -8,7 +8,7 @@ exports[`NotificationsList snapshots with notification 1`] = `
     className="notification-list__item"
   >
     <NotificationListItem
-      id="cj77cllps0000rjvehhwuhwyc"
+      id="some-id"
       onNotificationClick={[Function]}
       text="message"
       type="info"

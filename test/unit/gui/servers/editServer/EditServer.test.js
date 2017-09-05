@@ -8,7 +8,7 @@ import {
   EditServerForm
 } from '../../../../../src/gui/servers/editServer/EditServerForm';
 import configureStore from '../../../../../src/gui/app/configureStore';
-import { succeededAction } from '../../../../../src/gui/servers/addServer/epics';
+import { succeededAction } from '../../../../../src/gui/epics/addServer/actions';
 
 describe('EditServerPage', () => {
   test('default snapshot', () => {

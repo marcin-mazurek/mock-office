@@ -1,6 +1,6 @@
 import { List, Map } from 'immutable';
 import { Server, Scenario, Mock, Task } from './recordTypes';
-import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../servers/addServer/epics';
+import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
 import { SUCCEEDED as EDIT_SERVER_DID_SUCCEED } from '../../servers/editServer/epics';
 import { SUCCEEDED as REMOVE_SERVER_DID_SUCCEED } from '../../servers/removeServer/epics';
 import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../../epics/removeMock';

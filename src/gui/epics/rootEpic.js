@@ -1,5 +1,5 @@
 import { combineEpics } from 'redux-observable';
-import addServerEpic from '../servers/addServer/epics';
+import addServerEpic from './addServer';
 import addHttpMockEpic from './addHttpMock';
 import addWsMockEpic from './addWsMock';
 import { removeMockEpic } from './removeMock';

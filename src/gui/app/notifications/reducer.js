@@ -4,7 +4,7 @@ import { ADD } from './actions';
 import {
   SUCCEEDED as ADD_SERVER_DID_SUCCEED,
   FAILED as ADD_SERVER_FAILED
-} from '../../servers/addServer/epics';
+} from '../../epics/addServer/actions';
 import { FAILED as EDIT_SERVER_DID_FAIL } from '../../servers/editServer/epics';
 import {
   FAILED as REMOVE_SERVER_DID_FAIL,
