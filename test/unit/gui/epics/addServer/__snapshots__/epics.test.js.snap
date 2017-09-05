@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`addServerEpic actions dispatched on API response with error 1`] = `
+exports[`addServerEpic actions snapshot when api rejects promise with error 1`] = `
 Array [
   Object {
     "type": "addServerForm/SUBMIT_BUTTON_CLICKED",
@@ -18,7 +18,7 @@ Array [
 ]
 `;
 
-exports[`addServerEpic actions dispatched on API response without error 1`] = `
+exports[`addServerEpic actions snapshot when api resolves promise with server details 1`] = `
 Array [
   Object {
     "type": "addServerForm/SUBMIT_BUTTON_CLICKED",
