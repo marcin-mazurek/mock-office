@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
-import { SUBMIT_BUTTON_CLICKED } from './AddServerForm';
+import { SUBMIT_BUTTON_CLICKED } from '../../components/AddServerForm/actions';
 import api from '../../resources/api';
 
 export const SUCCEEDED = 'addServer/SUCCEED';

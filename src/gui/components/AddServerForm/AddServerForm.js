@@ -1,25 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Select from 'react-select';
 import Switch from 'rc-switch';
-import { Field, reduxForm } from 'redux-form/immutable';
+import { Field } from 'redux-form/immutable';
 import plusIcon from '../../../../assets/icons_white_add.svg';
-
-export const SUBMIT_BUTTON_CLICKED = 'addServerForm/SUBMIT_BUTTON_CLICKED';
-export const submitButtonClickAction = values => ({
-  type: SUBMIT_BUTTON_CLICKED,
-  values
-});
-
-const INITIAL_VALUES = {
-  name: 'Awesome server',
-  port: 3000,
-  type: 'http',
-  secure: false
-};
-
-const FORM_NAME = 'addServer';
 
 const ServerTypeField = field =>
   <Select
@@ -44,7 +28,7 @@ const secureField = field =>
     className="form-field__switch"
   />;
 
-export const AddServerForm = ({ handleSubmit }) =>
+const AddServerForm = ({ handleSubmit }) =>
   <form className="form add-server-form" onSubmit={handleSubmit}>
     <div className="form-row">
       <div className="form__field">
@@ -105,13 +89,4 @@ AddServerForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = {
-  onSubmit: submitButtonClickAction
-};
-
-export default connect(null, mapDispatchToProps)(
-  reduxForm({
-    form: FORM_NAME,
-    initialValues: INITIAL_VALUES
-  })(AddServerForm)
-);
+export default AddServerForm;

@@ -1,6 +1,6 @@
 import React from 'react';
-import AddServerFormConnect from '../../servers/addServer/AddServerForm';
-import serverIcon from '../../servers/addServer/icons_gray_server.svg';
+import { AddServerFormConnect } from '../AddServerForm';
+import serverIcon from '../../../../assets/icons_gray_server.svg';
 
 const AddServerModal = () => (
   <div>
