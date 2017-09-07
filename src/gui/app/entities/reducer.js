@@ -1,7 +1,7 @@
 import { List, Map } from 'immutable';
 import { Server, Scenario, Mock, Task } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
-import { SUCCEEDED as EDIT_SERVER_DID_SUCCEED } from '../../servers/editServer/epics';
+import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServer/actions';
 import { SUCCEEDED as REMOVE_SERVER_DID_SUCCEED } from '../../servers/removeServer/epics';
 import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../../epics/removeMock';
 import {
@@ -179,7 +179,7 @@ export default (state = getInitialState(), action) => {
       newState = reducers.addScenario(newState, data.id, { id: data.scenario });
       return newState;
     }
-    case EDIT_SERVER_DID_SUCCEED: {
+    case EDIT_SERVER_SUCCEEDED: {
       return reducers.updateServer(state, action.result.id, action.result);
     }
     case APP_RESTORE_STATE: {

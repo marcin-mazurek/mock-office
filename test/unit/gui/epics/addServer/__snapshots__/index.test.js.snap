@@ -3,7 +3,7 @@
 exports[`addServerEpic actions snapshot when api rejects promise with error 1`] = `
 Array [
   Object {
-    "type": "addServerForm/SUBMIT_BUTTON_CLICKED",
+    "type": "AddServerForm/SUBMIT_BUTTON_CLICKED",
     "values": Object {
       "name": "name",
       "port": 3000,
@@ -21,7 +21,7 @@ Array [
 exports[`addServerEpic actions snapshot when api resolves promise with server details 1`] = `
 Array [
   Object {
-    "type": "addServerForm/SUBMIT_BUTTON_CLICKED",
+    "type": "AddServerForm/SUBMIT_BUTTON_CLICKED",
     "values": Object {
       "name": "name",
       "port": 3000,

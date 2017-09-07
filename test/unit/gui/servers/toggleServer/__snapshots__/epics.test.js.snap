@@ -5,7 +5,7 @@ Array [
   Object {
     "id": "some id",
     "isOn": false,
-    "type": "component/Server/SWITCH_BUTTON_CLICKED",
+    "type": "InspectServer/SWITCH_BUTTON_CLICKED",
   },
   Object {
     "reason": "error message",
@@ -19,7 +19,7 @@ Array [
   Object {
     "id": "some id",
     "isOn": false,
-    "type": "component/Server/SWITCH_BUTTON_CLICKED",
+    "type": "InspectServer/SWITCH_BUTTON_CLICKED",
   },
   Object {
     "id": "some id",
@@ -33,7 +33,7 @@ Array [
   Object {
     "id": "some id",
     "isOn": false,
-    "type": "component/Server/SWITCH_BUTTON_CLICKED",
+    "type": "InspectServer/SWITCH_BUTTON_CLICKED",
   },
   Object {
     "reason": "error message",
@@ -47,7 +47,7 @@ Array [
   Object {
     "id": "some id",
     "isOn": false,
-    "type": "component/Server/SWITCH_BUTTON_CLICKED",
+    "type": "InspectServer/SWITCH_BUTTON_CLICKED",
   },
 ]
 `;

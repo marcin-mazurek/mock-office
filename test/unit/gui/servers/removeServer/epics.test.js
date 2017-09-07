@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
 import { Scenario, Server } from '../../../../../src/gui/app/entities';
-import { removeButtonClickedAction } from '../../../../../src/gui/servers/inspectServer/InspectServer';
+import { removeButtonClickedAction } from '../../../../../src/gui/components/InspectServer/actions';
 
 describe('removeServerEpic', () => {
   beforeEach(() => {

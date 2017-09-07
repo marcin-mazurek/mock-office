@@ -4,11 +4,7 @@ exports[`removeServerEpic fail path actions snapshot 1`] = `
 Array [
   Object {
     "id": "server-id",
-    "type": "component/Server/REMOVE_BUTTON_CLICKED",
-  },
-  Object {
-    "reason": "Error message",
-    "type": "removeServer/FAILED",
+    "type": "InspectServer/REMOVE_BUTTON_CLICKED",
   },
 ]
 `;
@@ -17,11 +13,7 @@ exports[`removeServerEpic success path actions snapshot 1`] = `
 Array [
   Object {
     "id": "server-id",
-    "type": "component/Server/REMOVE_BUTTON_CLICKED",
-  },
-  Object {
-    "id": "server-id",
-    "type": "removeServer/SUCCEEDED",
+    "type": "InspectServer/REMOVE_BUTTON_CLICKED",
   },
 ]
 `;

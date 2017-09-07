@@ -4,14 +4,8 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form/immutable';
 import { Link } from 'react-router';
 import serverIcon from '../../../../assets/icons_gray_server.svg';
-import { serverSelector } from '../../app/entities';
-
-export const FORM_SUBMITTED = 'editServer/FORM_SUBMITTED';
-export const formSubmittedAction = (id, values) => ({
-  type: FORM_SUBMITTED,
-  id,
-  values
-});
+import { serverSelector } from '../../app/entities/index';
+import { formSubmittedAction } from './actions';
 
 export const EditServerForm = props =>
   <form className="form" action="#" onSubmit={props.handleSubmit}>

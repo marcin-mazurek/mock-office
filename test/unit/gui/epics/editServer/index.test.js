@@ -2,7 +2,7 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { formSubmittedAction } from '../../../../../src/gui/servers/editServer/EditServerForm';
+import { formSubmittedAction } from '../../../../../src/gui/components/EditServerForm/actions';
 
 describe('editServerEpic', () => {
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('editServerEpic', () => {
       }
     }));
     // eslint-disable-next-line global-require
-    const editServerEpic = require('../../../../../src/gui/servers/editServer/epics').default;
+    const editServerEpic = require('../../../../../src/gui/epics/editServer/index').default;
 
     const epicMiddleware = createEpicMiddleware(editServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
@@ -41,7 +41,7 @@ describe('editServerEpic', () => {
         return Promise.resolve({ error: 'error message' });
       }
     }));
-    const editServerEpic = require('../../../../../src/gui/servers/editServer/epics').default;
+    const editServerEpic = require('../../../../../src/gui/epics/editServer').default;
 
     const epicMiddleware = createEpicMiddleware(editServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);

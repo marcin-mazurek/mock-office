@@ -6,7 +6,7 @@ import { removeMockEpic } from './removeMock';
 import addMockFromFileEpic from './importMock';
 import removeServerEpic from '../servers/removeServer/epics';
 import exportStateEpic from './exportState/exportStateEpic';
-import editServerEpic from '../servers/editServer/epics';
+import editServerEpic from './editServer';
 import toggleServer from '../servers/toggleServer/epic';
 import clearExpiredNotificationsEpic from './clearExpiredNotifications';
 

@@ -1,4 +1,4 @@
-import { switchButtonClickedAction } from '../../../../../src/gui/servers/inspectServer/InspectServer';
+import { switchButtonClickedAction } from '../../../../../src/gui/components/InspectServer/actions';
 
 /* eslint-disable global-require */
 describe('toggleServerEpic', () => {

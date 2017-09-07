@@ -4,30 +4,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import classnames from 'classnames';
-import { serverSelector } from '../../app/entities';
-import FilePickerConnect from '../../components/FilePicker/index';
-import MocksConnect from '../../components/Mocks/index';
+import { serverSelector } from '../../app/entities/index';
+import FilePickerConnect from '../FilePicker/index';
+import MocksConnect from '../Mocks/index';
 import trashIcon from '../../../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../../../assets/icons_gray_add@3x.svg';
-
-export const REMOVE_BUTTON_CLICKED = 'component/Server/REMOVE_BUTTON_CLICKED';
-export const removeButtonClickedAction = id => ({
-  type: REMOVE_BUTTON_CLICKED,
-  id
-});
-export const SWITCH_BUTTON_CLICKED = 'component/Server/SWITCH_BUTTON_CLICKED';
-export const switchButtonClickedAction = (id, isOn) => ({
-  type: SWITCH_BUTTON_CLICKED,
-  id,
-  isOn
-});
-export const ADD_MOCK_BUTTON_CLICKED = 'component/Server/ADD_MOCK_BUTTON_CLICKED';
-export const addMockButtonClickedAction = (server, scenario, serverType) => ({
-  type: ADD_MOCK_BUTTON_CLICKED,
-  server,
-  scenario,
-  serverType
-});
+import {
+  switchButtonClickedAction,
+  removeButtonClickedAction,
+  addMockButtonClickedAction
+} from './actions';
 
 const ServerToggle = ({ toggled, serverId, onSwitchButtonClick }) => {
   const toggleClassNames = classnames({

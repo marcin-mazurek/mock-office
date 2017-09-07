@@ -2,20 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import EditServerPage from '../../../../../src/gui/servers/editServer/EditServerPage';
 import {
   EditServerFormConnect,
   EditServerForm
-} from '../../../../../src/gui/servers/editServer/EditServerForm';
+} from '../../../../../src/gui/components/EditServerForm';
 import configureStore from '../../../../../src/gui/app/configureStore';
 import { succeededAction } from '../../../../../src/gui/epics/addServer/actions';
-
-describe('EditServerPage', () => {
-  test('default snapshot', () => {
-    const wrapper = shallow(<EditServerPage params={{ id: 'id' }} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
-});
 
 describe('EditServerForm', () => {
   test('default snapshot', () => {

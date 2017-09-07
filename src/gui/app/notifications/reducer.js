@@ -5,7 +5,7 @@ import {
   SUCCEEDED as ADD_SERVER_DID_SUCCEED,
   FAILED as ADD_SERVER_FAILED
 } from '../../epics/addServer/actions';
-import { FAILED as EDIT_SERVER_DID_FAIL } from '../../servers/editServer/epics';
+import { FAILED as EDIT_SERVER_DID_FAIL } from '../../epics/editServer';
 import {
   FAILED as REMOVE_SERVER_DID_FAIL,
   SUCCEEDED as REMOVE_SERVER_DID_SUCCEED

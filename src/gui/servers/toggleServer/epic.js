@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ifElse } from 'ramda';
-import { SWITCH_BUTTON_CLICKED } from '../inspectServer/InspectServer';
+import { SWITCH_BUTTON_CLICKED } from '../../components/InspectServer/actions';
 import startServer from '../startServer/startServer';
 import stopServer from '../stopServer/index';
 

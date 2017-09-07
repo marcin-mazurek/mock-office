@@ -18,7 +18,7 @@
 // components
 @import '../components/App/App';
 @import '../sidebar/Sidebar/SideBar';
-@import '../servers/inspectServer/InspectServer';
+@import '../components/InspectServer/InspectServer';
 @import '../components/Mocks/Mocks';
 @import '../components/AddMock/AddMock';
 @import '../sidebar/SidebarServers/SideBarServers';
@@ -28,7 +28,7 @@
 @import '../components/EditableField/EditableField';
 @import '../components/NotificationsList/NotificationsList';
 @import 'components/rc-switch-theme';
-@import '../servers/editServer/EditServerPage';
+@import '../components/EditServerPage/EditServerPage';
 @import '../components/AddWsMockForm/AddWsMockForm';
 @import '../components/Modal/Modal';
 @import '../components/AddServerForm/AddServerForm';

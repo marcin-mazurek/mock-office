@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
-import ServerPage from '../../servers/inspectServer/InspectServer';
-import EditServerPage from '../../servers/editServer/EditServerPage';
+import ServerPage from '../../components/InspectServer';
+import EditServerPage from '../../components/EditServerPage';
 import AddMockPage from '../../components/AddMock/index';
 import LandingPageConnect from '../../components/landingPage/LandingPage';
 import App from '../../components/App';
