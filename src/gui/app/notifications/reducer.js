@@ -2,14 +2,14 @@ import { List, Map } from 'immutable';
 import { createNotification } from './createNotification';
 import { ADD } from './actions';
 import {
-  SUCCEEDED as ADD_SERVER_DID_SUCCEED,
+  SUCCEEDED as ADD_SERVER_SUCCEEDED,
   FAILED as ADD_SERVER_FAILED
 } from '../../epics/addServer/actions';
-import { FAILED as EDIT_SERVER_DID_FAIL } from '../../epics/editServer';
+import { FAILED as EDIT_SERVER_FAILED } from '../../epics/editServer/actions';
 import {
-  FAILED as REMOVE_SERVER_DID_FAIL,
-  SUCCEEDED as REMOVE_SERVER_DID_SUCCEED
-} from '../../servers/removeServer/epics';
+  FAILED as REMOVE_SERVER_FAILED,
+  SUCCEEDED as REMOVE_SERVER_SUCCEEDED
+} from '../../epics/removeServer/actions';
 import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../../epics/removeMock';
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED,
@@ -57,15 +57,15 @@ const reducer = (state = initialState, action) => {
     case ADD: {
       return addNotification(state, action.params);
     }
-    case ADD_SERVER_DID_SUCCEED: {
+    case ADD_SERVER_SUCCEEDED: {
       return addNotification(state, { type: 'success', text: 'Server added' });
     }
 
-    case REMOVE_SERVER_DID_SUCCEED: {
+    case REMOVE_SERVER_SUCCEEDED: {
       return addNotification(state, { type: 'success', text: 'Server removed' });
     }
-    case EDIT_SERVER_DID_FAIL:
-    case REMOVE_SERVER_DID_FAIL:
+    case EDIT_SERVER_FAILED:
+    case REMOVE_SERVER_FAILED:
     case REMOVE_MOCK_DID_FAIL:
     case IMPORT_MOCKS_FAILED:
     case ADD_HTTP_MOCK_FAILED:

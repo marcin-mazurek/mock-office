@@ -1,19 +1,9 @@
 import { ifElse, has } from 'ramda';
 import { push } from 'react-router-redux';
 import api from '../../resources/api';
-import { REMOVE_BUTTON_CLICKED } from '../../components/InspectServer';
+import { REMOVE_BUTTON_CLICKED } from '../../components/InspectServer/actions';
 import { selectors } from '../../sidebar';
-
-export const SUCCEEDED = 'removeServer/SUCCEEDED';
-export const FAILED = 'removeServer/FAILED';
-const succeededAction = id => ({
-  type: SUCCEEDED,
-  id
-});
-const failedAction = reason => ({
-  type: FAILED,
-  reason
-});
+import { failedAction, succeededAction } from './actions';
 
 const makeRequest = action => api.removeServer({ id: action.id });
 const onFail = result => [failedAction(result.error)];

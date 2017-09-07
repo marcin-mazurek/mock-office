@@ -2,7 +2,7 @@ import { List, Map } from 'immutable';
 import { Server, Scenario, Mock, Task } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
 import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServer/actions';
-import { SUCCEEDED as REMOVE_SERVER_DID_SUCCEED } from '../../servers/removeServer/epics';
+import { SUCCEEDED as REMOVE_SERVER_SUCCEEDED } from '../../epics/removeServer/actions';
 import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../../epics/removeMock';
 import {
   REMOVE_MOCK_MESSAGE_RECEIVED,
@@ -205,7 +205,7 @@ export default (state = getInitialState(), action) => {
 
       return newState;
     }
-    case REMOVE_SERVER_DID_SUCCEED: {
+    case REMOVE_SERVER_SUCCEEDED: {
       let newState = state;
       const { id } = action;
       const server = state.getIn(['servers', 'entities', id]);

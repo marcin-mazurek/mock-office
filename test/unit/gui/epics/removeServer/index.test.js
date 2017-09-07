@@ -20,7 +20,7 @@ describe('removeServerEpic', () => {
         });
       }
     }));
-    const removeServerEpic = require('../../../../../src/gui/servers/removeServer/epics').default;
+    const removeServerEpic = require('../../../../../src/gui/epics/removeServer').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({
@@ -43,7 +43,7 @@ describe('removeServerEpic', () => {
         });
       }
     }));
-    const removeServerEpic = require('../../../../../src/gui/servers/removeServer/epics').default;
+    const removeServerEpic = require('../../../../../src/gui/epics/removeServer').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({
