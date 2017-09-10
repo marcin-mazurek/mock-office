@@ -16,8 +16,8 @@ import {
 } from '../../epics/importMock';
 import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../../epics/addHttpMock';
 import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../../epics/addWsMock';
-import { SUCCEEDED as START_SERVER_SUCCEED } from '../../servers/startServer/startServer';
-import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../servers/stopServer';
+import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';
+import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer';
 
 export const getInitialState = () => new Map({
   servers: new Map({

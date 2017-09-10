@@ -7,7 +7,7 @@ import addMockFromFileEpic from './importMock';
 import removeServerEpic from './removeServer';
 import exportStateEpic from './exportState/exportStateEpic';
 import editServerEpic from './editServer';
-import toggleServer from '../servers/toggleServer/epic';
+import toggleServer from './toggleServer';
 import clearExpiredNotificationsEpic from './clearExpiredNotifications';
 
 export default combineEpics(

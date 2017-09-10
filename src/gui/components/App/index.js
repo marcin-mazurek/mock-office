@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ModalConnect } from '../Modal';
 import { NotificationsListConnect } from '../NotificationsList';
-import Sidebar from '../../sidebar/Sidebar';
+import Sidebar from '../Sidebar';
 
 const App = ({ children }) => (
   <div className="app">

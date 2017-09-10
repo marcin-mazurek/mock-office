@@ -3,7 +3,7 @@ import { reducer as formReducer } from 'redux-form/immutable';
 import routingReducer from './routing/utils';
 import { reducer as entitiesReducer } from '../app/entities';
 import { reducer as notificationsReducer } from './notifications';
-import { reducer as sidebarReducer } from '../sidebar/sidebarModule';
+import { reducer as sidebarReducer } from './sidebar';
 import { reducer as modalReducer } from '../app/modal';
 import addMockReducer from './addMock';
 

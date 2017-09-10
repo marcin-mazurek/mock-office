@@ -1,19 +1,7 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import api from '../../resources/api/index';
-
-export const SUCCEEDED = 'toggleServer/SUCCEEDED';
-export const FAILED = 'toggleServer/FAILED';
-
-export const succeededAction = id => ({
-  type: SUCCEEDED,
-  id
-});
-
-export const failedAction = reason => ({
-  type: FAILED,
-  reason
-});
+import { failedAction, succeededAction } from './actions';
 
 const preparePayload = action => ({ id: action.id });
 const makeRequest = action => Observable.from(api.startServer({ id: action.id }));

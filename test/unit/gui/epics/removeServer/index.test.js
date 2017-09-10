@@ -10,7 +10,7 @@ describe('removeServerEpic', () => {
     jest.resetAllMocks();
   });
 
-  test('success path actions snapshot', (done) => {
+  test.only('success path actions snapshot', (done) => {
     jest.mock('../../../../../src/gui/resources/api', () => ({
       removeServer() {
         return Promise.resolve({
@@ -29,10 +29,10 @@ describe('removeServerEpic', () => {
       }
     }));
     store.dispatch(removeButtonClickedAction('server-id'));
-    Promise.resolve().then(() => {
+    setTimeout(() => {
       expect(store.getActions()).toMatchSnapshot();
       done();
-    });
+    }, 100);
   });
 
   test('fail path actions snapshot', (done) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import SidebarServers from '../../../../src/gui/sidebar/SidebarServers';
+import SidebarServers from '../../../../src/gui/components/SidebarServers';
 import AddServerModal from '../../../../src/gui/components/AddServerModal';
 import { AddServerFormConnect } from '../../../../src/gui/components/AddServerForm';
 import { ModalConnect } from '../../../../src/gui/components/Modal';

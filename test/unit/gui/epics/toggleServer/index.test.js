@@ -18,7 +18,7 @@ describe('toggleServerEpic', () => {
         }
       }));
       // eslint-disable-next-line global-require
-      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/epics/toggleServer/index').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);
@@ -39,7 +39,7 @@ describe('toggleServerEpic', () => {
           return Promise.resolve({ error: 'error message' });
         }
       }));
-      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/epics/toggleServer/index').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);
@@ -65,7 +65,7 @@ describe('toggleServerEpic', () => {
         }
       }));
       // eslint-disable-next-line global-require
-      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/epics/toggleServer/index').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);
@@ -86,7 +86,7 @@ describe('toggleServerEpic', () => {
           return Promise.resolve({ error: 'error message' });
         }
       }));
-      const toggleServerEpic = require('../../../../../src/gui/servers/toggleServer/epic').default;
+      const toggleServerEpic = require('../../../../../src/gui/epics/toggleServer/index').default;
 
       const epicMiddleware = createEpicMiddleware(toggleServerEpic);
       const mockStore = configureMockStore([epicMiddleware]);

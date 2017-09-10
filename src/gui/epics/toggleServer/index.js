@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ifElse } from 'ramda';
 import { SWITCH_BUTTON_CLICKED } from '../../components/InspectServer/actions';
-import startServer from '../startServer/startServer';
+import startServer from '../startServer/index';
 import stopServer from '../stopServer/index';
 
 const isOn = action => action.isOn;

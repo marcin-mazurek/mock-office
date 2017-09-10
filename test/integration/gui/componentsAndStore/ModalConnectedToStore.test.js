@@ -5,7 +5,7 @@ import { OVERLAY_CLICKED } from '../../../../src/gui/components/Modal/actions';
 import AddServerModal from '../../../../src/gui/components/AddServerModal';
 import { ModalConnect } from '../../../../src/gui/components/Modal';
 import configureStore from '../../../../src/gui/app/configureStore';
-import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../../src/gui/sidebar/SidebarServers/SideBarServers';
+import { ADD_BUTTON_CLICKED, addButtonClickedAction } from '../../../../src/gui/components/SidebarServers/SideBarServers';
 
 describe('ModalConnect', () => {
   it(`should display AddServerModal on ${ADD_BUTTON_CLICKED} action`, () => {

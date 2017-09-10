@@ -25,9 +25,9 @@ import {
 } from '../../epics/addWsMock';
 import {
   FAILED as START_SERVER_FAILED
-} from '../../servers/startServer/startServer';
+} from '../../epics/startServer/actions';
 import { NOTIFICATION_CLICKED } from '../../components/NotificationsList';
-import { FAILED as STOP_SERVER_FAILED } from '../../servers/stopServer';
+import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer';
 import { NOTIFICATION_EXPIRED } from '../../epics/clearExpiredNotifications';
 
 const initialState = new Map({

@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
-import { ADD_BUTTON_CLICKED } from '../../sidebar/SidebarServers/SideBarServers';
+import { ADD_BUTTON_CLICKED } from '../../components/SidebarServers/SideBarServers';
 import { ADD_MOCK_BUTTON_CLICKED } from '../../components/InspectServer/actions';
 import { FORM_SUBMITTED as WS_MOCK_FORM_SUBMITTED } from '../../components/AddWsMockForm';
 import { FORM_SUBMITTED as HTTP_MOCK_FORM_SUBMITTED } from '../../components/AddHttpMockForm';

@@ -2,7 +2,7 @@ import { ifElse, has } from 'ramda';
 import { push } from 'react-router-redux';
 import api from '../../resources/api';
 import { REMOVE_BUTTON_CLICKED } from '../../components/InspectServer/actions';
-import { selectors } from '../../sidebar';
+import { currentDisplayedServerSelector } from '../../app/sidebar';
 import { failedAction, succeededAction } from './actions';
 
 const makeRequest = action => api.removeServer({ id: action.id });
@@ -11,12 +11,11 @@ const onSuccess = store => (result) => {
   const state = store.getState();
   const { data } = result;
   const actions = [];
-  const displayedServerId = selectors.currentDisplayedServerSelector(state);
+  const displayedServerId = currentDisplayedServerSelector(state);
   if (displayedServerId === data.id) {
     actions.push(push('/'));
   }
   actions.push(succeededAction(result.data.id));
-
   return actions;
 };
 const hasError = has('error');
