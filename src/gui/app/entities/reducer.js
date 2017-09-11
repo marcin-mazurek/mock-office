@@ -10,7 +10,7 @@ import {
   FINISH_MOCK_MESSAGE_RECEIVED,
   RUN_MOCK_MESSAGE_RECEIVED,
   RESTORE_STATE as APP_RESTORE_STATE
-} from '../../appSync/startAppSync';
+} from '../../appSync/actions';
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
 } from '../../epics/importMock';
