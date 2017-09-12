@@ -54,6 +54,17 @@ const AddHttpMockTaskFormSection = () => (
         />
       </div>
     </div>
+    <div className="form-row">
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="status">Status code:</label>
+        <Field
+          className="form-field__input"
+          component="input"
+          type="number"
+          name="params.status"
+        />
+      </div>
+    </div>
   </div>
 );
 

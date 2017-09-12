@@ -68,7 +68,10 @@ const AddHttpMockFormConnect = connect(null, mapDispatchToProps)(
       form: 'addHttpMock',
       initialValues: {
         task: {
-          type: 'immediate'
+          type: 'immediate',
+          params: {
+            status: 200
+          }
         }
       }
     }

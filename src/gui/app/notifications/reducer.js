@@ -49,8 +49,6 @@ const removeNotification = (state, id) =>
 
 const showError = (state, reason) =>
   addNotification(state, { type: 'error', text: reason });
-const showAddMockSuccess = (state, action, reducers) =>
-  reducers.addNotification(state, { type: 'success', text: 'Mock added' });
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -78,11 +76,9 @@ const reducer = (state = initialState, action) => {
     case IMPORT_MOCKS_SUCCEEDED: {
       return addNotification(state, { type: 'success', text: 'Mocks imported' });
     }
-    case ADD_HTTP_MOCK_SUCCEED: {
-      return showAddMockSuccess(state, action);
-    }
+    case ADD_HTTP_MOCK_SUCCEED:
     case ADD_WS_MOCK_SUCCEED: {
-      return showAddMockSuccess(state, action);
+      return addNotification(state, { type: 'success', text: 'Mock added' });
     }
     case NOTIFICATION_CLICKED: {
       return removeNotification(state, action.id);

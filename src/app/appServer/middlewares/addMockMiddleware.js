@@ -37,6 +37,14 @@ export default function configure(ajv, serversManager) {
                   },
                   delay: {
                     type: 'number'
+                  },
+                  params: {
+                    type: 'object',
+                    properties: {
+                      status: {
+                        type: 'string'
+                      }
+                    }
                   }
                 },
                 required: ['type']
@@ -64,7 +72,8 @@ export default function configure(ajv, serversManager) {
           quantity: mock.quantity,
           tasks: mock.tasks.map(task => Object.assign({ id: task.id }, task.scheduleDetails)),
           title: mock.title,
-          requirements: mock.requirements
+          requirements: mock.requirements,
+          status: mock.status
         },
         scenario: scenario.id
       });
