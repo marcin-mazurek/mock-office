@@ -42,7 +42,7 @@ export default function configure(ajv, serversManager) {
                     type: 'object',
                     properties: {
                       status: {
-                        type: 'string'
+                        type: 'number'
                       }
                     }
                   }

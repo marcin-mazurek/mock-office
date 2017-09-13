@@ -52,6 +52,10 @@ const processFormValues = (formValues) => {
     fV.task.delay = parseInt(fV.task.delay, 10);
   }
 
+  if (fV.task.params && fV.task.params.status) {
+    fV.task.params.status = parseInt(fV.task.params.status, 10);
+  }
+
   return {
     data: {
       title: fV.title,
