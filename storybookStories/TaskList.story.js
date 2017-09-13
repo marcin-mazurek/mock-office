@@ -1,10 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { storiesOf } from '@kadira/storybook';
-import TaskListConnect from '../src/gui/components/TaskList';
-import configureStore from '../src/gui/app/configureStore';
-import { succeededAction } from '../src/gui/epics/importMock/index';
-import { succeededAction as addServerSucceded } from '../src/gui/epics/addServer/actions';
+import TaskListConnect from '../src/lib/gui/components/TaskList';
+import configureStore from '../src/lib/gui/app/configureStore';
+import { succeededAction } from '../src/lib/gui/epics/importMock/index';
+import { succeededAction as addServerSucceded } from '../src/lib/gui/epics/addServer/actions';
 
 storiesOf('TaskList', module)
   .add('default', () => {

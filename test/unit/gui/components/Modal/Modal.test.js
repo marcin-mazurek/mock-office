@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import R from 'ramda';
-import { createModal } from '../../../../../src/gui/components/Modal';
+import { createModal } from '../../../../../src/lib/gui/components/Modal';
 
 describe('Modal', () => {
   test('no component snapshot', () => {

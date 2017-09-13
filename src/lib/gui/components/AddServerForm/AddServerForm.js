@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Switch from 'rc-switch';
 import { Field } from 'redux-form/immutable';
-import plusIcon from '../../../../assets/icons_white_add.svg';
+import plusIcon from '../../../../../assets/icons_white_add.svg';
 
 const ServerTypeField = field =>
   <Select

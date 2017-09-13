@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import enzymeToJson from 'enzyme-to-json';
-import AddServerForm from '../../../../../src/gui/components/AddServerForm/AddServerForm';
+import AddServerForm from '../../../../../src/lib/gui/components/AddServerForm/AddServerForm';
 
 describe('AddServerForm', () => {
   describe('snapshots', () => {

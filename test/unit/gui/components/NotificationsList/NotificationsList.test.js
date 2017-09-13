@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { List } from 'immutable';
 import enzymeToJson from 'enzyme-to-json';
-import { NotificationsList } from '../../../../../src/gui/components/NotificationsList';
-import { createNotification } from '../../../../../src/gui/app/notifications';
+import { NotificationsList } from '../../../../../src/lib/gui/components/NotificationsList';
+import { createNotification } from '../../../../../src/lib/gui/app/notifications';
 
 describe('NotificationsList', () => {
   describe('snapshots', () => {

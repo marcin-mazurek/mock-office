@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { FilePicker } from '../../../../../src/gui/components/FilePicker';
+import { FilePicker } from '../../../../../src/lib/gui/components/FilePicker';
 
 describe('FilePicker', () => {
   test('default snapshot', () => {

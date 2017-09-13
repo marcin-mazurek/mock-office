@@ -5,9 +5,9 @@ import toJson from 'enzyme-to-json';
 import {
   EditServerFormConnect,
   EditServerForm
-} from '../../../../../src/gui/components/EditServerForm';
-import configureStore from '../../../../../src/gui/app/configureStore';
-import { succeededAction } from '../../../../../src/gui/epics/addServer/actions';
+} from '../../../../../src/lib/gui/components/EditServerForm';
+import configureStore from '../../../../../src/lib/gui/app/configureStore';
+import { succeededAction } from '../../../../../src/lib/gui/epics/addServer/actions';
 
 describe('EditServerForm', () => {
   test('default snapshot', () => {

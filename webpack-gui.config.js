@@ -5,8 +5,8 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'whatwg-fetch',
-    './src/gui/styles/main.scss',
-    './src/gui/main.js'
+    './src/lib/gui/styles/main.scss',
+    './src/lib/gui/main.js'
   ],
   module: {
     loaders: [
@@ -39,13 +39,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/gui/index.html',
+      template: './src/lib/gui/index.html',
       chunksSortMode: 'dependency'
     })
   ],
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, 'dist/gui'),
+    path: path.join(__dirname, 'dist/lib/gui'),
     filename: 'bundle.js'
   },
   resolve: {

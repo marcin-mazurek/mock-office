@@ -2,8 +2,8 @@
 import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
-import { submitButtonClickAction } from '../../../../../src/gui/components/AddServerForm/actions';
-import { SUCCEEDED, FAILED } from '../../../../../src/gui/epics/addServer/actions';
+import { submitButtonClickAction } from '../../../../../src/lib/gui/components/AddServerForm/actions';
+import { SUCCEEDED, FAILED } from '../../../../../src/lib/gui/epics/addServer/actions';
 
 describe('addServerEpic', () => {
   beforeEach(() => {
@@ -13,7 +13,7 @@ describe('addServerEpic', () => {
 
   describe('actions snapshot', () => {
     test('when api resolves promise with server details', (done) => {
-      jest.mock('../../../../../src/gui/resources/api', () => ({
+      jest.mock('../../../../../src/lib/gui/resources/api', () => ({
         addServer() {
           return Promise.resolve({
             data: {
@@ -27,7 +27,7 @@ describe('addServerEpic', () => {
         }
       }));
       // eslint-disable-next-line global-require
-      const addServerEpic = require('../../../../../src/gui/epics/addServer/index').default;
+      const addServerEpic = require('../../../../../src/lib/gui/epics/addServer/index').default;
       let store;
       const helperEpic = action$ =>
         action$.ofType(SUCCEEDED)
@@ -53,7 +53,7 @@ describe('addServerEpic', () => {
     });
 
     test('when api rejects promise with error', (done) => {
-      jest.mock('../../../../../src/gui/resources/api', () => ({
+      jest.mock('../../../../../src/lib/gui/resources/api', () => ({
         addServer() {
           return Promise.resolve({
             error: 'error message'
@@ -62,7 +62,7 @@ describe('addServerEpic', () => {
       }));
       let store;
       // eslint-disable-next-line global-require
-      const addServerEpic = require('../../../../../src/gui/epics/addServer/index').default;
+      const addServerEpic = require('../../../../../src/lib/gui/epics/addServer/index').default;
       const helperEpic = action$ =>
         action$.ofType(FAILED)
           .map(() => {
