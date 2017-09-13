@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import { SideBarServers } from '../../src/gui/components/SidebarServers/SideBarServers';
+import { SideBarServers } from '../../src/lib/gui/components/SidebarServers/SideBarServers';
 
 const props = {
   servers: [

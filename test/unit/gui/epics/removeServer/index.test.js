@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { Scenario, Server } from '../../../../../src/gui/app/entities';
-import { removeButtonClickedAction } from '../../../../../src/gui/components/InspectServer/actions';
+import { Scenario, Server } from '../../../../../src/lib/gui/app/entities';
+import { removeButtonClickedAction } from '../../../../../src/lib/gui/components/InspectServer/actions';
 
 describe('removeServerEpic', () => {
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('removeServerEpic', () => {
   });
 
   test.only('success path actions snapshot', (done) => {
-    jest.mock('../../../../../src/gui/resources/api', () => ({
+    jest.mock('../../../../../src/lib/gui/resources/api', () => ({
       removeServer() {
         return Promise.resolve({
           data: {
@@ -20,7 +20,7 @@ describe('removeServerEpic', () => {
         });
       }
     }));
-    const removeServerEpic = require('../../../../../src/gui/epics/removeServer').default;
+    const removeServerEpic = require('../../../../../src/lib/gui/epics/removeServer').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({
@@ -36,14 +36,14 @@ describe('removeServerEpic', () => {
   });
 
   test('fail path actions snapshot', (done) => {
-    jest.mock('../../../../../src/gui/resources/api', () => ({
+    jest.mock('../../../../../src/lib/gui/resources/api', () => ({
       removeServer() {
         return Promise.resolve({
           error: 'Error message'
         });
       }
     }));
-    const removeServerEpic = require('../../../../../src/gui/epics/removeServer').default;
+    const removeServerEpic = require('../../../../../src/lib/gui/epics/removeServer').default;
     const epicMiddleware = createEpicMiddleware(removeServerEpic);
     const mockStore = configureMockStore([epicMiddleware]);
     const store = mockStore(fromJS({

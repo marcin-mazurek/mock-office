@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import R from 'ramda';
-import { createModal } from '../src/gui/components/Modal';
+import { createModal } from '../src/lib/gui/components/Modal';
 
 storiesOf('Modal', module)
   .add('test modal', () => {

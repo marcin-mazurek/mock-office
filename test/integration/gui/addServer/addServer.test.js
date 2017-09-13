@@ -1,13 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import SidebarServers from '../../../../src/gui/components/SidebarServers';
-import AddServerModal from '../../../../src/gui/components/AddServerModal';
-import { AddServerFormConnect } from '../../../../src/gui/components/AddServerForm';
-import { ModalConnect } from '../../../../src/gui/components/Modal';
+import SidebarServers from '../../../../src/lib/gui/components/SidebarServers';
+import AddServerModal from '../../../../src/lib/gui/components/AddServerModal';
+import { AddServerFormConnect } from '../../../../src/lib/gui/components/AddServerForm';
+import { ModalConnect } from '../../../../src/lib/gui/components/Modal';
 
 describe('Add server', () => {
-  jest.mock('../../../../src/gui/resources/api', () => ({
+  jest.mock('../../../../src/lib/gui/resources/api', () => ({
     addServer() {
       return Promise.resolve({
         data: {
@@ -22,7 +22,7 @@ describe('Add server', () => {
   }));
 
   test('Given that user clicks on add server icon user should see form', () => {
-    const configureStore = require('../../../../src/gui/app/configureStore').default;
+    const configureStore = require('../../../../src/lib/gui/app/configureStore').default;
     const store = configureStore();
     const wrapper = mount(
       <Provider store={store}>
@@ -40,7 +40,7 @@ describe('Add server', () => {
   test('Given that user clicks add server form submit button' +
     ', after successful response from server' +
     'user should see new server on server list', (done) => {
-    const configureStore = require('../../../../src/gui/app/configureStore').default;
+    const configureStore = require('../../../../src/lib/gui/app/configureStore').default;
     const store = configureStore();
     const wrapper = mount(
       <Provider store={store}>

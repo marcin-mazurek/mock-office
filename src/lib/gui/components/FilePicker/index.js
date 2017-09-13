@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import uploadIcon from '../../../../assets/icons_gray_upload@3x.svg';
+import uploadIcon from '../../../../../assets/icons_gray_upload@3x.svg';
 
 export const FILE_PICKED = 'component/FilePicker/FILE_PICKED';
 export const filePickedAction = (server, scenario, files) => ({

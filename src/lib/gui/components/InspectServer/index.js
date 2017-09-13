@@ -7,8 +7,8 @@ import classnames from 'classnames';
 import { serverSelector } from '../../app/entities/index';
 import FilePickerConnect from '../FilePicker/index';
 import MocksConnect from '../Mocks/index';
-import trashIcon from '../../../../assets/icons_gray_trash@3x.svg';
-import plusIcon from '../../../../assets/icons_gray_add@3x.svg';
+import trashIcon from '../../../../../assets/icons_gray_trash@3x.svg';
+import plusIcon from '../../../../../assets/icons_gray_add@3x.svg';
 import {
   switchButtonClickedAction,
   removeButtonClickedAction,

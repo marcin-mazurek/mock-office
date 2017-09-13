@@ -1,13 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import configureStore from '../../../../../src/gui/app/configureStore';
+import configureStore from '../../../../../src/lib/gui/app/configureStore';
 import {
   NotificationsListConnect,
   NotificationsList,
   NotificationListItem
-} from '../../../../../src/gui/components/NotificationsList';
-import { addNotificationAction } from '../../../../../src/gui/app/notifications';
+} from '../../../../../src/lib/gui/components/NotificationsList';
+import { addNotificationAction } from '../../../../../src/lib/gui/app/notifications';
 
 describe('NotificationsList', () => {
   test('should display notifications from redux store', () => {

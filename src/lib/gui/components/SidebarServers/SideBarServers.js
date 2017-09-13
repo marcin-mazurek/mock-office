@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { allServersSelector } from '../../app/entities/index';
-import plusIcon from '../../../../assets/icons_white_add.svg';
-import lockIcon from '../../../../assets/icons_general_locked@3x.svg';
+import plusIcon from '../../../../../assets/icons_white_add.svg';
+import lockIcon from '../../../../../assets/icons_general_locked@3x.svg';
 import { currentDisplayedServerSelector } from '../../app/sidebar';
 
 export const EXPORT_BUTTON_CLICKED = 'component/sidebarServers/EXPORT_BUTTON_CLICKED';

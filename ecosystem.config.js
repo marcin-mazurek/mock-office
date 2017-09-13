@@ -25,7 +25,7 @@ module.exports = {
     // with GUI
     {
       name: 'app-server-with-gui',
-      script: './dist/index.js',
+      script: './dist/cli/chan.js',
       env: {
         COMMON_VARIABLE: 'true'
       },

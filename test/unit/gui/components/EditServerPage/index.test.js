@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import EditServerPage from '../../../../../src/gui/components/EditServerPage';
+import EditServerPage from '../../../../../src/lib/gui/components/EditServerPage';
 
 describe('EditServerPage', () => {
   test('default snapshot', () => {

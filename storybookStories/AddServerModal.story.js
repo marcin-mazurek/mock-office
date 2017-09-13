@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { storiesOf } from '@kadira/storybook';
-import { createModal } from '../src/gui/components/Modal';
-import configureStore from '../src/gui/store/index';
-import AddServerModal from '../src/gui/components/AddServerModal';
+import { createModal } from '../src/lib/gui/components/Modal';
+import configureStore from '../src/lib/gui/store/index';
+import AddServerModal from '../src/lib/gui/components/AddServerModal';
 
 storiesOf('AddServerModal', module)
   .add('default', () => {

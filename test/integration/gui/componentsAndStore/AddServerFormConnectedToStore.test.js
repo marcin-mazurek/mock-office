@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import configureStore from '../../../../src/gui/app/configureStore';
+import configureStore from '../../../../src/lib/gui/app/configureStore';
 import {
   AddServerFormConnect,
   AddServerForm
-} from '../../../../src/gui/components/AddServerForm';
+} from '../../../../src/lib/gui/components/AddServerForm';
 
 describe('AddServerFormConnect', () => {
   test('should let AddServerForm display redux-form controls', () => {
