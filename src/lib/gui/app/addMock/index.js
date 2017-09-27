@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 import { ADD_MOCK_BUTTON_CLICKED } from '../../components/InspectServer/actions';
-import { OVERLAY_CLICKED } from '../../modules/react-redux-modal';
 
 const initialState = new Map({
   server: '',
@@ -17,9 +16,6 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MOCK_BUTTON_CLICKED: {
       return setServer(action);
-    }
-    case OVERLAY_CLICKED: {
-      return resetServer(state);
     }
     default: {
       return state;

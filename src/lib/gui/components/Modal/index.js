@@ -1,4 +1,4 @@
-import { createModalConnect } from '../../modules/react-redux-modal';
+import { createModalConnect } from 'modalo';
 import AddServerModal from '../AddServerModal';
 import AddMockModal from '../AddMockModal';
 
