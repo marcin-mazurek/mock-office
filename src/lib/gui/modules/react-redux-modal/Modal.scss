@@ -4,9 +4,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+  display: flex;
+  pointer-events: none;
+}
+
+.modal--visible {
+  pointer-events: auto;
 }
 
 .modal__content {
@@ -17,6 +23,7 @@
   width: 500px;
   outline: none;
   position: relative;
+  transform: translateY(150);
 }
 
 .modal__overlay {

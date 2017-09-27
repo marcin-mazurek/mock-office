@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 import { ADD_MOCK_BUTTON_CLICKED } from '../../components/InspectServer/actions';
-import { OVERLAY_CLICKED } from '../../components/Modal/actions';
+import { OVERLAY_CLICKED } from '../../modules/react-redux-modal';
 
 const initialState = new Map({
   server: '',

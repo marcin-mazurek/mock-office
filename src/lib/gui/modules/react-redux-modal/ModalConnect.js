@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
 import { overlayClickedAction } from './actions';
-import { modalSelector } from '../../app/modal/selectors';
+import { modalSelector } from './selectors';
 import createModal from './Modal';
-import AddServerModal from '../AddServerModal';
-import AddMockModal from '../AddMockModal';
 
 const mapStateToProps = state => ({
   component: modalSelector(state)
@@ -11,8 +9,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   onOverlayClick: overlayClickedAction
 };
+const createModalConnect = types =>
+  connect(mapStateToProps, mapDispatchToProps)(createModal(types));
 
-export default connect(mapStateToProps, mapDispatchToProps)(createModal({
-  AddServerModal,
-  AddMockModal
-}));
+export default createModalConnect;
