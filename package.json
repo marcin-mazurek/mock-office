@@ -93,6 +93,7 @@
     "json8": "^0.9.2",
     "modalo": "git@github.com:xclix/modalo.git",
     "npm-watch": "^0.1.8",
+    "notifications": "git@github.com:xclix/notifications.git",
     "prop-types": "^15.5.7",
     "ramda": "^0.23.0",
     "ramda-fantasy": "^0.7.0",

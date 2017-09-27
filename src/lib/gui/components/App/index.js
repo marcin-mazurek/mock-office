@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NotificationsListConnect } from '../NotificationsList';
+import { NotificationsConnect } from 'notifications';
 import Sidebar from '../Sidebar';
 import Modal from '../Modal';
 
@@ -13,7 +13,7 @@ const App = ({ children }) => (
       { children }
     </div>
     <Modal />
-    <NotificationsListConnect />
+    <NotificationsConnect />
   </div>
 );
 
