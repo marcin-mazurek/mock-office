@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import SidebarServers from '../../../../src/lib/gui/components/SidebarServers';
 import AddServerModal from '../../../../src/lib/gui/components/AddServerModal';
 import { AddServerFormConnect } from '../../../../src/lib/gui/components/AddServerForm';
-import { ModalConnect } from '../../../../src/lib/gui/components/Modal';
+import Modal from '../../../../src/lib/gui/components/Modal';
 
 describe('Add server', () => {
   jest.mock('../../../../src/lib/gui/resources/api', () => ({
@@ -21,20 +21,24 @@ describe('Add server', () => {
     }
   }));
 
-  test('Given that user clicks on add server icon user should see form', () => {
+  test('Given that user clicks on add server icon user should see form', (done) => {
     const configureStore = require('../../../../src/lib/gui/app/configureStore').default;
     const store = configureStore();
     const wrapper = mount(
       <Provider store={store}>
         <div>
           <SidebarServers />
-          <ModalConnect />
+          <Modal />
         </div>
       </Provider>
     );
     const submitButton = wrapper.find('.sidebar-servers__add-server-button');
     submitButton.simulate('click');
-    expect(wrapper.find(AddServerModal).exists()).toBeTruthy();
+    // modal render content asynchronously
+    setTimeout(() => {
+      expect(wrapper.find(AddServerModal).exists()).toBeTruthy();
+      done();
+    }, 100);
   });
 
   test('Given that user clicks add server form submit button' +

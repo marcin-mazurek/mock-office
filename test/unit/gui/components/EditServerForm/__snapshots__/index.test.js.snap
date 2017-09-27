@@ -106,7 +106,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
       onSubmit={[Function]}
       serverId="server-id"
     >
-      <Connect(Form(Component))
+      <Connect(Form(EditServerForm))
         destroyOnUnmount={true}
         enableReinitialize={false}
         forceUnregisterOnUnmount={false}
@@ -128,7 +128,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
         touchOnBlur={true}
         touchOnChange={false}
       >
-        <Form(Component)
+        <Form(EditServerForm)
           anyTouched={false}
           array={
             Object {
@@ -231,7 +231,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
             }
           }
         >
-          <Component
+          <EditServerForm
             anyTouched={false}
             array={
               Object {
@@ -267,7 +267,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
               }
             }
             initialize={[Function]}
-            initialized={false}
+            initialized={true}
             invalid={false}
             onSubmit={[Function]}
             pristine={true}
@@ -520,6 +520,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                         component="input"
                         dirty={false}
                         dispatch={[Function]}
+                        initial="Awesome server"
                         name="name"
                         normalize={[Function]}
                         pristine={true}
@@ -768,6 +769,7 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                           component="input"
                           dirty={false}
                           dispatch={[Function]}
+                          initial={3000}
                           name="port"
                           normalize={[Function]}
                           pristine={true}
@@ -816,9 +818,9 @@ exports[`EditServerFormConnect should be connected to store 1`] = `
                 </Link>
               </div>
             </form>
-          </Component>
-        </Form(Component)>
-      </Connect(Form(Component))>
+          </EditServerForm>
+        </Form(EditServerForm)>
+      </Connect(Form(EditServerForm))>
     </ReduxForm>
   </Connect(ReduxForm)>
 </Provider>
