@@ -66,14 +66,6 @@ const AddServerForm = ({ handleSubmit }) =>
           <Field component={ServerTypeField} name="type" />
         </div>
       </div>
-      <div className="form__col form__col--small">
-        <div className="form__field">
-          <label className="form-field__label" htmlFor="secure">
-            Secure:
-          </label>
-          <Field name="secure" component={secureField} />
-        </div>
-      </div>
     </div>
     <div className="form-row">
       <button

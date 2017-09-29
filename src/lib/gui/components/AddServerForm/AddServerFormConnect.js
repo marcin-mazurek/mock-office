@@ -7,8 +7,7 @@ const FORM_NAME = 'addServer';
 const INITIAL_VALUES = {
   name: 'Awesome server',
   port: 3000,
-  type: 'http',
-  secure: false
+  type: 'http'
 };
 const mapDispatchToProps = {
   onSubmit: submitButtonClickAction

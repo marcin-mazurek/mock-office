@@ -10,7 +10,7 @@ const preparePayload = (action) => {
     name: values.get('name'),
     port: parseInt(values.get('port'), 10),
     type: values.get('type'),
-    secure: values.get('secure')
+    secure: false
   };
 
   if (payload.secure === true) {
