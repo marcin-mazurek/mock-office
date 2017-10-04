@@ -37,7 +37,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/lib/gui/index.html',
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'dependency',
+      filename: '../index.html'
     })
   ],
   devtool: 'source-map',
