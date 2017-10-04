@@ -3,10 +3,15 @@ import path from 'path';
 import colors from 'colors/safe';
 
 export function createGuiServer() {
-  const serveStatic = express.static(path.resolve(__dirname, '../gui'));
+  const staticAssetsMiddleware = (req, res) => {
+    res.sendFile(path.resolve(__dirname, `../gui/${req.originalUrl}`));
+  };
+  const reactAppMiddleware = (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../gui/index.html'));
+  };
   const app = express();
-  app.use(serveStatic);
-
+  app.use('/static/*', staticAssetsMiddleware);
+  app.use('*', reactAppMiddleware);
   return app;
 }
 

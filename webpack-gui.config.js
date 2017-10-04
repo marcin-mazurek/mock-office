@@ -29,10 +29,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg|jpg|png|ico)(\?.+)?$/,
-        loader: 'file-loader',
-        query: {
-          name: './static/[name].[ext]'
-        }
+        loader: 'file-loader'
       },
       { test: /\.json/, loader: 'json-loader' }
     ]
@@ -45,8 +42,9 @@ module.exports = {
   ],
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, 'dist/lib/gui'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'dist/lib/gui/static'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
   resolve: {
     extensions: ['.js', '.jsx'],

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router, hashHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureRoutes from './routing/configureRoutes';
 
 export default (store) => {
-  const history = syncHistoryWithStore(hashHistory, store, {
+  const history = syncHistoryWithStore(browserHistory, store, {
     selectLocationState(state) {
       return state.get('routing').toJS();
     }
