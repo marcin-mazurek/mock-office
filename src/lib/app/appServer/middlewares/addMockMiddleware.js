@@ -32,9 +32,6 @@ export default function configure(ajv, serversManager) {
                   type: {
                     type: 'string'
                   },
-                  payload: {
-                    type: 'object'
-                  },
                   delay: {
                     type: 'number'
                   },
