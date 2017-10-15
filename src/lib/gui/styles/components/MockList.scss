@@ -1,0 +1,12 @@
+.mock-list {
+  @extend %list-reset;
+  width: 100%;
+}
+
+.mock-list__item {
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom : 0;
+  }
+}

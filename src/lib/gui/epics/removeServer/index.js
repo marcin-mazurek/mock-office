@@ -1,7 +1,7 @@
 import { ifElse, has } from 'ramda';
 import { push } from 'react-router-redux';
 import api from '../../resources/api';
-import { REMOVE_BUTTON_CLICKED } from '../../components/InspectServer/actions';
+import { REMOVE_BUTTON_CLICKED } from '../../components/ServerViewHeader/actions';
 import { currentDisplayedServerSelector } from '../../app/sidebar';
 import { failedAction, succeededAction } from './actions';
 

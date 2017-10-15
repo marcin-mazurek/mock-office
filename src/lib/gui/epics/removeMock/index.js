@@ -1,6 +1,6 @@
 import { ifElse, has } from 'ramda';
 import api from '../../resources/api/index';
-import { REMOVE_BUTTON_CLICKED } from '../../components/Mocks/index';
+import { REMOVE_BUTTON_CLICKED } from '../../components/MockList/index';
 
 export const DID_SUCCEED = 'removeMock/SUCCEEDED';
 const didSucceedAction = (scenario, id) => ({

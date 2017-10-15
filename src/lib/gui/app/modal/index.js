@@ -1,7 +1,7 @@
 import { createReducer } from 'modalo';
 import { ADD_BUTTON_CLICKED } from '../../components/SidebarServers/SideBarServers';
 import { SUBMIT_BUTTON_CLICKED } from '../../components/AddServerForm/actions';
-import { ADD_MOCK_BUTTON_CLICKED } from '../../components/InspectServer/actions';
+import { ADD_MOCK_BUTTON_CLICKED } from '../../components/ServerViewHeader/actions';
 import { FORM_SUBMITTED } from '../../components/AddHttpMockForm';
 
 export default createReducer({

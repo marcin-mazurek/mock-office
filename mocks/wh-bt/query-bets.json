@@ -3,7 +3,10 @@
     "title": "query bets",
     "requirements": {
       "event": "RECEIVED_REQUEST",
-      "url": "/bet/slips/S00001067bec2425c4/?sortOrder=off"
+      "request": {
+        "method": "GET",
+        "url": "/bet/slips"
+      }
     },
     "reuse": "infinite",
     "tasks": [

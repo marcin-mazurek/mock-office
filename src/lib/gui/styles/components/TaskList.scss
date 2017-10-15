@@ -6,7 +6,8 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid #EBEBEB;
-  padding: 10px 0;
+  padding: 5px 0;
+  font-size: 14px;
 
   &:last-child {
     border-bottom: none;
@@ -18,20 +19,20 @@
   padding: 2px 6px;
   margin-right: 10px;
   font-size: 13px;
-  background-color: $mock-spec-tag-background-color;
-  color: darken($mock-spec-tag-background-color, 40%);
+  background-color: $mock-list-item-spec-tag-background-color;
+  color: darken($mock-list-item-spec-tag-background-color, 40%);
 }
 
 .task-list-item__remove-button {
   @extend %button-reset;
   cursor: pointer;
   font-size: 16px;
-  color: $mock-remove-button-font-color;
+  color: $mock-list-item-remove-button-font-color;
   margin-left: auto;
   transition: color .2s ease;
 
   &:hover {
-    color: $mock-remove-button-hover-font-color;
+    color: $mock-list-item-remove-button-hover-font-color;
   }
 }
 
@@ -42,7 +43,7 @@
 }
 
 .task-list-item-title {
-  padding: 5px 15px;
+  padding: 5px 0;
   display: flex;
   align-items: center;
   font-weight: 300;
@@ -51,13 +52,4 @@
 .task-list-item__title {
   margin-right: 15px;
   flex: none;
-}
-
-.task-expand-button {
-  @extend %button-reset;
-  cursor: pointer;
-
-  &:hover {
-    opacity: .5;
-  }
 }

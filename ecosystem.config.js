@@ -16,7 +16,7 @@ module.exports = {
         NODE_ENV: 'production'
       },
       watch: [
-        './dist'
+        './dist/lib/app'
       ],
       out_file: __dirname + '/pm2.log',
       error_file: __dirname + '/pm2-errors.log',
@@ -33,7 +33,7 @@ module.exports = {
         NODE_ENV: 'production'
       },
       watch: [
-        './dist'
+        './dist/lib/app'
       ],
       out_file: __dirname + '/pm2.log',
       error_file: __dirname + '/pm2-errors.log',

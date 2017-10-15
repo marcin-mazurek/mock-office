@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { ADD_MOCK_BUTTON_CLICKED } from '../../components/InspectServer/actions';
+import { ADD_MOCK_BUTTON_CLICKED } from '../../components/ServerViewHeader/actions';
 
 const initialState = new Map({
   server: '',
@@ -11,7 +11,6 @@ const setServer = params => new Map({
   scenario: params.scenario,
   serverType: params.serverType
 });
-const resetServer = state => state.delete('id');
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MOCK_BUTTON_CLICKED: {

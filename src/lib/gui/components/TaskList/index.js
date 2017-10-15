@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { mockSelector, taskSelector } from '../../app/entities';
-import expandIcon from '../../../../../assets/icons_green_expand@3x.svg';
 
 export const TaskListItem = ({
                                title,
@@ -23,10 +22,7 @@ export const TaskListItem = ({
   }
   return (
     <div className="task-list-item">
-      <button className="task-expand-button">
-        <img src={expandIcon} role="presentation" />
-      </button>
-      <div className="task-list-item-title">{title}</div>
+      <div className="task-list-item-title">{title} test</div>
       <div className="task-list-item-spec">
         {
           delay

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
-import ServerPage from '../../components/InspectServer';
+import { ServerViewConnect } from '../../components/ServerView';
 import EditServerPage from '../../components/EditServerPage';
 import AddMockPage from '../../components/AddMock/index';
 import LandingPageConnect from '../../components/landingPage/LandingPage';
@@ -15,7 +15,7 @@ export default function configureRoutes(store) {
 
   return (
     <Route component={App}>
-      <Route path="/server/:id" component={ServerPage} onEnter={checkIfServerExists} />
+      <Route path="/server/:id" component={ServerViewConnect} onEnter={checkIfServerExists} />
       <Route path="/server/:id/edit" component={EditServerPage} onEnter={checkIfServerExists} />
       <Route path="/:id/add-mock" component={AddMockPage} onEnter={checkIfServerExists} />
       <Route path="/" component={LandingPageConnect} />

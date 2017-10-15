@@ -16,18 +16,21 @@
 @import 'objects/form';
 
 // components
+@import 'components/ServerView';
+@import 'components/ServerViewHeader';
+@import 'components/ServerViewHeaderToggle';
+@import 'components/MockList';
+@import 'components/MockListItem';
+@import 'components/TaskList';
+@import 'components/rc-switch-theme';
 @import '../components/App/App';
 @import '../components/Sidebar/SideBar';
-@import '../components/InspectServer/InspectServer';
-@import '../components/Mocks/Mocks';
 @import '../components/AddMock/AddMock';
 @import '../components/SidebarServers/SideBarServers';
 @import '../components/landingPage/LandingPage';
 @import '../components/FilePicker/FilePicker';
-@import '../components/TaskList/TaskList';
 @import '../components/EditableField/EditableField';
 @import '../../../../node_modules/notifications/dist/Notifications/Notifications';
-@import 'components/rc-switch-theme';
 @import '../components/EditServerPage/EditServerPage';
 @import '../components/AddWsMockForm/AddWsMockForm';
 @import '../../../../node_modules/modalo/dist/modalo-renderer/Renderer';
