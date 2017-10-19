@@ -70,18 +70,15 @@ export default class HttpMockServer {
 
   respond(req, res) {
     const requirements = {
-      event: 'RECEIVED_REQUEST',
-      request: {
-        url: req.originalUrl,
-        method: req.method,
-        headers: req.headers
-      }
+      path: req.originalUrl,
+      method: req.method,
+      headers: req.headers
     };
 
     if (req.method === 'POST') {
-      requirements.request.body = req.body;
+      requirements.payload = req.body;
     }
-    const mock = this.scenario.findMock(requirements);
+    const mock = this.scenario.matchMock(requirements);
 
     if (mock) {
       this.scenario.play(mock.id, send(req, res));
@@ -134,5 +131,34 @@ export default class HttpMockServer {
 
   changePort(port) {
     this.port = port;
+  }
+
+  addMock(scenarioId, mockConfig) {
+    mockConfig.request = mockConfig.request || {};
+    mockConfig.response = mockConfig.response || {};
+
+    if (!mockConfig.request.method) {
+      mockConfig.request.method = 'GET';
+    }
+
+    if (!mockConfig.request.path) {
+      mockConfig.request.path = '/';
+    }
+
+    if (!mockConfig.response.params) {
+      mockConfig.response.params = {};
+    } else if (!mockConfig.response.params.status) {
+      mockConfig.response.params.status = 200;
+    }
+
+    return this.scenario.addMock({
+      requirements: mockConfig.request,
+      tasks: [mockConfig.response],
+      loadedCounter: mockConfig.loadedCounter
+    });
+  }
+
+  getMock(scenarioId, mockId) {
+    return this.scenario.getMock(mockId);
   }
 }

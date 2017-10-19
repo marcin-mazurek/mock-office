@@ -1,7 +1,7 @@
 import { clearExpiredNotificationsEpic } from 'notifications';
 import { combineEpics } from 'redux-observable';
 import addServerEpic from './addServer';
-import addHttpMockEpic from './addHttpMock';
+import addHttpMockEpic from './addMock';
 import addWsMockEpic from './addWsMock';
 import { removeMockEpic } from './removeMock';
 import addMockFromFileEpic from './importMock';

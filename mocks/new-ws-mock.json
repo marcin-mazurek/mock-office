@@ -1,0 +1,26 @@
+[
+  {
+    "trigger": {
+      "event": "connect"
+    },
+    "messages": [
+      {
+        "params": {
+          "payload": {
+            "message": "welcome message"
+          }
+        },
+        "schedule": {
+          "delay": 1000
+        }
+      },
+      {
+        "params": {
+          "payload": {
+            "message": "ping"
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "title": "request for some-url",
+    "request": {
+      "method": "GET"
+    },
+    "response": {
+      "params": {
+        "status": 200,
+        "payload": "{\"message\": \"Hello world!\"}"
+      },
+      "schedule": {
+        "delay": 3000
+      }
+    },
+    "loadedCount": 10
+  }
+]

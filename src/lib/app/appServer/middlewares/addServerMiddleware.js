@@ -1,4 +1,6 @@
-export default function configure(ajv, serversManager) {
+import { serversManager } from '../../serversManager';
+
+export default function configure(ajv) {
   return (req, res) => {
     const schema = {
       type: 'object',
@@ -41,7 +43,7 @@ export default function configure(ajv, serversManager) {
         req.body.certPath
       );
 
-      const server = serversManager.find(id);
+      const server = serversManager.getServer(id);
       res.json({
         name: server.name,
         port: server.port,

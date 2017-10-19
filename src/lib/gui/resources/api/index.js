@@ -49,11 +49,33 @@ export default {
       })
       .then((res) => {
         if (res.status === 200) {
-          return res.json().then(payload => ({ data: payload }));
+          return res.json().then(payload => payload.id);
         } else if (res.status === 400) {
           return res.json().then(payload => ({ error: payload.error }));
         } else if (res.status === 404) {
           return { error: 'Server not found' };
+        }
+
+        return { error: 'Unknown server response' };
+      });
+  },
+  getMock(serverId, scenarioId, mockId) {
+    return fetch(`http://127.0.0.1:3060/mock?id=${mockId}&server=${serverId}&scenario=${scenarioId}`, {
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+      .catch(() => {
+        throw new ConnectionError();
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else if (res.status === 400) {
+          return res.json().then(payload => ({ error: payload.error }));
+        } else if (res.status === 404) {
+          return { error: 'Mock not found' };
         }
 
         return { error: 'Unknown server response' };

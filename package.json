@@ -6,7 +6,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build-gui": "webpack --config webpack-gui.config.js",
-    "watch-gui": "webpack --config webpack-gui.config.js --watch",
+    "watch-gui": "npm run watch-webpack & npm run browser-sync",
+    "watch-webpack": "webpack --config webpack-gui.config.js --watch",
+    "browser-sync": "browser-sync start --files 'dist/lib/gui/**/*' --proxy http://localhost:3070 --reload-debounc 1000",
     "test-gui": "jest src/gui",
     "tdd-gui": "jest src/gui --watch",
     "build-app": "babel src --out-dir dist --source-maps --ignore gui/",
@@ -53,6 +55,7 @@
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
+    "browser-sync": "^2.18.13",
     "css-loader": "^0.26.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.11.1",

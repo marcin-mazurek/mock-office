@@ -54,9 +54,9 @@ export default class WsMockServer {
       this.ws = ws;
 
       this.ws.on('message', (message) => {
-        const mock = this.scenario.findMock(
+        const mock = this.scenario.matchMock(
           {
-            event: 'RECEIVED_MESSAGE',
+            event: 'message',
             message
           }
         );
@@ -75,17 +75,18 @@ export default class WsMockServer {
 
       this.ws.on('close', () => {
         this.scenario.cancelPendingMocks();
-        this.ws = undefined;
+        this.ws = null;
       });
 
-      const mock = this.scenario.findMock(
+      const mock = this.scenario.matchMock(
         {
-          event: 'CLIENT_CONNECTED'
+          event: 'connect'
         }
       );
 
       if (mock) {
         this.scenario.play(mock.id, (params) => {
+          console.log(params);
           this.ws.send(params.payload.message);
         });
       }
@@ -122,7 +123,19 @@ export default class WsMockServer {
     this.name = name;
   }
 
+  addMock(scenarioId, mockConfig) {
+    return this.scenario.addMock({
+      requirements: mockConfig.trigger,
+      tasks: mockConfig.messages,
+      loadedCounter: mockConfig.loadedCounter
+    });
+  }
+
   changePort(port) {
     this.port = port;
+  }
+
+  getMock(scenarioId, mockId) {
+    return this.scenario.getMock(mockId);
   }
 }

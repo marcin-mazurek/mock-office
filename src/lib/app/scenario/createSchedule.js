@@ -14,80 +14,65 @@ const buildSendParams = (params, payload) =>
     }
   );
 
-export default function createSchedule(taskConfig) {
+export default function createSchedule(scheduleConfig, params) {
   return function schedule(action, onStart, onFinish) {
     let payload;
 
-    if (typeof taskConfig.payload !== 'undefined') {
-      if (taskConfig.payload === 'generator') {
-        const scriptSrc = fs.readFileSync(taskConfig.generatorPath);
+    if (typeof params.payload !== 'undefined') {
+      if (params.payload === 'generator') {
+        const scriptSrc = fs.readFileSync(params.generatorPath);
         payload = new vm.Script(scriptSrc).runInNewContext({});
-      } else if (taskConfig.payload.type === 'b64') {
+      } else if (params.payload.type === 'b64') {
         payload = {
-          message: atob(taskConfig.payload.message)
+          message: atob(params.payload.message)
         };
       } else {
-        payload = taskConfig.payload;
+        payload = params.payload;
       }
     }
 
-    switch (taskConfig.type) {
-      case 'immediate': {
-        onStart();
-        return Scheduler.asap.schedule(
-          () => {
-            action(buildSendParams(taskConfig.params, payload));
-            onFinish();
-            return () => {
-            };
-          }
-        );
-      }
-      case 'future': {
-        onStart();
-        return Scheduler.async.schedule(
-          () => {
-            action(buildSendParams(taskConfig.params, payload));
-            onFinish();
-            return () => {
-            };
-          },
-          taskConfig.delay
-        );
-      }
-      case 'periodic': {
-        const task = function task(repeatLimit) {
-          action(buildSendParams(taskConfig.params, payload));
+    if (scheduleConfig.interval) {
+      const task = function task(repeatLimit) {
+        action(buildSendParams(params, payload));
 
-          if (repeatLimit !== undefined) {
-            if (repeatLimit - 1 > 0) {
-              this.schedule(repeatLimit - 1, taskConfig.interval);
-            } else {
-              onFinish();
-            }
+        if (repeatLimit !== undefined) {
+          if (repeatLimit - 1 > 0) {
+            this.schedule(repeatLimit - 1, scheduleConfig.interval);
           } else {
-            this.schedule(undefined, taskConfig.interval);
-          }
-        };
-        onStart();
-
-        return Scheduler.async.schedule(
-          task,
-          taskConfig.interval,
-          taskConfig.repeat
-        );
-      }
-      default: {
-        onStart();
-        return Scheduler.asap.schedule(
-          () => {
-            action(buildSendParams(taskConfig.params, payload));
             onFinish();
-            return () => {
-            };
           }
-        );
-      }
+        } else {
+          this.schedule(undefined, scheduleConfig.interval);
+        }
+      };
+      onStart();
+
+      return Scheduler.async.schedule(
+        task,
+        scheduleConfig.interval,
+        scheduleConfig.repeat
+      );
+    } else if (scheduleConfig.delay) {
+      onStart();
+      return Scheduler.async.schedule(
+        () => {
+          action(buildSendParams(params, payload));
+          onFinish();
+          return () => {
+          };
+        },
+        scheduleConfig.delay
+      );
     }
+
+    onStart();
+    return Scheduler.asap.schedule(
+      () => {
+        action(buildSendParams(params, payload));
+        onFinish();
+        return () => {
+        };
+      }
+    );
   };
 }

@@ -16,7 +16,7 @@ import {
 import {
   SUCCEED as ADD_HTTP_MOCK_SUCCEED,
   FAILED as ADD_HTTP_MOCK_FAILED
-} from '../../epics/addHttpMock';
+} from '../../epics/addMock';
 import {
   SUCCEED as ADD_WS_MOCK_SUCCEED,
   FAILED as ADD_WS_MOCK_FAILED
