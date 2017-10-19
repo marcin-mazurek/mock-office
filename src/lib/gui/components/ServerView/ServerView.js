@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { MockListConnect } from '../MockList';
 import { ServerViewHeaderConnect } from '../ServerViewHeader';
 import { HttpMockListItemConnect } from '../HttpMockListItem';
+import { WsMockListItemConnect } from '../WsMockListItem';
+import { MockListConnect } from '../MockList';
 
 const ServerView = ({
   scenario,
@@ -28,7 +29,15 @@ const ServerView = ({
       <div className="server-view__mocks">
         <div className="server-view__mocks-scroll-container">
           <Scrollbars>
-            <MockListConnect server={id} scenario={scenario} Renderer={type === 'http' ? HttpMockListItemConnect : MockListConnect} />
+            <MockListConnect
+              server={id}
+              scenario={scenario}
+              render={
+                type === 'http'
+                  ? mock => <HttpMockListItemConnect server={id} scenario={scenario} id={mock} />
+                  : mock => <WsMockListItemConnect server={id} scenario={scenario} id={mock} />
+              }
+            />
           </Scrollbars>
         </div>
       </div>

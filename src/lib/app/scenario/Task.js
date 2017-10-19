@@ -2,11 +2,12 @@ import unique from 'cuid';
 import createSchedule from './createSchedule';
 
 export default class Task {
-  constructor(args) {
+  constructor(config, emitter) {
     this.id = unique();
-    this.emitter = args.emitter.extend({ taskId: this.id });
+    this.emitter = emitter.extend({ taskId: this.id });
     this.pending = false;
-    this.scheduleDetails = args.scheduleDetails;
+    this.schedule = config.schedule || {};
+    this.params = config.params || {};
   }
 
   // Function -> Promise
@@ -16,7 +17,7 @@ export default class Task {
     }
 
     return new Promise((resolve) => {
-      const schedule = createSchedule(this.scheduleDetails);
+      const schedule = createSchedule(this.schedule, this.params);
 
       this.subscription = schedule(
         action,

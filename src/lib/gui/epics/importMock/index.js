@@ -1,6 +1,7 @@
 import { ifElse, has } from 'ramda';
 import { FILE_PICKED } from '../../components/FilePicker/index';
 import api from '../../resources/api/index';
+import { paramsSelector } from '../../app/addMock/selectors';
 
 export const SUCCEEDED = 'importMock/SUCCEEDED';
 export const succeededAction = (scenario, mocks) => ({
@@ -35,14 +36,20 @@ const makeRequests = requestParams =>
       mock => api.addMock(requestParams.server, requestParams.scenario, mock)
     )
   )
-    .then(responses => ({ data: responses }))
+    .then(ids => Promise.all(
+      ids.map(id =>
+        api.getMock(requestParams.server, requestParams.scenario, id)
+          .then(mock => Object.assign({ id }, mock))
+      )
+    ))
+    .then(mocks => ({
+      mocks,
+      scenario: requestParams.scenario
+    }))
     .catch(error => ({ error }));
 const onFail = result => failedAction(result.error);
-const onSuccess = (results) => {
-  const mocks = results.data.map(result => result.data.mock);
-  const scenario = results.data[0].data.scenario;
-  return succeededAction(scenario, mocks);
-};
+const onSuccess = ({ mocks, scenario }) =>
+  succeededAction(scenario, mocks);
 
 export default action$ =>
   action$.ofType(FILE_PICKED)

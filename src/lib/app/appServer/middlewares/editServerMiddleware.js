@@ -1,4 +1,6 @@
-export default function configure(ajv, serversManager) {
+import { serversManager } from '../../serversManager';
+
+export default function configure(ajv) {
   const createResponseBody = server => ({
     name: server.name,
     port: server.port,
@@ -35,7 +37,7 @@ export default function configure(ajv, serversManager) {
     }
 
     const { id, name, port } = req.body;
-    const server = serversManager.find(id);
+    const server = serversManager.getServer(id);
     if (!server) {
       res.status(404).end();
       return;

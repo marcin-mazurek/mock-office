@@ -28,20 +28,42 @@ export default class Scenario {
     this.id = unique();
     this.emitter = args.emitter.extend({ scenarioId: this.id });
     this.mocks = [];
-    this.find = this.find.bind(this);
+    this.getMock = this.getMock.bind(this);
     this.addMock = this.addMock.bind(this);
     this.removeMock = this.removeMock.bind(this);
     this.play = this.play.bind(this);
-    this.findMock = this.findMock.bind(this);
+    this.matchMock = this.matchMock.bind(this);
     this.cancelPendingMocks = this.cancelPendingMocks.bind(this);
   }
 
-  find(id) {
-    return this.mocks.find(desc => desc.id === id);
+  getAll() {
+    return this.mocks.map(mock => this.getMock(mock.id));
+  }
+
+  getMock(id) {
+    const mock = this.mocks.find(desc => desc.id === id);
+
+    if (!mock) {
+      return mock;
+    }
+
+    return {
+      id: mock.id,
+      requirements: mock.requirements,
+      pending: mock.pending,
+      runCounter: mock.runCounter,
+      loadedCounter: mock.loadedCounter,
+      tasks: mock.tasks.map(task => ({
+        id: task.id,
+        pending: task.pending,
+        schedule: task.schedule,
+        params: task.params
+      }))
+    };
   }
 
   addMock(mockConfig) {
-    const mock = new Mock(Object.assign(mockConfig, { emitter: this.emitter }));
+    const mock = new Mock(mockConfig, this.emitter);
     this.mocks.push(mock);
 
     return mock.id;
@@ -63,7 +85,7 @@ export default class Scenario {
 
   // (String, Function) -> Promise
   play(id, action) {
-    const mock = this.find(id);
+    const mock = this.mocks.find(m => m.id === id);
 
     return mock.play(action).then(
       (finished) => {
@@ -77,7 +99,7 @@ export default class Scenario {
     );
   }
 
-  findMock(requirements) {
+  matchMock(requirements) {
     return this.mocks.find((mock) => {
       if (!mock.pending) {
         if (mock.requirements) {
@@ -87,6 +109,10 @@ export default class Scenario {
               req.message = btoa(requirements.message);
               req.type = 'b64';
             }
+
+            console.log('mock.requirements');
+            console.log(mock.requirements);
+            console.log(extractSubTree(req, mock.requirements));
 
             return deepEqual(mock.requirements, extractSubTree(req, mock.requirements));
           }

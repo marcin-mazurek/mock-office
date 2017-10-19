@@ -2,8 +2,9 @@ import http from 'http';
 import { Server as WebSocketServer } from 'ws';
 import colors from 'colors/safe';
 import { addListener } from './serversManager/emitter';
+import { serversManager } from './serversManager';
 
-export function configureGuiEventsServer(serversManager, persistentState) {
+export function configureGuiEventsServer(persistentState) {
   const httpServer = http.createServer();
   const server = new WebSocketServer({ server: httpServer });
   let sockets = [];

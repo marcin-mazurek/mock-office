@@ -1,19 +1,15 @@
 import { Record, List } from 'immutable';
 
 export const Mock = new Record({
-  title: '',
   id: '',
   interval: null,
   reuse: null,
-  quantity: null,
+  count: null,
   delay: null,
   requirements: null,
   tasks: new List(),
   finished: false,
-  running: false,
-  runCount: 0,
-  lastRunTimestamp: null,
-  lastDuration: null
+  pending: false
 });
 export const Scenario = new Record({
   id: '',
@@ -29,11 +25,9 @@ export const Server = new Record({
   running: false
 });
 export const Task = new Record({
-  title: '',
-  id: '',
+  params: null,
   interval: null,
   reuse: null,
   quantity: null,
   delay: null,
-  requirements: null
 });

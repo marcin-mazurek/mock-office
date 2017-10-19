@@ -1,0 +1,70 @@
+.mock-list-item {
+  border-radius: 2px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  border-left: 4px solid transparent;
+}
+
+.mock-list-item--expired {
+  border-color: transparent;
+  opacity: 0.5;
+}
+
+.mock-list-item__request {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.mock-list-item__title {
+  margin-right: 15px;
+  flex: none;
+  font-weight: 500;
+}
+
+.mock-list-item__remove-button {
+@extend %button-reset;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ED4608;
+  margin-left: auto;
+  transition: color .2s ease;
+  text-transform: uppercase;
+
+&:hover {
+    opacity: .5;
+  }
+}
+
+.mock-list-item__tag {
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-right: 10px;
+  font-size: 13px;
+  background-color: #EEE;
+  color: darken(#EEE, 40%);
+}
+
+.mock-list-item__response {
+  display: none;
+}
+
+.mock-list-item__response--visible {
+  display: block;
+}
+
+.mock-list-item__expand-button {
+  @extend %button-reset;
+  margin-right: 10px;
+}
+
+.mock-list-item__expand-button--active {
+  transform: rotate(180deg);
+}
+
+.mock-list-item__spinner {
+  margin-right: 10px;
+}

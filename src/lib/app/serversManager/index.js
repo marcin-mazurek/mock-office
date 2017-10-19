@@ -1,2 +1,2 @@
 export { emitter } from './emitter';
-export { default } from './ServersManager';
+export { default as serversManager } from './ServersManager';

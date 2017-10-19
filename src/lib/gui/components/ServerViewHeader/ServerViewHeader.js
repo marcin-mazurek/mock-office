@@ -35,28 +35,30 @@ const ServerViewHeader = ({
         </div>
       </div>
     </div>
-    <button
-      className="server-view-header__remove-button button"
-      onClick={() => (
-        // eslint-disable-next-line no-alert
-        confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
-          ? onRemoveButtonClick(id)
-          : false
-      )
-      }
-    >
-      <img src={trashIcon} role="presentation" />
-    </button>
-    <Link className="server-view-header__edit-button" to={`/server/${id}/edit`}>
-      Edit
-    </Link>
-    <button
-      className="server-view-header__add-mock-button"
-      onClick={() => onAddMockButtonClickedAction(id, scenario, type)}
-    >
-      <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
-      Add mock
-    </button>
+    <div className="server-view-header__buttons">
+      <button
+        className="server-view-header__remove-button button"
+        onClick={() => (
+          // eslint-disable-next-line no-alert
+          confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
+            ? onRemoveButtonClick(id)
+            : false
+        )
+        }
+      >
+        <img src={trashIcon} role="presentation" />
+      </button>
+      <Link className="server-view-header__edit-button" to={`/server/${id}/edit`}>
+        Edit
+      </Link>
+      <button
+        className="server-view-header__add-mock-button"
+        onClick={() => onAddMockButtonClickedAction(id, scenario, type)}
+      >
+        <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
+        Add mock
+      </button>
+    </div>
     <FilePickerConnect scenario={scenario} server={id} />
   </div>
 );

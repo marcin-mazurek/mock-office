@@ -29,9 +29,11 @@ export default function startAppSync(ws, store) {
           break;
         }
         case 'MOCK_REMOVED_AFTER_USE': {
-          store.dispatch(
-            removeAfterUseMessageReceivedAction(data.scenario, data.mockId)
-          );
+          setTimeout(() => {
+            store.dispatch(
+              removeAfterUseMessageReceivedAction(data.scenario, data.mockId)
+            );
+          }, 3000);
           break;
         }
         case 'MOCK_START': {

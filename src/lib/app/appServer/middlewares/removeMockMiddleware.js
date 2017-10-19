@@ -1,4 +1,6 @@
-export default function configure(ajv, serversManager) {
+import { serversManager } from '../../serversManager';
+
+export default function configure(ajv) {
   return (req, res) => {
     const schema = {
       properties: {
@@ -16,7 +18,7 @@ export default function configure(ajv, serversManager) {
       res.json(ajv.errors);
     }
 
-    const server = serversManager.find(req.body.serverId);
+    const server = serversManager.getServer(req.body.serverId);
 
     if (!server) {
       res.status(404).end();

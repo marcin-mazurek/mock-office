@@ -1,5 +1,5 @@
-import { List, Map } from 'immutable';
-import { Server, Scenario, Mock, Task } from './recordTypes';
+import { List, Map, fromJS } from 'immutable';
+import { Server, Scenario } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
 import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServer/actions';
 import { SUCCEEDED as REMOVE_SERVER_SUCCEEDED } from '../../epics/removeServer/actions';
@@ -14,7 +14,7 @@ import {
 import {
   SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
 } from '../../epics/importMock';
-import { SUCCEED as ADD_HTTP_MOCK_SUCCEED } from '../../epics/addHttpMock';
+import { SUCCEED as ADD_MOCK_SUCCEED } from '../../epics/addMock';
 import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../../epics/addWsMock';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer/actions';
@@ -82,12 +82,13 @@ export const reducers = {
       .setIn(['servers', 'entities', serverId, 'scenario'], scenario.id);
   },
   addMock(state, scenario, id, params) {
-    const mock = new Mock(
-      Object.assign(
-        { id },
-        Object.assign({}, params, { tasks: new List() })
-      )
-    );
+    const mock = fromJS(Object.assign(
+      {
+        id,
+        expired: false
+      },
+      Object.assign({}, params, { tasks: new List() })
+    ));
 
     return state
       .setIn(['mocks', 'entities', id], mock)
@@ -100,9 +101,7 @@ export const reducers = {
       .updateIn(['tasks', 'ids'], ids => ids.push(id))
       .setIn(
         ['tasks', 'entities', id],
-        new Task(
-          Object.assign({ id }, task)
-        )
+        fromJS(Object.assign({ id }, task))
       );
   },
   removeScenario(state, id) {
@@ -111,7 +110,7 @@ export const reducers = {
       .deleteIn(['scenarios', 'entities', id]);
   },
   removeMock(state, scenario, id) {
-    const tasks = state.getIn(['mocks', 'entities', id]).tasks;
+    const tasks = state.getIn(['mocks', 'entities', id, 'tasks']);
     let newState = state;
 
     newState = newState
@@ -138,22 +137,26 @@ export const reducers = {
   stopMock(state, id) {
     const prevState = state.getIn(['mocks', 'entities', id]);
     return state.mergeIn(['mocks', 'entities', id], {
-      running: false,
+      pending: false,
       lastDuration: Date.now() - prevState.get('lastRunTimestamp')
     });
   },
   finishMock(state, id) {
-    return state
-      .setIn(['mocks', 'entities', id, 'running'], false)
-      .setIn(['mocks', 'entities', id, 'finished'], true);
+    let newState = state
+      .setIn(['mocks', 'entities', id, 'pending'], false);
+
+    const mock = state.getIn(['mocks', 'entities', id]);
+    if (mock.get('runCounter') === mock.get('loadedCounter')) {
+      newState = newState.setIn(['mocks', 'entities', id, 'expired'], true);
+    }
+
+    return newState;
   },
   runMock(state, id) {
     const prevState = state.getIn(['mocks', 'entities', id]);
     return state.mergeIn(['mocks', 'entities', id], {
-      running: true,
-      runCount: prevState.get('runCount') + 1,
-      lastRunTimestamp: Date.now(),
-      lastDuration: null
+      pending: true,
+      runCounter: prevState.get('runCounter') + 1
     });
   }
 };
@@ -247,7 +250,7 @@ export default (state = getInitialState(), action) => {
       });
       return newState;
     }
-    case ADD_HTTP_MOCK_SUCCEED:
+    case ADD_MOCK_SUCCEED:
     case ADD_WS_MOCK_SUCCEED: {
       const { mock, scenario } = action;
       let newState = state;

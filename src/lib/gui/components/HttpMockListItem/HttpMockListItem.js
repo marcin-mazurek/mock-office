@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
-import TasksConnect from '../TaskList/index';
 import expandIcon from '../../../../../assets/icons_green_expand@3x.svg';
+import { TaskListConnect } from '../TaskList';
+import { HttpTaskListItemConnect } from '../HttpTaskListItem';
+import { WsTaskListItemConnect } from '../WsTaskListItem';
 
 export default class HttpMockListItem extends React.Component {
   constructor() {
@@ -21,85 +24,66 @@ export default class HttpMockListItem extends React.Component {
 
   render() {
     const {
-      id,
-      server,
-      scenario,
+      mock,
       onRemoveButtonClick,
-      reuse,
-      quantity,
-      requirements,
-      runCount,
-      lastDuration,
-      finished,
-      running
+      server,
+      scenario
     } = this.props;
     const { expanded } = this.state;
-    const mockTasksClassnames = classnames('mock-list-item__tasks',
-      {
-        'mock-list-item__tasks--expanded': expanded
-      }
-    );
-
-    let quantityInfo = null;
-
-    if (reuse) {
-      if (reuse === 'infinite') {
-        quantityInfo = <i className="fa fa-repeat" />;
-      } else if (reuse === 'fixed') {
-        quantityInfo = <div>{quantity}<i className="fa fa-repeat" /></div>;
-      }
-    }
-
-    const mockClassNames = classnames({
-      'mock-list-item': true,
-      'mock-list-item--finished': finished,
-      'mock-list-item--running': running
+    const mockTasksClassnames = classnames({
+      'mock-list-item__response': true,
+      'mock-list-item__response--visible': expanded
     });
 
+    const expired = mock.get('expired');
+    const pending = mock.get('pending');
+    const mockClassNames = classnames({
+      'mock-list-item': true,
+      'mock-list-item--expired': expired
+    });
+
+    const expandButtonClassNames = classnames({
+      'mock-list-item__expand-button': true,
+      'mock-list-item__expand-button--active': expanded
+    });
+
+    const id = mock.get('id');
+    const runCounter = mock.get('runCounter');
+    const loadedCounter = mock.get('loadedCounter');
+    const spinnerClassNames = classnames({
+      spinner: true,
+      'spinner--active': pending
+    });
     return (
       <div className={mockClassNames}>
-        <div className="mock-list-item-details">
-          <div className="mock-list-item-spec">
-            <div className="mock-list-item-spec__tag">
-              { requirements.request.method || 'GET' }
+        <div className="mock-list-item__request">
+          <button className={expandButtonClassNames} onClick={this.showTasks}>
+            <img src={expandIcon} role="presentation" />
+          </button>
+          <div className="mock-list-item__spinner">
+            <div className={spinnerClassNames}>
+              <div className="bounce1" />
+              <div className="bounce2" />
+              <div className="bounce3" />
             </div>
-            <div className="mock-list-item-spec__tag">{requirements.request.url}</div>
-            {
-              reuse
-                ? <div className="mock-list-item-spec__tag">{quantityInfo}</div>
-                : null
-            }
-            {
-              runCount > 0
-                ? (
-                  <div className="mock-list-item-status__tag" title="Run count">
-                    <i className="fa fa-flash" /> {runCount}
-                  </div>
-                )
-                : null
-            }
-            {
-              lastDuration
-                ? (
-                  <div className="mock-list-item-status__tag" title="Last duration">
-                    <i className="fa fa-clock-o" /> {lastDuration}{'ms'}
-                  </div>
-                )
-                : null
-            }
           </div>
+          <div className="mock-list-item__tag">{`${runCounter}/${loadedCounter}`}</div>
+          <div className="mock-list-item__tag">
+            {mock.getIn(['requirements', 'method'])}
+          </div>
+          <div className="mock-list-item__tag">{mock.getIn(['requirements', 'path'])}</div>
           <button
             className="mock-list-item__remove-button"
             onClick={() => onRemoveButtonClick(server, scenario, id)}
           >
             remove
           </button>
-          <button className="task-expand-button" onClick={this.showTasks}>
-            <img src={expandIcon} role="presentation" />
-          </button>
         </div>
         <div className={mockTasksClassnames}>
-          <TasksConnect mock={id} />
+          <TaskListConnect
+            mock={id}
+            render={taskId => <HttpTaskListItemConnect id={taskId} />}
+          />
         </div>
       </div>
     );
@@ -107,15 +91,8 @@ export default class HttpMockListItem extends React.Component {
 }
 
 HttpMockListItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  reuse: PropTypes.string,
-  quantity: PropTypes.number.isRequired,
-  runCount: PropTypes.number.isRequired,
-  lastDuration: PropTypes.number,
-  finished: PropTypes.bool.isRequired,
-  running: PropTypes.bool.isRequired,
+  mock: ImmutablePropTypes.map.isRequired,
+  onRemoveButtonClick: PropTypes.func.isRequired,
   server: PropTypes.string.isRequired,
-  scenario: PropTypes.string.isRequired,
-  requirements: PropTypes.shape({}),
-  onRemoveButtonClick: PropTypes.func.isRequired
+  scenario: PropTypes.string.isRequired
 };

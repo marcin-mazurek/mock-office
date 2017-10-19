@@ -11,6 +11,7 @@ const setServer = params => new Map({
   scenario: params.scenario,
   serverType: params.serverType
 });
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MOCK_BUTTON_CLICKED: {

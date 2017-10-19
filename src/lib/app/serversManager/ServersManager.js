@@ -13,7 +13,7 @@ class ServersManager {
     this.add = this.add.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
-    this.find = this.find.bind(this);
+    this.getServer = this.getServer.bind(this);
     this.getAll = this.getAll.bind(this);
     this.remove = this.remove.bind(this);
     this.rename = this.rename.bind(this);
@@ -30,7 +30,7 @@ class ServersManager {
   }
 
   start(id) {
-    const server = this.find(id);
+    const server = this.getServer(id);
 
     if (!server) {
       return Promise.resolve(false);
@@ -46,7 +46,7 @@ class ServersManager {
   }
 
   stop(id) {
-    const server = this.find(id);
+    const server = this.getServer(id);
 
     if (server.isLive()) {
       return new Promise((resolve) => {
@@ -57,7 +57,7 @@ class ServersManager {
     return Promise.resolve();
   }
 
-  find(id) {
+  getServer(id) {
     return this.servers.find(server => server.id === id);
   }
 
@@ -78,7 +78,7 @@ class ServersManager {
   }
 
   rename(id, name) {
-    const server = this.find(id);
+    const server = this.getServer(id);
 
     if (server) {
       server.rename(name);
@@ -97,22 +97,7 @@ class ServersManager {
         port: server.port,
         id: server.id,
         scenario: server.getScenario().id,
-        mocks: server.getScenario().mocks.map(mock => ({
-          id: mock.id,
-          title: mock.title,
-          interval: mock.interval,
-          reuse: mock.reuse,
-          quantity: mock.quantity,
-          delay: mock.delay,
-          requirements: mock.requirements,
-          tasks: mock.tasks.map(part => ({
-            id: part.id,
-            pending: part.pending,
-            title: part.scheduleDetails.title,
-            type: part.scheduleDetails.type,
-            delay: part.scheduleDetails.delay
-          }))
-        }))
+        mocks: server.getScenario().getAll()
       })
     );
   }
@@ -122,7 +107,7 @@ class ServersManager {
       const id = this.add(
         s.name, s.port, s.type, s.secure, s.keyPath, s.certPath, false
       );
-      const server = this.find(id);
+      const server = this.getServer(id);
       s.mocks.forEach((mock) => {
         server.getScenario().addMock(mock);
       });
@@ -130,4 +115,4 @@ class ServersManager {
   }
 }
 
-export default ServersManager;
+export default new ServersManager();
