@@ -119,22 +119,24 @@ export const AddHttpMockForm = ({ handleSubmit }) => (
               />
             </div>
           </div>
-          <div className="form-row">
-            <div className="form__field">
-              <label className="form-field__label" htmlFor="loadedCounter">
-                How many times do you want to use it:
-              </label>
-              <Field
-                className="form-field__input"
-                component="input"
-                type="number"
-                name="loadedCounter"
-              />
-            </div>
-          </div>
         </section>
       </FormSection>
     </FormSection>
+    <div className="form-section">
+      <div className="form-row">
+        <div className="form__field">
+          <label className="form-field__label" htmlFor="loadedCounter">
+            How many times do you want to use it:
+          </label>
+          <Field
+            className="form-field__input"
+            component="input"
+            type="number"
+            name="loadedCounter"
+          />
+        </div>
+      </div>
+    </div>
     <div className="form-row">
       <button className="button form__button" type="submit">
         Submit
