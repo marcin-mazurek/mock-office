@@ -33,7 +33,6 @@ export default function configure(ajv) {
         id: server.addMock(req.body.scenario, req.body.mock)
       });
     } catch (error) {
-      console.log(error);
       res.status(400).json({ error });
     }
   };

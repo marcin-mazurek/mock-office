@@ -18,7 +18,6 @@ const schema = {
 export default function configure(ajv) {
   return (req, res) => {
     if (!ajv.validate(schema, req.query)) {
-      console.log('ajv.validate');
       res.status(400).json(ajv.errors);
       return;
     }
@@ -38,7 +37,6 @@ export default function configure(ajv) {
 
       res.status(200).json(mock);
     } catch (error) {
-      console.log(error);
       res.status(400).json({ error });
     }
   };

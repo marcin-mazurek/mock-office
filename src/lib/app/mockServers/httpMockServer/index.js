@@ -134,6 +134,7 @@ export default class HttpMockServer {
   }
 
   addMock(scenarioId, mockConfig) {
+    /* eslint-disable no-param-reassign */
     mockConfig.request = mockConfig.request || {};
     mockConfig.response = mockConfig.response || {};
 
@@ -156,6 +157,7 @@ export default class HttpMockServer {
       tasks: [mockConfig.response],
       loadedCounter: mockConfig.loadedCounter
     });
+    /* eslint-enable no-param-reassign */
   }
 
   getMock(scenarioId, mockId) {

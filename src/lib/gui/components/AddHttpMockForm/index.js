@@ -21,129 +21,127 @@ const MethodField = field =>
     ]}
   />;
 
-export const AddHttpMockForm = ({ handleSubmit }) => {
-  return (
-    <form className="add-http-mock-form form" onSubmit={handleSubmit}>
-      <FormSection name="request">
+export const AddHttpMockForm = ({ handleSubmit }) => (
+  <form className="add-http-mock-form form" onSubmit={handleSubmit}>
+    <FormSection name="request">
+      <section className="form-section">
+        <header className="form-section__header">Request:</header>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="path">Path:</label>
+            <Field
+              className="form-field__input"
+              name="path"
+              component="input"
+              type="text"
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="method">Method:</label>
+            <Field
+              name="method"
+              component={MethodField}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="payload">Payload:</label>
+            <Field
+              className="form-field__textarea"
+              name="payload"
+              component="textarea"
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="headers">Headers:</label>
+            <Field
+              className="form-field__textarea"
+              name="headers"
+              component="textarea"
+            />
+          </div>
+        </div>
+      </section>
+    </FormSection>
+    <FormSection name="response">
+      <FormSection name="params">
         <section className="form-section">
-          <header className="form-section__header">Request:</header>
-          <div className="form-row">
-            <div className="form__field">
-              <label className="form-field__label" htmlFor="path">Path:</label>
-              <Field
-                className="form-field__input"
-                name="path"
-                component="input"
-                type="text"
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form__field">
-              <label className="form-field__label" htmlFor="method">Method:</label>
-              <Field
-                name="method"
-                component={MethodField}
-              />
-            </div>
-          </div>
+          <header className="form-section__header">Response:</header>
           <div className="form-row">
             <div className="form__field">
               <label className="form-field__label" htmlFor="payload">Payload:</label>
               <Field
                 className="form-field__textarea"
-                name="payload"
                 component="textarea"
+                name="payload"
               />
             </div>
           </div>
           <div className="form-row">
             <div className="form__field">
-              <label className="form-field__label" htmlFor="headers">Headers:</label>
+              <label className="form-field__label" htmlFor="payload">Headers:</label>
               <Field
-                className="form-field__textarea"
-                name="headers"
                 component="textarea"
+                name="headers"
+                className="form-field__textarea"
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form__field">
+              <label className="form-field__label" htmlFor="status">Status code:</label>
+              <Field
+                className="form-field__input"
+                component="input"
+                type="number"
+                name="status"
               />
             </div>
           </div>
         </section>
       </FormSection>
-      <FormSection name="response">
-        <FormSection name="params">
-          <section className="form-section">
-            <header className="form-section__header">Response:</header>
-            <div className="form-row">
-              <div className="form__field">
-                <label className="form-field__label" htmlFor="payload">Payload:</label>
-                <Field
-                  className="form-field__textarea"
-                  component="textarea"
-                  name="payload"
-                />
-              </div>
+      <FormSection name="schedule">
+        <section className="form-section">
+          <div className="form-row">
+            <div className="form__field">
+              <label className="form-field__label" htmlFor="delay">Response delay:</label>
+              <Field
+                className="form-field__input"
+                component="input"
+                type="number"
+                name="delay"
+              />
             </div>
-            <div className="form-row">
-              <div className="form__field">
-                <label className="form-field__label" htmlFor="payload">Headers:</label>
-                <Field
-                  component="textarea"
-                  name="headers"
-                  className="form-field__textarea"
-                />
-              </div>
+          </div>
+          <div className="form-row">
+            <div className="form__field">
+              <label className="form-field__label" htmlFor="loadedCounter">
+                How many times do you want to use it:
+              </label>
+              <Field
+                className="form-field__input"
+                component="input"
+                type="number"
+                name="loadedCounter"
+              />
             </div>
-
-            <div className="form-row">
-              <div className="form__field">
-                <label className="form-field__label" htmlFor="status">Status code:</label>
-                <Field
-                  className="form-field__input"
-                  component="input"
-                  type="number"
-                  name="status"
-                />
-              </div>
-            </div>
-          </section>
-        </FormSection>
-        <FormSection name="schedule">
-          <section className="form-section">
-            <div className="form-row">
-              <div className="form__field">
-                <label className="form-field__label" htmlFor="delay">Response delay:</label>
-                <Field
-                  className="form-field__input"
-                  component="input"
-                  type="number"
-                  name="delay"
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form__field">
-                <label className="form-field__label" htmlFor="loadedCounter">
-                  How many times do you want to use it:
-                </label>
-                <Field
-                  className="form-field__input"
-                  component="input"
-                  type="number"
-                  name="loadedCounter"
-                />
-              </div>
-            </div>
-          </section>
-        </FormSection>
+          </div>
+        </section>
       </FormSection>
-      <div className="form-row">
-        <button className="button form__button" type="submit">
-          Submit
-        </button>
-      </div>
-    </form>
-  );
-};
+    </FormSection>
+    <div className="form-row">
+      <button className="button form__button" type="submit">
+        Submit
+      </button>
+    </div>
+  </form>
+);
 
 AddHttpMockForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired

@@ -86,7 +86,6 @@ export default class WsMockServer {
 
       if (mock) {
         this.scenario.play(mock.id, (params) => {
-          console.log(params);
           this.ws.send(params.payload.message);
         });
       }

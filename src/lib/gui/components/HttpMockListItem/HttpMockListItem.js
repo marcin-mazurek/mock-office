@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import expandIcon from '../../../../../assets/icons_green_expand@3x.svg';
 import { TaskListConnect } from '../TaskList';
 import { HttpTaskListItemConnect } from '../HttpTaskListItem';
-import { WsTaskListItemConnect } from '../WsTaskListItem';
 
 export default class HttpMockListItem extends React.Component {
   constructor() {

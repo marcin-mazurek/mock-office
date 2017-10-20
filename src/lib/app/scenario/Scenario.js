@@ -110,10 +110,6 @@ export default class Scenario {
               req.type = 'b64';
             }
 
-            console.log('mock.requirements');
-            console.log(mock.requirements);
-            console.log(extractSubTree(req, mock.requirements));
-
             return deepEqual(mock.requirements, extractSubTree(req, mock.requirements));
           }
         } else {

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { HttpTaskListItemConnect } from '../HttpTaskListItem';
 
 const TaskList = ({ tasks, render }) => (
   <ul className="task-list">

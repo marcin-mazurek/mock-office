@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import Switch from 'rc-switch';
 import { Field } from 'redux-form/immutable';
 import plusIcon from '../../../../../assets/icons_white_add.svg';
 
@@ -17,15 +16,6 @@ const ServerTypeField = field =>
       { value: 'http', label: 'HTTP' },
       { value: 'ws', label: 'Web Socket' }
     ]}
-  />;
-
-const secureField = field =>
-  <Switch
-    checked={field.input.value}
-    onChange={value => field.input.onChange(value)}
-    checkedChildren="Yes"
-    unCheckedChildren="No"
-    className="form-field__switch"
   />;
 
 const AddServerForm = ({ handleSubmit }) =>
