@@ -21,6 +21,7 @@ GUI is served at `http://127.0.0.1:3070`
 To start app development:
 
 `npm run watch`
+
 `npm run pm2-run-with-gui`
 
 ### Test
