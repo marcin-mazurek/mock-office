@@ -8,7 +8,7 @@
     "build-gui": "webpack --config webpack-gui.config.js",
     "watch-gui": "npm run watch-webpack & npm run browser-sync",
     "watch-webpack": "webpack --config webpack-gui.config.js --watch",
-    "browser-sync": "browser-sync start --files 'dist/lib/gui/**/*' --proxy http://localhost:3070 --reload-debounc 1000",
+    "browser-sync": "browser-sync start --no-ghost-mode --files 'dist/lib/gui/**/*' --proxy http://localhost:3070 --reload-debounc 1000",
     "test-gui": "jest src/gui",
     "tdd-gui": "jest src/gui --watch",
     "build-app": "babel src --out-dir dist --source-maps --ignore gui/",
