@@ -1,3 +1,5 @@
+import 'rxjs/operator/map';
+import 'rxjs/operator/mergeMap';
 import { clearExpiredNotificationsEpic } from 'notifications';
 import { combineEpics } from 'redux-observable';
 import addServerEpic from './addServer';
