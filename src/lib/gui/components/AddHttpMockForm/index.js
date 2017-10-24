@@ -23,9 +23,9 @@ const MethodField = field =>
 
 export const AddHttpMockForm = ({ handleSubmit }) => (
   <form className="add-http-mock-form form" onSubmit={handleSubmit}>
-    <FormSection name="request">
-      <section className="form-section">
-        <header className="form-section__header">Request:</header>
+    <section className="form-section">
+      <header className="form-section__header">Request:</header>
+      <FormSection name="request">
         <div className="form-row">
           <div className="form__field">
             <label className="form-field__label" htmlFor="path">Path:</label>
@@ -66,12 +66,13 @@ export const AddHttpMockForm = ({ handleSubmit }) => (
             />
           </div>
         </div>
-      </section>
-    </FormSection>
-    <FormSection name="response">
-      <FormSection name="params">
-        <section className="form-section">
-          <header className="form-section__header">Response:</header>
+      </FormSection>
+    </section>
+
+    <section className="form-section">
+      <FormSection name="response">
+        <header className="form-section__header">Response:</header>
+        <FormSection name="params">
           <div className="form-row">
             <div className="form__field">
               <label className="form-field__label" htmlFor="payload">Payload:</label>
@@ -104,10 +105,8 @@ export const AddHttpMockForm = ({ handleSubmit }) => (
               />
             </div>
           </div>
-        </section>
-      </FormSection>
-      <FormSection name="schedule">
-        <section className="form-section">
+        </FormSection>
+        <FormSection name="schedule">
           <div className="form-row">
             <div className="form__field">
               <label className="form-field__label" htmlFor="delay">Response delay:</label>
@@ -119,29 +118,27 @@ export const AddHttpMockForm = ({ handleSubmit }) => (
               />
             </div>
           </div>
-        </section>
-      </FormSection>
-    </FormSection>
-    <div className="form-section">
-      <div className="form-row">
-        <div className="form__field">
-          <label className="form-field__label" htmlFor="loadedCounter">
-            How many times do you want to use it:
-          </label>
-          <Field
-            className="form-field__input"
-            component="input"
-            type="number"
-            name="loadedCounter"
-          />
+        </FormSection>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="loadedCounter">
+              How many times do you want to use it:
+            </label>
+            <Field
+              className="form-field__input"
+              component="input"
+              type="number"
+              name="loadedCounter"
+            />
+          </div>
         </div>
+      </FormSection>
+      <div className="form-row">
+        <button className="button form__button" type="submit">
+          Submit
+        </button>
       </div>
-    </div>
-    <div className="form-row">
-      <button className="button form__button" type="submit">
-        Submit
-      </button>
-    </div>
+    </section>
   </form>
 );
 
