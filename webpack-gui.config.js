@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -9,29 +10,38 @@ module.exports = {
     './src/lib/gui/main.js'
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        use: [
+          'babel-loader'
+        ]
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use:
+          ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'sass-loader']
+          })
       },
       {
         test: /\.css/,
-        loaders: ['style-loader', 'css-loader']
+        use: ['css-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'file-loader'
+        use: 'file-loader'
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg|jpg|png|ico)(\?.+)?$/,
-        loader: 'file-loader'
+        use: 'file-loader'
       },
-      { test: /\.json/, loader: 'json-loader' }
+      {
+        test: /\.json/,
+        use: 'json-loader'
+      }
     ]
   },
   plugins: [
@@ -39,7 +49,8 @@ module.exports = {
       template: './src/lib/gui/index.html',
       chunksSortMode: 'dependency',
       filename: '../index.html'
-    })
+    }),
+    new ExtractTextPlugin('styles.css')
   ],
   devtool: 'source-map',
   output: {
