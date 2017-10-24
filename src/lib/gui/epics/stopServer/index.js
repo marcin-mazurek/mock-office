@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { has, ifElse } from 'ramda';
-import api from '../../resources/api/index';
+import api from '../../resources/api';
 import {
   failedAction,
   succeededAction

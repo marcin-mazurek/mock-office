@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
 import { SUBMIT_BUTTON_CLICKED } from '../../components/AddServerForm/actions';
-import api from '../../resources/api/index';
+import api from '../../resources/api';
 import { succeededAction, failedAction } from './actions';
 
 const preparePayload = (action) => {

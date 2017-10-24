@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ifElse, has } from 'ramda';
-import api from '../../resources/api/index';
+import api from '../../resources/api';
 import { failedAction, succeededAction } from './actions';
 
 const preparePayload = action => ({ id: action.id });

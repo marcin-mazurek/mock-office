@@ -1,5 +1,5 @@
 import { ifElse, has } from 'ramda';
-import api from '../../resources/api/index';
+import api from '../../resources/api';
 import { REMOVE_BUTTON_CLICKED as HTTP_REMOVE_BUTTON_CLICKED } from '../../components/HttpMockListItem';
 import { REMOVE_BUTTON_CLICKED as WS_REMOVE_BUTTON_CLICKED } from '../../components/WsMockListItem';
 
