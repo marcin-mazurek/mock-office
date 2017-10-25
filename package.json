@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build-gui": "webpack --progress",
-    "watch-gui": "npm run watch-webpack & npm run browser-sync",
-    "watch-webpack": "webpack --progress --watch",
+    "watch-gui": "npm run watch-webpack",
+    "watch-webpack": "webpack-dev-server --config webpack-dev.config.js",
     "browser-sync": "browser-sync start --no-ghost-mode --files 'dist/lib/gui/**/*' --proxy http://localhost:3070 --reload-debounce 1000",
     "test-gui": "jest src/gui",
     "tdd-gui": "jest src/gui --watch",
