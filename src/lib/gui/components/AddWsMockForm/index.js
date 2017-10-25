@@ -1,39 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection, FieldArray } from 'redux-form/immutable';
-import { connect } from 'react-redux';
 import Select from 'react-select';
-import TaskFormSection from '../AddWsMockFormTaskFormSection/index';
-
-export const FORM_SUBMITTED = 'component/AddWsMockForm/FORM_SUBMITTED';
-export const formSubmittedAction = (server, scenario, values) => ({
-  type: FORM_SUBMITTED,
-  server,
-  scenario,
-  values
-});
+import TaskFormSection from '../AddWsMockFormTaskFormSection';
+import { submitSucceededAction } from './actions';
 
 const EventTypeField = field =>
   <Select
-    name="event"
     value={field.input.value}
     onChange={option => field.input.onChange(option.value)}
     searchable={false}
     clearable={false}
     className="form-field__select"
     options={[
-      { value: 'RECEIVED_MESSAGE', label: 'on message' },
-      { value: 'CLIENT_CONNECTED', label: 'on connect' }
+      { value: 'message', label: 'on message' },
+      { value: 'connect', label: 'on connect' }
     ]}
   />;
 // eslint-disable-next-line react/prop-types
-const renderTasks = ({ fields }) =>
+const renderMessages = ({ fields }) =>
   <div>
     <ul className="add-ws-mock-tasks-list">
       {
-        fields.map((field, index) =>
+        fields.map((name, index) =>
           <li className="add-ws-mock-tasks-list__item" key={index}>
-            <FormSection name={field}>
+            <FormSection name={name}>
               <TaskFormSection />
             </FormSection>
           </li>
@@ -51,43 +42,48 @@ const renderTasks = ({ fields }) =>
 
 export const AddMockForm = props =>
   <form className="form" onSubmit={props.handleSubmit}>
-    <div className="form-row">
-      <div className="form__field">
-        <label className="form-field__label" htmlFor="title">Title:</label>
-        <Field
-          name="title"
-          component="input"
-          type="text"
-          placeholder="Mock title"
-          className="form-field__input"
-        />
-      </div>
-    </div>
-    <div className="form-row">
-      <div className="form__field">
-        <label className="form-field__label" htmlFor="eventType">Event type:</label>
-        <Field
-          name="event"
-          component={EventTypeField}
-        />
-      </div>
-    </div>
-    <section className="form-section">
-      <div className="form-row">
-        <div className="form__field">
-          <label className="form-field__label" htmlFor="requirements">Requirements:</label>
-          <Field
-            name="requirements"
-            component="textarea"
-            cols="30"
-            rows="10"
-          />
+    <FormSection name="trigger">
+      <section className="form-section">
+        <header className="form-section__header">Trigger:</header>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="event">Event type:</label>
+            <Field
+              name="event"
+              component={EventTypeField}
+            />
+          </div>
         </div>
-      </div>
-    </section>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="trigger.params">Params:</label>
+            <Field
+              name="params"
+              component="textarea"
+              cols="30"
+              rows="10"
+            />
+          </div>
+        </div>
+      </section>
+    </FormSection>
     <section className="form-section">
-      <FieldArray component={renderTasks} name="tasks" />
+      <header className="form-section__header">Messages:</header>
+      <FieldArray component={renderMessages} name="messages" />
     </section>
+    <div className="form-row">
+      <div className="form__field">
+        <label className="form-field__label" htmlFor="loadedCounter">
+          How many times do you want to use it:
+        </label>
+        <Field
+          className="form-field__input"
+          component="input"
+          type="number"
+          name="loadedCounter"
+        />
+      </div>
+    </div>
     <div className="form-row">
       <button className="button form__button" type="submit">
         Submit
@@ -99,18 +95,17 @@ AddMockForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(formSubmittedAction(ownProps.server, ownProps.scenario, values))
-});
-
-export default connect(null, mapDispatchToProps)(
-  reduxForm(
-    {
-      form: 'addWsMock',
-      initialValues: {
-        event: 'RECEIVED_MESSAGE',
-        tasks: [{}]
-      }
+export default reduxForm(
+  {
+    form: 'addWsMock',
+    initialValues: {
+      messages: [{}]
+    },
+    onSubmit(values) {
+      return values.set('loadedCounter', parseInt(values.get('loadedCounter'), 10)).toJS();
+    },
+    onSubmitSuccess(values, dispatch) {
+      dispatch(submitSucceededAction(values));
     }
-  )(AddMockForm)
-);
+  }
+)(AddMockForm);

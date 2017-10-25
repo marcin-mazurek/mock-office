@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import api from '../../resources/api';
-import { SUBMIT_SUCCEEDED } from '../../components/AddHttpMockForm/actions';
+import { SUBMIT_SUCCEEDED as HTTP_MOCK_FORM_SUBMIT_SUCCEEDED } from '../../components/AddHttpMockForm/actions';
+import { SUBMIT_SUCCEEDED as WS_MOCK_FORM_SUBMIT_SUCCEEDED } from '../../components/AddWsMockForm/actions';
 import { paramsSelector } from '../../app/addMock/selectors';
 import { ConnectionError } from '../../resources/api/errors';
 
@@ -19,7 +20,7 @@ export const failedAction = reason => ({
 export default function addMockEpic(action$, store) {
   let mockId;
 
-  return action$.ofType(SUBMIT_SUCCEEDED)
+  return action$.ofType(HTTP_MOCK_FORM_SUBMIT_SUCCEEDED, WS_MOCK_FORM_SUBMIT_SUCCEEDED)
     .flatMap((action) => {
       const params = paramsSelector(store.getState());
       return Observable.from(

@@ -4,7 +4,6 @@ import { clearExpiredNotificationsEpic } from 'notifications';
 import { combineEpics } from 'redux-observable';
 import addServerEpic from './addServer';
 import addHttpMockEpic from './addMock';
-import addWsMockEpic from './addWsMock';
 import { removeMockEpic } from './removeMock';
 import addMockFromFileEpic from './importMock';
 import removeServerEpic from './removeServer';
@@ -19,7 +18,6 @@ export default combineEpics(
   removeServerEpic,
   exportStateEpic,
   addHttpMockEpic,
-  addWsMockEpic,
   editServerEpic,
   toggleServer,
   clearExpiredNotificationsEpic
