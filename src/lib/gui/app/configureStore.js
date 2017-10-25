@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 import { createStore, compose, applyMiddleware } from 'redux';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { reducer } from './index';
@@ -12,7 +12,7 @@ const DEBUG = process.env.NODE_ENV !== 'production';
 
 export default () => {
   const initialState = fromJS({});
-  const routerMiddleware = createRouterMiddleware(hashHistory);
+  const routerMiddleware = createRouterMiddleware(browserHistory);
   const enhancer = compose(
     applyMiddleware(routerMiddleware, epicMiddleware),
     (DEBUG && window.devToolsExtension) ? window.devToolsExtension() : f => f
