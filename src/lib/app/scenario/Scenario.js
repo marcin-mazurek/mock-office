@@ -2,26 +2,7 @@ import unique from 'cuid';
 import deepEqual from 'deep-equal';
 import btoa from 'btoa';
 import Mock from './Mock';
-
-export const extractSubTree = (source, target, result) => {
-  const res = result || {};
-  const targetKeys = Object.keys(target);
-
-  targetKeys.forEach((key) => {
-    if (
-      typeof target[key] === 'object' &&
-      typeof source[key] === 'object' &&
-      !Array.isArray(source[key])
-    ) {
-      res[key] = {};
-      extractSubTree(source[key], target[key], res[key]);
-    } else {
-      res[key] = source[key];
-    }
-  });
-
-  return res;
-};
+import extractSubTree from './extractSubTree';
 
 export default class Scenario {
   constructor(args) {
