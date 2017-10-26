@@ -101,12 +101,9 @@ export default class WsMockServer {
 
   stop(cb) {
     if (this.ws) {
-      this.ws.close();
+      this.ws.terminate();
     }
-
-    this.wsServer.close(() => {
-      this.httpServer.close(cb);
-    });
+    this.httpServer.close(cb);
   }
 
   rename(name) {
