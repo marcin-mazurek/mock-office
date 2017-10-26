@@ -9,7 +9,8 @@ import {
   STOP_MOCK_MESSAGE_RECEIVED,
   FINISH_MOCK_MESSAGE_RECEIVED,
   RUN_MOCK_MESSAGE_RECEIVED,
-  RESTORE_STATE as APP_RESTORE_STATE
+  RESTORE_STATE as APP_RESTORE_STATE,
+  CANCEL_MOCK_MESSAGE_RECEIVED
 } from '../../appSync/actions';
 import { SUCCEEDED as IMPORT_MOCKS_SUCCEEDED } from '../../epics/importMock';
 import { SUCCEED as ADD_MOCK_SUCCEED } from '../../epics/addMock';
@@ -160,6 +161,7 @@ export const reducers = {
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
+    case CANCEL_MOCK_MESSAGE_RECEIVED:
     case STOP_MOCK_MESSAGE_RECEIVED: {
       const { id } = action;
       return reducers.stopMock(state, id);

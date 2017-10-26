@@ -25,3 +25,8 @@ export const runMockMessageReceivedAction = id => ({
   type: RUN_MOCK_MESSAGE_RECEIVED,
   id
 });
+export const CANCEL_MOCK_MESSAGE_RECEIVED = 'appSync/CANCEL_MOCK_MESSAGE_RECEIVED';
+export const cancelMockMessageReceived = id => ({
+  type: CANCEL_MOCK_MESSAGE_RECEIVED,
+  id
+});

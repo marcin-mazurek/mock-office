@@ -4,7 +4,8 @@ import {
   finishMockMessageReceivedAction,
   removeAfterUseMessageReceivedAction,
   runMockMessageReceivedAction,
-  restoreStateAction
+  restoreStateAction,
+  cancelMockMessageReceived,
 } from './actions';
 
 export default function startAppSync(ws, store) {
@@ -38,6 +39,10 @@ export default function startAppSync(ws, store) {
         }
         case 'MOCK_START': {
           store.dispatch(runMockMessageReceivedAction(data.mockId));
+          break;
+        }
+        case 'MOCK_CANCEL': {
+          store.dispatch(cancelMockMessageReceived(data.mockId));
           break;
         }
         case 'RESTORE_STATE': {
