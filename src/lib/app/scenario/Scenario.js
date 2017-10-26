@@ -5,9 +5,8 @@ import Mock from './Mock';
 import extractSubTree from './extractSubTree';
 
 export default class Scenario {
-  constructor(args) {
+  constructor() {
     this.id = unique();
-    this.emitter = args.emitter.extend({ scenarioId: this.id });
     this.mocks = [];
     this.getMock = this.getMock.bind(this);
     this.addMock = this.addMock.bind(this);
@@ -44,7 +43,7 @@ export default class Scenario {
   }
 
   addMock(mockConfig) {
-    const mock = new Mock(mockConfig, this.emitter);
+    const mock = new Mock(mockConfig);
     this.mocks.push(mock);
 
     return mock.id;
@@ -70,9 +69,8 @@ export default class Scenario {
 
     return mock.play(action).then(
       (finished) => {
-        if (finished && mock.toRemove) {
+        if (finished && mock.expired) {
           this.removeMock(id);
-          this.emitter.emit('MOCK_REMOVED_AFTER_USE', { mockId: id, scenario: this.id, tasks: mock.tasks.map(task => task.id) });
         }
 
         return finished;

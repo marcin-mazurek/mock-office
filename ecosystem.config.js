@@ -36,7 +36,7 @@ module.exports = {
         './dist/lib/app'
       ],
       out_file: __dirname + '/pm2.log',
-      error_file: __dirname + '/pm2-errors.log',
+      error_file: __dirname + '/pm2.log',
       args: "--gui",
       combine_logs: true
     }

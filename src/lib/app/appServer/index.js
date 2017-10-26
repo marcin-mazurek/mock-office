@@ -13,7 +13,7 @@ import configureRemoveMockMiddleware from './middlewares/removeMockMiddleware';
 import configureExportMiddleware from './middlewares/exportMiddleware';
 import configureGetMockMiddleware from './middlewares/getMockMiddleware';
 
-export const createAppServer = () => {
+export const createAppServer = (guiEventsMiddleware) => {
   const ajv = new Ajv();
   const app = express();
   app.use(cors());
@@ -23,8 +23,16 @@ export const createAppServer = () => {
   app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv));
   app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv));
   app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv));
-  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv));
-  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv));
+  app.post(
+    '/add-mock',
+    bodyParser.json(),
+    configureAddMockMiddleware(ajv),
+    guiEventsMiddleware || ((req, res, next) => { next(); }),
+    (req, res) => {
+      res.status(200).json({
+        id: req.body.mockId
+      });
+    });
   app.post('/remove-mock', bodyParser.json(), configureRemoveMockMiddleware(ajv));
   app.get('/export', configureExportMiddleware());
   app.get('/mock', configureGetMockMiddleware(ajv));

@@ -28,7 +28,7 @@ export default function startAppSync(ws, store) {
           store.dispatch(finishMockMessageReceivedAction(data.mockId));
           break;
         }
-        case 'MOCK_REMOVED_AFTER_USE': {
+        case 'MOCK_EXPIRE': {
           setTimeout(() => {
             store.dispatch(
               removeAfterUseMessageReceivedAction(data.scenario, data.mockId)

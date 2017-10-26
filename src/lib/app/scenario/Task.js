@@ -1,10 +1,11 @@
+import EventEmitter from 'events';
 import unique from 'cuid';
 import createSchedule from './createSchedule';
 
-export default class Task {
-  constructor(config, emitter) {
+export default class Task extends EventEmitter {
+  constructor(config) {
+    super();
     this.id = unique();
-    this.emitter = emitter.extend({ taskId: this.id });
     this.pending = false;
     this.schedule = config.schedule || {};
     this.params = config.params || {};
@@ -22,10 +23,10 @@ export default class Task {
       this.subscription = schedule(
         action,
         () => {
-          this.emitter.emit('MOCK_PART_START');
+          this.emit('start');
         },
         () => {
-          this.emitter.emit('MOCK_PART_END');
+          this.emit('end');
           this.pending = false;
           resolve(true);
         }
@@ -35,7 +36,7 @@ export default class Task {
 
       this.stop = () => {
         this.subscription.unsubscribe();
-        this.emitter.emit('MOCK_PART_CANCEL');
+        this.emit('cancel');
         this.pending = false;
         resolve(false);
       };

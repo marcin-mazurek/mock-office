@@ -25,8 +25,7 @@ export const send = (req, res) => (params) => {
 export default class HttpMockServer {
   constructor(config) {
     this.id = unique();
-    this.emitter = config.emitter.extend({ serverId: this.id });
-    this.scenario = new Scenario({ emitter: this.emitter });
+    this.scenario = new Scenario();
     this.sockets = [];
     this.type = 'http';
     this.port = config.port || 3000;

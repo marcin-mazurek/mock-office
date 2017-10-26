@@ -1,4 +1,4 @@
-export default function extractSubTree(source, target, subTree) {
+export default function extractSubTree(source, target, subTree = {}) {
   const res = subTree || {};
   const targetKeys = Object.keys(target);
 

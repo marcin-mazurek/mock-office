@@ -1,8 +1,7 @@
 import http from 'http';
 import { Server as WebSocketServer } from 'ws';
 import colors from 'colors/safe';
-import { addListener } from './serversManager/emitter';
-import { serversManager } from './serversManager';
+import { serversManager } from '../serversManager';
 
 export function configureGuiEventsServer(persistentState) {
   const httpServer = http.createServer();
@@ -45,39 +44,10 @@ export function configureGuiEventsServer(persistentState) {
     });
   });
 
-  addListener('MOCK_REMOVED',
-    args => broadcast('MOCK_REMOVED', args)
-  );
-
-  addListener('MOCK_START',
-    args => broadcast('MOCK_START', args)
-  );
-
-  addListener('MOCK_END',
-    args => broadcast('MOCK_END', args)
-  );
-
-  addListener('MOCK_CANCEL',
-    args => broadcast('MOCK_CANCEL', args)
-  );
-
-  addListener('MOCK_REMOVED_AFTER_USE',
-    args => broadcast('MOCK_REMOVED_AFTER_USE', args)
-  );
-
-  addListener('MOCK_PART_START',
-    args => broadcast('MOCK_PART_START', args)
-  );
-
-  addListener('MOCK_PART_END',
-    args => broadcast('MOCK_PART_END', args)
-  );
-
-  addListener('MOCK_PART_CANCEL',
-    args => broadcast('MOCK_PART_CANCEL', args)
-  );
-
-  return httpServer;
+  return {
+    server: httpServer,
+    broadcast
+  };
 }
 
 export function serveGuiEventsServer(server, port) {

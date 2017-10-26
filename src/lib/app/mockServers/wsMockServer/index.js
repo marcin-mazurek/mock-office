@@ -12,13 +12,11 @@ export default class WsMockServer {
     this.port = config.port || 3000;
     this.name = config.name;
     this.id = unique();
-    this.emitter = config.emitter.extend({ serverId: this.id });
-    this.scenario = new Scenario({ emitter: this.emitter });
+    this.scenario = new Scenario();
     this.listening = false;
     this.secure = config.secure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
-    this.emitter = config.emitter;
     this.getScenario = this.getScenario.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);

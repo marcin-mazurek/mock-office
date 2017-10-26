@@ -1,2 +1,3 @@
-export { emitter } from './emitter';
-export { default as serversManager } from './ServersManager';
+import ServersManager from './ServersManager';
+
+export const serversManager = new ServersManager();

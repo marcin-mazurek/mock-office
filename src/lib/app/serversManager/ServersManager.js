@@ -1,13 +1,12 @@
 import HttpMockServer from '../mockServers/httpMockServer';
-import WSMockServer from '../mockServers/wsMockServer/index';
-import { Emitter } from './emitter';
+import WSMockServer from '../mockServers/wsMockServer';
 
 const serverTypes = {
   http: HttpMockServer,
   ws: WSMockServer
 };
 
-class ServersManager {
+export default class ServersManager {
   constructor() {
     this.servers = [];
     this.add = this.add.bind(this);
@@ -17,13 +16,12 @@ class ServersManager {
     this.getAll = this.getAll.bind(this);
     this.remove = this.remove.bind(this);
     this.rename = this.rename.bind(this);
-    this.emitter = new Emitter();
   }
 
   add(name, port, type, secure, keyPath, certPath) {
     const ServerConstructor = serverTypes[type];
     const server = new ServerConstructor(
-      { name, port, secure, keyPath, certPath, emitter: this.emitter }
+      { name, port, secure, keyPath, certPath }
     );
     this.servers.push(server);
     return server.id;
@@ -114,5 +112,3 @@ class ServersManager {
     });
   }
 }
-
-export default new ServersManager();

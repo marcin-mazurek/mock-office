@@ -3,8 +3,10 @@
 const guiEnabled = (process.argv.indexOf('--gui') > -1);
 const chan = require('../index');
 
-chan.startApp();
+let guiServerMiddleware;
 
 if (guiEnabled) {
-  chan.startGUI();
+  guiServerMiddleware = chan.startGUI();
 }
+
+chan.startApp(guiServerMiddleware);

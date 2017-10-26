@@ -16,7 +16,7 @@ const schema = {
 };
 
 export default function configure(ajv) {
-  return (req, res) => {
+  return (req, res, next) => {
     if (!ajv.validate(schema, req.body)) {
       res.status(400).json(ajv.errors);
       return;
@@ -29,9 +29,8 @@ export default function configure(ajv) {
         return;
       }
 
-      res.status(200).json({
-        id: server.addMock(req.body.scenario, req.body.mock)
-      });
+      req.body.mockId = server.addMock(req.body.scenario, req.body.mock);
+      next();
     } catch (error) {
       res.status(400).json({ error });
     }
