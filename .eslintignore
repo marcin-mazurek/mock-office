@@ -1,3 +1,4 @@
 dist/
 /ecosystem.config.js
 !.storybook/
+mocks/

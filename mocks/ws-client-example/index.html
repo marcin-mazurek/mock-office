@@ -18,10 +18,14 @@
       document.getElementById('message').appendChild(newLine);
       index += 1;
     }
-    var ws = new WebSocket('ws://localhost:3100');
+    var ws = new WebSocket('ws://localhost:3010');
     ws.onmessage = function (event) {
       console.log(event);
       showMessage(event.data);
+
+      if (event === 'hello') {
+        ws.send('start messaging');
+      }
     };
     ws.onopen = function() {
       setTimeout(function() {

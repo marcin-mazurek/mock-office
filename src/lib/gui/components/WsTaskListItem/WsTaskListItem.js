@@ -6,9 +6,6 @@ const WsTaskListItem = ({ task }) => {
   const interval = task.getIn(['schedule', 'interval']);
   return (
     <div className="task-list-item">
-      <div className="task-list-item__tag">
-        {task.getIn(['params', 'status'])}
-      </div>
       {
         delay
           ? (

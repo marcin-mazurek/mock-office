@@ -42,6 +42,21 @@ const renderMessages = ({ fields }) =>
 
 export const AddMockForm = props =>
   <form className="form" onSubmit={props.handleSubmit}>
+    <div className="form-section">
+      <div className="form-row">
+        <div className="form__field">
+          <label className="form-field__label" htmlFor="loadedCounter">
+            How many times do you want to use it:
+          </label>
+          <Field
+            className="form-field__input"
+            component="input"
+            type="number"
+            name="loadedCounter"
+          />
+        </div>
+      </div>
+    </div>
     <FormSection name="trigger">
       <section className="form-section">
         <header className="form-section__header">Trigger:</header>
@@ -72,19 +87,6 @@ export const AddMockForm = props =>
       <FieldArray component={renderMessages} name="messages" />
     </section>
     <div className="form-row">
-      <div className="form__field">
-        <label className="form-field__label" htmlFor="loadedCounter">
-          How many times do you want to use it:
-        </label>
-        <Field
-          className="form-field__input"
-          component="input"
-          type="number"
-          name="loadedCounter"
-        />
-      </div>
-    </div>
-    <div className="form-row">
       <button className="button form__button" type="submit">
         Submit
       </button>
@@ -102,7 +104,17 @@ export default reduxForm(
       messages: [{}]
     },
     onSubmit(values) {
-      return values.set('loadedCounter', parseInt(values.get('loadedCounter'), 10)).toJS();
+      /* eslint-disable no-param-reassign */
+      values = values.update('loadedCounter', (loadedCounter) => {
+        if (!loadedCounter) {
+          return 1;
+        }
+
+        return parseInt(loadedCounter, 10);
+      });
+      /* eslint-enable no-param-reassign */
+
+      return values.toJS();
     },
     onSubmitSuccess(values, dispatch) {
       dispatch(submitSucceededAction(values));

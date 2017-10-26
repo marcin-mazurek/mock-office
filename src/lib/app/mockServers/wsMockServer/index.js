@@ -3,7 +3,8 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import unique from 'cuid';
-import Scenario from '../../scenario/index';
+import { lensPath, view, set } from 'ramda';
+import Scenario from '../../scenario';
 
 export default class WsMockServer {
   constructor(config) {
@@ -63,7 +64,7 @@ export default class WsMockServer {
 
         if (mock) {
           this.scenario.play(mock.id, (params) => {
-            this.ws.send(params.payload.message, (err) => {
+            this.ws.send(params.message, (err) => {
               if (err) {
                 // eslint-disable-next-line no-console
                 console.log('socket is closed so we cant send message. All tasks will be canceled on close event');
@@ -86,7 +87,7 @@ export default class WsMockServer {
 
       if (mock) {
         this.scenario.play(mock.id, (params) => {
-          this.ws.send(params.payload.message);
+          this.ws.send(params.message);
         });
       }
     });
@@ -123,6 +124,15 @@ export default class WsMockServer {
   }
 
   addMock(scenarioId, mockConfig) {
+    /* eslint-disable no-param-reassign */
+    // set default values
+    const eventLens = lensPath(['trigger', 'event']);
+    if (!view(eventLens, mockConfig)) {
+      mockConfig = set(eventLens, 'message', mockConfig);
+    }
+
+    /* eslint-enable no-param-reassign */
+
     return this.scenario.addMock({
       requirements: mockConfig.trigger,
       tasks: mockConfig.messages,

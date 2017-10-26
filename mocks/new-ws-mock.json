@@ -6,9 +6,7 @@
     "messages": [
       {
         "params": {
-          "payload": {
-            "message": "welcome message"
-          }
+          "message": "welcome message"
         },
         "schedule": {
           "delay": 1000
@@ -16,9 +14,10 @@
       },
       {
         "params": {
-          "payload": {
-            "message": "ping"
-          }
+          "message": "message from mock server"
+        },
+        "schedule": {
+          "interval": 1000
         }
       }
     ]

@@ -18,10 +18,6 @@ import {
   FAILED as ADD_HTTP_MOCK_FAILED
 } from '../../epics/addMock';
 import {
-  SUCCEED as ADD_WS_MOCK_SUCCEED,
-  FAILED as ADD_WS_MOCK_FAILED
-} from '../../epics/addWsMock';
-import {
   FAILED as START_SERVER_FAILED
 } from '../../epics/startServer/actions';
 import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer';
@@ -29,10 +25,6 @@ import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer';
 export default createReducer(
   {
     [ADD_HTTP_MOCK_SUCCEED]: reduce => reduce('addNotification', {
-      type: 'success',
-      text: 'Mock added'
-    }),
-    [ADD_WS_MOCK_SUCCEED]: reduce => reduce('addNotification', {
       type: 'success',
       text: 'Mock added'
     }),
@@ -57,10 +49,6 @@ export default createReducer(
       text: action.reason
     }),
     [ADD_HTTP_MOCK_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [ADD_WS_MOCK_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),

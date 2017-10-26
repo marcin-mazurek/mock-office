@@ -1,6 +1,5 @@
 import React from 'react';
-import { Field } from 'redux-form/immutable';
-import { FormSection } from 'redux-form';
+import { Field, FormSection } from 'redux-form/immutable';
 
 const AddWsMockFormTaskFormSection = () => (
   <div className="form-section">
@@ -8,13 +7,13 @@ const AddWsMockFormTaskFormSection = () => (
     <FormSection name="params">
       <div className="form-row">
         <div className="form__field">
-          <label className="form-field__label" htmlFor="payload">Payload:</label>
-          <Field component="textarea" name="payload" />
+          <label className="form-field__label" htmlFor="payload">Message:</label>
+          <Field component="textarea" name="message" />
         </div>
       </div>
     </FormSection>
-    <div className="form-row">
-      <FormSection name="schedule">
+    <FormSection name="schedule">
+      <div className="form-row">
         <div className="form__field">
           <label className="form-field__label" htmlFor="delay">Delay:</label>
           <Field
@@ -24,8 +23,19 @@ const AddWsMockFormTaskFormSection = () => (
             name="delay"
           />
         </div>
-      </FormSection>
-    </div>
+      </div>
+      <div className="form-row">
+        <div className="form__field">
+          <label className="form-field__label" htmlFor="interval">Interval:</label>
+          <Field
+            className="form-field__input"
+            component="input"
+            type="number"
+            name="interval"
+          />
+        </div>
+      </div>
+    </FormSection>
   </div>
 );
 

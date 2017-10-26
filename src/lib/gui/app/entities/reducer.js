@@ -11,11 +11,8 @@ import {
   RUN_MOCK_MESSAGE_RECEIVED,
   RESTORE_STATE as APP_RESTORE_STATE
 } from '../../appSync/actions';
-import {
-  SUCCEEDED as IMPORT_MOCKS_SUCCEEDED
-} from '../../epics/importMock';
+import { SUCCEEDED as IMPORT_MOCKS_SUCCEEDED } from '../../epics/importMock';
 import { SUCCEED as ADD_MOCK_SUCCEED } from '../../epics/addMock';
-import { SUCCEED as ADD_WS_MOCK_SUCCEED } from '../../epics/addWsMock';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer/actions';
 
@@ -250,8 +247,7 @@ export default (state = getInitialState(), action) => {
       });
       return newState;
     }
-    case ADD_MOCK_SUCCEED:
-    case ADD_WS_MOCK_SUCCEED: {
+    case ADD_MOCK_SUCCEED: {
       const { mock, scenario } = action;
       let newState = state;
       newState = reducers.addMock(
