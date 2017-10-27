@@ -140,5 +140,8 @@
       "<rootDir>/src",
       "<rootDir>/test"
     ]
+  },
+  "bin": {
+    "chan": "./dist/bin/chan.js"
   }
 }
