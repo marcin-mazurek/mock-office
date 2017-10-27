@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import expandIcon from '../../../../../assets/icons_green_expand@3x.svg';
+import trashIcon from '../../../../../assets/icons_gray_trash@3x.svg';
 import { TaskListConnect } from '../TaskList';
 import { HttpTaskListItemConnect } from '../HttpTaskListItem';
 
@@ -30,8 +31,8 @@ export default class HttpMockListItem extends React.Component {
     } = this.props;
     const { expanded } = this.state;
     const mockTasksClassnames = classnames({
-      'mock-list-item__response': true,
-      'mock-list-item__response--visible': expanded
+      'mock-list-item__tasks': true,
+      'mock-list-item__tasks--visible': expanded
     });
 
     const expired = mock.get('expired');
@@ -55,28 +56,37 @@ export default class HttpMockListItem extends React.Component {
     });
     return (
       <div className={mockClassNames}>
-        <div className="mock-list-item__request">
+        <span className="mock-list-item__line" />
+        <div className="mock-list-item-mock">
           <button className={expandButtonClassNames} onClick={this.showTasks}>
             <img src={expandIcon} role="presentation" />
           </button>
-          <div className="mock-list-item__spinner">
-            <div className={spinnerClassNames}>
-              <div className="bounce1" />
-              <div className="bounce2" />
-              <div className="bounce3" />
+          <div className="mock-list-item__params">
+            <div className="mock-list-item__spinner">
+              <div className={spinnerClassNames}>
+                <div className="bounce1" />
+                <div className="bounce2" />
+                <div className="bounce3" />
+              </div>
             </div>
+            <div className="mock-list-item__tag">{`${runCounter}/${loadedCounter}`}</div>
           </div>
-          <div className="mock-list-item__tag">{`${runCounter}/${loadedCounter}`}</div>
-          <div className="mock-list-item__tag">
-            {mock.getIn(['requirements', 'method'])}
+          <div className="mock-list-item__request">
+            <div className="mock-list-item__tag">
+              {mock.getIn(['requirements', 'method'])}
+            </div>
+            <div className="mock-list-item__tag">{mock.getIn(['requirements', 'path'])}</div>
+            <button
+              className="mock-list-item__remove-button"
+              onClick={() => onRemoveButtonClick(server, scenario, id)}
+            >
+              <img
+                src={trashIcon}
+                className="mock-list-item__remove-button-icon"
+                alt="remove mock button"
+              />
+            </button>
           </div>
-          <div className="mock-list-item__tag">{mock.getIn(['requirements', 'path'])}</div>
-          <button
-            className="mock-list-item__remove-button"
-            onClick={() => onRemoveButtonClick(server, scenario, id)}
-          >
-            remove
-          </button>
         </div>
         <div className={mockTasksClassnames}>
           <TaskListConnect

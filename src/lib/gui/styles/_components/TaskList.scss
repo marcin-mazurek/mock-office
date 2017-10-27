@@ -1,14 +1,18 @@
 .task-list {
   @extend %list-reset;
+  padding-left: 130px;
 }
 
 .task-list-item {
+  background-color: #FFFFFF;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #EBEBEB;
   padding: 5px 0;
   font-size: 14px;
-  padding-left: 50px;
+  height: 36px;
+  position: relative;
+  border-bottom-left-radius: 5px;
 
   &:last-child {
     border-bottom: none;
@@ -46,4 +50,10 @@
 .task-list-item__title {
   margin-right: 15px;
   flex: none;
+}
+
+.task-list-item__params {
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
 }

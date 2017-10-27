@@ -1,10 +1,10 @@
 .mock-list-item {
   border-radius: 2px;
-  background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
   font-size: 15px;
   border-left: 4px solid transparent;
+  position: relative;
 }
 
 .mock-list-item--expired {
@@ -15,8 +15,9 @@
 .mock-list-item__request {
   display: flex;
   align-items: center;
-  padding: 12px;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 0 20px;
+  border-left: 1px solid #EEE;
+  flex: auto;
 }
 
 .mock-list-item__title {
@@ -39,26 +40,34 @@
   }
 }
 
-.mock-list-item__tag {
-  border-radius: 3px;
-  padding: 2px 6px;
-  margin-right: 10px;
-  font-size: 13px;
-  background-color: #EEE;
-  color: darken(#EEE, 40%);
+.mock-list-item__remove-button-icon {
+  height: 20px;
 }
 
-.mock-list-item__response {
+.mock-list-item__tag {
+  border-radius: 3px;
+  padding: 0 6px;
+  margin-right: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  background-color: #EEE;
+  color: darken(#EEE, 40%);
+  height: 20px;
+}
+
+.mock-list-item__tasks {
   display: none;
 }
 
-.mock-list-item__response--visible {
+.mock-list-item__tasks--visible {
   display: block;
 }
 
 .mock-list-item__expand-button {
   @extend %button-reset;
-  margin-right: 10px;
+  height: 100%;
+  padding: 0 10px;
+  width: 30px;
 }
 
 .mock-list-item__expand-button--active {
@@ -67,4 +76,23 @@
 
 .mock-list-item__spinner {
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.mock-list-item__params {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  width: 100px;
+  padding: 5px 0;
+}
+
+.mock-list-item-mock {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 45px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background-color: #FFFFFF;
 }
