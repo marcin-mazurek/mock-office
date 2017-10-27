@@ -2,11 +2,13 @@
 
 const guiEnabled = (process.argv.indexOf('--gui') > -1);
 const chan = require('../index');
+const eventsPlugin = require('../lib/app/eventsPlugin').default;
 
-let guiServerMiddleware;
+const plugins = [];
 
 if (guiEnabled) {
-  guiServerMiddleware = chan.startGUI();
+  chan.startGUI();
+  plugins.push(eventsPlugin);
 }
 
-chan.startApp(guiServerMiddleware);
+chan.startApp(plugins);

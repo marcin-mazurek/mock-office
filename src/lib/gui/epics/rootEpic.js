@@ -10,6 +10,7 @@ import removeServerEpic from './removeServer';
 import exportStateEpic from './exportState/exportStateEpic';
 import editServerEpic from './editServer';
 import toggleServer from './toggleServer';
+import loadStateOnStart from './loadStateOnStart';
 
 export default combineEpics(
   addServerEpic,
@@ -20,5 +21,6 @@ export default combineEpics(
   addHttpMockEpic,
   editServerEpic,
   toggleServer,
-  clearExpiredNotificationsEpic
+  clearExpiredNotificationsEpic,
+  loadStateOnStart
 );

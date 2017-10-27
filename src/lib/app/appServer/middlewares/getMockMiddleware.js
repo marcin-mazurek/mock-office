@@ -1,5 +1,3 @@
-import { serversManager } from '../../serversManager';
-
 const schema = {
   properties: {
     server: {
@@ -15,7 +13,7 @@ const schema = {
   required: ['server', 'scenario', 'id']
 };
 
-export default function configure(ajv) {
+export default function configure(ajv, serversManager) {
   return (req, res) => {
     if (!ajv.validate(schema, req.query)) {
       res.status(400).json(ajv.errors);

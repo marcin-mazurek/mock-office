@@ -1,6 +1,4 @@
-import { serversManager } from '../../serversManager';
-
-export default function configure(ajv) {
+export default function configure(ajv, serversManager) {
   return (req, res) => {
     const schema = {
       type: 'object',

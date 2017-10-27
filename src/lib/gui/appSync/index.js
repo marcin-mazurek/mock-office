@@ -4,7 +4,6 @@ import {
   finishMockMessageReceivedAction,
   removeAfterUseMessageReceivedAction,
   runMockMessageReceivedAction,
-  restoreStateAction,
   cancelMockMessageReceived,
 } from './actions';
 
@@ -32,7 +31,7 @@ export default function startAppSync(ws, store) {
         case 'MOCK_EXPIRE': {
           setTimeout(() => {
             store.dispatch(
-              removeAfterUseMessageReceivedAction(data.scenario, data.mockId)
+              removeAfterUseMessageReceivedAction(data.scenarioId, data.mockId)
             );
           }, 3000);
           break;
@@ -43,10 +42,6 @@ export default function startAppSync(ws, store) {
         }
         case 'MOCK_CANCEL': {
           store.dispatch(cancelMockMessageReceived(data.mockId));
-          break;
-        }
-        case 'RESTORE_STATE': {
-          store.dispatch(restoreStateAction(data.state));
           break;
         }
         default:

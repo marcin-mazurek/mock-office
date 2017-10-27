@@ -1,13 +1,15 @@
-import HttpMockServer from '../mockServers/httpMockServer';
-import WSMockServer from '../mockServers/wsMockServer';
+import EventEmitter from 'events';
+import HttpMockServer from './mockServers/httpMockServer';
+import WSMockServer from './mockServers/wsMockServer';
 
 const serverTypes = {
   http: HttpMockServer,
   ws: WSMockServer
 };
 
-export default class ServersManager {
+export default class ServersManager extends EventEmitter {
   constructor() {
+    super();
     this.servers = [];
     this.add = this.add.bind(this);
     this.start = this.start.bind(this);
@@ -18,13 +20,52 @@ export default class ServersManager {
     this.rename = this.rename.bind(this);
   }
 
-  add(name, port, type, secure, keyPath, certPath) {
-    const ServerConstructor = serverTypes[type];
-    const server = new ServerConstructor(
-      { name, port, secure, keyPath, certPath }
-    );
-    this.servers.push(server);
-    return server.id;
+  add(type, cfg, params) {
+    switch (type) {
+      case 'server': {
+        const ServerConstructor = serverTypes[cfg.type];
+        const server = new ServerConstructor(cfg);
+        this.servers.push(server);
+        this.emit('add-server', {
+          serverId: server.id
+        });
+        return server.id;
+      }
+      case 'mock': {
+        const server = this.servers.find(s => s.id === params.serverId);
+        const mockId = server.addMock(params.scenarioId, cfg);
+        this.emit('add-mock', {
+          scenarioId: params.scenarioId,
+          serverId: params.serverId,
+          mockId
+        });
+        const mock = server.getScenario().mocks.find(m => m.id === mockId);
+        mock.on('start', () => this.emit('mock-start', {
+          mockId,
+          scenarioId: params.scenarioId,
+          serverId: params.serverId
+        }));
+        mock.on('end', () => this.emit('mock-end', {
+          mockId,
+          scenarioId: params.scenarioId,
+          serverId: params.serverId
+        }));
+        mock.on('cancel', () => this.emit('mock-cancel', {
+          mockId,
+          scenarioId: params.scenarioId,
+          serverId: params.serverId
+        }));
+        mock.on('expire', () => this.emit('mock-expire', {
+          mockId,
+          scenarioId: params.scenarioId,
+          serverId: params.serverId
+        }));
+        return mockId;
+      }
+      default: {
+        return null;
+      }
+    }
   }
 
   start(id) {

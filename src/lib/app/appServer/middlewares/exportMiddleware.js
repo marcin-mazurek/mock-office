@@ -1,6 +1,4 @@
-import { serversManager } from '../../serversManager';
-
-export default function configure() {
+export default function configure(serversManager) {
   return (req, res) => {
     res
       .set({

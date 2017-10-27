@@ -1,6 +1,4 @@
-import { serversManager } from '../../serversManager';
-
-export default function configure(ajv) {
+export default function configure(ajv, serversManager) {
   return (req, res) => {
     const schema = {
       type: 'object',
@@ -34,14 +32,7 @@ export default function configure(ajv) {
     };
 
     if (ajv.validate(schema, req.body)) {
-      const id = serversManager.add(
-        req.body.name,
-        req.body.port,
-        req.body.type,
-        req.body.secure,
-        req.body.keyPath,
-        req.body.certPath
-      );
+      const id = serversManager.add('server', req.body);
 
       const server = serversManager.getServer(id);
       res.json({

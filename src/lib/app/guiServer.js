@@ -15,8 +15,8 @@ export function createGuiServer() {
   return app;
 }
 
-export function serveGuiServer(app, port) {
-  app.listen(port, () => {
+export function serveGuiServer(port) {
+  createGuiServer().listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(colors.green(`GUI address: http://127.0.0.1:${port}`));
   });

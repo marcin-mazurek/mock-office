@@ -252,5 +252,11 @@ export default {
 
         throw new Error(error.message);
       });
+  },
+  getState() {
+    return fetch('http://127.0.0.1:3060/state', {
+      headers: { Accept: 'application/json, text/plain, */*' }
+    })
+      .then(res => res.json());
   }
 };

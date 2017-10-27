@@ -1,9 +1,10 @@
 import http from 'http';
 import { Server as WebSocketServer } from 'ws';
 import colors from 'colors/safe';
-import { serversManager } from '../serversManager';
 
-export function configureGuiEventsServer(persistentState) {
+const GUI_EVENTS_SERVER_PORT = 3061;
+
+export function configureGuiEventsServer(serversManager) {
   const httpServer = http.createServer();
   const server = new WebSocketServer({ server: httpServer });
   let sockets = [];
@@ -14,28 +15,6 @@ export function configureGuiEventsServer(persistentState) {
     );
   }
 
-  function autoHydrateClientState(ws) {
-    ws.send(
-      JSON.stringify(
-        Object.assign(
-          { event: 'RESTORE_STATE' },
-          { state: serversManager.getState() }
-        )
-      )
-    );
-  }
-
-  function watchSaveState(ws) {
-    ws.on('message', (message) => {
-      if (message === 'SAVE_STATE') {
-        persistentState.save();
-      }
-    });
-  }
-
-  server.on('connection', autoHydrateClientState);
-  server.on('connection', watchSaveState);
-
   server.on('connection', (ws) => {
     sockets.push(ws);
 
@@ -43,6 +22,11 @@ export function configureGuiEventsServer(persistentState) {
       sockets = sockets.filter(socket => socket !== ws);
     });
   });
+
+  serversManager.on('mock-expire', args => broadcast('MOCK_EXPIRE', args));
+  serversManager.on('mock-start', args => broadcast('MOCK_START', args));
+  serversManager.on('mock-end', args => broadcast('MOCK_END', args));
+  serversManager.on('mock-cancel', args => broadcast('MOCK_CANCEL', args));
 
   return {
     server: httpServer,
@@ -56,3 +40,10 @@ export function serveGuiEventsServer(server, port) {
     console.log(colors.green(`GUI events address: ws://127.0.0.1:${port}`));
   });
 }
+
+export default {
+  start(serversManager) {
+    const guiEventsServer = configureGuiEventsServer(serversManager);
+    serveGuiEventsServer(guiEventsServer.server, GUI_EVENTS_SERVER_PORT);
+  }
+};

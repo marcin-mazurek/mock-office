@@ -1,6 +1,4 @@
-import { serversManager } from '../../serversManager';
-
-export default function configure(ajv) {
+export default function configure(ajv, serversManager) {
   const createResponseBody = server => ({
     name: server.name,
     port: server.port,

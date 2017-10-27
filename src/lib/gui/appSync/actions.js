@@ -1,9 +1,3 @@
-export const RESTORE_STATE = 'appSync/RESTORE_STATE_MESSAGE_RECEIVED';
-export const restoreStateAction = servers => ({
-  type: RESTORE_STATE,
-  servers
-});
-
 export const REMOVE_MOCK_MESSAGE_RECEIVED = 'appSync/REMOVE_MOCK_MESSAGE_RECEIVED';
 export const removeAfterUseMessageReceivedAction = (scenario, id) => ({
   type: REMOVE_MOCK_MESSAGE_RECEIVED,

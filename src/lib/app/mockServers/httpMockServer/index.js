@@ -4,7 +4,7 @@ import http from 'http';
 import fs from 'fs';
 import unique from 'cuid';
 import bodyParser from 'body-parser';
-import Scenario from '../../scenario/index';
+import Scenario from '../../scenario';
 
 export const send = (req, res) => (params) => {
   if (req.headers.origin) {

@@ -1,7 +1,6 @@
 import fs from 'fs';
 import Ajv from 'ajv';
 import colors from 'colors/safe';
-import serversManager from './serversManager';
 
 const PATH_TO_FILE = './chanState.json';
 const schema = {
@@ -75,7 +74,7 @@ const schema = {
   }
 };
 
-export default function configurePersistentState() {
+export default function configurePersistentState(serversManager) {
   const ajv = Ajv();
   function save() {
     fs.writeFileSync(PATH_TO_FILE, JSON.stringify(serversManager.getState()), 'utf8');

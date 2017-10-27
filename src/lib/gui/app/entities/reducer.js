@@ -9,13 +9,13 @@ import {
   STOP_MOCK_MESSAGE_RECEIVED,
   FINISH_MOCK_MESSAGE_RECEIVED,
   RUN_MOCK_MESSAGE_RECEIVED,
-  RESTORE_STATE as APP_RESTORE_STATE,
   CANCEL_MOCK_MESSAGE_RECEIVED
 } from '../../appSync/actions';
 import { SUCCEEDED as IMPORT_MOCKS_SUCCEEDED } from '../../epics/importMock';
 import { SUCCEED as ADD_MOCK_SUCCEED } from '../../epics/addMock';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer/actions';
+import { SUCCEEDED as LOAD_STATE_ON_APP_START } from '../../epics/loadStateOnStart/actions';
 
 export const getInitialState = () => new Map({
   servers: new Map({
@@ -58,10 +58,11 @@ export const reducers = {
     return state.setIn(['servers', 'entities', id, 'running'], false);
   },
   removeServer(state, id) {
-    let newState = state.updateIn(
-      ['servers', 'ids'],
-      ids => ids.filter(serverId => serverId !== id)
-    );
+    let newState = state;
+    const scenario = state.getIn(['servers', 'entities', id, 'scenario']);
+    newState = reducers.removeScenario(newState, scenario);
+
+    newState = state.updateIn(['servers', 'ids'], ids => ids.filter(serverId => serverId !== id));
     newState = newState.deleteIn(['servers', 'entities', id]);
     return newState;
   },
@@ -103,26 +104,25 @@ export const reducers = {
       );
   },
   removeScenario(state, id) {
-    return state
+    const mocks = state.getIn(['scenarios', 'entities', id, 'mocks']);
+    let newState = state;
+
+    newState = mocks.reduce((acc, next) => reducers.removeMock(acc, id, next), newState);
+    newState
       .updateIn(['scenarios', 'ids'], ids => ids.filter(scenarioId => scenarioId !== id))
       .deleteIn(['scenarios', 'entities', id]);
+
+    return newState;
   },
   removeMock(state, scenario, id) {
     const tasks = state.getIn(['mocks', 'entities', id, 'tasks']);
     let newState = state;
 
+    newState = tasks.reduce((acc, next) => reducers.removeTask(acc, id, next), newState);
     newState = newState
       .updateIn(['mocks', 'ids'], ids => ids.filter(mockId => mockId !== id))
       .deleteIn(['mocks', 'entities', id])
-      .updateIn(['scenarios', 'entities', scenario, 'mocks'],
-        mocks => mocks.filter(mock => mock !== id)
-      );
-
-    tasks.forEach((task) => {
-      newState = newState
-        .deleteIn(['tasks', 'entities', task])
-        .updateIn(['tasks', 'ids'], ids => ids.filter(taskId => taskId !== task));
-    });
+      .updateIn(['scenarios', 'entities', scenario, 'mocks'], m => m.filter(mId => mId !== id));
 
     return newState;
   },
@@ -184,7 +184,7 @@ export default (state = getInitialState(), action) => {
     case EDIT_SERVER_SUCCEEDED: {
       return reducers.updateServer(state, action.result.id, action.result);
     }
-    case APP_RESTORE_STATE: {
+    case LOAD_STATE_ON_APP_START: {
       const { servers } = action;
       let newState = state;
 
@@ -211,18 +211,7 @@ export default (state = getInitialState(), action) => {
       let newState = state;
       const { id } = action;
       const server = state.getIn(['servers', 'entities', id]);
-      const scenario = state.getIn(['scenarios', 'entities', server.scenario]);
-      const mocks = scenario.mocks;
-
       newState = reducers.removeServer(newState, server.id);
-      newState = reducers.removeScenario(newState, scenario);
-      mocks.forEach((mockId) => {
-        const tasks = state.getIn(['mocks', 'entities', mockId]).tasks;
-        newState = reducers.removeMock(newState, scenario, mockId);
-        tasks.forEach((taskId) => {
-          newState = reducers.removeTask(newState, mockId, taskId);
-        });
-      });
 
       return newState;
     }

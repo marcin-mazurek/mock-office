@@ -1,5 +1,3 @@
-import { serversManager } from '../../serversManager';
-
 const schema = {
   properties: {
     server: {
@@ -15,8 +13,8 @@ const schema = {
   required: ['server', 'scenario', 'mock']
 };
 
-export default function configure(ajv) {
-  return (req, res, next) => {
+export default function configure(ajv, serversManager) {
+  return (req, res) => {
     if (!ajv.validate(schema, req.body)) {
       res.status(400).json(ajv.errors);
       return;
@@ -29,8 +27,16 @@ export default function configure(ajv) {
         return;
       }
 
-      req.body.mockId = server.addMock(req.body.scenario, req.body.mock);
-      next();
+      res.status(200).json({
+        id: serversManager.add(
+          'mock',
+          req.body.mock,
+          {
+            scenarioId: req.body.scenario,
+            serverId: req.body.server
+          }
+        )
+      });
     } catch (error) {
       res.status(400).json({ error });
     }
