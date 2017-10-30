@@ -8,14 +8,18 @@ const AddWsMockFormTaskFormSection = () => (
       <div className="form-row">
         <div className="form__field">
           <label className="form-field__label" htmlFor="payload">Message:</label>
-          <Field component="textarea" name="message" />
+          <Field
+            className="form-field__textarea"
+            component="textarea"
+            name="message"
+          />
         </div>
       </div>
     </FormSection>
     <FormSection name="schedule">
       <div className="form-row">
         <div className="form__field">
-          <label className="form-field__label" htmlFor="delay">Delay:</label>
+          <label className="form-field__label" htmlFor="delay">Delay(ms):</label>
           <Field
             className="form-field__input"
             component="input"
@@ -26,7 +30,7 @@ const AddWsMockFormTaskFormSection = () => (
       </div>
       <div className="form-row">
         <div className="form__field">
-          <label className="form-field__label" htmlFor="interval">Interval:</label>
+          <label className="form-field__label" htmlFor="interval">Interval(ms):</label>
           <Field
             className="form-field__input"
             component="input"

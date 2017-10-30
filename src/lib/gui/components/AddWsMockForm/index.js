@@ -73,10 +73,11 @@ export const AddMockForm = props =>
           <div className="form__field">
             <label className="form-field__label" htmlFor="trigger.params">Params:</label>
             <Field
+              className="form-field__textarea"
               name="params"
               component="textarea"
               cols="30"
-              rows="10"
+              rows="5"
             />
           </div>
         </div>
