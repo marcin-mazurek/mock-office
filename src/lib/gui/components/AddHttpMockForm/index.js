@@ -24,6 +24,21 @@ const MethodField = field =>
 export const AddHttpMockForm = ({ handleSubmit }) => (
   <form className="add-http-mock-form form" onSubmit={handleSubmit}>
     <section className="form-section">
+      <div className="form-row">
+        <div className="form__field">
+          <label className="form-field__label" htmlFor="loadedCounter">
+            How many times do you want to use it:
+          </label>
+          <Field
+            className="form-field__input"
+            component="input"
+            type="number"
+            name="loadedCounter"
+          />
+        </div>
+      </div>
+    </section>
+    <section className="form-section">
       <header className="form-section__header">Request:</header>
       <FormSection name="request">
         <div className="form-row">
@@ -109,7 +124,7 @@ export const AddHttpMockForm = ({ handleSubmit }) => (
         <FormSection name="schedule">
           <div className="form-row">
             <div className="form__field">
-              <label className="form-field__label" htmlFor="delay">Response delay:</label>
+              <label className="form-field__label" htmlFor="delay">Delay(ms):</label>
               <Field
                 className="form-field__input"
                 component="input"
@@ -119,19 +134,6 @@ export const AddHttpMockForm = ({ handleSubmit }) => (
             </div>
           </div>
         </FormSection>
-        <div className="form-row">
-          <div className="form__field">
-            <label className="form-field__label" htmlFor="loadedCounter">
-              How many times do you want to use it:
-            </label>
-            <Field
-              className="form-field__input"
-              component="input"
-              type="number"
-              name="loadedCounter"
-            />
-          </div>
-        </div>
       </FormSection>
       <div className="form-row">
         <button className="button form__button" type="submit">
