@@ -63,5 +63,9 @@ module.exports = {
     modules: [
       'node_modules'
     ]
+  },
+  devServer: {
+    publicPath: '/',
+    https: false
   }
 };

@@ -30,8 +30,8 @@ export default class WsMockListItem extends React.Component {
     } = this.props;
     const { expanded } = this.state;
     const mockTasksClassnames = classnames({
-      'mock-list-item__response': true,
-      'mock-list-item__response--visible': expanded
+      'mock-list-item__tasks': true,
+      'mock-list-item__tasks--visible': expanded
     });
 
     const expired = mock.get('expired');
@@ -56,19 +56,23 @@ export default class WsMockListItem extends React.Component {
     const eventType = mock.getIn(['requirements', 'event']);
     return (
       <div className={mockClassNames}>
-        <div className="mock-list-item__request">
+        <div className="mock-list-item-mock">
           <button className={expandButtonClassNames} onClick={this.showTasks}>
             <img src={expandIcon} role="presentation" />
           </button>
-          <div className="mock-list-item__spinner">
-            <div className={spinnerClassNames}>
-              <div className="bounce1" />
-              <div className="bounce2" />
-              <div className="bounce3" />
+          <div className="mock-list-item__params">
+            <div className="mock-list-item__spinner">
+              <div className={spinnerClassNames}>
+                <div className="bounce1" />
+                <div className="bounce2" />
+                <div className="bounce3" />
+              </div>
             </div>
+            <div className="mock-list-item__tag">{`${runCounter}/${loadedCounter}`}</div>
           </div>
-          <div className="mock-list-item__tag">{`${runCounter}/${loadedCounter}`}</div>
-          <div className="mock-list-item__tag">{eventType}</div>
+          <div className="mock-list-item__mock">
+            <div className="mock-list-item__tag">{eventType}</div>
+          </div>
           <button
             className="mock-list-item__remove-button"
             onClick={() => onRemoveButtonClick(server, scenario, id)}

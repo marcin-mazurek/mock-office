@@ -6,24 +6,26 @@ const WsTaskListItem = ({ task }) => {
   const interval = task.getIn(['schedule', 'interval']);
   return (
     <div className="task-list-item">
-      {
-        delay
-          ? (
-            <div className="task-list-item__tag">
-              <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
-            </div>
-          )
-          : null
-      }
-      {
-        interval
-          ? (
-            <div className="task-list-item__tag">
-              <i className="fa fa-history" />{' '}{interval / 1000}{'s'}
-            </div>
-          )
-          : null
-      }
+      <div className="task-list-item__params">
+        {
+          delay
+            ? (
+              <div className="task-list-item__tag">
+                <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
+              </div>
+            )
+            : null
+        }
+        {
+          interval
+            ? (
+              <div className="task-list-item__tag">
+                <i className="fa fa-history" />{' '}{interval / 1000}{'s'}
+              </div>
+            )
+            : null
+        }
+      </div>
     </div>
   );
 };

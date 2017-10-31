@@ -71,7 +71,7 @@ export default class HttpMockListItem extends React.Component {
             </div>
             <div className="mock-list-item__tag">{`${runCounter}/${loadedCounter}`}</div>
           </div>
-          <div className="mock-list-item__request">
+          <div className="mock-list-item__mock">
             <div className="mock-list-item__tag">
               {mock.getIn(['requirements', 'method'])}
             </div>
