@@ -18,9 +18,9 @@ export default class Task extends EventEmitter {
     }
 
     return new Promise((resolve) => {
-      const schedule = createSchedule(this.schedule, this.params);
+      const runSchedule = createSchedule(this.schedule, this.params);
 
-      this.subscription = schedule(
+      this.subscription = runSchedule(
         action,
         () => {
           this.emit('start');

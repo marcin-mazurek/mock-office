@@ -15,7 +15,7 @@ const buildSendParams = (params, payload) =>
   );
 
 export default function createSchedule(scheduleConfig, params) {
-  return function schedule(action, onStart, onFinish) {
+  return function runSchedule(action, onStart, onFinish) {
     let payload;
 
     if (typeof params.payload !== 'undefined') {
