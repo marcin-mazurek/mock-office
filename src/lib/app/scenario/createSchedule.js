@@ -14,26 +14,31 @@ const buildSendParams = (params, payload) =>
     }
   );
 
-export default function createSchedule(scheduleConfig, params) {
+export default function createSchedule(scheduleConfig, taskParams) {
   return function runSchedule(action, onStart, onFinish) {
     let payload;
 
-    if (typeof params.payload !== 'undefined') {
-      if (params.payload === 'generator') {
-        const scriptSrc = fs.readFileSync(params.generatorPath);
+    if (typeof taskParams.payload !== 'undefined') {
+      if (taskParams.payload === 'generator') {
+        const scriptSrc = fs.readFileSync(taskParams.generatorPath);
         payload = new vm.Script(scriptSrc).runInNewContext({});
-      } else if (params.payload.type === 'b64') {
+      } else if (taskParams.payload.type === 'b64') {
         payload = {
-          message: atob(params.payload.message)
+          message: atob(taskParams.payload.message)
         };
       } else {
-        payload = params.payload;
+        payload = taskParams.payload;
       }
     }
 
+    const task = () => {
+      action(buildSendParams(taskParams, payload));
+      onFinish();
+    };
+
     if (scheduleConfig.interval) {
       const task = function task(repeatLimit) {
-        action(buildSendParams(params, payload));
+        action(buildSendParams(taskParams, payload));
 
         if (repeatLimit !== undefined) {
           if (repeatLimit - 1 > 0) {
@@ -56,8 +61,7 @@ export default function createSchedule(scheduleConfig, params) {
       onStart();
       return Scheduler.async.schedule(
         () => {
-          action(buildSendParams(params, payload));
-          onFinish();
+
           return () => {
           };
         },
@@ -68,7 +72,7 @@ export default function createSchedule(scheduleConfig, params) {
     onStart();
     return Scheduler.asap.schedule(
       () => {
-        action(buildSendParams(params, payload));
+        action(buildSendParams(taskParams, payload));
         onFinish();
         return () => {
         };

@@ -7,10 +7,6 @@ import bodyParser from 'body-parser';
 import Scenario from '../../scenario';
 
 export const send = (req, res) => (params) => {
-  if (req.headers.origin) {
-    res.set('Access-Control-Allow-Origin', req.headers.origin);
-  }
-
   if (params.headers) {
     res.set(params.headers);
   }
@@ -68,6 +64,11 @@ export default class HttpMockServer {
   }
 
   respond(req, res) {
+    // allow CORS by default
+    if (req.headers.origin) {
+      res.set('Access-Control-Allow-Origin', req.headers.origin);
+    }
+
     const requirements = {
       path: req.originalUrl,
       method: req.method,
@@ -82,8 +83,7 @@ export default class HttpMockServer {
     if (mock) {
       this.scenario.play(mock.id, send(req, res));
     } else {
-      res.set('Access-Control-Allow-Origin', req.headers.origin)
-        .status(404).send('Sorry, we cannot find mock.');
+      res.status(404).send('Sorry, we cannot find mock.');
     }
   }
 
