@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import EventEmitter from 'events';
 import unique from 'cuid';
 import Task from './Task';
@@ -25,31 +26,30 @@ export default class Mock extends EventEmitter {
   }
 
   // Function -> Promise
-  play(action) {
+  play() {
     this.pending = true;
     this.emit('start');
 
-    return Promise.all(this.tasks.map(part => part.play(action))).then(
-      (taskStatuses) => {
-        const finished = taskStatuses.every(partFinished => partFinished);
+    const tasks$ = Observable.merge(this.tasks.map(part => part.play()));
 
-        if (finished) {
-          this.emit('end');
-          this.updateReuseStatus();
-        } else {
-          this.emit('cancel');
-        }
-
+    const subscription = tasks$.subscribe({
+      complete: () => {
         this.pending = false;
-        return finished;
+        this.stop = null;
+        this.emit('end');
       }
-    );
+    });
+
+    this.stop = subscription.unsubscribe;
+
+    return tasks$;
   }
 
   // void -> void
   cancel() {
     if (this.pending) {
-      this.tasks.forEach(part => part.cancel());
+      this.stop();
+      this.emit('cancel');
     }
   }
 }

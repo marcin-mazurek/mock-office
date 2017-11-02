@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import unique from 'cuid';
-import createSchedule from './createSchedule';
+import run from './run';
 
 export default class Task extends EventEmitter {
   constructor(config) {
@@ -11,42 +11,32 @@ export default class Task extends EventEmitter {
     this.params = config.params || {};
   }
 
-  // Function -> Promise
-  play(action) {
+  // Function -> Observable or String
+  play() {
     if (this.pending) {
-      return Promise.reject('Pending Task cant be played.');
+      return 'Pending task cant be run';
     }
 
-    return new Promise((resolve) => {
-      const runSchedule = createSchedule(this.schedule, this.params);
-
-      this.subscription = runSchedule(
-        action,
-        () => {
-          this.emit('start');
-        },
-        () => {
-          this.emit('end');
-          this.pending = false;
-          resolve(true);
-        }
-      );
-
-      this.pending = true;
-
-      this.stop = () => {
-        this.subscription.unsubscribe();
-        this.emit('cancel');
+    const task$ = run(this.schedule, this.params);
+    this.pending = true;
+    this.subscription = task$.subscribe({
+      complete: () => {
         this.pending = false;
-        resolve(false);
-      };
+        this.stop = null;
+        this.emit('end');
+      }
     });
+
+    this.stop = this.subscription.unsubscribe;
+
+    return task$;
   }
 
   // void -> void
   cancel() {
     if (this.pending) {
       this.stop();
+      this.emit('cancel');
     }
   }
 }

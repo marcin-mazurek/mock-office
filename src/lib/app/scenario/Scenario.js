@@ -64,18 +64,20 @@ export default class Scenario {
   }
 
   // (String, Function) -> Promise
-  play(id, action) {
+  play(id) {
     const mock = this.mocks.find(m => m.id === id);
 
-    return mock.play(action).then(
-      (finished) => {
-        if (finished && mock.expired) {
+    const $tasks = mock.play();
+
+    $tasks.subscribe({
+      complete: () => {
+        if (mock.expired) {
           this.removeMock(id);
         }
-
-        return finished;
       }
-    );
+    });
+
+    return $tasks;
   }
 
   matchMock(requirements) {

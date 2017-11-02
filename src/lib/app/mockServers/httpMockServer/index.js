@@ -6,7 +6,7 @@ import unique from 'cuid';
 import bodyParser from 'body-parser';
 import Scenario from '../../scenario';
 
-export const send = (req, res) => (params) => {
+export const send = (req, res, params) => {
   if (params.headers) {
     res.set(params.headers);
   }
@@ -78,12 +78,21 @@ export default class HttpMockServer {
     if (req.method === 'POST') {
       requirements.payload = req.body;
     }
-    const mock = this.scenario.matchMock(requirements);
 
-    if (mock) {
-      this.scenario.play(mock.id, send(req, res));
-    } else {
+    const mock = this.scenario.matchMock(requirements);
+    if (!mock) {
       res.status(404).send('Sorry, we cannot find mock.');
+      return;
+    }
+
+    const stream = this.scenario.play(mock.id);
+
+    if (stream) {
+      stream
+        .take(1)
+        .subscribe((params) => {
+          send(req, res, params);
+        });
     }
   }
 
