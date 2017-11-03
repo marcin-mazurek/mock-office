@@ -13,6 +13,7 @@ export default function run(scheduleConfig, taskParams) {
         () => {
           observer.next(taskParams);
         },
+        scheduleConfig.interval
       );
 
       return () => {
