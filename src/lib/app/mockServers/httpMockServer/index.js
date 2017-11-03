@@ -39,6 +39,7 @@ export default class HttpMockServer {
     this.getScenario = this.getScenario.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changePort = this.changePort.bind(this);
+    this.subscriptions = [];
     const httpServer = this.secure ? https : http;
     const app = express();
     app.use(bodyParser.json());
@@ -88,11 +89,13 @@ export default class HttpMockServer {
     const stream = this.scenario.play(mock.id);
 
     if (stream) {
-      stream
-        .take(1)
-        .subscribe((params) => {
-          send(req, res, params);
-        });
+      this.subscriptions.push(
+        stream
+          .take(1)
+          .subscribe((params) => {
+            send(req, res, params);
+          })
+      );
     }
   }
 
@@ -114,7 +117,15 @@ export default class HttpMockServer {
     this.sockets.length = 0;
   }
 
+  clearSubscriptions() {
+    if (this.subscriptions.length) {
+      this.subscriptions.forEach(s => s.unsubscribe());
+      this.subscriptions.length = 0;
+    }
+  }
+
   stop(cb) {
+    this.clearSubscriptions();
     this.scenario.cancelPendingMocks();
     // Browsers can keep connection open, thus callback after
     // HttpMockServer.stop cant be called if there are sockets
