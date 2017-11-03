@@ -8,7 +8,7 @@ export default class Task extends EventEmitter {
     super();
     this.id = unique();
     this.pending = false;
-    this.schedule = config.schedule || {};
+    this.scheduleParams = config.schedule || {};
     this.params = config.params || {};
   }
 
@@ -36,13 +36,13 @@ export default class Task extends EventEmitter {
           this.subscription = task$.subscribe({
             complete: () => {
               this.pending = false;
-              this.stop = null;
+              this.subscription = null;
               this.emit('end');
             }
           });
         })
       )
-    )(this.schedule, this.params);
+    )(this.scheduleParams, this.params);
   }
 
   // void -> void
