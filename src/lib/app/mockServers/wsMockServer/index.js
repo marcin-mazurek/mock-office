@@ -23,6 +23,7 @@ export default class WsMockServer {
     this.isLive = this.isLive.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changePort = this.changePort.bind(this);
+    this.subscriptions = [];
 
     const httpServer = this.secure ? https : http;
 
@@ -61,18 +62,19 @@ export default class WsMockServer {
         );
 
         if (mock) {
-          this.scenario.play(mock.id, (params) => {
-            this.ws.send(params.message, (err) => {
-              if (err) {
-                // eslint-disable-next-line no-console
-                console.log('socket is closed so we cant send message. All tasks will be canceled on close event');
-              }
-            });
-          });
+          const stream = this.scenario.play(mock.id);
+
+          this.subscriptions.push(
+            stream
+              .subscribe((params) => {
+                this.ws.send(params.message);
+              })
+          );
         }
       });
 
       this.ws.on('close', () => {
+        this.clearSubscriptions();
         this.scenario.cancelPendingMocks();
         this.ws = null;
       });
@@ -84,11 +86,23 @@ export default class WsMockServer {
       );
 
       if (mock) {
-        this.scenario.play(mock.id, (params) => {
-          this.ws.send(params.message);
-        });
+        const stream = this.scenario.play(mock.id);
+
+        this.subscriptions.push(
+          stream
+            .subscribe((params) => {
+              this.ws.send(params.message);
+            })
+        );
       }
     });
+  }
+
+  clearSubscriptions() {
+    if (this.subscriptions.length) {
+      this.subscriptions.forEach(s => s.unsubscribe());
+      this.subscriptions.length = 0;
+    }
   }
 
   getScenario() {
@@ -100,6 +114,7 @@ export default class WsMockServer {
   }
 
   stop(cb) {
+    this.clearSubscriptions();
     if (this.ws) {
       this.ws.terminate();
     }
