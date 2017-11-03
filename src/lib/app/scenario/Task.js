@@ -48,11 +48,8 @@ export default class Task extends EventEmitter {
   // void -> void
   cancel() {
     if (this.pending) {
-      if (this.subscription) {
-        this.subscription.unsubscribe();
-        this.subscription = null;
-      }
-
+      this.subscription.unsubscribe();
+      this.subscription = null;
       this.pending = false;
       this.emit('cancel');
     }
