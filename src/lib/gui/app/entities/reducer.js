@@ -144,6 +144,7 @@ export const reducers = {
       .setIn(['mocks', 'entities', id, 'pending'], false);
 
     const mock = state.getIn(['mocks', 'entities', id]);
+    newState = newState.updateIn(['mocks', 'entities', id, 'runCounter'], runCounter => runCounter + 1);
     if (mock.get('runCounter') === mock.get('loadedCounter')) {
       newState = newState.setIn(['mocks', 'entities', id, 'expired'], true);
     }
@@ -151,10 +152,8 @@ export const reducers = {
     return newState;
   },
   runMock(state, id) {
-    const prevState = state.getIn(['mocks', 'entities', id]);
     return state.mergeIn(['mocks', 'entities', id], {
-      pending: true,
-      runCounter: prevState.get('runCounter') + 1
+      pending: true
     });
   }
 };
