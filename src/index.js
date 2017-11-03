@@ -1,5 +1,5 @@
 import { serveAppServer } from './lib/app/appServer';
-import { serveGuiServer, createGuiServer } from './lib/app/guiServer';
+import { serveGuiServer } from './lib/app/guiServer';
 import ServersManager from './lib/app/ServersManager';
 
 const APP_SERVER_PORT = 3060;
