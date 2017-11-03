@@ -7,4 +7,3 @@ chanState.json
 dev-state.json
 /pm2.log
 /pm2-errors.log
-bin/
