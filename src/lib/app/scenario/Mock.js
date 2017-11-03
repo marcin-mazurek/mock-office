@@ -16,31 +16,28 @@ export default class Mock extends EventEmitter {
     this.expired = false;
   }
 
-  // void -> void
-  updateReuseStatus() {
-    this.runCounter += 1;
-    if (this.runCounter === this.loadedCounter) {
-      this.expired = true;
-      this.emit('expire');
-    }
-  }
-
-  // Function -> Promise
+  // Function -> Observable | String
   play() {
+    if (this.pending && (this.runCounter === this.loadedCounter - 1)) {
+      return 'Last mock run pending';
+    }
+
     this.pending = true;
     this.emit('start');
-
-    const tasks$ = Observable.merge(this.tasks.map(part => part.play()));
-
-    const subscription = tasks$.subscribe({
+    const tasks$ = Observable.merge(this.tasks.map(part => part.play())).mergeAll();
+    this.subscription = tasks$.subscribe({
       complete: () => {
+        this.runCounter += 1;
+        this.emit('end');
         this.pending = false;
         this.stop = null;
-        this.emit('end');
+
+        if (this.runCounter === this.loadedCounter) {
+          this.expired = true;
+          this.emit('expire');
+        }
       }
     });
-
-    this.stop = subscription.unsubscribe;
 
     return tasks$;
   }
@@ -48,7 +45,13 @@ export default class Mock extends EventEmitter {
   // void -> void
   cancel() {
     if (this.pending) {
-      this.stop();
+      if (this.subscription) {
+        this.tasks.forEach(task => task.cancel());
+        this.subscription.unsubscribe();
+        this.subscription = null;
+      }
+
+      this.pending = false;
       this.emit('cancel');
     }
   }
