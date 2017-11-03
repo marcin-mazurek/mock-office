@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import unique from 'cuid';
 import { Scheduler, Observable } from 'rxjs';
+import { tap, pipe, ifElse } from 'ramda';
 
 export default class Task extends EventEmitter {
   constructor(config) {
@@ -22,24 +23,26 @@ export default class Task extends EventEmitter {
       : task$.observeOn(Scheduler.asap);
   }
 
-  // Function -> Observable or String
+  // void -> [Observable]
   play() {
-    if (this.pending) {
-      return 'Pending task cant be run';
-    }
-
-    const task$ = Task.schedule(this.schedule, this.params);
-    this.pending = true;
-    this.emit('start');
-    this.subscription = task$.subscribe({
-      complete: () => {
-        this.pending = false;
-        this.stop = null;
-        this.emit('end');
-      }
-    });
-
-    return task$;
+    return ifElse(
+      () => this.pending,
+      () => 'Pending task cant be run',
+      pipe(
+        Task.schedule,
+        tap((task$) => {
+          this.pending = true;
+          this.emit('start');
+          this.subscription = task$.subscribe({
+            complete: () => {
+              this.pending = false;
+              this.stop = null;
+              this.emit('end');
+            }
+          });
+        })
+      )
+    )(this.schedule, this.params);
   }
 
   // void -> void
