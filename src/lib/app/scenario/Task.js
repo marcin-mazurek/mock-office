@@ -19,6 +19,7 @@ export default class Task extends EventEmitter {
 
     const task$ = run(this.schedule, this.params);
     this.pending = true;
+    this.emit('start');
     this.subscription = task$.subscribe({
       complete: () => {
         this.pending = false;
@@ -27,15 +28,18 @@ export default class Task extends EventEmitter {
       }
     });
 
-    this.stop = this.subscription.unsubscribe;
-
     return task$;
   }
 
   // void -> void
   cancel() {
     if (this.pending) {
-      this.stop();
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+        this.subscription = null;
+      }
+
+      this.pending = false;
       this.emit('cancel');
     }
   }
