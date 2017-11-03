@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import unique from 'cuid';
-import run from './run';
+import { Scheduler, Observable } from 'rxjs';
 
 export default class Task extends EventEmitter {
   constructor(config) {
@@ -11,13 +11,37 @@ export default class Task extends EventEmitter {
     this.params = config.params || {};
   }
 
+  static schedule(scheduleConfig, taskParams) {
+    let task$;
+    if (scheduleConfig.interval) {
+      task$ = Observable.create((observer) => {
+        const intervalId = setInterval(
+          () => {
+            observer.next(taskParams);
+          },
+          scheduleConfig.interval
+        );
+
+        return () => {
+          clearInterval(intervalId);
+        };
+      });
+    } else {
+      task$ = Observable.from([taskParams]);
+    }
+
+    return scheduleConfig.delay
+      ? task$.observeOn(Scheduler.async, scheduleConfig.delay)
+      : task$.observeOn(Scheduler.asap);
+  }
+
   // Function -> Observable or String
   play() {
     if (this.pending) {
       return 'Pending task cant be run';
     }
 
-    const task$ = run(this.schedule, this.params);
+    const task$ = Task.schedule(this.schedule, this.params);
     this.pending = true;
     this.emit('start');
     this.subscription = task$.subscribe({
