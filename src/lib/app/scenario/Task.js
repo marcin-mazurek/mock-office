@@ -12,23 +12,10 @@ export default class Task extends EventEmitter {
   }
 
   static schedule(scheduleConfig, taskParams) {
-    let task$;
-    if (scheduleConfig.interval) {
-      task$ = Observable.create((observer) => {
-        const intervalId = setInterval(
-          () => {
-            observer.next(taskParams);
-          },
-          scheduleConfig.interval
-        );
-
-        return () => {
-          clearInterval(intervalId);
-        };
-      });
-    } else {
-      task$ = Observable.from([taskParams]);
-    }
+    const task$ = scheduleConfig.interval
+      ? Observable.interval(scheduleConfig.interval)
+        .mapTo(taskParams)
+      : Observable.from([taskParams]);
 
     return scheduleConfig.delay
       ? task$.observeOn(Scheduler.async, scheduleConfig.delay)
