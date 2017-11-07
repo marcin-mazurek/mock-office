@@ -18,27 +18,27 @@ import configureGetStateMiddleware from './middlewares/getStateMiddleware';
 const persistentState = configurePersistentState();
 persistentState.restore();
 
-export const createAppServer = (serversManager) => {
+export const createAppServer = () => {
   const ajv = new Ajv();
   const app = express();
   app.use(cors());
 
-  app.post('/add-server', bodyParser.json(), configureAddServerMiddleware(ajv, serversManager));
-  app.post('/remove-server', bodyParser.json(), configureRemoveServerMiddleware(ajv, serversManager));
-  app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv, serversManager));
-  app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv, serversManager));
-  app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv, serversManager));
-  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv, serversManager));
-  app.post('/remove-mock', bodyParser.json(), configureRemoveMockMiddleware(ajv, serversManager));
-  app.get('/export', configureExportMiddleware(serversManager));
-  app.get('/mock', configureGetMockMiddleware(ajv, serversManager));
-  app.get('/state', configureGetStateMiddleware(serversManager));
+  app.post('/add-server', bodyParser.json(), configureAddServerMiddleware(ajv));
+  app.post('/remove-server', bodyParser.json(), configureRemoveServerMiddleware(ajv));
+  app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv));
+  app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv));
+  app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv));
+  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv));
+  app.post('/remove-mock', bodyParser.json(), configureRemoveMockMiddleware(ajv));
+  app.get('/export', configureExportMiddleware());
+  app.get('/mock', configureGetMockMiddleware(ajv));
+  app.get('/state', configureGetStateMiddleware());
 
   return app;
 };
 
-export const serveAppServer = (serversManager, port, cb) => {
-  createAppServer(serversManager).listen(port, () => {
+export const serveAppServer = (port, cb) => {
+  createAppServer().listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(colors.green(`App address: http://127.0.0.1:${port}`));
     if (typeof cb === 'function') {

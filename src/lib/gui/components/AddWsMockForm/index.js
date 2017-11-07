@@ -57,7 +57,7 @@ export const AddMockForm = props =>
         </div>
       </div>
     </div>
-    <FormSection name="trigger">
+    <FormSection name="requirements">
       <section className="form-section">
         <header className="form-section__header">Trigger:</header>
         <div className="form-row">
@@ -85,7 +85,7 @@ export const AddMockForm = props =>
     </FormSection>
     <section className="form-section">
       <header className="form-section__header">Messages:</header>
-      <FieldArray component={renderMessages} name="messages" />
+      <FieldArray component={renderMessages} name="tasks" />
     </section>
     <div className="form-row">
       <button className="button form__button" type="submit">
@@ -102,7 +102,7 @@ export default reduxForm(
   {
     form: 'addWsMock',
     initialValues: {
-      messages: [{}]
+      tasks: [{}]
     },
     onSubmit(values) {
       /* eslint-disable no-param-reassign */

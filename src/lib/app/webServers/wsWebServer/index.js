@@ -3,27 +3,21 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import unique from 'cuid';
-import { lensPath, view, set } from 'ramda';
-import Scenario from '../../scenario';
 
-export default class WsMockServer {
-  constructor(config) {
-    this.type = 'ws';
+export default class WsWebServer {
+  constructor(config, onTaskTrigger, onServerStop) {
     this.port = config.port || 3000;
-    this.name = config.name;
     this.id = unique();
-    this.scenario = new Scenario();
-    this.listening = false;
     this.secure = config.secure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
-    this.getScenario = this.getScenario.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
-    this.changeName = this.changeName.bind(this);
     this.changePort = this.changePort.bind(this);
     this.subscriptions = [];
+    this.onTaskTrigger = onTaskTrigger;
+    this.onServerStop = onServerStop;
 
     const httpServer = this.secure ? https : http;
 
@@ -54,47 +48,45 @@ export default class WsMockServer {
       this.ws = ws;
 
       this.ws.on('message', (message) => {
-        const mock = this.scenario.matchMock(
+        this.onTaskTrigger(
           {
             event: 'message',
             message
+          },
+          (task$) => {
+            if (task$) {
+              this.subscriptions.push(
+                task$
+                  .subscribe((params) => {
+                    this.ws.send(params.message);
+                  })
+              );
+            }
           }
         );
-
-        if (mock) {
-          const stream = this.scenario.play(mock.id);
-
-          this.subscriptions.push(
-            stream
-              .subscribe((params) => {
-                this.ws.send(params.message);
-              })
-          );
-        }
       });
 
       this.ws.on('close', () => {
         this.clearSubscriptions();
-        this.scenario.cancelPendingMocks();
+        this.onServerStop();
         this.ws = null;
       });
 
-      const mock = this.scenario.matchMock(
+      this.onTaskTrigger(
         {
-          event: 'connect'
+          event: 'connect',
+        },
+        (task$) => {
+          if (task$) {
+            this.subscriptions.push(
+              task$
+                .subscribe((params) => {
+                  this.ws.send(params.message);
+                })
+            );
+          }
         }
       );
-
-      if (mock) {
-        const stream = this.scenario.play(mock.id);
-
-        this.subscriptions.push(
-          stream
-            .subscribe((params) => {
-              this.ws.send(params.message);
-            })
-        );
-      }
     });
   }
 
@@ -105,56 +97,47 @@ export default class WsMockServer {
     }
   }
 
-  getScenario() {
-    return this.scenario;
+  start() {
+    if (this.isLive()) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      this.httpServer.listen(this.port, resolve);
+    });
   }
 
-  start(cb) {
-    this.httpServer.listen(this.port, cb);
-  }
+  stop() {
+    if (!this.isLive()) {
+      return Promise.resolve();
+    }
 
-  stop(cb) {
     this.clearSubscriptions();
     if (this.ws) {
       this.ws.terminate();
     }
-    this.httpServer.close(cb);
-  }
-
-  rename(name) {
-    this.name = name;
+    return new Promise((resolve) => {
+      this.httpServer.close(resolve);
+    });
   }
 
   isLive() {
     return this.httpServer.listening;
   }
 
-  changeName(name) {
-    this.name = name;
-  }
-
-  addMock(scenarioId, mockConfig) {
-    /* eslint-disable no-param-reassign */
-    // set default values
-    const eventLens = lensPath(['trigger', 'event']);
-    if (!view(eventLens, mockConfig)) {
-      mockConfig = set(eventLens, 'message', mockConfig);
-    }
-
-    /* eslint-enable no-param-reassign */
-
-    return this.scenario.addMock({
-      requirements: mockConfig.trigger,
-      tasks: mockConfig.messages,
-      loadedCounter: mockConfig.loadedCounter
-    });
-  }
-
   changePort(port) {
-    this.port = port;
-  }
-
-  getMock(scenarioId, mockId) {
-    return this.scenario.getMock(mockId);
+    return new Promise((resolve) => {
+      if (this.isLive()) {
+        this.stop(() => {
+          this.port = port;
+          this.start(() => {
+            resolve();
+          });
+        });
+      } else {
+        this.port = port;
+        resolve();
+      }
+    });
   }
 }

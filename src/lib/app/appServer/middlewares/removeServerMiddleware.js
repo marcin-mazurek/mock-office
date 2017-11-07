@@ -1,4 +1,6 @@
-export default function configure(ajv, serversManager) {
+import serversHub from '../../serversHub';
+
+export default function configure(ajv) {
   return (req, res) => {
     const schema = {
       type: 'object',
@@ -11,7 +13,7 @@ export default function configure(ajv, serversManager) {
     };
 
     if (ajv.validate(schema, req.body)) {
-      serversManager.remove(req.body.id)
+      serversHub.remove(req.body.id)
         .then(
           () => {
             res.status(200).end();

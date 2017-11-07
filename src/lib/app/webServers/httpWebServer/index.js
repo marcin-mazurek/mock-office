@@ -2,9 +2,7 @@ import express from 'express';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
-import unique from 'cuid';
 import bodyParser from 'body-parser';
-import Scenario from '../../scenario';
 
 export const send = (req, res, params) => {
   if (params.headers) {
@@ -18,14 +16,10 @@ export const send = (req, res, params) => {
   res.json(params.payload);
 };
 
-export default class HttpMockServer {
-  constructor(config) {
-    this.id = unique();
-    this.scenario = new Scenario();
+export default class HttpWebServer {
+  constructor(config, onTaskTrigger, onServerStop) {
     this.sockets = [];
-    this.type = 'http';
     this.port = config.port || 3000;
-    this.name = config.name;
     this.secure = config.secure;
     this.keyPath = config.keyPath;
     this.certPath = config.certPath;
@@ -36,10 +30,10 @@ export default class HttpMockServer {
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
     this.respond = this.respond.bind(this);
-    this.getScenario = this.getScenario.bind(this);
-    this.changeName = this.changeName.bind(this);
     this.changePort = this.changePort.bind(this);
     this.subscriptions = [];
+    this.onTaskTrigger = onTaskTrigger;
+    this.onServerStop = onServerStop;
     const httpServer = this.secure ? https : http;
     const app = express();
     app.use(bodyParser.json());
@@ -60,10 +54,6 @@ export default class HttpMockServer {
     this.httpServer.on('connection', this.saveSocketRef);
   }
 
-  getScenario() {
-    return this.scenario;
-  }
-
   respond(req, res) {
     // allow CORS by default
     if (req.headers.origin) {
@@ -80,31 +70,30 @@ export default class HttpMockServer {
       requirements.payload = req.body;
     }
 
-    const mock = this.scenario.matchMock(requirements);
-    if (!mock) {
-      res.status(404).send('Sorry, we cannot find mock.');
-      return;
-    }
+    this.onTaskTrigger(requirements, (task$) => {
+      if (!task$) {
+        res.status(404).send('Sorry, we cannot find mock.');
+        return;
+      }
 
-    const stream = this.scenario.play(mock.id);
-
-    if (stream) {
       this.subscriptions.push(
-        stream
+        task$
           .take(1)
           .subscribe((params) => {
             send(req, res, params);
           })
       );
-    }
+    });
   }
 
-  start(onSuccess, onError) {
-    this.httpServer.listen(this.port, onSuccess);
-    this.httpServer.on('error', (err) => {
-      if (err.code === 'EADDRINUSE') {
-        onError(`Port ${err.port} is in use. Choose different port.`);
-      }
+  start() {
+    return new Promise((resolve, reject) => {
+      this.httpServer.listen(this.port, resolve);
+      this.httpServer.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          reject(`Port ${err.port} is in use. Choose different port.`);
+        }
+      });
     });
   }
 
@@ -124,62 +113,37 @@ export default class HttpMockServer {
     }
   }
 
-  stop(cb) {
-    this.clearSubscriptions();
-    this.scenario.cancelPendingMocks();
-    // Browsers can keep connection open, thus callback after
-    // HttpMockServer.stop cant be called if there are sockets
-    // still open, thus we need to ensure that all sockets are
-    // destroyed
-    // https://nodejs.org/api/net.html#net_server_close_callback
-    this.destroyOpenSockets();
-    this.httpServer.close(cb);
-  }
-
-  rename(name) {
-    this.name = name;
+  stop() {
+    return new Promise((resolve) => {
+      this.clearSubscriptions();
+      this.onServerStop();
+      // Browsers can keep connection open, thus callback after
+      // HttpMockServer.stop cant be called if there are sockets
+      // still open, thus we need to ensure that all sockets are
+      // destroyed
+      // https://nodejs.org/api/net.html#net_server_close_callback
+      this.destroyOpenSockets();
+      this.httpServer.close(resolve);
+    });
   }
 
   isLive() {
     return this.httpServer.listening;
   }
 
-  changeName(name) {
-    this.name = name;
-  }
-
   changePort(port) {
-    this.port = port;
-  }
-
-  addMock(scenarioId, mockConfig) {
-    /* eslint-disable no-param-reassign */
-    mockConfig.request = mockConfig.request || {};
-    mockConfig.response = mockConfig.response || {};
-
-    if (!mockConfig.request.method) {
-      mockConfig.request.method = 'GET';
-    }
-
-    if (!mockConfig.request.path) {
-      mockConfig.request.path = '/';
-    }
-
-    if (!mockConfig.response.params) {
-      mockConfig.response.params = {};
-    } else if (!mockConfig.response.params.status) {
-      mockConfig.response.params.status = 200;
-    }
-
-    return this.scenario.addMock({
-      requirements: mockConfig.request,
-      tasks: [mockConfig.response],
-      loadedCounter: mockConfig.loadedCounter
+    return new Promise((resolve) => {
+      if (this.isLive()) {
+        this.stop(() => {
+          this.port = port;
+          this.start(() => {
+            resolve();
+          });
+        });
+      } else {
+        this.port = port;
+        resolve();
+      }
     });
-    /* eslint-enable no-param-reassign */
-  }
-
-  getMock(scenarioId, mockId) {
-    return this.scenario.getMock(mockId);
   }
 }

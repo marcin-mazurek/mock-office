@@ -1,3 +1,5 @@
+import serversHub from '../../serversHub';
+
 const schema = {
   properties: {
     server: {
@@ -13,7 +15,7 @@ const schema = {
   required: ['server', 'scenario', 'mock']
 };
 
-export default function configure(ajv, serversManager) {
+export default function configure(ajv) {
   return (req, res) => {
     if (!ajv.validate(schema, req.body)) {
       res.status(400).json(ajv.errors);
@@ -21,24 +23,22 @@ export default function configure(ajv, serversManager) {
     }
 
     try {
-      const server = serversManager.getServer(req.body.server);
+      const server = serversHub.getServer(req.body.server);
+
       if (!server) {
-        res.status(404).end();
+        res.status(400).end();
         return;
       }
 
+      const mock = server.player.add(
+        'mock',
+        req.body.mock
+      );
       res.status(200).json({
-        id: serversManager.add(
-          'mock',
-          req.body.mock,
-          {
-            scenarioId: req.body.scenario,
-            serverId: req.body.server
-          }
-        )
+        id: mock.id
       });
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(500).json({ error: error.message });
     }
   };
 }

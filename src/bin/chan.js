@@ -2,7 +2,7 @@
 
 const guiEnabled = (process.argv.indexOf('--gui') > -1);
 const chan = require('../index');
-const eventsPlugin = require('../lib/app/eventsPlugin').default;
+const eventsPlugin = require('../lib/app/gui/eventsPlugin').default;
 
 const plugins = [];
 

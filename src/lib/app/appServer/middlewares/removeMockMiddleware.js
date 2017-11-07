@@ -1,4 +1,6 @@
-export default function configure(ajv, serversManager) {
+import serversHub from '../../serversHub';
+
+export default function configure(ajv) {
   return (req, res) => {
     const schema = {
       properties: {
@@ -14,19 +16,18 @@ export default function configure(ajv, serversManager) {
 
     if (!ajv.validate(schema, req.body)) {
       res.json(ajv.errors);
-    }
-
-    const server = serversManager.getServer(req.body.serverId);
-
-    if (!server) {
-      res.status(404).end();
       return;
     }
 
-    const mockRemoved = server.getScenario().removeMock(req.body.mockId);
+    const server = serversHub.getServer(req.body.serverId);
 
-    if (mockRemoved) {
-      res.end();
+    if (!server) {
+      res.status(400).end();
+      return;
+    }
+
+    if (server.player.remove('mock', { serverId: req.body.serverId, mockId: req.body.mockId })) {
+      res.status(200).end();
     } else {
       res.status(404).end();
     }

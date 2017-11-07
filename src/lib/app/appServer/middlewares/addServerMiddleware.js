@@ -1,4 +1,6 @@
-export default function configure(ajv, serversManager) {
+import serversHub from '../../serversHub';
+
+export default function configure(ajv) {
   return (req, res) => {
     const schema = {
       type: 'object',
@@ -32,17 +34,16 @@ export default function configure(ajv, serversManager) {
     };
 
     if (ajv.validate(schema, req.body)) {
-      const id = serversManager.add('server', req.body);
+      const server = serversHub.add(req.body);
 
-      const server = serversManager.getServer(id);
       res.json({
         name: server.name,
-        port: server.port,
         type: server.type,
-        secure: server.secure,
-        scenario: server.getScenario().id,
-        running: server.isLive(),
-        id
+        port: server.webServer.port,
+        secure: server.webServer.secure,
+        scenario: server.player.get('scenario').id,
+        running: server.webServer.isLive(),
+        id: server.id
       });
 
       return;

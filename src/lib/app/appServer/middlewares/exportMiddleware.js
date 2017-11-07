@@ -1,11 +1,13 @@
-export default function configure(serversManager) {
+import serversHub from '../../serversHub';
+
+export default function configure() {
   return (req, res) => {
     res
       .set({
         'Content-Type': 'text/plain',
         'Content-Disposition': 'attachment; filename=export.json'
       })
-      .write(JSON.stringify(serversManager.getState()), 'utf-8', () => {
+      .write(JSON.stringify(serversHub.getState()), 'utf-8', () => {
         res.end();
       });
   };
