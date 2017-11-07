@@ -4,7 +4,7 @@ import colors from 'colors/safe';
 
 const GUI_EVENTS_SERVER_PORT = 3061;
 
-export function configureGuiEventsServer(serversManager) {
+export function configureGuiEventsServer(eventBus) {
   const httpServer = http.createServer();
   const server = new WebSocketServer({ server: httpServer });
   let sockets = [];
@@ -22,11 +22,10 @@ export function configureGuiEventsServer(serversManager) {
       sockets = sockets.filter(socket => socket !== ws);
     });
   });
-
-  serversManager.on('mock-expire', args => broadcast('MOCK_EXPIRE', args));
-  serversManager.on('mock-start', args => broadcast('MOCK_START', args));
-  serversManager.on('mock-end', args => broadcast('MOCK_END', args));
-  serversManager.on('mock-cancel', args => broadcast('MOCK_CANCEL', args));
+  eventBus.on('mock-expire', args => broadcast('MOCK_EXPIRE', args));
+  eventBus.on('mock-start', args => broadcast('MOCK_START', args));
+  eventBus.on('mock-end', args => broadcast('MOCK_END', args));
+  eventBus.on('mock-cancel', args => broadcast('MOCK_CANCEL', args));
 
   return {
     server: httpServer,
@@ -42,8 +41,8 @@ export function serveGuiEventsServer(server, port) {
 }
 
 export default {
-  start(serversManager) {
-    const guiEventsServer = configureGuiEventsServer(serversManager);
+  start(serversHub) {
+    const guiEventsServer = configureGuiEventsServer(serversHub);
     serveGuiEventsServer(guiEventsServer.server, GUI_EVENTS_SERVER_PORT);
   }
 };

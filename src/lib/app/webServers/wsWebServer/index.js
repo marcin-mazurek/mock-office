@@ -68,7 +68,6 @@ export default class WsWebServer {
 
       this.ws.on('close', () => {
         this.clearSubscriptions();
-        this.onServerStop();
         this.ws = null;
       });
 
@@ -113,6 +112,7 @@ export default class WsWebServer {
     }
 
     this.clearSubscriptions();
+    this.onServerStop();
     if (this.ws) {
       this.ws.terminate();
     }

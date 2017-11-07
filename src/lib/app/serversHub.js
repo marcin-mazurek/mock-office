@@ -1,17 +1,16 @@
-import EventEmitter from 'events';
 import unique from 'cuid';
 import HttpWebServer from './webServers/httpWebServer';
 import WsWebServer from './webServers/wsWebServer';
 import Player from './player/Player';
+import eventBus from './eventBus';
 
 const serverTypes = {
   http: HttpWebServer,
   ws: WsWebServer
 };
 
-class ServersHub extends EventEmitter {
+class ServersHub {
   constructor() {
-    super();
     this.servers = [];
     this.add = this.add.bind(this);
     this.getServer = this.getServer.bind(this);
@@ -21,7 +20,7 @@ class ServersHub extends EventEmitter {
   }
 
   add(cfg) {
-    const player = new Player();
+    const player = new Player(eventBus);
     const onTaskTrigger = (requirements, cb) => {
       cb(player.play(requirements));
     };

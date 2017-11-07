@@ -7,7 +7,7 @@ export default function configure(ajv) {
     type: server.type,
     secure: server.webServer.secure,
     id: server.id,
-    scenario: server.player.getScenario().id,
+    scenario: server.player.get('scenario').id,
     running: server.webServer.isLive(),
   });
 
