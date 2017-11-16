@@ -1,6 +1,5 @@
 import unique from 'cuid';
 import deepEqual from 'deep-equal';
-import btoa from 'btoa';
 import Mock from './Mock';
 import extractSubTree from './extractSubTree';
 
@@ -8,47 +7,22 @@ export default class Scenario {
   constructor() {
     this.id = unique();
     this.mocks = [];
-    this.getMock = this.getMock.bind(this);
     this.addMock = this.addMock.bind(this);
     this.removeMock = this.removeMock.bind(this);
     this.play = this.play.bind(this);
     this.matchMock = this.matchMock.bind(this);
-    this.cancelPendingMocks = this.cancelPendingMocks.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
-  getAll() {
-    return this.mocks.map(mock => this.getMock(mock.id));
-  }
-
-  getMock(id) {
-    const mock = this.mocks.find(desc => desc.id === id);
-
-    if (!mock) {
-      return mock;
-    }
-
-    return {
-      id: mock.id,
-      requirements: mock.requirements,
-      pending: mock.pending,
-      runCounter: mock.runCounter,
-      loadedCounter: mock.loadedCounter,
-      tasks: mock.tasks.map(task => ({
-        id: task.id,
-        pending: task.pending,
-        schedule: task.schedule,
-        params: task.params
-      }))
-    };
-  }
-
+  // addMock :: Object -> Mock
   addMock(mockConfig) {
-    const mock = new Mock(mockConfig);
+    const mock = new Mock(this.id, mockConfig);
     this.mocks.push(mock);
 
     return mock;
   }
 
+  // removeMock :: String -> Boolean
   removeMock(mockId) {
     const mockIndex = this.mocks.findIndex(mock => mock.id === mockId);
 
@@ -57,13 +31,13 @@ export default class Scenario {
     }
 
     const mock = this.mocks[mockIndex];
-    mock.cancel();
+    mock.kill();
     this.mocks.splice(mockIndex, 1);
 
     return true;
   }
 
-  // (String, Function) -> Promise
+  // play:: (Object) -> Observable
   play(requirements) {
     const mock = this.matchMock(requirements);
 
@@ -71,42 +45,26 @@ export default class Scenario {
       return null;
     }
 
-    const $tasks = mock.play();
-
-    $tasks.subscribe({
-      complete: () => {
-        if (mock.expired) {
-          this.removeMock(mock.id);
-        }
-      }
-    });
-
-    return $tasks;
+    return mock.start();
   }
 
+  // matchMock :: Object -> Boolean
   matchMock(requirements) {
     return this.mocks.find((mock) => {
-      if (!mock.pending) {
-        if (mock.requirements) {
-          const req = requirements;
-          if (req) {
-            if (mock.requirements.type === 'b64') {
-              req.message = btoa(requirements.message);
-              req.type = 'b64';
-            }
-
-            return deepEqual(mock.requirements, extractSubTree(req, mock.requirements));
-          }
-        } else {
-          return true;
-        }
+      if (!mock.requirements) {
+        return true;
       }
 
-      return false;
+      if (!requirements) {
+        return false;
+      }
+
+      return deepEqual(mock.requirements, extractSubTree(requirements, mock.requirements));
     });
   }
 
-  cancelPendingMocks() {
+  // cancel :: void -> void
+  cancel() {
     this.mocks.forEach(mock => mock.cancel());
   }
 }

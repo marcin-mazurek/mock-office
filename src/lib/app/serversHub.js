@@ -22,10 +22,10 @@ class ServersHub {
   add(cfg) {
     const player = new Player(eventBus);
     const onTaskTrigger = (requirements, cb) => {
-      cb(player.play(requirements));
+      cb(player.start(requirements));
     };
     const onServerStop = () => {
-      player.get('scenario').cancelPendingMocks();
+      player.getScenario().cancel();
     };
     const WebServerConstructor = serverTypes[cfg.type];
     const webServer = new WebServerConstructor(cfg, onTaskTrigger, onServerStop);
@@ -81,18 +81,8 @@ class ServersHub {
     return Promise.reject();
   }
 
-  getState() {
-    return this.servers.map(
-      server => ({
-        running: server.webServer.isLive(),
-        name: server.name,
-        type: server.type,
-        port: server.webServer.port,
-        id: server.id,
-        scenario: server.player.get('scenario', { serverId: server.id }).id,
-        mocks: server.player.get('scenario', { serverId: server.id }).getAll()
-      })
-    );
+  getServers() {
+    return this.servers;
   }
 
   setState(state) {

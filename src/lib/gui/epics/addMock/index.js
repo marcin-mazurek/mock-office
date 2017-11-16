@@ -18,8 +18,6 @@ export const failedAction = reason => ({
 });
 
 export default function addMockEpic(action$, store) {
-  let mockId;
-
   return action$.ofType(HTTP_MOCK_FORM_SUBMIT_SUCCEEDED, WS_MOCK_FORM_SUBMIT_SUCCEEDED)
     .flatMap((action) => {
       const params = paramsSelector(store.getState());
@@ -31,14 +29,9 @@ export default function addMockEpic(action$, store) {
         )
       );
     })
-    .flatMap((id) => {
-      mockId = id;
-      const params = paramsSelector(store.getState());
-      return Observable.fromPromise(api.getMock(params.get('server'), params.get('scenario'), id));
-    })
     .map((mock) => {
       const params = paramsSelector(store.getState());
-      return succeedAction(params.get('scenario'), Object.assign({ id: mockId }, mock));
+      return succeedAction(params.get('scenario'), Object.assign({ id: mock.id }, mock));
     })
     .catch((error) => {
       if (error instanceof ConnectionError) {

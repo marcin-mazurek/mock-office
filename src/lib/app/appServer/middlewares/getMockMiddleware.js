@@ -1,4 +1,5 @@
 import serversHub from '../../serversHub';
+import { mockToResponse } from './transformers';
 
 const schema = {
   properties: {
@@ -30,22 +31,14 @@ export default function configure(ajv) {
         return;
       }
 
-      const mock = server.player.get(
-        'mock',
-        {
-          serverId: req.query.server,
-          scenarioId: req.query.scenario,
-          mockId: req.query.id
-        }
-      );
+      const mock = server.player.scenario.mocks.find(m => m.id === req.query.id);
       if (!mock) {
         res.status(404).end();
         return;
       }
 
-      res.status(200).json(mock);
+      res.status(200).json(mockToResponse(mock));
     } catch (error) {
-      console.log(error);
       res.status(500).json({ error: error.message });
     }
   };

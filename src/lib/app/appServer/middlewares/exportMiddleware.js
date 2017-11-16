@@ -7,7 +7,7 @@ export default function configure() {
         'Content-Type': 'text/plain',
         'Content-Disposition': 'attachment; filename=export.json'
       })
-      .write(JSON.stringify(serversHub.getState()), 'utf-8', () => {
+      .write(JSON.stringify(serversHub.getServers()), 'utf-8', () => {
         res.end();
       });
   };
