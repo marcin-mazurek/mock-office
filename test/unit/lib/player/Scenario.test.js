@@ -2,32 +2,32 @@ import { Observable } from 'rxjs';
 import Scenario from '../../../../src/lib/app/player/Scenario';
 
 describe('Scenario', () => {
-  describe('removeScene', () => {
+  describe('removeMock', () => {
     it('should return true when succeeded', () => {
       const scenario = new Scenario();
-      const scene = scenario.addScene({ tasks: [{}] });
-      expect(scenario.removeScene(scene.id)).toBeTruthy();
+      const scene = scenario.addMock({ tasks: [{}] });
+      expect(scenario.removeMock(scene.id)).toBeTruthy();
     });
 
     it('should return false when failed', () => {
       const scenario = new Scenario();
-      scenario.addScene({ tasks: [{}] });
-      expect(scenario.removeScene('wrong id')).toBeFalsy();
+      scenario.addMock({ tasks: [{}] });
+      expect(scenario.removeMock('wrong id')).toBeFalsy();
     });
 
-    it('should remove scene from scenes', () => {
+    it('should remove scene from mocks', () => {
       const scenario = new Scenario();
-      const scene = scenario.addScene({ tasks: [{}] });
-      scenario.removeScene(scene.id);
-      expect(scenario.scenes).toHaveLength(0);
+      const scene = scenario.addMock({ tasks: [{}] });
+      scenario.removeMock(scene.id);
+      expect(scenario.mocks).toHaveLength(0);
     });
 
     it('should kill scene', () => {
       const scenario = new Scenario();
-      const scene = scenario.addScene({ tasks: [{}] });
+      const scene = scenario.addMock({ tasks: [{}] });
       const killScene = jest.fn();
       scene.kill = killScene;
-      scenario.removeScene(scene.id);
+      scenario.removeMock(scene.id);
       expect(killScene).toHaveBeenCalled();
     });
   });
@@ -40,68 +40,68 @@ describe('Scenario', () => {
 
     it('should return observable if requirements doesn\'t match scene', () => {
       const scenario = new Scenario();
-      scenario.addScene({ tasks: [{}] });
+      scenario.addMock({ tasks: [{}] });
       expect(scenario.play({})).toBeInstanceOf(Observable);
     });
   });
 
-  describe('matchScene', () => {
+  describe('matchMock', () => {
     it('should return true if requirements matches scene requirements', () => {
       const scenario = new Scenario();
-      scenario.addScene({
+      scenario.addMock({
         requirements: {
           prop: 'value'
         },
         tasks: [{}]
       });
-      expect(scenario.matchScene({
+      expect(scenario.matchMock({
         prop: 'value'
       })).toBeTruthy();
     });
 
     it('should return false if requirements doesn\'t match scene requirements', () => {
       const scenario = new Scenario();
-      scenario.addScene({
+      scenario.addMock({
         requirements: {
           prop: 'value'
         },
         tasks: [{}]
       });
-      expect(scenario.matchScene({
+      expect(scenario.matchMock({
         prop: 'value1'
       })).toBeFalsy();
     });
 
     it('should return false if we don\'t provide requirements', () => {
       const scenario = new Scenario();
-      scenario.addScene({
+      scenario.addMock({
         requirements: {
           prop: 'value'
         },
         tasks: [{}]
       });
-      expect(scenario.matchScene()).toBeFalsy();
+      expect(scenario.matchMock()).toBeFalsy();
     });
 
     it('should return true if scene don\'t have requirements', () => {
       const scenario = new Scenario();
-      scenario.addScene({
+      scenario.addMock({
         tasks: [{}]
       });
-      expect(scenario.matchScene({
+      expect(scenario.matchMock({
         prop: 'value1'
       })).toBeTruthy();
     });
   });
 
   describe('cancel', () => {
-    it('should cancel all scenes', () => {
+    it('should cancel all mocks', () => {
       const scenario = new Scenario();
-      const cancelScene = jest.fn();
-      scenario.addScene({ tasks: [{}] }).cancel = cancelScene;
-      scenario.addScene({ tasks: [{}] }).cancel = cancelScene;
+      const cancelMock = jest.fn();
+      scenario.addMock({ tasks: [{}] }).cancel = cancelMock;
+      scenario.addMock({ tasks: [{}] }).cancel = cancelMock;
       scenario.cancel();
-      expect(cancelScene).toHaveBeenCalledTimes(2);
+      expect(cancelMock).toHaveBeenCalledTimes(2);
     });
   });
 });

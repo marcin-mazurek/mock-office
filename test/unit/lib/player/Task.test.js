@@ -3,19 +3,19 @@ import Task from '../../../../src/lib/app/player/Task';
 
 describe('Task', () => {
   it('it should be in inactive status', () => {
-    const task = new Task('scene-id', {});
+    const task = new Task('mock-id', {});
     expect(task.status).toEqual('inactive');
   });
 
   describe('start', () => {
     it('should return schedule observable', () => {
-      const task = new Task('scene-id', {});
+      const task = new Task('mock-id', {});
       expect(task.start()).toBeInstanceOf(Observable);
     });
 
     it('should make status$ emit scheduled status',
       (done) => {
-        const task = new Task('scene-id', {});
+        const task = new Task('mock-id', {});
         task.status$.subscribe((next) => {
           if (next === 'scheduled') {
             done();
@@ -26,7 +26,7 @@ describe('Task', () => {
     );
 
     it('it should change task status to scheduled', () => {
-      const task = new Task('scene-id', {});
+      const task = new Task('mock-id', {});
       task.start();
       expect(task.status).toEqual('scheduled');
     });
@@ -39,7 +39,7 @@ describe('Task', () => {
       () => {
         it('it should make status$ emit cancelled',
           (done) => {
-            const task = new Task('scene-id', {});
+            const task = new Task('mock-id', {});
             task.status$.subscribe((next) => {
               if (next === 'cancelled') {
                 done();
@@ -51,7 +51,7 @@ describe('Task', () => {
         );
 
         it('should change task status to cancelled', () => {
-          const task = new Task('scene-id', {});
+          const task = new Task('mock-id', {});
           task.start();
           task.cancel();
           expect(task.status).toEqual('cancelled');
@@ -63,13 +63,13 @@ describe('Task', () => {
   describe('getStatusChanges', () => {
     it('should return subject which contains relevant data',
       (done) => {
-        const task = new Task('scene-id', {});
+        const task = new Task('mock-id', {});
         const statusChanges$ = task.getStatusChanges();
         expect(statusChanges$).toBeInstanceOf(Subject);
 
         statusChanges$.subscribe((event) => {
           expect(event).toHaveProperty('taskId');
-          expect(event).toHaveProperty('sceneId');
+          expect(event).toHaveProperty('mockId');
           expect(event).toHaveProperty('status');
           done();
         });
@@ -81,7 +81,7 @@ describe('Task', () => {
   describe('kill', () => {
     describe('given that task is scheduled', () => {
       it('should cancel task', (done) => {
-        const task = new Task('scene-id', {});
+        const task = new Task('mock-id', {});
         task.status$.subscribe((next) => {
           if (next === 'cancelled') {
             done();
@@ -93,7 +93,7 @@ describe('Task', () => {
     });
 
     it('should end stream of status change', (done) => {
-      const task = new Task('scene-id', {});
+      const task = new Task('mock-id', {});
       task.status$.subscribe({
         complete: () => {
           done();
@@ -107,14 +107,14 @@ describe('Task', () => {
     `Given that,
     task emitted status change`,
     () => {
-      it('should add scene id and task id to emitting values',
+      it('should add mock id and task id to emitting values',
         (done) => {
-          const task = new Task('scene-id', {});
+          const task = new Task('mock-id', {});
           task.getStatusChanges()
             .subscribe(
               (value) => {
                 expect(value).toHaveProperty('status');
-                expect(value).toHaveProperty('sceneId');
+                expect(value).toHaveProperty('mockId');
                 expect(value).toHaveProperty('taskId');
                 done();
               }
