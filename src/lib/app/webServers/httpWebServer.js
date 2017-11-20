@@ -3,7 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import bodyParser from 'body-parser';
-import Player from '../player/Player';
+import Codex from '../codex';
 
 export const send = (req, res, params) => {
   if (params.headers) {
@@ -36,7 +36,7 @@ export default class HttpWebServer {
     this.respond = this.respond.bind(this);
     this.changePort = this.changePort.bind(this);
     this.pendingReactions = [];
-    this.player = new Player(this.id);
+    this.codex = new Codex();
     const httpServer = this.secure ? https : http;
     const app = express();
     app.use(bodyParser.json());
@@ -73,13 +73,14 @@ export default class HttpWebServer {
       requirements.payload = req.body;
     }
 
-    const run = this.player.start(requirements);
+    const behaviour = this.codex.getBehaviour(requirements);
 
-    if (!run) {
+    if (!behaviour) {
       res.status(404).send('Sorry, we cannot find mock.');
       return;
     }
 
+    const run = behaviour.use();
     this.pendingReactions.push(
       Object.assign({
         subscription: run
@@ -94,7 +95,7 @@ export default class HttpWebServer {
                 this.eventBus.emit(
                   'server-reactions-end',
                   {
-                    mockId: run.mockId,
+                    behaviourId: run.behaviourId,
                     scenarioId: run.scenarioId,
                     serverId: this.id
                   }
@@ -109,7 +110,7 @@ export default class HttpWebServer {
       this.eventBus.emit(
         'server-reactions-start',
         {
-          mockId: run.mockId,
+          behaviourId: run.behaviourId,
           scenarioId: run.scenarioId,
           serverId: this.id
         }
@@ -146,7 +147,7 @@ export default class HttpWebServer {
           this.eventBus.emit(
             'server-reactions-end',
             {
-              mockId: r.mockId,
+              behaviourId: r.behaviourId,
               scenarioId: r.scenarioId,
               serverId: this.id
             }

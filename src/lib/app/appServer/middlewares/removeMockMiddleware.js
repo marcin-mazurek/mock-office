@@ -26,7 +26,7 @@ export default function configure(ajv) {
       return;
     }
 
-    if (server.player.scenario.removeMock(req.body.mockId)) {
+    if (server.webServer.codex.scenario.removeBehaviour(req.body.mockId)) {
       res.status(200).end();
     } else {
       res.status(404).end();

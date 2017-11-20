@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import Scenario from '../../../../src/lib/app/player/Scenario';
+import Scenario from '../../../../src/lib/app/codex/Scenario';
 
 describe('Scenario', () => {
   describe('play', () => {

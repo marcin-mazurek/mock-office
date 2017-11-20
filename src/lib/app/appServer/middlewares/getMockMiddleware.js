@@ -1,5 +1,5 @@
 import serversHub from '../../serversHub';
-import { mockToResponse } from './transformers';
+import { behaviourToResponse } from './transformers';
 
 const schema = {
   properties: {
@@ -31,13 +31,13 @@ export default function configure(ajv) {
         return;
       }
 
-      const mock = server.webServer.player.scenario.mocks.find(m => m.id === req.query.id);
-      if (!mock) {
+      const behaviour = server.webServer.codex.scenario.behaviours.find(b => b.id === req.query.id);
+      if (!behaviour) {
         res.status(404).end();
         return;
       }
 
-      res.status(200).json(mockToResponse(mock));
+      res.status(200).json(behaviourToResponse(behaviour));
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

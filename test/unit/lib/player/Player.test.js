@@ -1,12 +1,12 @@
-import Player from '../../../../src/lib/app/player/Player';
+import Player from '../../../../src/lib/app/codex/Player';
 
 describe('Player', () => {
   describe('start', () => {
     it('should play scenario', () => {
-      const player = new Player();
+      const codex = new Player();
       const playScene = jest.fn();
-      player.scenario.play = playScene;
-      player.start();
+      codex.scenario.play = playScene;
+      codex.start();
       expect(playScene).toHaveBeenCalled();
     });
   });

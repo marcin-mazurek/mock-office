@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Rx';
-import Mock from '../../../../src/lib/app/player/Mock';
+import Mock from '../../../../src/lib/app/codex/Mock';
 
 describe('Mock', () => {
   it('should has inactive status', () => {

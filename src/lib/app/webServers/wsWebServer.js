@@ -3,7 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import unique from 'cuid';
-import Player from '../player/Player';
+import Codex from '../codex';
 
 export default class WsWebServer {
   constructor(config, eventBus) {
@@ -20,7 +20,7 @@ export default class WsWebServer {
     this.isLive = this.isLive.bind(this);
     this.changePort = this.changePort.bind(this);
     this.pendingReactions = [];
-    this.player = new Player();
+    this.codex = new Codex();
 
     const httpServer = this.secure ? https : http;
 
@@ -51,12 +51,13 @@ export default class WsWebServer {
       this.ws = ws;
 
       this.ws.on('message', (message) => {
-        const run = this.player.start({
+        const behaviour = this.codex.getBehaviour({
           event: 'message',
           message
         });
 
-        if (run) {
+        if (behaviour) {
+          const run = behaviour.use();
           this.pendingReactions.push(
             Object.assign({
               subscription: run
@@ -70,7 +71,7 @@ export default class WsWebServer {
                       this.eventBus.emit(
                         'server-reactions-end',
                         {
-                          mockId: run.mockId,
+                          behaviourId: run.behaviourId,
                           scenarioId: run.scenarioId,
                           serverId: this.id
                         }
@@ -85,7 +86,7 @@ export default class WsWebServer {
             this.eventBus.emit(
               'server-reactions-start',
               {
-                mockId: run.mockId,
+                behaviourId: run.behaviourId,
                 scenarioId: run.scenarioId,
                 serverId: this.id
               }
@@ -99,11 +100,12 @@ export default class WsWebServer {
         this.ws = null;
       });
 
-      const run = this.player.start({
+      const behaviour = this.codex.getBehaviour({
         event: 'connect',
       });
 
-      if (run) {
+      if (behaviour) {
+        const run = behaviour.use();
         this.pendingReactions.push(
           Object.assign({
             subscription: run
@@ -117,7 +119,7 @@ export default class WsWebServer {
                     this.eventBus.emit(
                       'server-reactions-end',
                       {
-                        mockId: run.mockId,
+                        behaviourId: run.behaviourId,
                         scenarioId: run.scenarioId,
                         serverId: this.id
                       }
@@ -132,7 +134,7 @@ export default class WsWebServer {
           this.eventBus.emit(
             'server-reactions-start',
             {
-              mockId: run.mockId,
+              behaviourId: run.behaviourId,
               scenarioId: run.scenarioId,
               serverId: this.id
             }
@@ -151,7 +153,7 @@ export default class WsWebServer {
           this.eventBus.emit(
             'server-reactions-end',
             {
-              mockId: r.mockId,
+              behaviourId: r.behaviourId,
               scenarioId: r.scenarioId,
               serverId: this.id
             }

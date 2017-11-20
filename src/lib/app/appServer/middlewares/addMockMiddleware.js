@@ -1,5 +1,5 @@
 import serversHub from '../../serversHub';
-import { mockToResponse } from './transformers';
+import { behaviourToResponse } from './transformers';
 
 const schema = {
   properties: {
@@ -31,8 +31,8 @@ export default function configure(ajv) {
         return;
       }
 
-      const mock = server.webServer.player.scenario.addMock(req.body.mock);
-      res.status(200).json(mockToResponse(mock));
+      const behaviour = server.webServer.codex.scenario.addBehaviour(req.body.mock);
+      res.status(200).json(behaviourToResponse(behaviour));
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

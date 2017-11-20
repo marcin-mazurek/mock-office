@@ -21,27 +21,27 @@ export default function startAppSync(ws, store) {
 
       switch (data.event) {
         case 'MOCK_STOP': {
-          store.dispatch(stopMockMessageReceivedAction(data.mockId));
+          store.dispatch(stopMockMessageReceivedAction(data.behaviourId));
           break;
         }
         case 'MOCK_END': {
-          store.dispatch(finishMockMessageReceivedAction(data.mockId));
+          store.dispatch(finishMockMessageReceivedAction(data.behaviourId));
           break;
         }
         case 'MOCK_EXPIRE': {
           setTimeout(() => {
             store.dispatch(
-              removeAfterUseMessageReceivedAction(data.scenarioId, data.mockId)
+              removeAfterUseMessageReceivedAction(data.scenarioId, data.behaviourId)
             );
           }, 3000);
           break;
         }
         case 'MOCK_START': {
-          store.dispatch(runMockMessageReceivedAction(data.mockId));
+          store.dispatch(runMockMessageReceivedAction(data.behaviourId));
           break;
         }
         case 'MOCK_CANCEL': {
-          store.dispatch(cancelMockMessageReceived(data.mockId));
+          store.dispatch(cancelMockMessageReceived(data.behaviourId));
           break;
         }
         default:

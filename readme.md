@@ -7,9 +7,9 @@
 * You can run it locally or on shared resources, CI.
 * You can use GUI or REST to manage servers.
 
-Command your mock server to behave as you want by adding interactions:
+Command your mock server to behave as you want by adding behaviours:
 
-**Interactions consists of action and commands**
+**Behaviour consists of action and reactions**
 
 * action(what happened): request from client, new connection etc.
 * reactions(what should do): send a response or emit message, disconnect etc.
