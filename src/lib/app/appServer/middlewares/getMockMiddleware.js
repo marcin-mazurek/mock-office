@@ -31,7 +31,7 @@ export default function configure(ajv) {
         return;
       }
 
-      const mock = server.player.scenario.mocks.find(m => m.id === req.query.id);
+      const mock = server.webServer.player.scenario.mocks.find(m => m.id === req.query.id);
       if (!mock) {
         res.status(404).end();
         return;

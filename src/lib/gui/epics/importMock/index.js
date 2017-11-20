@@ -35,14 +35,8 @@ const makeRequests = requestParams =>
       mock => api.addMock(requestParams.server, requestParams.scenario, mock)
     )
   )
-    .then(ids => Promise.all(
-      ids.map(id =>
-        api.getMock(requestParams.server, requestParams.scenario, id)
-          .then(mock => Object.assign({ id }, mock))
-      )
-    ))
     .then(mocks => ({
-      mocks,
+      mocks: mocks.map(m => Object.assign({ id: m.id }, m)),
       scenario: requestParams.scenario
     }))
     .catch(error => ({ error }));

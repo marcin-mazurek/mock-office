@@ -3,6 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import bodyParser from 'body-parser';
+import Player from '../player/Player';
 
 export const send = (req, res, params) => {
   if (params.headers) {
@@ -17,7 +18,10 @@ export const send = (req, res, params) => {
 };
 
 export default class HttpWebServer {
-  constructor(config, onTaskTrigger, onServerStop) {
+  constructor(config, eventBus) {
+    if (eventBus) {
+      this.eventBus = eventBus;
+    }
     this.sockets = [];
     this.port = config.port || 3000;
     this.secure = config.secure;
@@ -31,9 +35,8 @@ export default class HttpWebServer {
     this.isLive = this.isLive.bind(this);
     this.respond = this.respond.bind(this);
     this.changePort = this.changePort.bind(this);
-    this.subscriptions = [];
-    this.onTaskTrigger = onTaskTrigger;
-    this.onServerStop = onServerStop;
+    this.pendingReactions = [];
+    this.player = new Player(this.id);
     const httpServer = this.secure ? https : http;
     const app = express();
     app.use(bodyParser.json());
@@ -70,20 +73,48 @@ export default class HttpWebServer {
       requirements.payload = req.body;
     }
 
-    this.onTaskTrigger(requirements, (task$) => {
-      if (!task$) {
-        res.status(404).send('Sorry, we cannot find mock.');
-        return;
-      }
+    const run = this.player.start(requirements);
 
-      this.subscriptions.push(
-        task$
+    if (!run) {
+      res.status(404).send('Sorry, we cannot find mock.');
+      return;
+    }
+
+    this.pendingReactions.push(
+      Object.assign({
+        subscription: run
+          .reactions
           .take(1)
-          .subscribe((params) => {
-            send(req, res, params);
-          })
+          .subscribe({
+            next: (params) => {
+              send(req, res, params);
+            },
+            complete: () => {
+              if (this.eventBus) {
+                this.eventBus.emit(
+                  'server-reactions-end',
+                  {
+                    mockId: run.mockId,
+                    scenarioId: run.scenarioId,
+                    serverId: this.id
+                  }
+                );
+              }
+            }
+          }),
+      }, run)
+  );
+
+    if (this.eventBus) {
+      this.eventBus.emit(
+        'server-reactions-start',
+        {
+          mockId: run.mockId,
+          scenarioId: run.scenarioId,
+          serverId: this.id
+        }
       );
-    });
+    }
   }
 
   start() {
@@ -106,20 +137,32 @@ export default class HttpWebServer {
     this.sockets.length = 0;
   }
 
-  clearSubscriptions() {
-    if (this.subscriptions.length) {
-      this.subscriptions.forEach(s => s.unsubscribe());
-      this.subscriptions.length = 0;
+  clearPendingReactions() {
+    if (this.pendingReactions.length) {
+      this.pendingReactions.forEach((r) => {
+        r.subscription.unsubscribe();
+
+        if (this.eventBus) {
+          this.eventBus.emit(
+            'server-reactions-end',
+            {
+              mockId: r.mockId,
+              scenarioId: r.scenarioId,
+              serverId: this.id
+            }
+          );
+        }
+      });
+      this.pendingReactions.length = 0;
     }
   }
 
   stop() {
     return new Promise((resolve) => {
-      this.clearSubscriptions();
-      this.onServerStop();
+      this.clearPendingReactions();
       // Browsers can keep connection open, thus callback after
       // HttpMockServer.stop cant be called if there are sockets
-      // still open, thus we need to ensure that all sockets are
+      // still open, so we need to ensure that all sockets are
       // destroyed
       // https://nodejs.org/api/net.html#net_server_close_callback
       this.destroyOpenSockets();

@@ -31,7 +31,7 @@ export default function configure(ajv) {
         return;
       }
 
-      const mock = server.player.scenario.addMock(req.body.mock);
+      const mock = server.webServer.player.scenario.addMock(req.body.mock);
       res.status(200).json(mockToResponse(mock));
     } catch (error) {
       res.status(500).json({ error: error.message });

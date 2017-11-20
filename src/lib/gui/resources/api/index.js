@@ -49,7 +49,7 @@ export default {
       })
       .then((res) => {
         if (res.status === 200) {
-          return res.json().then(payload => payload.id);
+          return res.json();
         } else if (res.status === 400) {
           return res.json().then(payload => ({ error: payload.error }));
         } else if (res.status === 404) {

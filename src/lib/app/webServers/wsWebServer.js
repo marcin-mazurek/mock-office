@@ -3,9 +3,13 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import unique from 'cuid';
+import Player from '../player/Player';
 
 export default class WsWebServer {
-  constructor(config, onTaskTrigger, onServerStop) {
+  constructor(config, eventBus) {
+    if (eventBus) {
+      this.eventBus = eventBus;
+    }
     this.port = config.port || 3000;
     this.id = unique();
     this.secure = config.secure;
@@ -15,9 +19,8 @@ export default class WsWebServer {
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
     this.changePort = this.changePort.bind(this);
-    this.subscriptions = [];
-    this.onTaskTrigger = onTaskTrigger;
-    this.onServerStop = onServerStop;
+    this.pendingReactions = [];
+    this.player = new Player();
 
     const httpServer = this.secure ? https : http;
 
@@ -48,51 +51,114 @@ export default class WsWebServer {
       this.ws = ws;
 
       this.ws.on('message', (message) => {
-        this.onTaskTrigger(
-          {
-            event: 'message',
-            message
-          },
-          (task$) => {
-            if (task$) {
-              this.subscriptions.push(
-                task$
-                  .subscribe((params) => {
+        const run = this.player.start({
+          event: 'message',
+          message
+        });
+
+        if (run) {
+          this.pendingReactions.push(
+            Object.assign({
+              subscription: run
+                .reactions
+                .subscribe({
+                  next: (params) => {
                     this.ws.send(params.message);
-                  })
-              );
-            }
-          }
-        );
-      });
-
-      this.ws.on('close', () => {
-        this.clearSubscriptions();
-        this.ws = null;
-      });
-
-      this.onTaskTrigger(
-        {
-          event: 'connect',
-        },
-        (task$) => {
-          if (task$) {
-            this.subscriptions.push(
-              task$
-                .subscribe((params) => {
-                  this.ws.send(params.message);
+                  },
+                  complete: () => {
+                    if (this.eventBus) {
+                      this.eventBus.emit(
+                        'server-reactions-end',
+                        {
+                          mockId: run.mockId,
+                          scenarioId: run.scenarioId,
+                          serverId: this.id
+                        }
+                      );
+                    }
+                  }
                 })
+            }, run)
+          );
+
+          if (this.eventBus) {
+            this.eventBus.emit(
+              'server-reactions-start',
+              {
+                mockId: run.mockId,
+                scenarioId: run.scenarioId,
+                serverId: this.id
+              }
             );
           }
         }
-      );
+      });
+
+      this.ws.on('close', () => {
+        this.clearPendingReactions();
+        this.ws = null;
+      });
+
+      const run = this.player.start({
+        event: 'connect',
+      });
+
+      if (run) {
+        this.pendingReactions.push(
+          Object.assign({
+            subscription: run
+              .reactions
+              .subscribe({
+                next: (params) => {
+                  this.ws.send(params.message);
+                },
+                complete: () => {
+                  if (this.eventBus) {
+                    this.eventBus.emit(
+                      'server-reactions-end',
+                      {
+                        mockId: run.mockId,
+                        scenarioId: run.scenarioId,
+                        serverId: this.id
+                      }
+                    );
+                  }
+                }
+              })
+          }, run)
+        );
+
+        if (this.eventBus) {
+          this.eventBus.emit(
+            'server-reactions-start',
+            {
+              mockId: run.mockId,
+              scenarioId: run.scenarioId,
+              serverId: this.id
+            }
+          );
+        }
+      }
     });
   }
 
-  clearSubscriptions() {
-    if (this.subscriptions.length) {
-      this.subscriptions.forEach(s => s.unsubscribe());
-      this.subscriptions.length = 0;
+  clearPendingReactions() {
+    if (this.pendingReactions.length) {
+      this.pendingReactions.forEach((r) => {
+        r.subscription.unsubscribe();
+
+        if (this.eventBus) {
+          this.eventBus.emit(
+            'server-reactions-end',
+            {
+              mockId: r.mockId,
+              scenarioId: r.scenarioId,
+              serverId: this.id
+            }
+          );
+        }
+      });
+      this.pendingReactions.length = 0;
     }
   }
 
@@ -111,8 +177,7 @@ export default class WsWebServer {
       return Promise.resolve();
     }
 
-    this.clearSubscriptions();
-    this.onServerStop();
+    this.clearPendingReactions();
     if (this.ws) {
       this.ws.terminate();
     }

@@ -2,36 +2,6 @@ import { Observable } from 'rxjs';
 import Scenario from '../../../../src/lib/app/player/Scenario';
 
 describe('Scenario', () => {
-  describe('removeMock', () => {
-    it('should return true when succeeded', () => {
-      const scenario = new Scenario();
-      const scene = scenario.addMock({ tasks: [{}] });
-      expect(scenario.removeMock(scene.id)).toBeTruthy();
-    });
-
-    it('should return false when failed', () => {
-      const scenario = new Scenario();
-      scenario.addMock({ tasks: [{}] });
-      expect(scenario.removeMock('wrong id')).toBeFalsy();
-    });
-
-    it('should remove scene from mocks', () => {
-      const scenario = new Scenario();
-      const scene = scenario.addMock({ tasks: [{}] });
-      scenario.removeMock(scene.id);
-      expect(scenario.mocks).toHaveLength(0);
-    });
-
-    it('should kill scene', () => {
-      const scenario = new Scenario();
-      const scene = scenario.addMock({ tasks: [{}] });
-      const killScene = jest.fn();
-      scene.kill = killScene;
-      scenario.removeMock(scene.id);
-      expect(killScene).toHaveBeenCalled();
-    });
-  });
-
   describe('play', () => {
     it('should return null if requirements doesn\'t match scene', () => {
       const scenario = new Scenario();

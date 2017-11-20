@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable, Scheduler } from 'rxjs';
 import unique from 'cuid';
 import Task from './Task';
 
@@ -11,78 +11,36 @@ export default class Mock {
     this.loadedCounter = config.loadedCounter || 1;
     this.runCounter = 0;
     this.tasks = config.tasks.map(taskConfig => new Task(this.id, taskConfig));
-    this.status$ = new Subject();
+  }
 
-    const taskLifecycles$ = Observable
-      .merge(
-        ...this.tasks.map(part => part.getStatusChanges()),
-        this.tasks.length
-      );
-    taskLifecycles$.subscribe({
-      complete: () => {
-        this.runCounter += 1;
-        if (this.tasks.every(task => task.status === 'finished')) {
-          this.status = 'finished';
-          this.status$.next('finished');
-        } else {
-          this.status = 'cancelled';
-          this.status$.next('mock-cancel');
-        }
+  // schedule :: (Object, Object) -> Observable
+  static schedule({ params: taskParams, schedule: scheduleConfig }) {
+    const task$ = scheduleConfig && scheduleConfig.interval
+      ? Observable.interval(scheduleConfig.interval)
+        .mapTo(taskParams)
+      : Observable.from([taskParams]);
 
-        if (this.runCounter === this.loadedCounter) {
-          this.status = 'expired';
-          this.status$.next('expired');
-          this.status$.complete();
-        }
-      }
-    });
+    return scheduleConfig && scheduleConfig.delay
+      ? task$.observeOn(Scheduler.async, scheduleConfig.delay)
+      : task$.observeOn(Scheduler.asap);
   }
 
   // start :: void -> Observable
   start() {
-    if (this.status === 'pending' && (this.runCounter === this.loadedCounter - 1)) {
+    if (this.runCounter === this.loadedCounter) {
       return null;
     }
 
-    const tasks$ = Observable
+    this.runCounter += 1;
+
+    return {
+      mockId: this.id,
+      scenarioId: this.scenarioId,
+      reactions: Observable
       .merge(
-        ...this.tasks.map(task => task.start()),
+        ...this.tasks.map(Mock.schedule),
         this.tasks.length
       )
-      .multicast(new Subject())
-      .refCount();
-    this.status = 'pending';
-    this.status$.next('pending');
-
-    return tasks$;
-  }
-
-  // cancel :: void -> void
-  cancel() {
-    if (this.status === 'pending') {
-      this.tasks.forEach(task => task.cancel());
-    }
-  }
-
-  // getStatusChanges :: void -> Observable
-  getStatusChanges() {
-    return this.status$
-      .map(event => ({
-        event,
-        payload: {
-          mockId: this.mockId,
-          scenarioId: this.scenarioId
-        }
-      }));
-  }
-
-  // kill :: void -> void
-  kill() {
-    if (this.status === 'pending') {
-      this.cancel();
-      return;
-    }
-
-    this.status$.complete();
+    };
   }
 }

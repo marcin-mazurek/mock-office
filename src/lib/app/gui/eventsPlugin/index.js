@@ -23,8 +23,8 @@ export function configureGuiEventsServer(eventBus) {
     });
   });
   eventBus.on('mock-expire', args => broadcast('MOCK_EXPIRE', args));
-  eventBus.on('mock-start', args => broadcast('MOCK_START', args));
-  eventBus.on('mock-end', args => broadcast('MOCK_END', args));
+  eventBus.on('server-reactions-start', args => broadcast('MOCK_START', args));
+  eventBus.on('server-reactions-end', args => broadcast('MOCK_END', args));
   eventBus.on('mock-cancel', args => broadcast('MOCK_CANCEL', args));
 
   return {

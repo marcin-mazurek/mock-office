@@ -9,8 +9,8 @@ export default function configure() {
         type: server.type,
         port: server.webServer.port,
         id: server.id,
-        scenario: server.player.scenario.id,
-        mocks: server.player.scenario.mocks.map(mock => ({
+        scenario: server.webServer.player.scenario.id,
+        mocks: server.webServer.player.scenario.mocks.map(mock => ({
           id: mock.id,
           runCounter: mock.runCounter,
           loadedCounter: mock.loadedCounter,

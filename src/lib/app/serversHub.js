@@ -1,7 +1,6 @@
 import unique from 'cuid';
 import HttpWebServer from './webServers/httpWebServer';
 import WsWebServer from './webServers/wsWebServer';
-import Player from './player/Player';
 import eventBus from './eventBus';
 
 const serverTypes = {
@@ -20,21 +19,13 @@ class ServersHub {
   }
 
   add(cfg) {
-    const player = new Player(eventBus);
-    const onTaskTrigger = (requirements, cb) => {
-      cb(player.start(requirements));
-    };
-    const onServerStop = () => {
-      player.getScenario().cancel();
-    };
     const WebServerConstructor = serverTypes[cfg.type];
-    const webServer = new WebServerConstructor(cfg, onTaskTrigger, onServerStop);
+    const webServer = new WebServerConstructor(cfg, eventBus);
     const server = {
       id: unique(),
       name: cfg.name,
       type: cfg.type,
-      webServer,
-      player
+      webServer
     };
     this.servers.push(server);
     return server;

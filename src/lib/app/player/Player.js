@@ -1,20 +1,17 @@
-import { Subject } from 'rxjs';
 import Scenario from './Scenario';
 
 export default class Player {
-  constructor(eventBus) {
+  constructor(serverId) {
+    this.serverId = serverId;
     this.scenario = new Scenario();
-    this.eventBus = eventBus;
-    this.$lifecycle = new Subject();
+    this.playing = [];
   }
 
   // add :: (String, Object) -> Mock
   add(type, cfg) {
     switch (type) {
       case 'mock': {
-        const mock = this.scenario.addMock(cfg);
-        this.$lifecycle.merge(mock.getStatusChanges());
-        return mock;
+        return this.scenario.addMock(cfg);
       }
       default: {
         return null;
