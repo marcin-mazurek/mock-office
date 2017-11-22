@@ -12,12 +12,13 @@
 @import '__objects/modal';
 @import '__objects/form';
 @import '__objects/three-dots-loader';
+@import '__objects/reactionList';
+@import '__objects/reactionListItem';
 @import '_components/ServerView';
 @import '_components/ServerViewHeader';
 @import '_components/ServerViewHeaderToggle';
 @import '_components/BehaviourList';
 @import '_components/BehaviourListItem';
-@import '_components/ReactionList';
 @import '_components/rc-switch-theme';
 @import '_components/App';
 @import '_components/SideBar';

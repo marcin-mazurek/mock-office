@@ -1,14 +1,9 @@
-.reaction-list {
-  @extend %list-reset;
-  padding-left: 130px;
-}
-
 .reaction-list-item {
   background-color: #FFFFFF;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #EBEBEB;
-  padding: 5px 0;
+  padding: 5px 20px;
   font-size: 14px;
   height: 36px;
   position: relative;
@@ -40,20 +35,17 @@
   }
 }
 
-.reaction-list-item-title {
-  padding: 5px 0;
+.reaction-list-item__event-property {
   display: flex;
-  align-items: center;
-  font-weight: 300;
+  flex-direction: column;
+  margin-right: 20px;
 }
 
-.reaction-list-item__title {
-  margin-right: 15px;
-  flex: none;
+.reaction-list-item__event-property-label {
+  font-size: 10px;
+  color: #AAA;
 }
 
-.reaction-list-item__params {
-  padding-left: 20px;
-  display: flex;
-  align-items: center;
+.reaction-list-item__event-property-value {
+  font-size: 12px;
 }
