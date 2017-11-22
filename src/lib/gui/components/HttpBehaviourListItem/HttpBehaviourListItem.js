@@ -70,22 +70,51 @@ export default class HttpBehaviourListItem extends React.Component {
             </div>
             <div className="behaviour-list-item__tag">{`${runCounter}/${loadedCounter}`}</div>
           </div>
-          <div className="behaviour-list-item__behaviour">
-            <div className="behaviour-list-item__tag">
-              {behaviour.getIn(['event', 'method'])}
+          <div className="behaviour-list-item__event">
+            <div className="behaviour-list-item__event-property">
+              <div className="behaviour-list-item__event-property-label">Event type</div>
+              <div className="behaviour-list-item__event-property-value">
+                {
+                  behaviour.getIn(['event', 'type']) || 'Any'
+                }
+              </div>
             </div>
-            <div className="behaviour-list-item__tag">{behaviour.getIn(['event', 'path'])}</div>
-            <button
-              className="behaviour-list-item__remove-button"
-              onClick={() => onRemoveButtonClick(serverId, id)}
-            >
-              <img
-                src={trashIcon}
-                className="behaviour-list-item__remove-button-icon"
-                alt="remove behaviour button"
-              />
-            </button>
+            <div className="behaviour-list-item__event-property">
+              <div className="behaviour-list-item__event-property-label">Path</div>
+              <div className="behaviour-list-item__event-property-value">
+                {
+                  behaviour.getIn(['event', 'path']) || 'Any'
+                }
+              </div>
+            </div>
+            <div className="behaviour-list-item__event-property">
+              <div className="behaviour-list-item__event-property-label">Method</div>
+              <div className="behaviour-list-item__event-property-value">
+                {
+                  behaviour.getIn(['event', 'method']) || 'Any'
+                }
+              </div>
+            </div>
+            <div className="behaviour-list-item__event-property">
+              <div className="behaviour-list-item__event-property-label">Headers</div>
+              <div className="behaviour-list-item__event-property-value">
+                {
+                  behaviour.getIn(['event', 'headers']) ? 'Yes' : 'No'
+                }
+              </div>
+            </div>
           </div>
+          {/* <div className="behaviour-list-item__tag">{behaviour.getIn(['event', 'path'])}</div> */}
+          <button
+            className="behaviour-list-item__remove-button"
+            onClick={() => onRemoveButtonClick(serverId, id)}
+          >
+            <img
+              src={trashIcon}
+              className="behaviour-list-item__remove-button-icon"
+              alt="remove behaviour button"
+            />
+          </button>
         </div>
         <div className={behaviourReactionsClassnames}>
           <ReactionListConnect
