@@ -9,12 +9,12 @@
 
 Command your mock server to behave as you want by adding behaviours:
 
-**Behaviour consists of action and reactions**
+**Behaviour consists of event and reactions**
 
-* action(what happened): request from client, new connection etc.
+* event(what happened): request from client, new connection etc.
 * reactions(what should do): send a response or emit message, disconnect etc.
 
-Currently multiple reactions for one action is usable ony for web socket servers for multiple messages, but we got way to implement more types of actions in the future.
+Currently multiple reactions for one action is usable ony for web socket servers for multiple messages, but we got way to implement more types of reactions for http server in the future.
 
 ## Usage
 For now it only can be run from node CLI or npm script.

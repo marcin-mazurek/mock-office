@@ -1,10 +1,11 @@
 import { Observable } from 'rxjs';
 import unique from 'cuid';
 import Reaction from './Reaction';
+import Event from './Event';
 
 export default class Behaviour {
   constructor(config) {
-    this.action = config.requirements;
+    this.event = new Event(config.event.type, config.event.params);
     this.id = unique();
     this.loadedCounter = config.loadedCounter || 1;
     this.runCounter = 0;

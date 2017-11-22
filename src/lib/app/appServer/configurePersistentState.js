@@ -38,7 +38,7 @@ const schema = {
             title: {
               type: 'string'
             },
-            requirements: {
+            event: {
               type: 'object'
             },
             reuse: {

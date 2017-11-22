@@ -57,7 +57,7 @@ export const AddBehaviourForm = props =>
         </div>
       </div>
     </div>
-    <FormSection name="requirements">
+    <FormSection name="event">
       <section className="form-section">
         <header className="form-section__header">Trigger:</header>
         <div className="form-row">

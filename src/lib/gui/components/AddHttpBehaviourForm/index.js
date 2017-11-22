@@ -101,7 +101,7 @@ export const AddHttpBehaviourForm = ({ handleSubmit }) => (
     </section>
     <section className="form-section">
       <header className="form-section__header">Request:</header>
-      <FormSection name="requirements">
+      <FormSection name="event">
         <div className="form-row">
           <div className="form__field">
             <label className="form-field__label" htmlFor="path">Path:</label>

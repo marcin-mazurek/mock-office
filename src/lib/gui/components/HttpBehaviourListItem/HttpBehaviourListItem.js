@@ -72,9 +72,9 @@ export default class HttpBehaviourListItem extends React.Component {
           </div>
           <div className="behaviour-list-item__behaviour">
             <div className="behaviour-list-item__tag">
-              {behaviour.getIn(['requirements', 'method'])}
+              {behaviour.getIn(['event', 'method'])}
             </div>
-            <div className="behaviour-list-item__tag">{behaviour.getIn(['requirements', 'path'])}</div>
+            <div className="behaviour-list-item__tag">{behaviour.getIn(['event', 'path'])}</div>
             <button
               className="behaviour-list-item__remove-button"
               onClick={() => onRemoveButtonClick(serverId, id)}

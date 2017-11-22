@@ -63,17 +63,20 @@ export default class HttpWebServer {
       res.set('Access-Control-Allow-Origin', req.headers.origin);
     }
 
-    const requirements = {
-      path: req.originalUrl,
-      method: req.method,
-      headers: req.headers
+    const event = {
+      type: 'request',
+      params: {
+        path: req.originalUrl,
+        method: req.method,
+        headers: req.headers
+      }
     };
 
     if (req.method === 'POST') {
-      requirements.payload = req.body;
+      event.params.payload = req.body;
     }
 
-    const behaviour = this.codex.matchBehaviour(requirements);
+    const behaviour = this.codex.matchBehaviour(event);
 
     if (!behaviour) {
       res.status(404).send('Sorry, we cannot find behaviour.');

@@ -52,7 +52,7 @@ export default class WsBehaviourListItem extends React.Component {
       spinner: true,
       'spinner--active': pending
     });
-    const eventType = behaviour.getIn(['requirements', 'event']);
+    const eventType = behaviour.getIn(['event', 'event']);
     return (
       <div className={behaviourClassNames}>
         <div className="behaviour-list-item-behaviour">

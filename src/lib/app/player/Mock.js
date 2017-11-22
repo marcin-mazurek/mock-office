@@ -5,7 +5,7 @@ import Reaction from './Reaction';
 export default class Behaviour {
   constructor(scenarioId, config) {
     this.scenarioId = scenarioId;
-    this.requirements = config.requirements;
+    this.event = config.event;
     this.id = unique();
     this.status = 'inactive';
     this.loadedCounter = config.loadedCounter || 1;

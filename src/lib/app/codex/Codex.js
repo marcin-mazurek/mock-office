@@ -37,17 +37,17 @@ export default class Codex {
   }
 
   // matchBehaviour :: Object -> Behaviour
-  matchBehaviour(action) {
+  matchBehaviour(event) {
     return this.behaviours.find((b) => {
-      if (!b.action) {
+      if (!b.event) {
         return true;
       }
 
-      if (!action) {
+      if (!event) {
         return false;
       }
 
-      return deepEqual(b.action, extractSubTree(action, b.action));
+      return deepEqual(b.event, extractSubTree(event, b.event));
     });
   }
 }

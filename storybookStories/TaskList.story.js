@@ -45,7 +45,7 @@ storiesOf('ReactionList', module)
               }
             ],
             title: 'Behaviour',
-            requirements: {
+            event: {
               event: 'RECEIVED_REQUEST',
               url: '/bet/slips/S00001067bec2425c4/?sortOrder=off'
             }

@@ -7,6 +7,7 @@ export const reactionToResponse = reaction => ({
 
 export const behaviourToResponse = behaviour => ({
   id: behaviour.id,
+  event: behaviour.event,
   serverId: behaviour.serverId,
   runCounter: behaviour.runCounter,
   loadedCounter: behaviour.loadedCounter,

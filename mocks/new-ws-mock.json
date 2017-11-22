@@ -1,7 +1,7 @@
 [
   {
-    "requirements": {
-      "event": "connect"
+    "event": {
+      "type": "connect"
     },
     "reactions": [
       {

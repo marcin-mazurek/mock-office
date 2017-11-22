@@ -1,8 +1,11 @@
 [
   {
     "title": "request for some-url",
-    "requirements": {
-      "method": "GET"
+    "event": {
+      "type": "request",
+      "params": {
+        "method": "GET"
+      }
     },
     "reactions": [
       {
