@@ -1,0 +1,32 @@
+.http-behaviour-list-item-response {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #EBEBEB;
+  padding: 5px 0;
+  font-size: 14px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.http-behaviour-list-item-response__tag {
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-right: 10px;
+  font-size: 13px;
+  background-color: $behaviour-list-item-spec-tag-background-color;
+  color: darken($behaviour-list-item-spec-tag-background-color, 40%);
+}
+
+.http-behaviour-list-item-response__remove-button {
+  @extend %button-reset;
+  font-size: 16px;
+  color: $behaviour-list-item-remove-button-font-color;
+  margin-left: auto;
+  transition: color .2s ease;
+
+  &:hover {
+    color: $behaviour-list-item-remove-button-hover-font-color;
+  }
+}

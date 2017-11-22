@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { storiesOf } from '@kadira/storybook';
 import TaskListConnect from '../src/lib/gui/components/TaskList';
 import configureStore from '../src/lib/gui/app/configureStore';
-import { succeededAction } from '../src/lib/gui/epics/importMock/index';
+import { succeededAction } from '../src/lib/gui/epics/importBehaviour/index';
 import { succeededAction as addServerSucceded } from '../src/lib/gui/epics/addServer/actions';
 
 storiesOf('TaskList', module)
@@ -27,7 +27,7 @@ storiesOf('TaskList', module)
         'scenario-id',
         [
           {
-            id: 'mock-id-1',
+            id: 'behaviour-id-1',
             quantity: 0,
             tasks: [
               {
@@ -44,7 +44,7 @@ storiesOf('TaskList', module)
                 delay: 500
               }
             ],
-            title: 'Mock',
+            title: 'Behaviour',
             requirements: {
               event: 'RECEIVED_REQUEST',
               url: '/bet/slips/S00001067bec2425c4/?sortOrder=off'
@@ -56,7 +56,7 @@ storiesOf('TaskList', module)
 
     return (
       <Provider store={store}>
-        <TaskListConnect mock="mock-id-1" />
+        <TaskListConnect behaviour="behaviour-id-1" />
       </Provider>
     );
   });

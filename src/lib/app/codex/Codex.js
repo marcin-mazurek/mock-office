@@ -1,30 +1,53 @@
-import Scenario from './Scenario';
+import deepEqual from 'deep-equal';
+import Behaviour from './Behaviour';
+import extractSubTree from './extractSubTree';
 
 export default class Codex {
   constructor() {
-    this.scenario = new Scenario();
+    this.behaviours = [];
+    this.addBehaviour = this.addBehaviour.bind(this);
+    this.removeBehaviour = this.removeBehaviour.bind(this);
+    this.findBehaviour = this.matchBehaviour.bind(this);
   }
 
-  // add :: (String, Object) -> Behaviour
-  add(type, cfg) {
-    switch (type) {
-      case 'mock': {
-        return this.scenario.addBehaviour(cfg);
-      }
-      default: {
-        return null;
-      }
-    }
+  // getBehaviour :: String -> Behaviour
+  getBehaviour(id) {
+    return this.behaviours.find(b => b.id === id);
   }
 
-  // getBehaviour :: Object -> Behaviour
-  getBehaviour(action) {
-    const behaviour = this.scenario.find(action);
-
-    if (!behaviour) {
-      return null;
-    }
+  // addBehaviour :: Object -> Behaviour
+  addBehaviour(behaviourCfg) {
+    const behaviour = new Behaviour(behaviourCfg);
+    this.behaviours.push(behaviour);
 
     return behaviour;
+  }
+
+  // removeBehaviour :: String -> Boolean
+  removeBehaviour(behaviourId) {
+    const behaviourIndex = this.behaviours.findIndex(b => b.id === behaviourId);
+
+    if (behaviourIndex < 0) {
+      return false;
+    }
+
+    this.behaviours.splice(behaviourIndex, 1);
+
+    return true;
+  }
+
+  // matchBehaviour :: Object -> Behaviour
+  matchBehaviour(action) {
+    return this.behaviours.find((b) => {
+      if (!b.action) {
+        return true;
+      }
+
+      if (!action) {
+        return false;
+      }
+
+      return deepEqual(b.action, extractSubTree(action, b.action));
+    });
   }
 }

@@ -8,10 +8,10 @@ import configureRemoveServerMiddleware from './middlewares/removeServerMiddlewar
 import configureStartServerMiddleware from './middlewares/startServerMiddleware';
 import configureStopServerMiddleware from './middlewares/stopServerMiddleware';
 import configureEditServerMiddleware from './middlewares/editServerMiddleware';
-import configureAddMockMiddleware from './middlewares/addMockMiddleware';
-import configureRemoveMockMiddleware from './middlewares/removeMockMiddleware';
+import configureAddBehaviourMiddleware from './middlewares/addBehaviourMiddleware';
+import configureRemoveBehaviourMiddleware from './middlewares/removeBehaviourMiddleware';
 import configureExportMiddleware from './middlewares/exportMiddleware';
-import configureGetMockMiddleware from './middlewares/getMockMiddleware';
+import configureGetBehaviourMiddleware from './middlewares/getBehaviourMiddleware';
 import configurePersistentState from './configurePersistentState';
 import configureGetStateMiddleware from './middlewares/getStateMiddleware';
 
@@ -28,10 +28,10 @@ export const createAppServer = () => {
   app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv));
   app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv));
   app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv));
-  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv));
-  app.post('/remove-mock', bodyParser.json(), configureRemoveMockMiddleware(ajv));
+  app.post('/add-behaviour', bodyParser.json(), configureAddBehaviourMiddleware(ajv));
+  app.post('/remove-behaviour', bodyParser.json(), configureRemoveBehaviourMiddleware(ajv));
   app.get('/export', configureExportMiddleware());
-  app.get('/mock', configureGetMockMiddleware(ajv));
+  app.get('/behaviour', configureGetBehaviourMiddleware(ajv));
   app.get('/state', configureGetStateMiddleware());
 
   return app;

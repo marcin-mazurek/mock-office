@@ -12,7 +12,7 @@ const schema = {
       'name',
       'type',
       'id',
-      'mocks'
+      'behaviours'
     ],
     properties: {
       running: {
@@ -30,7 +30,7 @@ const schema = {
       id: {
         type: 'string'
       },
-      mocks: {
+      behaviours: {
         type: 'array',
         items: {
           type: 'object',

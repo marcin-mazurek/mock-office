@@ -51,7 +51,7 @@ export default class WsWebServer {
       this.ws = ws;
 
       this.ws.on('message', (message) => {
-        const behaviour = this.codex.getBehaviour({
+        const behaviour = this.codex.matchBehaviour({
           event: 'message',
           message
         });
@@ -100,7 +100,7 @@ export default class WsWebServer {
         this.ws = null;
       });
 
-      const behaviour = this.codex.getBehaviour({
+      const behaviour = this.codex.matchBehaviour({
         event: 'connect',
       });
 

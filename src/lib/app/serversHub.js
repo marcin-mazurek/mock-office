@@ -82,8 +82,8 @@ class ServersHub {
         s.name, s.port, s.type, s.secure, s.keyPath, s.certPath, false
       );
       const server = this.getServer(id);
-      s.mocks.forEach((mock) => {
-        server.getScenario().addMock(mock);
+      s.behaviours.forEach((behaviour) => {
+        server.getScenario().addBehaviour(behaviour);
       });
     });
   }

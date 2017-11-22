@@ -8,15 +8,15 @@ import {
   FAILED as REMOVE_SERVER_FAILED,
   SUCCEEDED as REMOVE_SERVER_SUCCEEDED
 } from '../../epics/removeServer/actions';
-import { DID_FAIL as REMOVE_MOCK_DID_FAIL } from '../../epics/removeMock';
+import { DID_FAIL as REMOVE_BEHAVIOUR_DID_FAIL } from '../../epics/removeBehaviour';
 import {
-  SUCCEEDED as IMPORT_MOCKS_SUCCEEDED,
-  FAILED as IMPORT_MOCKS_FAILED
-} from '../../epics/importMock';
+  SUCCEEDED as IMPORT_BEHAVIOURS_SUCCEEDED,
+  FAILED as IMPORT_BEHAVIOURS_FAILED
+} from '../../epics/importBehaviour';
 import {
-  SUCCEED as ADD_HTTP_MOCK_SUCCEED,
-  FAILED as ADD_HTTP_MOCK_FAILED
-} from '../../epics/addMock';
+  SUCCEED as ADD_HTTP_BEHAVIOUR_SUCCEED,
+  FAILED as ADD_HTTP_BEHAVIOUR_FAILED
+} from '../../epics/addBehaviour';
 import {
   FAILED as START_SERVER_FAILED
 } from '../../epics/startServer/actions';
@@ -24,13 +24,13 @@ import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer';
 
 export default createReducer(
   {
-    [ADD_HTTP_MOCK_SUCCEED]: reduce => reduce('addNotification', {
+    [ADD_HTTP_BEHAVIOUR_SUCCEED]: reduce => reduce('addNotification', {
       type: 'success',
-      text: 'Mock added'
+      text: 'Behaviour added'
     }),
-    [IMPORT_MOCKS_SUCCEEDED]: reduce => reduce('addNotification', {
+    [IMPORT_BEHAVIOURS_SUCCEEDED]: reduce => reduce('addNotification', {
       type: 'success',
-      text: 'Mocks imported'
+      text: 'Behaviours imported'
     }),
     [EDIT_SERVER_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
@@ -40,15 +40,15 @@ export default createReducer(
       type: 'error',
       text: action.reason
     }),
-    [REMOVE_MOCK_DID_FAIL]: (reduce, action) => reduce('addNotification', {
+    [REMOVE_BEHAVIOUR_DID_FAIL]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),
-    [IMPORT_MOCKS_FAILED]: (reduce, action) => reduce('addNotification', {
+    [IMPORT_BEHAVIOURS_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),
-    [ADD_HTTP_MOCK_FAILED]: (reduce, action) => reduce('addNotification', {
+    [ADD_HTTP_BEHAVIOUR_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),

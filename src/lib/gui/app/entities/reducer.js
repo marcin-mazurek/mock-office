@@ -1,18 +1,16 @@
 import { List, Map, fromJS } from 'immutable';
-import { Server, Scenario } from './recordTypes';
+import { Server } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
 import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServer/actions';
 import { SUCCEEDED as REMOVE_SERVER_SUCCEEDED } from '../../epics/removeServer/actions';
-import { DID_SUCCEED as REMOVE_MOCK_DID_SUCCEED } from '../../epics/removeMock';
+import { DID_SUCCEED as REMOVE_BEHAVIOUR_DID_SUCCEED } from '../../epics/removeBehaviour';
 import {
-  REMOVE_MOCK_MESSAGE_RECEIVED,
-  STOP_MOCK_MESSAGE_RECEIVED,
-  FINISH_MOCK_MESSAGE_RECEIVED,
-  RUN_MOCK_MESSAGE_RECEIVED,
-  CANCEL_MOCK_MESSAGE_RECEIVED
+  REACTIONS_ENDED,
+  REACTIONS_DID_RUN_ACTION,
+  REACTIONS_CANCELLED
 } from '../../appSync/actions';
-import { SUCCEEDED as IMPORT_MOCKS_SUCCEEDED } from '../../epics/importMock';
-import { SUCCEED as ADD_MOCK_SUCCEED } from '../../epics/addMock';
+import { SUCCEEDED as IMPORT_BEHAVIOURS_SUCCEEDED } from '../../epics/importBehaviour';
+import { SUCCEED as ADD_BEHAVIOUR_SUCCEED } from '../../epics/addBehaviour';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer/actions';
 import { SUCCEEDED as LOAD_STATE_ON_APP_START } from '../../epics/loadStateOnStart/actions';
@@ -26,11 +24,7 @@ export const getInitialState = () => new Map({
     ids: new List(),
     entities: new Map()
   }),
-  mocks: new Map({
-    ids: new List(),
-    entities: new Map()
-  }),
-  scenarios: new Map({
+  behaviours: new Map({
     ids: new List(),
     entities: new Map()
   })
@@ -43,8 +37,7 @@ export const reducers = {
       name: params.name,
       port: params.port,
       type: params.type,
-      secure: params.secure,
-      scenario: params.scenario
+      secure: params.secure
     });
 
     return state
@@ -59,8 +52,6 @@ export const reducers = {
   },
   removeServer(state, id) {
     let newState = state;
-    const scenario = state.getIn(['servers', 'entities', id, 'scenario']);
-    newState = reducers.removeScenario(newState, scenario);
 
     newState = state.updateIn(['servers', 'ids'], ids => ids.filter(serverId => serverId !== id));
     newState = newState.deleteIn(['servers', 'entities', id]);
@@ -72,87 +63,65 @@ export const reducers = {
       new Server(Object.assign({ id, }, params))
     );
   },
-  addScenario(state, serverId, scenarioParams) {
-    const scenario = new Scenario(scenarioParams);
-
-    return state
-      .setIn(['scenarios', 'entities', scenario.id], scenario)
-      .updateIn(['scenarios', 'ids'], ids => ids.push(scenario.id))
-      .setIn(['servers', 'entities', serverId, 'scenario'], scenario.id);
-  },
-  addMock(state, scenario, id, params) {
-    const mock = fromJS(Object.assign(
-      {
-        id,
-        expired: false
-      },
+  addBehaviour(state, serverId, params) {
+    const behaviour = fromJS(Object.assign(
+      { expired: false },
       Object.assign({}, params, { tasks: new List() })
     ));
 
     return state
-      .setIn(['mocks', 'entities', id], mock)
-      .updateIn(['mocks', 'ids'], ids => ids.push(id))
-      .updateIn(['scenarios', 'entities', scenario, 'mocks'], mocks => mocks.push(id));
+      .setIn(['behaviours', 'entities', params.id], behaviour)
+      .updateIn(['behaviours', 'ids'], ids => ids.push(params.id))
+      .updateIn(['servers', 'entities', serverId, 'behaviours'], behaviours => behaviours.push(params.id));
   },
-  addTask(state, mock, id, task) {
+  addTask(state, behaviourId, task) {
     return state
-      .updateIn(['mocks', 'entities', mock, 'tasks'], tasks => tasks.push(id))
-      .updateIn(['tasks', 'ids'], ids => ids.push(id))
+      .updateIn(['behaviours', 'entities', behaviourId, 'tasks'], tasks => tasks.push(task.id))
+      .updateIn(['tasks', 'ids'], ids => ids.push(task.id))
       .setIn(
-        ['tasks', 'entities', id],
-        fromJS(Object.assign({ id }, task))
+        ['tasks', 'entities', task.id],
+        fromJS(task)
       );
   },
-  removeScenario(state, id) {
-    const mocks = state.getIn(['scenarios', 'entities', id, 'mocks']);
+  removeBehaviour(state, serverId, behaviourId) {
+    const tasks = state.getIn(['behaviours', 'entities', behaviourId, 'tasks']);
     let newState = state;
 
-    newState = mocks.reduce((acc, next) => reducers.removeMock(acc, id, next), newState);
-    newState
-      .updateIn(['scenarios', 'ids'], ids => ids.filter(scenarioId => scenarioId !== id))
-      .deleteIn(['scenarios', 'entities', id]);
-
-    return newState;
-  },
-  removeMock(state, scenario, id) {
-    const tasks = state.getIn(['mocks', 'entities', id, 'tasks']);
-    let newState = state;
-
-    newState = tasks.reduce((acc, next) => reducers.removeTask(acc, id, next), newState);
+    newState = tasks.reduce((acc, next) => reducers.removeTask(acc, behaviourId, next), newState);
     newState = newState
-      .updateIn(['mocks', 'ids'], ids => ids.filter(mockId => mockId !== id))
-      .deleteIn(['mocks', 'entities', id])
-      .updateIn(['scenarios', 'entities', scenario, 'mocks'], m => m.filter(mId => mId !== id));
+      .updateIn(['behaviours', 'ids'], ids => ids.filter(id => id !== behaviourId))
+      .deleteIn(['behaviours', 'entities', behaviourId])
+      .updateIn(['servers', 'entities', serverId, 'behaviours'], m => m.filter(mId => mId !== behaviourId));
 
     return newState;
   },
-  removeTask(state, mock, id) {
+  removeTask(state, behaviour, id) {
     return state
       .updateIn(['tasks', 'ids'], ids => ids.filter(taskId => taskId !== id))
       .deleteIn(['tasks', 'entities', id])
-      .updateIn(['mocks', 'entities', mock, 'tasks'], tasks => tasks.filter(taskId => taskId !== id));
+      .updateIn(['behaviours', 'entities', behaviour, 'tasks'], tasks => tasks.filter(taskId => taskId !== id));
   },
-  stopMock(state, id) {
-    const prevState = state.getIn(['mocks', 'entities', id]);
-    return state.mergeIn(['mocks', 'entities', id], {
+  cancelReactions(state, id) {
+    const prevState = state.getIn(['behaviours', 'entities', id]);
+    return state.mergeIn(['behaviours', 'entities', id], {
       pending: false,
       lastDuration: Date.now() - prevState.get('lastRunTimestamp')
     });
   },
-  finishMock(state, id) {
+  endReactions(state, id) {
     let newState = state
-      .setIn(['mocks', 'entities', id, 'pending'], false);
+      .setIn(['behaviours', 'entities', id, 'pending'], false);
 
-    const mock = state.getIn(['mocks', 'entities', id]);
-    newState = newState.updateIn(['mocks', 'entities', id, 'runCounter'], runCounter => runCounter + 1);
-    if (mock.get('runCounter') === mock.get('loadedCounter')) {
-      newState = newState.setIn(['mocks', 'entities', id, 'expired'], true);
+    const behaviour = state.getIn(['behaviours', 'entities', id]);
+    newState = newState.updateIn(['behaviours', 'entities', id, 'runCounter'], runCounter => runCounter + 1);
+    if (behaviour.get('runCounter') === behaviour.get('loadedCounter')) {
+      newState = newState.setIn(['behaviours', 'entities', id, 'expired'], true);
     }
 
     return newState;
   },
-  runMock(state, id) {
-    return state.mergeIn(['mocks', 'entities', id], {
+  runBehaviour(state, id) {
+    return state.mergeIn(['behaviours', 'entities', id], {
       pending: true
     });
   }
@@ -160,24 +129,22 @@ export const reducers = {
 
 export default (state = getInitialState(), action) => {
   switch (action.type) {
-    case CANCEL_MOCK_MESSAGE_RECEIVED:
-    case STOP_MOCK_MESSAGE_RECEIVED: {
+    case REACTIONS_CANCELLED: {
       const { id } = action;
-      return reducers.stopMock(state, id);
+      return reducers.cancelReactions(state, id);
     }
-    case FINISH_MOCK_MESSAGE_RECEIVED: {
+    case REACTIONS_ENDED: {
       const { id } = action;
-      return reducers.finishMock(state, id);
+      return reducers.endReactions(state, id);
     }
-    case RUN_MOCK_MESSAGE_RECEIVED: {
+    case REACTIONS_DID_RUN_ACTION: {
       const { id } = action;
-      return reducers.runMock(state, id);
+      return reducers.runBehaviour(state, id);
     }
     case ADD_SERVER_SUCCEED: {
       const { params: { data } } = action;
       let newState = state;
       newState = reducers.addServer(newState, data.id, data);
-      newState = reducers.addScenario(newState, data.id, { id: data.scenario });
       return newState;
     }
     case EDIT_SERVER_SUCCEEDED: {
@@ -193,13 +160,11 @@ export default (state = getInitialState(), action) => {
           newState = reducers.startServer(newState, serverParams.id);
         }
 
-        newState = reducers.addScenario(newState, serverParams.id, { id: serverParams.scenario });
+        serverParams.behaviours.forEach((behaviour) => {
+          newState = reducers.addBehaviour(newState, serverParams.id, behaviour);
 
-        serverParams.mocks.forEach((mock) => {
-          newState = reducers.addMock(newState, serverParams.scenario, mock.id, mock);
-
-          mock.tasks.forEach((task) => {
-            newState = reducers.addTask(newState, mock.id, task.id, task);
+          behaviour.tasks.forEach((task) => {
+            newState = reducers.addTask(newState, behaviour.id, task);
           });
         });
       });
@@ -214,40 +179,31 @@ export default (state = getInitialState(), action) => {
 
       return newState;
     }
-    case REMOVE_MOCK_DID_SUCCEED: {
-      return reducers.removeMock(state, action.scenario, action.id);
+    case REMOVE_BEHAVIOUR_DID_SUCCEED: {
+      return reducers.removeBehaviour(state, action.serverId, action.behaviourId);
     }
-    case REMOVE_MOCK_MESSAGE_RECEIVED: {
-      return reducers.removeMock(state, action.scenario, action.id);
-    }
-    case IMPORT_MOCKS_SUCCEEDED: {
-      const { mocks, scenario } = action;
+    case IMPORT_BEHAVIOURS_SUCCEEDED: {
+      const { behaviours, serverId } = action;
       let newState = state;
-      mocks.forEach((mock) => {
-        newState = reducers.addMock(
-          newState,
-          scenario,
-          mock.id,
-          mock
-        );
+      behaviours.forEach((behaviour) => {
+        newState = reducers.addBehaviour(newState, serverId, behaviour);
 
-        mock.tasks.forEach((task) => {
-          newState = reducers.addTask(newState, mock.id, task.id, task);
+        behaviour.tasks.forEach((task) => {
+          newState = reducers.addTask(newState, behaviour.id, task);
         });
       });
       return newState;
     }
-    case ADD_MOCK_SUCCEED: {
-      const { mock, scenario } = action;
+    case ADD_BEHAVIOUR_SUCCEED: {
+      const { behaviour, serverId } = action;
       let newState = state;
-      newState = reducers.addMock(
+      newState = reducers.addBehaviour(
         newState,
-        scenario,
-        mock.id,
-        mock
+        serverId,
+        behaviour
       );
-      mock.tasks.forEach((task) => {
-        newState = reducers.addTask(newState, mock.id, task.id, task);
+      behaviour.tasks.forEach((task) => {
+        newState = reducers.addTask(newState, behaviour.id, task);
       });
       return newState;
     }

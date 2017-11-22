@@ -3,9 +3,9 @@ import 'rxjs/operator/mergeMap';
 import { clearExpiredNotificationsEpic } from 'notifications';
 import { combineEpics } from 'redux-observable';
 import addServerEpic from './addServer';
-import addHttpMockEpic from './addMock';
-import { removeMockEpic } from './removeMock';
-import addMockFromFileEpic from './importMock';
+import addHttpBehaviourEpic from './addBehaviour';
+import { removeBehaviourEpic } from './removeBehaviour';
+import addBehaviourFromFileEpic from './importBehaviour';
 import removeServerEpic from './removeServer';
 import exportStateEpic from './exportState/exportStateEpic';
 import editServerEpic from './editServer';
@@ -14,11 +14,11 @@ import loadStateOnStart from './loadStateOnStart';
 
 export default combineEpics(
   addServerEpic,
-  removeMockEpic,
-  addMockFromFileEpic,
+  removeBehaviourEpic,
+  addBehaviourFromFileEpic,
   removeServerEpic,
   exportStateEpic,
-  addHttpMockEpic,
+  addHttpBehaviourEpic,
   editServerEpic,
   toggleServer,
   clearExpiredNotificationsEpic,

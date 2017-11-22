@@ -8,17 +8,16 @@ import { ServerViewHeaderToggleConnect } from '../ServerViewHeaderToggle';
 
 const ServerViewHeader = ({
   running,
-  id,
   type,
   name,
   port,
-  scenario,
   onRemoveButtonClick,
-  onAddMockButtonClickedAction
+  onAddBehaviourButtonClickedAction,
+  serverId
 }) => (
   <div className="server-view-header">
     <div className="server-view-header__toggle">
-      <ServerViewHeaderToggleConnect toggled={running} serverId={id} />
+      <ServerViewHeaderToggleConnect toggled={running} serverId={serverId} />
     </div>
     <div className="server-view-header__details">
       <div className="server-view-header__name">
@@ -41,37 +40,36 @@ const ServerViewHeader = ({
         onClick={() => (
           // eslint-disable-next-line no-alert
           confirm(`Do you want to stop & remove '${name}' from the list of available servers?`)
-            ? onRemoveButtonClick(id)
+            ? onRemoveButtonClick(serverId)
             : false
         )
         }
       >
         <img src={trashIcon} role="presentation" />
       </button>
-      <Link className="server-view-header__edit-button" to={`/server/${id}/edit`}>
+      <Link className="server-view-header__edit-button" to={`/server/${serverId}/edit`}>
         Edit
       </Link>
       <button
-        className="server-view-header__add-mock-button"
-        onClick={() => onAddMockButtonClickedAction(id, scenario, type)}
+        className="server-view-header__add-behaviour-button"
+        onClick={() => onAddBehaviourButtonClickedAction(serverId, type)}
       >
         <img src={plusIcon} role="presentation" style={{ marginRight: '11px' }} />
-        Add mock
+        Add behaviour
       </button>
     </div>
-    <FilePickerConnect scenario={scenario} server={id} />
+    <FilePickerConnect serverId={serverId} />
   </div>
 );
 
 ServerViewHeader.propTypes = {
   running: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   port: PropTypes.number.isRequired,
-  scenario: PropTypes.string.isRequired,
+  serverId: PropTypes.string.isRequired,
   onRemoveButtonClick: PropTypes.func.isRequired,
-  onAddMockButtonClickedAction: PropTypes.func.isRequired
+  onAddBehaviourButtonClickedAction: PropTypes.func.isRequired
 };
 
 export default ServerViewHeader;

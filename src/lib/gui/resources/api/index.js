@@ -35,14 +35,14 @@ export default {
         throw new Error(error.message);
       });
   },
-  addMock(server, scenario, mock) {
-    return fetch('http://127.0.0.1:3060/add-mock', {
+  addBehaviour(serverId, behaviour) {
+    return fetch('http://127.0.0.1:3060/add-behaviour', {
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({ server, scenario, mock })
+      body: JSON.stringify({ serverId, behaviour })
     })
       .catch(() => {
         throw new ConnectionError();
@@ -51,16 +51,18 @@ export default {
         if (res.status === 200) {
           return res.json();
         } else if (res.status === 400) {
-          return res.json().then(payload => ({ error: payload.error }));
+          res.json().then((payload) => {
+            throw new Error(payload.error);
+          });
         } else if (res.status === 404) {
-          return { error: 'Server not found' };
+          throw new Error('Server not found');
         }
 
         return { error: 'Unknown server response' };
       });
   },
-  getMock(serverId, scenarioId, mockId) {
-    return fetch(`http://127.0.0.1:3060/mock?id=${mockId}&server=${serverId}&scenario=${scenarioId}`, {
+  getBehaviour(serverId, scenarioId, behaviourId) {
+    return fetch(`http://127.0.0.1:3060/behaviour?id=${behaviourId}&server=${serverId}&scenario=${scenarioId}`, {
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
@@ -75,7 +77,7 @@ export default {
         } else if (res.status === 400) {
           return res.json().then(payload => ({ error: payload.error }));
         } else if (res.status === 404) {
-          return { error: 'Mock not found' };
+          return { error: 'Behaviour not found' };
         }
 
         return { error: 'Unknown server response' };
@@ -219,8 +221,8 @@ export default {
         throw new Error(error.message);
       });
   },
-  removeMock(params) {
-    return fetch('http://127.0.0.1:3060/remove-mock', {
+  removeBehaviour(params) {
+    return fetch('http://127.0.0.1:3060/remove-behaviour', {
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
@@ -233,14 +235,13 @@ export default {
       })
       .then((res) => {
         if (res.status === 200) {
-          return {
-            scenarioId: params.scenarioId,
-            mockId: params.mockId
-          };
+          return true;
         } else if (res.status === 400) {
-          return res.json().then(payload => ({ error: payload.error }));
+          return res.json().then((payload) => {
+            throw new Error(payload.error);
+          });
         } else if (res.status === 404) {
-          return { error: 'That mock does\'nt exist' };
+          throw new Error('That behaviour does\'nt exist');
         }
 
         return { error: 'Server error' };

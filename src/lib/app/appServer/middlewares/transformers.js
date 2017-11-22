@@ -7,6 +7,7 @@ export const reactionToResponse = reaction => ({
 
 export const behaviourToResponse = behaviour => ({
   id: behaviour.id,
+  serverId: behaviour.serverId,
   runCounter: behaviour.runCounter,
   loadedCounter: behaviour.loadedCounter,
   status: behaviour.status,
@@ -19,6 +20,5 @@ export const serverToResponse = server => ({
   type: server.type,
   port: server.webServer.port,
   id: server.id,
-  scenario: server.webServer.codex.scenario.id,
-  mocks: server.webServer.codex.scenario.behaviours.map(behaviourToResponse)
+  behaviours: server.webServer.codex.behaviours.map(behaviourToResponse)
 });

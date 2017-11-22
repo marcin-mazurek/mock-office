@@ -1,4 +1,5 @@
 import serversHub from '../../serversHub';
+import { serverToResponse } from './transformers';
 
 export default function configure(ajv) {
   return (req, res) => {
@@ -36,15 +37,7 @@ export default function configure(ajv) {
     if (ajv.validate(schema, req.body)) {
       const server = serversHub.add(req.body);
 
-      res.json({
-        name: server.name,
-        type: server.type,
-        port: server.webServer.port,
-        secure: server.webServer.secure,
-        scenario: server.webServer.codex.scenario.id,
-        running: server.webServer.isLive(),
-        id: server.id
-      });
+      res.json(serverToResponse(server));
 
       return;
     }

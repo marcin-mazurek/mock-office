@@ -3,8 +3,7 @@ import unique from 'cuid';
 import Reaction from './Reaction';
 
 export default class Behaviour {
-  constructor(scenarioId, config) {
-    this.scenarioId = scenarioId;
+  constructor(config) {
     this.action = config.requirements;
     this.id = unique();
     this.loadedCounter = config.loadedCounter || 1;
@@ -22,7 +21,6 @@ export default class Behaviour {
 
     return {
       behaviourId: this.id,
-      scenarioId: this.scenarioId,
       reactions: Observable.merge(
         ...this.reactions.map(Reaction.schedule),
         this.reactions.length

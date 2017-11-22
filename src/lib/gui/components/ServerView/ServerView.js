@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { ServerViewHeaderConnect } from '../ServerViewHeader';
-import { HttpMockListItemConnect } from '../HttpMockListItem';
-import { WsMockListItemConnect } from '../WsMockListItem';
-import { MockListConnect } from '../MockList';
+import { HttpBehaviourListItemConnect } from '../HttpBehaviourListItem';
+import { WsBehaviourListItemConnect } from '../WsBehaviourListItem';
+import { BehaviourListConnect } from '../BehaviourList';
 
 const ServerView = ({
-  scenario,
   id,
   running,
   type,
@@ -18,24 +17,22 @@ const ServerView = ({
     <header className="server-view__header">
       <ServerViewHeaderConnect
         running={running}
-        id={id}
+        serverId={id}
         type={type}
         name={name}
         port={port}
-        scenario={scenario}
       />
     </header>
     <main className="server-view-main server-view__main">
-      <div className="server-view__mocks">
-        <div className="server-view__mocks-scroll-container">
+      <div className="server-view__behaviours">
+        <div className="server-view__behaviours-scroll-container">
           <Scrollbars>
-            <MockListConnect
-              server={id}
-              scenario={scenario}
+            <BehaviourListConnect
+              serverId={id}
               render={
                 type === 'http'
-                  ? mock => <HttpMockListItemConnect server={id} scenario={scenario} id={mock} />
-                  : mock => <WsMockListItemConnect server={id} scenario={scenario} id={mock} />
+                  ? behaviour => <HttpBehaviourListItemConnect serverId={id} id={behaviour} />
+                  : behaviour => <WsBehaviourListItemConnect serverId={id} id={behaviour} />
               }
             />
           </Scrollbars>
@@ -45,7 +42,6 @@ const ServerView = ({
   </div>;
 
 ServerView.propTypes = {
-  scenario: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   running: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,

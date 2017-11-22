@@ -73,10 +73,10 @@ export default class HttpWebServer {
       requirements.payload = req.body;
     }
 
-    const behaviour = this.codex.getBehaviour(requirements);
+    const behaviour = this.codex.matchBehaviour(requirements);
 
     if (!behaviour) {
-      res.status(404).send('Sorry, we cannot find mock.');
+      res.status(404).send('Sorry, we cannot find behaviour.');
       return;
     }
 
@@ -162,7 +162,7 @@ export default class HttpWebServer {
     return new Promise((resolve) => {
       this.clearPendingReactions();
       // Browsers can keep connection open, thus callback after
-      // HttpMockServer.stop cant be called if there are sockets
+      // HttpBehaviourServer.stop cant be called if there are sockets
       // still open, so we need to ensure that all sockets are
       // destroyed
       // https://nodejs.org/api/net.html#net_server_close_callback

@@ -22,10 +22,9 @@ export function configureGuiEventsServer(eventBus) {
       sockets = sockets.filter(socket => socket !== ws);
     });
   });
-  eventBus.on('mock-expire', args => broadcast('MOCK_EXPIRE', args));
-  eventBus.on('server-reactions-start', args => broadcast('MOCK_START', args));
-  eventBus.on('server-reactions-end', args => broadcast('MOCK_END', args));
-  eventBus.on('mock-cancel', args => broadcast('MOCK_CANCEL', args));
+  eventBus.on('server-reactions-start', args => broadcast('SERVER_REACTIONS_STARTED', args));
+  eventBus.on('server-reactions-end', args => broadcast('SERVER_REACTIONS_ENDED', args));
+  eventBus.on('server-reactions-cancel', args => broadcast('SERVER_REACTIONS_CANCELLED', args));
 
   return {
     server: httpServer,
