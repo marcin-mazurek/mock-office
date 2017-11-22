@@ -4,4 +4,4 @@ import './notifications/NotificationsList.story';
 import './Modal.story';
 import './AddServerModal.story';
 import './AddBehaviourModal.story';
-import './TaskList.story';
+import './ReactionList.story';

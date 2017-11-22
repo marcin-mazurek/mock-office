@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm, FormSection, FieldArray } from 'redux-form/immutable';
 import Select from 'react-select';
-import TaskFormSection from '../AddWsBehaviourFormTaskFormSection';
+import ReactionFormSection from '../AddWsBehaviourFormReactionFormSection';
 import { submitSucceededAction } from './actions';
 
 const EventTypeField = field =>
@@ -20,12 +20,12 @@ const EventTypeField = field =>
 // eslint-disable-next-line react/prop-types
 const renderMessages = ({ fields }) =>
   <div>
-    <ul className="add-ws-behaviour-tasks-list">
+    <ul className="add-ws-behaviour-reactions-list">
       {
         fields.map((name, index) =>
-          <li className="add-ws-behaviour-tasks-list__item" key={index}>
+          <li className="add-ws-behaviour-reactions-list__item" key={index}>
             <FormSection name={name}>
-              <TaskFormSection />
+              <ReactionFormSection />
             </FormSection>
           </li>
         )
@@ -85,7 +85,7 @@ export const AddBehaviourForm = props =>
     </FormSection>
     <section className="form-section">
       <header className="form-section__header">Messages:</header>
-      <FieldArray component={renderMessages} name="tasks" />
+      <FieldArray component={renderMessages} name="reactions" />
     </section>
     <div className="form-row">
       <button className="button form__button" type="submit">
@@ -102,7 +102,7 @@ export default reduxForm(
   {
     form: 'addWsBehaviour',
     initialValues: {
-      tasks: [{}]
+      reactions: [{}]
     },
     onSubmit(values) {
       /* eslint-disable no-param-reassign */

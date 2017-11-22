@@ -20,7 +20,7 @@ export const getInitialState = () => new Map({
     ids: new List(),
     entities: new Map()
   }),
-  tasks: new Map({
+  reactions: new Map({
     ids: new List(),
     entities: new Map()
   }),
@@ -66,7 +66,7 @@ export const reducers = {
   addBehaviour(state, serverId, params) {
     const behaviour = fromJS(Object.assign(
       { expired: false },
-      Object.assign({}, params, { tasks: new List() })
+      Object.assign({}, params, { reactions: new List() })
     ));
 
     return state
@@ -74,20 +74,20 @@ export const reducers = {
       .updateIn(['behaviours', 'ids'], ids => ids.push(params.id))
       .updateIn(['servers', 'entities', serverId, 'behaviours'], behaviours => behaviours.push(params.id));
   },
-  addTask(state, behaviourId, task) {
+  addReaction(state, behaviourId, reaction) {
     return state
-      .updateIn(['behaviours', 'entities', behaviourId, 'tasks'], tasks => tasks.push(task.id))
-      .updateIn(['tasks', 'ids'], ids => ids.push(task.id))
+      .updateIn(['behaviours', 'entities', behaviourId, 'reactions'], reactions => reactions.push(reaction.id))
+      .updateIn(['reactions', 'ids'], ids => ids.push(reaction.id))
       .setIn(
-        ['tasks', 'entities', task.id],
-        fromJS(task)
+        ['reactions', 'entities', reaction.id],
+        fromJS(reaction)
       );
   },
   removeBehaviour(state, serverId, behaviourId) {
-    const tasks = state.getIn(['behaviours', 'entities', behaviourId, 'tasks']);
+    const reactions = state.getIn(['behaviours', 'entities', behaviourId, 'reactions']);
     let newState = state;
 
-    newState = tasks.reduce((acc, next) => reducers.removeTask(acc, behaviourId, next), newState);
+    newState = reactions.reduce((acc, next) => reducers.removeReaction(acc, behaviourId, next), newState);
     newState = newState
       .updateIn(['behaviours', 'ids'], ids => ids.filter(id => id !== behaviourId))
       .deleteIn(['behaviours', 'entities', behaviourId])
@@ -95,11 +95,11 @@ export const reducers = {
 
     return newState;
   },
-  removeTask(state, behaviour, id) {
+  removeReaction(state, behaviour, id) {
     return state
-      .updateIn(['tasks', 'ids'], ids => ids.filter(taskId => taskId !== id))
-      .deleteIn(['tasks', 'entities', id])
-      .updateIn(['behaviours', 'entities', behaviour, 'tasks'], tasks => tasks.filter(taskId => taskId !== id));
+      .updateIn(['reactions', 'ids'], ids => ids.filter(reactionId => reactionId !== id))
+      .deleteIn(['reactions', 'entities', id])
+      .updateIn(['behaviours', 'entities', behaviour, 'reactions'], reactions => reactions.filter(reactionId => reactionId !== id));
   },
   cancelReactions(state, id) {
     const prevState = state.getIn(['behaviours', 'entities', id]);
@@ -163,8 +163,8 @@ export default (state = getInitialState(), action) => {
         serverParams.behaviours.forEach((behaviour) => {
           newState = reducers.addBehaviour(newState, serverParams.id, behaviour);
 
-          behaviour.tasks.forEach((task) => {
-            newState = reducers.addTask(newState, behaviour.id, task);
+          behaviour.reactions.forEach((reaction) => {
+            newState = reducers.addReaction(newState, behaviour.id, reaction);
           });
         });
       });
@@ -188,8 +188,8 @@ export default (state = getInitialState(), action) => {
       behaviours.forEach((behaviour) => {
         newState = reducers.addBehaviour(newState, serverId, behaviour);
 
-        behaviour.tasks.forEach((task) => {
-          newState = reducers.addTask(newState, behaviour.id, task);
+        behaviour.reactions.forEach((reaction) => {
+          newState = reducers.addReaction(newState, behaviour.id, reaction);
         });
       });
       return newState;
@@ -202,8 +202,8 @@ export default (state = getInitialState(), action) => {
         serverId,
         behaviour
       );
-      behaviour.tasks.forEach((task) => {
-        newState = reducers.addTask(newState, behaviour.id, task);
+      behaviour.reactions.forEach((reaction) => {
+        newState = reducers.addReaction(newState, behaviour.id, reaction);
       });
       return newState;
     }

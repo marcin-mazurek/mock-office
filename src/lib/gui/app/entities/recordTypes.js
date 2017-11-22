@@ -11,7 +11,7 @@ export const Server = new Record({
   behaviours: new List()
 });
 
-export const Task = new Record({
+export const Reaction = new Record({
   params: null,
   interval: null,
   reuse: null,

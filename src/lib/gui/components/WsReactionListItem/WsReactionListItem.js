@@ -1,16 +1,16 @@
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-const WsTaskListItem = ({ task }) => {
-  const delay = task.getIn(['schedule', 'delay']);
-  const interval = task.getIn(['schedule', 'interval']);
+const WsReactionListItem = ({ reaction }) => {
+  const delay = reaction.getIn(['schedule', 'delay']);
+  const interval = reaction.getIn(['schedule', 'interval']);
   return (
-    <div className="task-list-item">
-      <div className="task-list-item__params">
+    <div className="reaction-list-item">
+      <div className="reaction-list-item__params">
         {
           delay
             ? (
-              <div className="task-list-item__tag">
+              <div className="reaction-list-item__tag">
                 <i className="fa fa-hourglass-o" />{' '}{delay / 1000}{'s'}
               </div>
             )
@@ -19,7 +19,7 @@ const WsTaskListItem = ({ task }) => {
         {
           interval
             ? (
-              <div className="task-list-item__tag">
+              <div className="reaction-list-item__tag">
                 <i className="fa fa-history" />{' '}{interval / 1000}{'s'}
               </div>
             )
@@ -30,8 +30,8 @@ const WsTaskListItem = ({ task }) => {
   );
 };
 
-WsTaskListItem.propTypes = {
-  task: ImmutablePropTypes.map
+WsReactionListItem.propTypes = {
+  reaction: ImmutablePropTypes.map
 };
 
-export default WsTaskListItem;
+export default WsReactionListItem;

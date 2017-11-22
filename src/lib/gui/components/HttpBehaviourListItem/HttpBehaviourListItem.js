@@ -4,19 +4,19 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import expandIcon from '../../../../../assets/icons_green_expand@3x.svg';
 import trashIcon from '../../../../../assets/icons_gray_trash@3x.svg';
-import { TaskListConnect } from '../TaskList';
-import { HttpTaskListItemConnect } from '../HttpTaskListItem';
+import { ReactionListConnect } from '../ReactionList';
+import { HttpReactionListItemConnect } from '../HttpReactionListItem';
 
 export default class HttpBehaviourListItem extends React.Component {
   constructor() {
     super();
-    this.showTasks = this.showTasks.bind(this);
+    this.showReactions = this.showReactions.bind(this);
     this.state = {
       expanded: false
     };
   }
 
-  showTasks() {
+  showReactions() {
     this.setState({
       expanded: !this.state.expanded
     });
@@ -29,9 +29,9 @@ export default class HttpBehaviourListItem extends React.Component {
       serverId
     } = this.props;
     const { expanded } = this.state;
-    const behaviourTasksClassnames = classnames({
-      'behaviour-list-item__tasks': true,
-      'behaviour-list-item__tasks--visible': expanded
+    const behaviourReactionsClassnames = classnames({
+      'behaviour-list-item__reactions': true,
+      'behaviour-list-item__reactions--visible': expanded
     });
 
     const expired = behaviour.get('expired');
@@ -57,7 +57,7 @@ export default class HttpBehaviourListItem extends React.Component {
       <div className={behaviourClassNames}>
         <span className="behaviour-list-item__line" />
         <div className="behaviour-list-item-behaviour">
-          <button className={expandButtonClassNames} onClick={this.showTasks}>
+          <button className={expandButtonClassNames} onClick={this.showReactions}>
             <img src={expandIcon} role="presentation" />
           </button>
           <div className="behaviour-list-item__params">
@@ -87,10 +87,10 @@ export default class HttpBehaviourListItem extends React.Component {
             </button>
           </div>
         </div>
-        <div className={behaviourTasksClassnames}>
-          <TaskListConnect
+        <div className={behaviourReactionsClassnames}>
+          <ReactionListConnect
             behaviour={id}
-            render={taskId => <HttpTaskListItemConnect id={taskId} />}
+            render={reactionId => <HttpReactionListItemConnect id={reactionId} />}
           />
         </div>
       </div>

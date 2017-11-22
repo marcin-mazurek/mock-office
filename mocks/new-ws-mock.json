@@ -3,7 +3,7 @@
     "requirements": {
       "event": "connect"
     },
-    "tasks": [
+    "reactions": [
       {
         "params": {
           "message": "welcome message"

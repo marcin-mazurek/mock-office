@@ -9,7 +9,7 @@
       }
     },
     "reuse": "infinite",
-    "tasks": [
+    "reactions": [
       {
         "title": "response with bets",
         "type": "future",

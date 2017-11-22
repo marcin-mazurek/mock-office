@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FormSection } from 'redux-form/immutable';
 
-const AddWsBehaviourFormTaskFormSection = () => (
+const AddWsBehaviourFormReactionFormSection = () => (
   <div className="form-section">
     <header className="form-section__header">Message:</header>
     <FormSection name="params">
@@ -43,4 +43,4 @@ const AddWsBehaviourFormTaskFormSection = () => (
   </div>
 );
 
-export default AddWsBehaviourFormTaskFormSection;
+export default AddWsBehaviourFormReactionFormSection;

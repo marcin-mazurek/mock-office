@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import expandIcon from '../../../../../assets/icons_green_expand@3x.svg';
-import { WsTaskListItemConnect } from '../WsTaskListItem';
-import { TaskListConnect } from '../TaskList';
+import { WsReactionListItemConnect } from '../WsReactionListItem';
+import { ReactionListConnect } from '../ReactionList';
 
 export default class WsBehaviourListItem extends React.Component {
   constructor() {
     super();
-    this.showTasks = this.showTasks.bind(this);
+    this.showReactions = this.showReactions.bind(this);
     this.state = {
       expanded: false
     };
   }
 
-  showTasks() {
+  showReactions() {
     this.setState({
       expanded: !this.state.expanded
     });
@@ -28,9 +28,9 @@ export default class WsBehaviourListItem extends React.Component {
       serverId
     } = this.props;
     const { expanded } = this.state;
-    const behaviourTasksClassnames = classnames({
-      'behaviour-list-item__tasks': true,
-      'behaviour-list-item__tasks--visible': expanded
+    const behaviourReactionsClassnames = classnames({
+      'behaviour-list-item__reactions': true,
+      'behaviour-list-item__reactions--visible': expanded
     });
 
     const expired = behaviour.get('expired');
@@ -56,7 +56,7 @@ export default class WsBehaviourListItem extends React.Component {
     return (
       <div className={behaviourClassNames}>
         <div className="behaviour-list-item-behaviour">
-          <button className={expandButtonClassNames} onClick={this.showTasks}>
+          <button className={expandButtonClassNames} onClick={this.showReactions}>
             <img src={expandIcon} role="presentation" />
           </button>
           <div className="behaviour-list-item__params">
@@ -79,10 +79,10 @@ export default class WsBehaviourListItem extends React.Component {
             remove
           </button>
         </div>
-        <div className={behaviourTasksClassnames}>
-          <TaskListConnect
+        <div className={behaviourReactionsClassnames}>
+          <ReactionListConnect
             behaviour={id}
-            render={taskId => <WsTaskListItemConnect id={taskId} />}
+            render={reactionId => <WsReactionListItemConnect id={reactionId} />}
           />
         </div>
       </div>

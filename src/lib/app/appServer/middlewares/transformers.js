@@ -11,7 +11,7 @@ export const behaviourToResponse = behaviour => ({
   runCounter: behaviour.runCounter,
   loadedCounter: behaviour.loadedCounter,
   status: behaviour.status,
-  tasks: behaviour.reactions.map(reactionToResponse)
+  reactions: behaviour.reactions.map(reactionToResponse)
 });
 
 export const serverToResponse = server => ({

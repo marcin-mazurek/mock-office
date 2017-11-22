@@ -44,7 +44,7 @@ const schema = {
             reuse: {
               type: 'string'
             },
-            tasks: {
+            reactions: {
               type: 'array',
               minItems: 1,
               items: {
@@ -67,7 +67,7 @@ const schema = {
               }
             }
           },
-          required: ['tasks']
+          required: ['reactions']
         }
       }
     }

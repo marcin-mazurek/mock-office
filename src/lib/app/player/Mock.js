@@ -1,6 +1,6 @@
 import { Observable, Scheduler } from 'rxjs';
 import unique from 'cuid';
-import Task from './Task';
+import Reaction from './Reaction';
 
 export default class Behaviour {
   constructor(scenarioId, config) {
@@ -10,19 +10,19 @@ export default class Behaviour {
     this.status = 'inactive';
     this.loadedCounter = config.loadedCounter || 1;
     this.runCounter = 0;
-    this.tasks = config.tasks.map(taskConfig => new Task(this.id, taskConfig));
+    this.reactions = config.reactions.map(reactionConfig => new Reaction(this.id, reactionConfig));
   }
 
   // schedule :: (Object, Object) -> Observable
-  static schedule({ params: taskParams, schedule: scheduleConfig }) {
-    const task$ = scheduleConfig && scheduleConfig.interval
+  static schedule({ params: reactionParams, schedule: scheduleConfig }) {
+    const reaction$ = scheduleConfig && scheduleConfig.interval
       ? Observable.interval(scheduleConfig.interval)
-        .mapTo(taskParams)
-      : Observable.from([taskParams]);
+        .mapTo(reactionParams)
+      : Observable.from([reactionParams]);
 
     return scheduleConfig && scheduleConfig.delay
-      ? task$.observeOn(Scheduler.async, scheduleConfig.delay)
-      : task$.observeOn(Scheduler.asap);
+      ? reaction$.observeOn(Scheduler.async, scheduleConfig.delay)
+      : reaction$.observeOn(Scheduler.asap);
   }
 
   // start :: void -> Observable
@@ -38,8 +38,8 @@ export default class Behaviour {
       scenarioId: this.scenarioId,
       reactions: Observable
       .merge(
-        ...this.tasks.map(Behaviour.schedule),
-        this.tasks.length
+        ...this.reactions.map(Behaviour.schedule),
+        this.reactions.length
       )
     };
   }

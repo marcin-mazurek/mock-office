@@ -4,7 +4,7 @@ import { Field, reduxForm, FormSection, FieldArray } from 'redux-form/immutable'
 import Select from 'react-select';
 import { submitSucceededAction } from './actions';
 
-const renderTasks = ({ fields }) => (
+const renderReactions = ({ fields }) => (
   <ul style={{ padding: '0', margin: '0', listStyle: 'none' }}>
     {
       fields.map((name, index) => (
@@ -146,7 +146,7 @@ export const AddHttpBehaviourForm = ({ handleSubmit }) => (
     </section>
 
     <section className="form-section">
-      <FieldArray component={renderTasks} name="tasks" />
+      <FieldArray component={renderReactions} name="reactions" />
       <div className="form-row">
         <button className="button form__button" type="submit">
           Submit
@@ -164,7 +164,7 @@ export default reduxForm(
   {
     form: 'addHttpBehaviour',
     initialValues: {
-      tasks: [{}]
+      reactions: [{}]
     },
     onSubmit(values) {
       return values.set('loadedCounter', parseInt(values.get('loadedCounter'), 10)).toJS();

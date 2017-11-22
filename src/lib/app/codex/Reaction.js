@@ -10,13 +10,13 @@ export default class Reaction {
 
   // schedule :: Reaction -> Observable
   static schedule({ params, schedule }) {
-    const task$ = schedule && schedule.interval
+    const reaction$ = schedule && schedule.interval
       ? Observable.interval(schedule.interval)
         .mapTo(params)
       : Observable.from([params]);
 
     return schedule && schedule.delay
-      ? task$.observeOn(Scheduler.async, schedule.delay)
-      : task$.observeOn(Scheduler.asap);
+      ? reaction$.observeOn(Scheduler.async, schedule.delay)
+      : reaction$.observeOn(Scheduler.asap);
   }
 }

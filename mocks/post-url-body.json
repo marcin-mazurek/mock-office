@@ -12,7 +12,7 @@
       }
     },
     "reuse": "infinite",
-    "tasks": [
+    "reactions": [
       {
         "title": "response",
         "type": "future",

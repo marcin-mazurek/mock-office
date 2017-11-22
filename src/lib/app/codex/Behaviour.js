@@ -8,7 +8,7 @@ export default class Behaviour {
     this.id = unique();
     this.loadedCounter = config.loadedCounter || 1;
     this.runCounter = 0;
-    this.reactions = config.tasks.map(reactionCfg => new Reaction(reactionCfg));
+    this.reactions = config.reactions.map(reactionCfg => new Reaction(reactionCfg));
   }
 
   // use :: void -> Object
