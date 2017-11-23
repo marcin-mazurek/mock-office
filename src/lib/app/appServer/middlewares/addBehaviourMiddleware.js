@@ -7,7 +7,31 @@ const schema = {
       type: 'string'
     },
     behaviour: {
-      type: 'object'
+      type: 'object',
+      properties: {
+        event: {
+          type: 'object',
+          properties: {
+            type: {
+              type: 'string'
+            }
+          },
+          required: ['type']
+        },
+        reactions: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              type: {
+                type: 'string'
+              }
+            },
+            required: ['type']
+          }
+        }
+      },
+      required: ['reactions', 'event']
     }
   },
   required: ['serverId', 'behaviour']
@@ -16,7 +40,7 @@ const schema = {
 export default function configure(ajv) {
   return (req, res) => {
     if (!ajv.validate(schema, req.body)) {
-      res.status(400).json(ajv.errors);
+      res.status(400).json({ error: `${ajv.errors[0].dataPath} ${ajv.errors[0].message}` });
       return;
     }
 
@@ -24,7 +48,7 @@ export default function configure(ajv) {
       const server = serversHub.getServer(req.body.serverId);
 
       if (!server) {
-        res.status(400).end();
+        res.status(400).json({ error: 'Server not found.' });
         return;
       }
 

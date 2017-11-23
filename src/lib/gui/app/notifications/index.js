@@ -14,8 +14,8 @@ import {
   FAILED as IMPORT_BEHAVIOURS_FAILED
 } from '../../epics/importBehaviour';
 import {
-  SUCCEED as ADD_HTTP_BEHAVIOUR_SUCCEED,
-  FAILED as ADD_HTTP_BEHAVIOUR_FAILED
+  SUCCEED as ADD_BEHAVIOUR_SUCCEED,
+  FAILED as ADD_BEHAVIOUR_FAILED
 } from '../../epics/addBehaviour';
 import {
   FAILED as START_SERVER_FAILED
@@ -24,7 +24,7 @@ import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer';
 
 export default createReducer(
   {
-    [ADD_HTTP_BEHAVIOUR_SUCCEED]: reduce => reduce('addNotification', {
+    [ADD_BEHAVIOUR_SUCCEED]: reduce => reduce('addNotification', {
       type: 'success',
       text: 'Behaviour added'
     }),
@@ -48,7 +48,7 @@ export default createReducer(
       type: 'error',
       text: action.reason
     }),
-    [ADD_HTTP_BEHAVIOUR_FAILED]: (reduce, action) => reduce('addNotification', {
+    [ADD_BEHAVIOUR_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),

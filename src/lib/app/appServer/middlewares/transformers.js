@@ -2,7 +2,8 @@ export const reactionToResponse = reaction => ({
   id: reaction.id,
   status: reaction.status,
   params: reaction.params,
-  schedule: reaction.scheduleParams
+  schedule: reaction.schedule,
+  type: reaction.type
 });
 
 export const behaviourToResponse = behaviour => ({

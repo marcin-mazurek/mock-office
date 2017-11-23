@@ -9,6 +9,7 @@
     },
     "reactions": [
       {
+        "type": "response",
         "params": {
           "status": 200,
           "payload": "{\"message\": \"Hello world!\"}"

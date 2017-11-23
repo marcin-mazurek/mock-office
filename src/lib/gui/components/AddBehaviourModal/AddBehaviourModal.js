@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import AddHttpBehaviourFormConnect from '../AddHttpBehaviourForm';
-import AddWsBehaviourFormConnect from '../AddWsBehaviourForm';
+import AddBehaviourFormConnect from '../AddBehaviourForm';
 
-const AddBehaviourModal = ({ serverType, serverId }) => (
+const AddBehaviourModal = ({ serverId }) => (
   <div className="add-behaviour-modal">
     <div className="modal-header">
       <div className="modal-header__label">
@@ -14,11 +13,7 @@ const AddBehaviourModal = ({ serverType, serverId }) => (
     <div className="add-behaviour-modal__content">
       <Scrollbars>
         <div className="add-behaviour-modal__form">
-          {
-            serverType === 'http'
-              ? <AddHttpBehaviourFormConnect serverId={serverId} />
-              : <AddWsBehaviourFormConnect serverId={serverId} />
-          }
+          <AddBehaviourFormConnect serverId={serverId} />
         </div>
       </Scrollbars>
     </div>
@@ -26,7 +21,6 @@ const AddBehaviourModal = ({ serverType, serverId }) => (
 );
 
 AddBehaviourModal.propTypes = {
-  serverType: PropTypes.string.isRequired,
   serverId: PropTypes.string.isRequired
 };
 

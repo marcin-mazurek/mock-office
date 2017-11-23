@@ -83,7 +83,7 @@ export default class HttpBehaviourListItem extends React.Component {
               <div className="behaviour-list-item__event-property-label">Path</div>
               <div className="behaviour-list-item__event-property-value">
                 {
-                  behaviour.getIn(['event', 'path']) || 'Any'
+                  behaviour.getIn(['event', 'params', 'path']) || 'Any'
                 }
               </div>
             </div>
@@ -91,7 +91,7 @@ export default class HttpBehaviourListItem extends React.Component {
               <div className="behaviour-list-item__event-property-label">Method</div>
               <div className="behaviour-list-item__event-property-value">
                 {
-                  behaviour.getIn(['event', 'method']) || 'Any'
+                  behaviour.getIn(['event', 'params', 'method']) || 'Any'
                 }
               </div>
             </div>
@@ -99,7 +99,7 @@ export default class HttpBehaviourListItem extends React.Component {
               <div className="behaviour-list-item__event-property-label">Headers</div>
               <div className="behaviour-list-item__event-property-value">
                 {
-                  behaviour.getIn(['event', 'headers']) ? 'Yes' : 'No'
+                  behaviour.getIn(['event', 'params', 'headers']) ? 'Yes' : 'No'
                 }
               </div>
             </div>

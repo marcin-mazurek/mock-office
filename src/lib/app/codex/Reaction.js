@@ -6,6 +6,7 @@ export default class Reaction {
     this.id = unique();
     this.schedule = config.schedule;
     this.params = config.params || {};
+    this.type = config.type;
   }
 
   // schedule :: Reaction -> Observable

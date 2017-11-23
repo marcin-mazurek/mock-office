@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
+import { has, ifElse } from 'ramda';
 import api from '../../resources/api';
 import { SUBMIT_SUCCEEDED as HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddHttpBehaviourForm/actions';
 import { SUBMIT_SUCCEEDED as WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddWsBehaviourForm/actions';
-import { paramsSelector } from '../../app/addBehaviour/selectors';
-import { ConnectionError } from '../../resources/api/errors';
+import { SUBMIT_SUCCEEDED as ADD_BEHAVIOUR_SUBMIT_SUCCEEDED } from '../../components/AddBehaviourForm/actions';
 
 export const SUCCEED = 'addBehaviour/SUCCEEDED';
 export const succeedAction = (serverId, behaviour) => ({
@@ -17,27 +17,34 @@ export const failedAction = reason => ({
   reason
 });
 
-export default function addBehaviourEpic(action$, store) {
-  return action$.ofType(HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED, WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED)
-    .flatMap((action) => {
-      const params = paramsSelector(store.getState());
-      return Observable.from(
-        api.addBehaviour(
-          params.get('serverId'),
-          action.values
-        )
-        .then(behaviour => ({
-          behaviour,
-          serverId: params.get('serverId')
-        }))
-      );
-    })
-    .map(({ behaviour, serverId }) => succeedAction(serverId, behaviour))
-    .catch((error) => {
-      if (error instanceof ConnectionError) {
-        return failedAction(error);
-      }
+const makeRequest = action =>
+  Observable.from(
+    api.addBehaviour(
+      action.serverId,
+      action.values
+    )
+    .then(behaviour => ({
+      behaviour,
+      serverId: action.serverId
+    }))
+    .catch(error => ({ error: error.message }))
+  );
+const hasError = has('error');
+const onSuccess = ({ behaviour, serverId }) => succeedAction(serverId, behaviour);
+const onFail = ({ error }) => failedAction(error);
 
-      throw new Error(error.message);
-    });
+export default function addBehaviourEpic(action$) {
+  return action$.ofType(
+    HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED,
+    WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED,
+    ADD_BEHAVIOUR_SUBMIT_SUCCEEDED
+  )
+    .flatMap(makeRequest)
+    .map(
+      ifElse(
+        hasError,
+        onFail,
+        onSuccess
+      )
+    );
 }

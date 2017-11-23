@@ -51,14 +51,14 @@ export default {
         if (res.status === 200) {
           return res.json();
         } else if (res.status === 400) {
-          res.json().then((payload) => {
-            throw new Error(payload.error);
+          return res.json().then(({ error }) => {
+            throw new Error(error);
           });
         } else if (res.status === 404) {
           throw new Error('Server not found');
         }
 
-        return { error: 'Unknown server response' };
+        throw new Error('Unknown server response');
       });
   },
   getBehaviour(serverId, scenarioId, behaviourId) {

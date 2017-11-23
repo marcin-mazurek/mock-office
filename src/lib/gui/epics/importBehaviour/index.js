@@ -33,12 +33,12 @@ const makeRequests = requestParams =>
   .all(requestParams.behaviours.map(
     behaviour => api.addBehaviour(requestParams.serverId, behaviour)
   ))
-  .then(behaviours => ({
-    behaviours,
+  .then(behaviour => ({
+    behaviour,
     serverId: requestParams.serverId
   }))
-    .catch(error => ({ error }));
-const onFail = result => failedAction(result.error);
+  .catch(error => ({ error: error.message }));
+const onFail = ({ error }) => failedAction(error);
 const onSuccess = ({ behaviours, serverId }) =>
   succeededAction(serverId, behaviours);
 
