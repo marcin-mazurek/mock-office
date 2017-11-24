@@ -1,6 +1,6 @@
 import unique from 'cuid';
-import HttpWebServer from './webServers/http/httpWebServer';
-import WsWebServer from './webServers/ws/wsWebServer';
+import HttpWebServer from './webServers/http/HttpWebServer';
+import WsWebServer from './webServers/ws/WsWebServer';
 import eventBus from './eventBus';
 
 const serverTypes = {

@@ -65,7 +65,6 @@ export default class WsWebServer {
       });
 
       this.ws.on('close', () => {
-        console.log('ws close');
         this.clearPendingReactions();
         this.ws = null;
       });
