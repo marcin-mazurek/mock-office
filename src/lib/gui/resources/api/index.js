@@ -56,6 +56,10 @@ export default {
           });
         } else if (res.status === 404) {
           throw new Error('Server not found');
+        } else if (res.status === 500) {
+          return res.json().then(({ error }) => {
+            throw new Error(error);
+          });
         }
 
         throw new Error('Unknown server response');

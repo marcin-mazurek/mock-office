@@ -7,17 +7,17 @@ export default class Reaction {
     this.schedule = config.schedule;
     this.params = config.params || {};
     this.type = config.type;
+    this.schedule$ = Reaction.getSchedule(config.schedule);
   }
 
-  // schedule :: Reaction -> Observable
-  static schedule({ params, schedule }) {
-    const reaction$ = schedule && schedule.interval
+  // getSchedule :: void -> Observable
+  static getSchedule(schedule) {
+    const schedule$ = schedule && schedule.interval
       ? Observable.interval(schedule.interval)
-        .mapTo(params)
-      : Observable.from([params]);
+      : Observable.from(Promise.resolve());
 
     return schedule && schedule.delay
-      ? reaction$.observeOn(Scheduler.async, schedule.delay)
-      : reaction$.observeOn(Scheduler.asap);
+      ? schedule$.observeOn(Scheduler.async, schedule.delay)
+      : schedule$.observeOn(Scheduler.asap);
   }
 }

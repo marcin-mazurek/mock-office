@@ -3,7 +3,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import bodyParser from 'body-parser';
-import Codex from '../codex';
+import HttpServerCodex from './HttpServerCodex';
 
 export const send = (req, res, params) => {
   if (params.headers) {
@@ -18,7 +18,8 @@ export const send = (req, res, params) => {
 };
 
 export default class HttpWebServer {
-  constructor(config, eventBus) {
+  constructor(id, config, eventBus) {
+    this.id = id;
     if (eventBus) {
       this.eventBus = eventBus;
     }
@@ -33,14 +34,14 @@ export default class HttpWebServer {
     this.destroyOpenSockets = this.destroyOpenSockets.bind(this);
     this.stop = this.stop.bind(this);
     this.isLive = this.isLive.bind(this);
-    this.respond = this.respond.bind(this);
+    this.handleIncomingRequests = this.handleIncomingRequests.bind(this);
     this.changePort = this.changePort.bind(this);
-    this.pendingReactions = [];
-    this.codex = new Codex();
+    this.pendingBehaviours = [];
+    this.codex = new HttpServerCodex(this.id);
     const httpServer = this.secure ? https : http;
     const app = express();
     app.use(bodyParser.json());
-    app.use('*', this.respond);
+    app.use('*', this.handleIncomingRequests);
 
     if (this.secure) {
       const credentials = {
@@ -57,12 +58,7 @@ export default class HttpWebServer {
     this.httpServer.on('connection', this.saveSocketRef);
   }
 
-  respond(req, res) {
-    // allow CORS by default
-    if (req.headers.origin) {
-      res.set('Access-Control-Allow-Origin', req.headers.origin);
-    }
-
+  handleIncomingRequests(req, res) {
     const event = {
       type: 'request',
       params: {
@@ -83,42 +79,9 @@ export default class HttpWebServer {
       return;
     }
 
-    const run = behaviour.use();
-    this.pendingReactions.push(
-      Object.assign({
-        subscription: run
-          .reactions
-          .take(1)
-          .subscribe({
-            next: (params) => {
-              send(req, res, params);
-            },
-            complete: () => {
-              if (this.eventBus) {
-                this.eventBus.emit(
-                  'server-reactions-end',
-                  {
-                    behaviourId: run.behaviourId,
-                    scenarioId: run.scenarioId,
-                    serverId: this.id
-                  }
-                );
-              }
-            }
-          }),
-      }, run)
-  );
-
-    if (this.eventBus) {
-      this.eventBus.emit(
-        'server-reactions-start',
-        {
-          behaviourId: run.behaviourId,
-          scenarioId: run.scenarioId,
-          serverId: this.id
-        }
-      );
-    }
+    behaviour.configureReceiver(req, res);
+    behaviour.trigger();
+    this.pendingBehaviours.push(behaviour);
   }
 
   start() {
@@ -142,22 +105,22 @@ export default class HttpWebServer {
   }
 
   clearPendingReactions() {
-    if (this.pendingReactions.length) {
-      this.pendingReactions.forEach((r) => {
-        r.subscription.unsubscribe();
+    if (this.pendingBehaviours.length) {
+      this.pendingBehaviours.forEach((pB) => {
+        pB.cancel();
 
         if (this.eventBus) {
           this.eventBus.emit(
             'server-reactions-end',
             {
-              behaviourId: r.behaviourId,
-              scenarioId: r.scenarioId,
+              behaviourId: pB.behaviourId,
+              scenarioId: pB.scenarioId,
               serverId: this.id
             }
           );
         }
       });
-      this.pendingReactions.length = 0;
+      this.pendingBehaviours.length = 0;
     }
   }
 

@@ -1,6 +1,6 @@
 import unique from 'cuid';
-import HttpWebServer from './webServers/httpWebServer';
-import WsWebServer from './webServers/wsWebServer';
+import HttpWebServer from './webServers/http/httpWebServer';
+import WsWebServer from './webServers/ws/wsWebServer';
 import eventBus from './eventBus';
 
 const serverTypes = {
@@ -20,9 +20,10 @@ class ServersHub {
 
   add(cfg) {
     const WebServerConstructor = serverTypes[cfg.type];
-    const webServer = new WebServerConstructor(cfg, eventBus);
+    const id = unique();
+    const webServer = new WebServerConstructor(id, cfg, eventBus);
     const server = {
-      id: unique(),
+      id,
       name: cfg.name,
       type: cfg.type,
       webServer

@@ -3,11 +3,12 @@ import Behaviour from './Behaviour';
 import extractSubTree from './extractSubTree';
 
 export default class Codex {
-  constructor() {
+  constructor(serverId) {
+    this.serverId = serverId;
     this.behaviours = [];
     this.addBehaviour = this.addBehaviour.bind(this);
     this.removeBehaviour = this.removeBehaviour.bind(this);
-    this.findBehaviour = this.matchBehaviour.bind(this);
+    this.matchBehaviour = this.matchBehaviour.bind(this);
   }
 
   // getBehaviour :: String -> Behaviour
@@ -17,9 +18,8 @@ export default class Codex {
 
   // addBehaviour :: Object -> Behaviour
   addBehaviour(behaviourCfg) {
-    const behaviour = new Behaviour(behaviourCfg);
+    const behaviour = new Behaviour(this.serverId, behaviourCfg);
     this.behaviours.push(behaviour);
-
     return behaviour;
   }
 

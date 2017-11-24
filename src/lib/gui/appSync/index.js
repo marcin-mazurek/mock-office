@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import {
   reactionsEndedAction,
   reactionsDidRunAction,
-  cancelReactionsMessageReceived,
+  reactionsCancelledAction,
 } from './actions';
 
 export default function startAppSync(ws, store) {
@@ -27,7 +27,7 @@ export default function startAppSync(ws, store) {
           break;
         }
         case 'SERVER_REACTIONS_CANCELLED': {
-          store.dispatch(cancelReactionsMessageReceived(data.behaviourId));
+          store.dispatch(reactionsCancelledAction(data.behaviourId));
           break;
         }
         default:

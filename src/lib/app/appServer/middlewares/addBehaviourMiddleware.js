@@ -55,6 +55,7 @@ export default function configure(ajv) {
       const behaviour = server.webServer.codex.addBehaviour(req.body.behaviour);
       res.status(200).json(behaviourToResponse(behaviour));
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: error.message });
     }
   };

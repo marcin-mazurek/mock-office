@@ -33,8 +33,8 @@ const makeRequests = requestParams =>
   .all(requestParams.behaviours.map(
     behaviour => api.addBehaviour(requestParams.serverId, behaviour)
   ))
-  .then(behaviour => ({
-    behaviour,
+  .then(behaviours => ({
+    behaviours,
     serverId: requestParams.serverId
   }))
   .catch(error => ({ error: error.message }));

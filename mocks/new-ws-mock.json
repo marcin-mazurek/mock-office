@@ -1,10 +1,11 @@
 [
   {
     "event": {
-      "type": "connect"
+      "type": "connection"
     },
     "reactions": [
       {
+        "type": "message",
         "params": {
           "message": "welcome message"
         },
@@ -13,6 +14,7 @@
         }
       },
       {
+        "type": "message",
         "params": {
           "message": "message from mock server"
         },
