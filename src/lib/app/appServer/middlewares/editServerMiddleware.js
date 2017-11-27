@@ -1,12 +1,13 @@
-export default function configure(ajv, serversManager) {
+import serversHub from '../../serversHub';
+
+export default function configure(ajv) {
   const createResponseBody = server => ({
     name: server.name,
-    port: server.port,
+    port: server.webServer.port,
     type: server.type,
-    secure: server.secure,
+    secure: server.webServer.secure,
     id: server.id,
-    scenario: server.getScenario().id,
-    running: server.isLive(),
+    running: server.webServer.isLive(),
   });
 
   return (req, res) => {
@@ -35,27 +36,19 @@ export default function configure(ajv, serversManager) {
     }
 
     const { id, name, port } = req.body;
-    const server = serversManager.getServer(id);
+    const server = serversHub.getServer(id);
     if (!server) {
       res.status(404).end();
       return;
     }
     if (name) {
-      server.changeName(name);
+      server.name = name;
     }
 
     if (port) {
-      if (server.isLive()) {
-        server.stop(() => {
-          server.changePort(port);
-          server.start(() => {
-            res.status(200).json(createResponseBody(server));
-          });
-        });
-      } else {
-        server.changePort(port);
+      server.webServer.changePort(port).then(() => {
         res.status(200).json(createResponseBody(server));
-      }
+      });
     } else {
       res.status(200).json(createResponseBody(server));
     }

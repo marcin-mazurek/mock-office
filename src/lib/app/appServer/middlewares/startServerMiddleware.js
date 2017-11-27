@@ -1,4 +1,6 @@
-export default function configure(ajv, serversManager) {
+import serversHub from '../../serversHub';
+
+export default function configure(ajv) {
   return (req, res) => {
     const schema = {
       properties: {
@@ -10,13 +12,16 @@ export default function configure(ajv, serversManager) {
     };
 
     if (ajv.validate(schema, req.body)) {
-      serversManager.start(req.body.id)
+      serversHub
+        .getServer(req.body.id).webServer
+        .start()
         .then(
           () => {
             res.status(200).json({ id: req.body.id });
           },
           (err) => {
-            res.status(400).json({ error: err });
+            console.log(err);
+            res.status(500).json({ error: err });
           }
         );
     } else {

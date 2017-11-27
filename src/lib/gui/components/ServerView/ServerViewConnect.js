@@ -10,7 +10,6 @@ const serverMapStateToProps = (state, ownProps) => {
     type: server.type,
     name: server.name,
     port: server.port,
-    scenario: server.scenario,
     running: server.running
   };
 };

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { storiesOf } from '@kadira/storybook';
-import TaskListConnect from '../src/lib/gui/components/TaskList';
+import ReactionListConnect from '../src/lib/gui/components/ReactionList';
 import configureStore from '../src/lib/gui/app/configureStore';
-import { succeededAction } from '../src/lib/gui/epics/importMock/index';
+import { succeededAction } from '../src/lib/gui/epics/importBehaviour/index';
 import { succeededAction as addServerSucceded } from '../src/lib/gui/epics/addServer/actions';
 
-storiesOf('TaskList', module)
+storiesOf('ReactionList', module)
   .add('default', () => {
     const store = configureStore();
     store.dispatch(
@@ -27,25 +27,25 @@ storiesOf('TaskList', module)
         'scenario-id',
         [
           {
-            id: 'mock-id-1',
+            id: 'behaviour-id-1',
             quantity: 0,
-            tasks: [
+            reactions: [
               {
-                id: 'task-id-1',
-                title: 'task 1',
+                id: 'reaction-id-1',
+                title: 'reaction 1',
                 type: 'future',
                 payload: {}
               },
               {
-                id: 'task-id-2',
-                title: 'task 2',
+                id: 'reaction-id-2',
+                title: 'reaction 2',
                 type: 'future',
                 payload: {},
                 delay: 500
               }
             ],
-            title: 'Mock',
-            requirements: {
+            title: 'Behaviour',
+            event: {
               event: 'RECEIVED_REQUEST',
               url: '/bet/slips/S00001067bec2425c4/?sortOrder=off'
             }
@@ -56,7 +56,7 @@ storiesOf('TaskList', module)
 
     return (
       <Provider store={store}>
-        <TaskListConnect mock="mock-id-1" />
+        <ReactionListConnect behaviour="behaviour-id-1" />
       </Provider>
     );
   });

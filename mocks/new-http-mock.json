@@ -1,18 +1,24 @@
 [
   {
-    "title": "request for some-url",
-    "request": {
-      "method": "GET"
-    },
-    "response": {
+    "event": {
+      "type": "request",
       "params": {
-        "status": 200,
-        "payload": "{\"message\": \"Hello world!\"}"
-      },
-      "schedule": {
-        "delay": 3000
+        "path": "/",
+        "method": "GET"
       }
     },
-    "loadedCount": 10
+    "reactions": [
+      {
+        "type": "response",
+        "params": {
+          "status": 200,
+          "payload": "{\"message\": \"Hello world!\"}"
+        },
+        "schedule": {
+          "delay": 1000
+        }
+      }
+    ],
+    "loadedCounter": 10
   }
 ]

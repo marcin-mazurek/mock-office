@@ -1,26 +1,15 @@
-export const REMOVE_MOCK_MESSAGE_RECEIVED = 'appSync/REMOVE_MOCK_MESSAGE_RECEIVED';
-export const removeAfterUseMessageReceivedAction = (scenario, id) => ({
-  type: REMOVE_MOCK_MESSAGE_RECEIVED,
-  scenario,
+export const REACTIONS_ENDED = 'appSync/REACTIONS_ENDED';
+export const reactionsEndedAction = id => ({
+  type: REACTIONS_ENDED,
   id
 });
-export const STOP_MOCK_MESSAGE_RECEIVED = 'appSync/STOP_MOCK_MESSAGE_RECEIVED';
-export const stopMockMessageReceivedAction = id => ({
-  type: STOP_MOCK_MESSAGE_RECEIVED,
+export const REACTIONS_DID_RUN_ACTION = 'appSync/REACTIONS_DID_RUN_ACTION';
+export const reactionsDidRunAction = id => ({
+  type: REACTIONS_DID_RUN_ACTION,
   id
 });
-export const FINISH_MOCK_MESSAGE_RECEIVED = 'appSync/FINISH_MOCK_MESSAGE_RECEIVED';
-export const finishMockMessageReceivedAction = id => ({
-  type: FINISH_MOCK_MESSAGE_RECEIVED,
-  id
-});
-export const RUN_MOCK_MESSAGE_RECEIVED = 'appSync/RUN_MOCK_MESSAGE_RECEIVED';
-export const runMockMessageReceivedAction = id => ({
-  type: RUN_MOCK_MESSAGE_RECEIVED,
-  id
-});
-export const CANCEL_MOCK_MESSAGE_RECEIVED = 'appSync/CANCEL_MOCK_MESSAGE_RECEIVED';
-export const cancelMockMessageReceived = id => ({
-  type: CANCEL_MOCK_MESSAGE_RECEIVED,
+export const REACTIONS_CANCELLED = 'appSync/REACTIONS_CANCELLED';
+export const reactionsCancelledAction = id => ({
+  type: REACTIONS_CANCELLED,
   id
 });

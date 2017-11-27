@@ -1,45 +1,38 @@
 import { Observable } from 'rxjs';
 import api from '../../resources/api';
-import { SUBMIT_SUCCEEDED as HTTP_MOCK_FORM_SUBMIT_SUCCEEDED } from '../../components/AddHttpMockForm/actions';
-import { SUBMIT_SUCCEEDED as WS_MOCK_FORM_SUBMIT_SUCCEEDED } from '../../components/AddWsMockForm/actions';
-import { paramsSelector } from '../../app/addMock/selectors';
+import { SUBMIT_SUCCEEDED as HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddHttpBehaviourForm/actions';
+import { SUBMIT_SUCCEEDED as WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddWsBehaviourForm/actions';
+import { paramsSelector } from '../../app/addBehaviour/selectors';
 import { ConnectionError } from '../../resources/api/errors';
 
-export const SUCCEED = 'addMock/SUCCEEDED';
-export const succeedAction = (scenario, mock) => ({
+export const SUCCEED = 'addBehaviour/SUCCEEDED';
+export const succeedAction = (serverId, behaviour) => ({
   type: SUCCEED,
-  scenario,
-  mock
+  serverId,
+  behaviour
 });
-export const FAILED = 'addMock/FAILED';
+export const FAILED = 'addBehaviour/FAILED';
 export const failedAction = reason => ({
   type: FAILED,
   reason
 });
 
-export default function addMockEpic(action$, store) {
-  let mockId;
-
-  return action$.ofType(HTTP_MOCK_FORM_SUBMIT_SUCCEEDED, WS_MOCK_FORM_SUBMIT_SUCCEEDED)
+export default function addBehaviourEpic(action$, store) {
+  return action$.ofType(HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED, WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED)
     .flatMap((action) => {
       const params = paramsSelector(store.getState());
       return Observable.from(
-        api.addMock(
-          params.get('server'),
-          params.get('scenario'),
+        api.addBehaviour(
+          params.get('serverId'),
           action.values
         )
+        .then(behaviour => ({
+          behaviour,
+          serverId: params.get('serverId')
+        }))
       );
     })
-    .flatMap((id) => {
-      mockId = id;
-      const params = paramsSelector(store.getState());
-      return Observable.fromPromise(api.getMock(params.get('server'), params.get('scenario'), id));
-    })
-    .map((mock) => {
-      const params = paramsSelector(store.getState());
-      return succeedAction(params.get('scenario'), Object.assign({ id: mockId }, mock));
-    })
+    .map(({ behaviour, serverId }) => succeedAction(serverId, behaviour))
     .catch((error) => {
       if (error instanceof ConnectionError) {
         return failedAction(error);

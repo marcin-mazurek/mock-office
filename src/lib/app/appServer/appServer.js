@@ -8,37 +8,37 @@ import configureRemoveServerMiddleware from './middlewares/removeServerMiddlewar
 import configureStartServerMiddleware from './middlewares/startServerMiddleware';
 import configureStopServerMiddleware from './middlewares/stopServerMiddleware';
 import configureEditServerMiddleware from './middlewares/editServerMiddleware';
-import configureAddMockMiddleware from './middlewares/addMockMiddleware';
-import configureRemoveMockMiddleware from './middlewares/removeMockMiddleware';
+import configureAddBehaviourMiddleware from './middlewares/addBehaviourMiddleware';
+import configureRemoveBehaviourMiddleware from './middlewares/removeBehaviourMiddleware';
 import configureExportMiddleware from './middlewares/exportMiddleware';
-import configureGetMockMiddleware from './middlewares/getMockMiddleware';
+import configureGetBehaviourMiddleware from './middlewares/getBehaviourMiddleware';
 import configurePersistentState from './configurePersistentState';
 import configureGetStateMiddleware from './middlewares/getStateMiddleware';
 
 const persistentState = configurePersistentState();
 persistentState.restore();
 
-export const createAppServer = (serversManager) => {
+export const createAppServer = () => {
   const ajv = new Ajv();
   const app = express();
   app.use(cors());
 
-  app.post('/add-server', bodyParser.json(), configureAddServerMiddleware(ajv, serversManager));
-  app.post('/remove-server', bodyParser.json(), configureRemoveServerMiddleware(ajv, serversManager));
-  app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv, serversManager));
-  app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv, serversManager));
-  app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv, serversManager));
-  app.post('/add-mock', bodyParser.json(), configureAddMockMiddleware(ajv, serversManager));
-  app.post('/remove-mock', bodyParser.json(), configureRemoveMockMiddleware(ajv, serversManager));
-  app.get('/export', configureExportMiddleware(serversManager));
-  app.get('/mock', configureGetMockMiddleware(ajv, serversManager));
-  app.get('/state', configureGetStateMiddleware(serversManager));
+  app.post('/add-server', bodyParser.json(), configureAddServerMiddleware(ajv));
+  app.post('/remove-server', bodyParser.json(), configureRemoveServerMiddleware(ajv));
+  app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv));
+  app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv));
+  app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv));
+  app.post('/add-behaviour', bodyParser.json(), configureAddBehaviourMiddleware(ajv));
+  app.post('/remove-behaviour', bodyParser.json(), configureRemoveBehaviourMiddleware(ajv));
+  app.get('/export', configureExportMiddleware());
+  app.get('/behaviour', configureGetBehaviourMiddleware(ajv));
+  app.get('/state', configureGetStateMiddleware());
 
   return app;
 };
 
-export const serveAppServer = (serversManager, port, cb) => {
-  createAppServer(serversManager).listen(port, () => {
+export const serveAppServer = (port, cb) => {
+  createAppServer().listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(colors.green(`App address: http://127.0.0.1:${port}`));
     if (typeof cb === 'function') {

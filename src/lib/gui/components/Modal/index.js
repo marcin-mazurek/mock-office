@@ -1,10 +1,10 @@
 import { createModalConnect } from 'modalo';
 import AddServerModal from '../AddServerModal';
-import { AddMockModalConnect } from '../AddMockModal';
+import { AddBehaviourModalConnect } from '../AddBehaviourModal';
 
 const Modal = createModalConnect({
   AddServerModal,
-  AddMockModal: AddMockModalConnect
+  AddBehaviourModal: AddBehaviourModalConnect
 });
 
 export default Modal;

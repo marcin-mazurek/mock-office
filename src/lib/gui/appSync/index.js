@@ -1,10 +1,8 @@
 import { Observable } from 'rxjs';
 import {
-  stopMockMessageReceivedAction,
-  finishMockMessageReceivedAction,
-  removeAfterUseMessageReceivedAction,
-  runMockMessageReceivedAction,
-  cancelMockMessageReceived,
+  reactionsEndedAction,
+  reactionsDidRunAction,
+  reactionsCancelledAction,
 } from './actions';
 
 export default function startAppSync(ws, store) {
@@ -20,28 +18,16 @@ export default function startAppSync(ws, store) {
       const data = JSON.parse(message.data);
 
       switch (data.event) {
-        case 'MOCK_STOP': {
-          store.dispatch(stopMockMessageReceivedAction(data.mockId));
+        case 'SERVER_REACTIONS_ENDED': {
+          store.dispatch(reactionsEndedAction(data.behaviourId));
           break;
         }
-        case 'MOCK_END': {
-          store.dispatch(finishMockMessageReceivedAction(data.mockId));
+        case 'SERVER_REACTIONS_STARTED': {
+          store.dispatch(reactionsDidRunAction(data.behaviourId));
           break;
         }
-        case 'MOCK_EXPIRE': {
-          setTimeout(() => {
-            store.dispatch(
-              removeAfterUseMessageReceivedAction(data.scenarioId, data.mockId)
-            );
-          }, 3000);
-          break;
-        }
-        case 'MOCK_START': {
-          store.dispatch(runMockMessageReceivedAction(data.mockId));
-          break;
-        }
-        case 'MOCK_CANCEL': {
-          store.dispatch(cancelMockMessageReceived(data.mockId));
+        case 'SERVER_REACTIONS_CANCELLED': {
+          store.dispatch(reactionsCancelledAction(data.behaviourId));
           break;
         }
         default:

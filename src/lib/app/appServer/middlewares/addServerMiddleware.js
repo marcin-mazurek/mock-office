@@ -1,4 +1,7 @@
-export default function configure(ajv, serversManager) {
+import serversHub from '../../serversHub';
+import { serverToResponse } from './transformers';
+
+export default function configure(ajv) {
   return (req, res) => {
     const schema = {
       type: 'object',
@@ -32,18 +35,9 @@ export default function configure(ajv, serversManager) {
     };
 
     if (ajv.validate(schema, req.body)) {
-      const id = serversManager.add('server', req.body);
+      const server = serversHub.add(req.body);
 
-      const server = serversManager.getServer(id);
-      res.json({
-        name: server.name,
-        port: server.port,
-        type: server.type,
-        secure: server.secure,
-        scenario: server.getScenario().id,
-        running: server.isLive(),
-        id
-      });
+      res.json(serverToResponse(server));
 
       return;
     }

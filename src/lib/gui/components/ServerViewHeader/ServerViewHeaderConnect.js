@@ -2,12 +2,12 @@ import { connect } from 'react-redux';
 import ServerViewHeader from './ServerViewHeader';
 import {
   removeButtonClickedAction,
-  addMockButtonClickedAction
+  addBehaviourButtonClickedAction
 } from './actions';
 
 const serverMapDispatchToProps = {
   onRemoveButtonClick: removeButtonClickedAction,
-  onAddMockButtonClickedAction: addMockButtonClickedAction
+  onAddBehaviourButtonClickedAction: addBehaviourButtonClickedAction
 };
 
 export default connect(null, serverMapDispatchToProps)(ServerViewHeader);

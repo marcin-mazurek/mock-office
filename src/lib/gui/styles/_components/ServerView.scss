@@ -17,12 +17,12 @@ $padding-left: 24px;
   flex-direction: column;
 }
 
-.server-view__mocks {
+.server-view__behaviours {
   flex: auto;
   position: relative;
 }
 
-.server-view__mocks-scroll-container {
+.server-view__behaviours-scroll-container {
   height: 100%;
   position: absolute;
   left: 0;

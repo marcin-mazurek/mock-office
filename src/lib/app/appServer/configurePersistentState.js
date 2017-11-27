@@ -12,7 +12,7 @@ const schema = {
       'name',
       'type',
       'id',
-      'mocks'
+      'behaviours'
     ],
     properties: {
       running: {
@@ -30,7 +30,7 @@ const schema = {
       id: {
         type: 'string'
       },
-      mocks: {
+      behaviours: {
         type: 'array',
         items: {
           type: 'object',
@@ -38,13 +38,13 @@ const schema = {
             title: {
               type: 'string'
             },
-            requirements: {
+            event: {
               type: 'object'
             },
             reuse: {
               type: 'string'
             },
-            tasks: {
+            reactions: {
               type: 'array',
               minItems: 1,
               items: {
@@ -67,7 +67,7 @@ const schema = {
               }
             }
           },
-          required: ['tasks']
+          required: ['reactions']
         }
       }
     }

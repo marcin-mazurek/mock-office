@@ -1,5 +1,8 @@
-export default function configure(serversManager) {
+import serversHub from '../../serversHub';
+import { serverToResponse } from './transformers';
+
+export default function configure() {
   return (req, res) => {
-    res.send(serversManager.getState());
+    res.send(serversHub.getServers().map(serverToResponse));
   };
 }
