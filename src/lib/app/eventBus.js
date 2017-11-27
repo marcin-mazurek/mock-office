@@ -1,3 +1,5 @@
 import EventEmitter from 'events';
 
-export default new EventEmitter();
+const eventLog = new EventEmitter();
+export const log = eventLog.emit.bind(eventLog);
+export const on = eventLog.on.bind(eventLog);

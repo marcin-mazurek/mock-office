@@ -1,4 +1,5 @@
 import { Server as WebSocketServer } from 'ws';
+import { Observable } from 'rxjs';
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
@@ -40,54 +41,61 @@ export default class WsWebServer {
       console.error(err.message);
     });
 
-    this.wsServer.on('connection', (ws) => {
-      // support only one open socket
-      if (this.ws) {
-        ws.close();
-        return;
-      }
-
+    this.connections$ = Observable.fromEventPattern((handler) => {
+      this.wsServer.on('connection', handler);
+    })
+    // support only one client
+    .filter(() => !this.ws)
+    .do((ws) => {
       this.ws = ws;
-
-      this.ws.on('message', (message) => {
-        const behaviour = this.codex.matchBehaviour({
+      this.messages$ = Observable.fromEventPattern((handler) => {
+        ws.on('message', handler);
+      })
+        .map(message => ({
           type: 'message',
           params: {
             message
           }
+        }))
+        .map(event => this.codex.matchBehaviour(event))
+        .filter(behaviour => !!behaviour)
+        .flatMap((behaviour) => {
+          behaviour
+            .configureReceiver(this.ws)
+            .use();
+        });
+      this.messagesSub = this.messages$.subscribe();
+
+      this.clientDisconnect$ = Observable.fromEventPattern((handler) => {
+        this.ws.on('close', handler);
+      })
+        .take(1)
+        .do(() => {
+          console.log('clientDisconnect$ emit');
+          this.clearPendingReactions();
+          this.ws = null;
+          this.connectionSub = this.connections$.subscribe();
         });
 
-        if (behaviour) {
-          behaviour.configureReceiver(ws);
-          behaviour.trigger();
-          this.pendingBehaviours.push(behaviour);
-        }
-      });
-
-      this.ws.on('close', () => {
-        this.clearPendingReactions();
-        this.ws = null;
-      });
-
-      const behaviour = this.codex.matchBehaviour({
-        type: 'connection',
-      });
-
-      if (behaviour) {
-        behaviour.configureReceiver(ws);
-        behaviour.trigger();
-        this.pendingBehaviours.push(behaviour);
-      }
-    });
+      this.clientDisconnectSub = this.clientDisconnect$.subscribe();
+    })
+    .mapTo({
+      type: 'connection',
+    })
+    .map(event => ({
+      behaviour: this.codex.matchBehaviour(event)
+    }))
+    .filter(({ behaviour }) => !!behaviour)
+    .flatMap(({ behaviour }) =>
+      behaviour
+      .configureReceiver(this.ws)
+      .use()
+    );
   }
 
   clearPendingReactions() {
-    if (this.pendingBehaviours.length) {
-      this.pendingBehaviours.forEach((pB) => {
-        pB.cancel();
-      });
-      this.pendingBehaviours.length = 0;
-    }
+    this.messagesSub.unsubscribe();
+    this.connectionSub.unsubscribe();
   }
 
   start() {
@@ -96,6 +104,7 @@ export default class WsWebServer {
     }
 
     return new Promise((resolve) => {
+      this.connectionSub = this.connections$.subscribe();
       this.httpServer.listen(this.port, resolve);
     });
   }
@@ -105,11 +114,11 @@ export default class WsWebServer {
       return Promise.resolve();
     }
 
-    this.clearPendingReactions();
-    if (this.ws) {
-      this.ws.terminate();
-    }
     return new Promise((resolve) => {
+      if (this.ws) {
+        this.ws.terminate();
+      }
+
       this.httpServer.close(resolve);
     });
   }
@@ -119,18 +128,17 @@ export default class WsWebServer {
   }
 
   changePort(port) {
-    return new Promise((resolve) => {
-      if (this.isLive()) {
-        this.stop(() => {
+    if (this.isLive()) {
+      return this.stop()
+        .then(() => {
           this.port = port;
-          this.start(() => {
-            resolve();
-          });
+        })
+        .then(() => {
+          this.start();
         });
-      } else {
-        this.port = port;
-        resolve();
-      }
-    });
+    }
+
+    this.port = port;
+    return Promise.resolve();
   }
 }

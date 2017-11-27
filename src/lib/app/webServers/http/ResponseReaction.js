@@ -1,30 +1,30 @@
 import Reaction from '../../codex/Reaction';
 
 export default class ResponseReaction extends Reaction {
+  // configureReceiver :: (http.ClientRequest, http.ServerResponse) -> void
   configureReceiver(req, res) {
     this.req = req;
     this.res = res;
   }
 
+  // prepare :: void -> Observable
   prepare() {
     return this.schedule$
       .do(() => {
-        const { params, req, res } = this;
-
         // allow CORS by default
-        if (req.headers.origin) {
-          res.set('Access-Control-Allow-Origin', req.headers.origin);
+        if (this.req.headers.origin) {
+          this.res.set('Access-Control-Allow-Origin', this.req.headers.origin);
         }
 
-        if (params.headers) {
-          res.set(params.headers);
+        if (this.params.headers) {
+          this.res.set(this.params.headers);
         }
 
-        if (params.status) {
-          res.status(params.status);
+        if (this.params.status) {
+          this.res.status(this.params.status);
         }
 
-        res.json(params.payload);
+        this.res.json(this.params.payload);
       });
   }
 }

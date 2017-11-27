@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import unique from 'cuid';
 import Event from './Event';
-import eventBus from '../eventBus';
+import { log } from '../eventBus';
 
 export default class Behaviour {
   constructor(serverId, config) {
@@ -16,43 +16,35 @@ export default class Behaviour {
     });
   }
 
-  configureReceiver(receiver) {
-    this.reactions.forEach(r => r.configureReceiver(receiver));
-  }
-
-  // trigger :: void -> void
-  trigger() {
+  // use :: void -> Observable
+  use() {
     if (this.runCounter === this.loadedCounter) {
-      return;
+      return null;
     }
 
     this.runCounter += 1;
 
-    eventBus.emit('server-reactions-start', {
-      behaviourId: this.id,
-      serverId: this.serverId
-    });
-    this.subscription = Observable.merge(
+    return Observable.merge(
       ...this.reactions.map(r => r.prepare()),
       this.reactions.length
-    ).subscribe({
-      complete: () => {
-        eventBus.emit('server-reactions-end', {
-          behaviourId: this.id,
-          serverId: this.serverId
-        });
-      }
-    });
-  }
+    )
+    // first emit for log start event
+      .startWith(0)
+      .scan(acc => acc + 1, 0)
+      .do((reactionCount) => {
+        if (reactionCount === 1) {
+          log('server-reactions-start', {
+            behaviourId: this.id,
+            serverId: this.serverId
+          });
+        }
 
-  cancel() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
-      eventBus.emit('server-reactions-cancel', {
-        behaviourId: this.id,
-        serverId: this.serverId
+        if (reactionCount === this.reactions.length + 1) {
+          log('server-reactions-end', {
+            behaviourId: this.id,
+            serverId: this.serverId
+          });
+        }
       });
-    }
   }
 }

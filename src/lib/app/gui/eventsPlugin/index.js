@@ -4,7 +4,7 @@ import colors from 'colors/safe';
 
 const GUI_EVENTS_SERVER_PORT = 3061;
 
-export function configureGuiEventsServer(eventBus) {
+export function configureGuiEventsServer(on) {
   const httpServer = http.createServer();
   const server = new WebSocketServer({ server: httpServer });
   let sockets = [];
@@ -22,9 +22,9 @@ export function configureGuiEventsServer(eventBus) {
       sockets = sockets.filter(socket => socket !== ws);
     });
   });
-  eventBus.on('server-reactions-start', args => broadcast('SERVER_REACTIONS_STARTED', args));
-  eventBus.on('server-reactions-end', args => broadcast('SERVER_REACTIONS_ENDED', args));
-  eventBus.on('server-reactions-cancel', args => broadcast('SERVER_REACTIONS_CANCELLED', args));
+  on('server-reactions-start', args => broadcast('SERVER_REACTIONS_STARTED', args));
+  on('server-reactions-end', args => broadcast('SERVER_REACTIONS_ENDED', args));
+  on('server-reactions-cancel', args => broadcast('SERVER_REACTIONS_CANCELLED', args));
 
   return {
     server: httpServer,
