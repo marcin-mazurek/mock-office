@@ -47,11 +47,12 @@ export default class HttpWebServer {
         res
       }))
       .filter(({ behaviour }) => !!behaviour)
-      .flatMap(({ behaviour, req, res }) =>
+      .do(({ behaviour, req, res }) => {
         behaviour
-          .configureReceiver(req, res)
-          .use()
-      );
+        .configureReceiver(req, res)
+        .execute();
+        this.pendingBehaviours.push(behaviour);
+      });
 
     if (this.secure) {
       const credentials = {
@@ -94,10 +95,8 @@ export default class HttpWebServer {
 
   // clearPendingReactions :: void -> void
   clearPendingReactions() {
-    if (this.pendingBehaviours.length) {
-      this.pendingBehaviours.forEach(pB => pB.cancel());
-      this.pendingBehaviours.length = 0;
-    }
+    this.pendingBehaviours.forEach(pB => pB.cancel());
+    this.pendingBehaviours.length = 0;
   }
 
   // stop :: void -> Promise

@@ -22,9 +22,8 @@ export function configureGuiEventsServer(on) {
       sockets = sockets.filter(socket => socket !== ws);
     });
   });
-  on('server-reactions-start', args => broadcast('SERVER_REACTIONS_STARTED', args));
-  on('server-reactions-end', args => broadcast('SERVER_REACTIONS_ENDED', args));
-  on('server-reactions-cancel', args => broadcast('SERVER_REACTIONS_CANCELLED', args));
+  on('behaviour-status-change', args => broadcast('behaviour-status-change', args));
+  on('reaction-status-change', args => broadcast('reaction-status-change', args));
 
   return {
     server: httpServer,

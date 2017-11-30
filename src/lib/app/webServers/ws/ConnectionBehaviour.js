@@ -13,11 +13,11 @@ export default class ConnectionBehaviour extends Behaviour {
 
   // createReaction :: Object -> MessageReaction
   // eslint-disable-next-line class-methods-use-this
-  createReaction(reactionCfg) {
+  createReaction(id, reactionCfg) {
     let reaction;
 
     if (reactionCfg.type === 'message') {
-      reaction = new MessageReaction(reactionCfg);
+      reaction = new MessageReaction(id, reactionCfg);
     } else {
       throw new Error(`Invalid reaction type: ${reactionCfg.type}`);
     }

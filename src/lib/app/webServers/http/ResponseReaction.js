@@ -7,24 +7,20 @@ export default class ResponseReaction extends Reaction {
     this.res = res;
   }
 
-  // prepare :: void -> Observable
-  prepare() {
-    return this.schedule$
-      .do(() => {
-        // allow CORS by default
-        if (this.req.headers.origin) {
-          this.res.set('Access-Control-Allow-Origin', this.req.headers.origin);
-        }
+  doCommand() {
+    // allow CORS by default
+    if (this.req.headers.origin) {
+      this.res.set('Access-Control-Allow-Origin', this.req.headers.origin);
+    }
 
-        if (this.params.headers) {
-          this.res.set(this.params.headers);
-        }
+    if (this.params.headers) {
+      this.res.set(this.params.headers);
+    }
 
-        if (this.params.status) {
-          this.res.status(this.params.status);
-        }
+    if (this.params.status) {
+      this.res.status(this.params.status);
+    }
 
-        this.res.json(this.params.payload);
-      });
+    this.res.json(this.params.payload);
   }
 }

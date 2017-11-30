@@ -18,16 +18,14 @@ export default function startAppSync(ws, store) {
       const data = JSON.parse(message.data);
 
       switch (data.event) {
-        case 'SERVER_REACTIONS_ENDED': {
-          store.dispatch(reactionsEndedAction(data.behaviourId));
-          break;
-        }
-        case 'SERVER_REACTIONS_STARTED': {
-          store.dispatch(reactionsDidRunAction(data.behaviourId));
-          break;
-        }
-        case 'SERVER_REACTIONS_CANCELLED': {
-          store.dispatch(reactionsCancelledAction(data.behaviourId));
+        case 'behaviour-status-change': {
+          if (data.status === 'finished') {
+            store.dispatch(reactionsEndedAction(data.behaviourId));
+          } else if (data.status === 'pending') {
+            store.dispatch(reactionsDidRunAction(data.behaviourId));
+          } else if (data.status === 'cancelled') {
+            store.dispatch(reactionsCancelledAction(data.behaviourId));
+          }
           break;
         }
         default:
