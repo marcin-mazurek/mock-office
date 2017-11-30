@@ -20,7 +20,6 @@ export default function configure(ajv) {
             res.status(200).json({ id: req.body.id });
           },
           (err) => {
-            console.log(err);
             res.status(500).json({ error: err });
           }
         );

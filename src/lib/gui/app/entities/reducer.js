@@ -87,7 +87,11 @@ export const reducers = {
     const reactions = state.getIn(['behaviours', 'entities', behaviourId, 'reactions']);
     let newState = state;
 
-    newState = reactions.reduce((acc, next) => reducers.removeReaction(acc, behaviourId, next), newState);
+    newState = reactions
+    .reduce(
+      (acc, next) => reducers.removeReaction(acc, behaviourId, next),
+      newState
+    );
     newState = newState
       .updateIn(['behaviours', 'ids'], ids => ids.filter(id => id !== behaviourId))
       .deleteIn(['behaviours', 'entities', behaviourId])

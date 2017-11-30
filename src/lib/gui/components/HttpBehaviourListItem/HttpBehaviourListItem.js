@@ -104,7 +104,6 @@ export default class HttpBehaviourListItem extends React.Component {
               </div>
             </div>
           </div>
-          {/* <div className="behaviour-list-item__tag">{behaviour.getIn(['event', 'path'])}</div> */}
           <button
             className="behaviour-list-item__remove-button"
             onClick={() => onRemoveButtonClick(serverId, id)}

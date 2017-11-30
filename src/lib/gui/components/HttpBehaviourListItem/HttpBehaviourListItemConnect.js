@@ -3,15 +3,15 @@ import { behaviourSelector } from '../../app/entities';
 import { removeButtonClickedAction } from './actions';
 import HttpBehaviourListItem from './HttpBehaviourListItem';
 
-const behaviourMapStateToProps = (state, ownProps) => {
-  const behaviour = behaviourSelector(state, ownProps.id);
+export default connect(
+  (state, ownProps) => {
+    const behaviour = behaviourSelector(state, ownProps.id);
 
-  return {
-    behaviour
-  };
-};
-
-const behaviourMapDispatchToProps = {
-  onRemoveButtonClick: removeButtonClickedAction
-};
-export default connect(behaviourMapStateToProps, behaviourMapDispatchToProps)(HttpBehaviourListItem);
+    return {
+      behaviour
+    };
+  },
+  {
+    onRemoveButtonClick: removeButtonClickedAction
+  }
+)(HttpBehaviourListItem);

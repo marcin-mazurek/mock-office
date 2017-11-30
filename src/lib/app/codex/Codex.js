@@ -38,7 +38,7 @@ export default class Codex {
 
   // matchBehaviour :: Object -> Behaviour
   matchBehaviour(event) {
-    const b = this.behaviours.find((b) => {
+    const behaviour = this.behaviours.find((b) => {
       if (!b.event) {
         return true;
       }
@@ -49,6 +49,6 @@ export default class Codex {
 
       return deepEqual(b.event, extractSubTree(event, b.event));
     });
-    return b;
+    return behaviour;
   }
 }

@@ -6,6 +6,7 @@ import Select from 'react-select';
 import { submitSucceededAction } from './actions';
 import { paramsSelector } from '../../app/addBehaviour/selectors';
 
+// eslint-disable-next-line react/prop-types
 const renderReactions = ({ fields }) => (
   <ul style={{ padding: '0', margin: '0', listStyle: 'none' }}>
     {
