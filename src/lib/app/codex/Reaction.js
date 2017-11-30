@@ -14,7 +14,6 @@ export default class Reaction {
 
   // execute :: void -> Function
   execute(success) {
-    console.log(this.schedule.delay);
     let schedule$ = this.schedule.interval
       ? Observable.interval(this.schedule.interval)
       : Observable.of(1);
