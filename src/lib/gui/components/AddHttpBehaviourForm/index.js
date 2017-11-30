@@ -1,78 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Field, reduxForm, FormSection, FieldArray } from 'redux-form/immutable';
+import { Field, reduxForm, FormSection, FieldArray, SubmissionError } from 'redux-form/immutable';
 import Select from 'react-select';
-import { submitSucceededAction } from './actions';
-import { paramsSelector } from '../../app/addBehaviour/selectors';
-
-// eslint-disable-next-line react/prop-types
-const renderReactions = ({ fields }) => (
-  <ul style={{ padding: '0', margin: '0', listStyle: 'none' }}>
-    {
-      fields.map((name, index) => (
-        <li key={index} style={{ padding: '0', margin: '0' }}>
-          <FormSection name={name}>
-            <header className="form-section__header">Reactions:</header>
-            <FormSection name="params">
-              <div className="form-row">
-                <div className="form__field">
-                  <label className="form-field__label" htmlFor="payload">Payload:</label>
-                  <Field
-                    className="form-field__textarea"
-                    component="textarea"
-                    name="payload"
-                  />message
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form__field">
-                  <label className="form-field__label" htmlFor="payload">Headers:</label>
-                  <Field
-                    component="textarea"
-                    name="headers"
-                    className="form-field__textarea"
-                  />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form__field">
-                  <label className="form-field__label" htmlFor="status">Status code:</label>
-                  <Field
-                    className="form-field__input"
-                    component="input"
-                    type="number"
-                    name="status"
-                    normalize={value => parseInt(value, 10)}
-                  />
-                </div>
-              </div>
-            </FormSection>
-            <FormSection name="schedule">
-              <div className="form-row">
-                <div className="form__field">
-                  <label className="form-field__label" htmlFor="delay">Delay(ms):</label>
-                  <Field
-                    className="form-field__input"
-                    component="input"
-                    type="number"
-                    name="delay"
-                    normalize={value => parseInt(value, 10)}
-                  />
-                </div>
-              </div>
-            </FormSection>
-          </FormSection>
-        </li>
-      ))
-    }
-  </ul>
-);
+import ResponseReactionSection from './ResponseReactionSection';
+import { submitSucceededAction, submitFailedAction } from './actions';
 
 const EventTypeField = field =>
   <Select
-    name="type"
     value={field.input.value}
     onChange={option => field.input.onChange(option.value)}
     searchable={false}
@@ -83,26 +17,23 @@ const EventTypeField = field =>
     ]}
   />;
 
-const MethodField = field =>
-  <Select
-    name="method"
-    value={field.input.value}
-    onChange={option => field.input.onChange(option.value)}
-    searchable={false}
-    clearable={false}
-    className="form-field__select"
-    options={[
-      { value: 'GET', label: 'GET' },
-      { value: 'POST', label: 'POST' },
-      { value: 'PUT', label: 'PUT' },
-      { value: 'DELETE', label: 'DELETE' },
-      { value: 'UPDATE', label: 'UPDATE' }
-    ]}
-  />;
+// eslint-disable-next-line react/prop-types
+const renderReactions = ({ fields }) =>
+  <div>
+    {
+      fields.map((name, index) =>
+        <div className="form-section" key={index}>
+          <FormSection name={name}>
+            <ResponseReactionSection />
+          </FormSection>
+        </div>
+      )
+    }
+  </div>;
 
-export const AddHttpBehaviourForm = ({ handleSubmit }) => (
-  <form className="add-http-behaviour-form form" onSubmit={handleSubmit}>
-    <section className="form-section">
+export const AddBehaviourForm = props =>
+  <form className="form" onSubmit={props.handleSubmit}>
+    <div className="form-section">
       <div className="form-row">
         <div className="form__field">
           <label className="form-field__label" htmlFor="loadedCounter">
@@ -117,95 +48,78 @@ export const AddHttpBehaviourForm = ({ handleSubmit }) => (
           />
         </div>
       </div>
-    </section>
-    <section className="form-section">
-      <header className="form-section__header">Event:</header>
-      <FormSection name="event">
+    </div>
+    <FormSection name="event">
+      <section className="form-section">
+        <header className="form-section__header">Event:</header>
         <div className="form-row">
           <div className="form__field">
-            <label className="form-field__label" htmlFor="method">Event type:</label>
-            <Field component={EventTypeField} />
+            <label className="form-field__label" htmlFor="event">Event type:</label>
+            <Field name="type" component={EventTypeField} />
           </div>
         </div>
-        <FormSection name="params">
-          <div className="form-row">
-            <div className="form__field">
-              <label className="form-field__label" htmlFor="path">Path:</label>
-              <Field
-                className="form-field__input"
-                name="path"
-                component="input"
-                type="text"
-              />
-            </div>
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="trigger.params">Params:</label>
+            <Field
+              className="form-field__textarea"
+              name="params"
+              component="textarea"
+              cols="30"
+              rows="5"
+            />
           </div>
-          <div className="form-row">
-            <div className="form__field">
-              <label className="form-field__label" htmlFor="method">Method:</label>
-              <Field component={MethodField} />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form__field">
-              <label className="form-field__label" htmlFor="payload">Payload:</label>
-              <Field
-                className="form-field__textarea"
-                name="payload"
-                component="textarea"
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form__field">
-              <label className="form-field__label" htmlFor="headers">Headers:</label>
-              <Field
-                className="form-field__textarea"
-                name="headers"
-                component="textarea"
-              />
-            </div>
-          </div>
-        </FormSection>
-      </FormSection>
-    </section>
+        </div>
+      </section>
+    </FormSection>
+    <FieldArray component={renderReactions} name="reactions" />
+    <div className="form-row">
+      <button className="button form__button" type="submit">
+        Submit
+      </button>
+    </div>
+  </form>;
 
-    <section className="form-section">
-      <FieldArray component={renderReactions} name="reactions" />
-      <div className="form-row">
-        <button className="button form__button" type="submit">
-          Submit
-        </button>
-      </div>
-    </section>
-  </form>
-);
-
-AddHttpBehaviourForm.propTypes = {
+AddBehaviourForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
-export default connect(
-  state => ({
-    serverId: paramsSelector(state).get('serverId')
-  })
-)(
-  reduxForm(
-    {
-      form: 'addHttpBehaviour',
-      initialValues: {
-        event: {
-          type: 'request'
-        },
-        reactions: [{
-          type: 'response'
-        }]
+export default reduxForm(
+  {
+    form: 'addHttpBehaviour',
+    initialValues: {
+      event: {
+        type: 'request',
       },
-      onSubmit(values) {
-        return values.toJS();
-      },
-      onSubmitSuccess(values, dispatch, props) {
-        dispatch(submitSucceededAction(values, props.serverId));
+      reactions: [{
+        type: 'response'
+      }]
+    },
+    onSubmit(values, dispatch) {
+      const plainValues = values.toJS();
+
+      if (plainValues.reactions[0].params) {
+        try {
+          plainValues.reactions[0].params = JSON.parse(plainValues.reactions[0].params);
+        } catch (e) {
+          dispatch(submitFailedAction('reactions[0].params: Invalid json'));
+          throw new SubmissionError({ 'reactions[0].params': 'Invalid json' });
+        }
       }
+
+      if (plainValues.event.params) {
+        try {
+          plainValues.event.params = JSON.parse(plainValues.event.params);
+        } catch (e) {
+          dispatch(submitFailedAction('event.params: Invalid json'));
+          throw new SubmissionError({ 'event.params': 'Invalid json' });
+        }
+      }
+
+      return plainValues;
+    },
+    onSubmitSuccess(values, dispatch, props) {
+      dispatch(submitSucceededAction(values, props.serverId));
     }
-  )(AddHttpBehaviourForm)
-);
+  }
+)(AddBehaviourForm);

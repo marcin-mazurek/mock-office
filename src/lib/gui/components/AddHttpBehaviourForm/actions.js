@@ -4,3 +4,9 @@ export const submitSucceededAction = (values, serverId) => ({
   values,
   serverId
 });
+
+export const SUBMIT_FAILED = 'AddHttpBehaviourForm/SUBMIT_FAILED';
+export const submitFailedAction = reason => ({
+  type: SUBMIT_FAILED,
+  reason
+});

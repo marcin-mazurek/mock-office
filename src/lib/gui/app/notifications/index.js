@@ -21,6 +21,7 @@ import {
   FAILED as START_SERVER_FAILED
 } from '../../epics/startServer/actions';
 import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer';
+import { SUBMIT_FAILED } from '../../components/AddHttpBehaviourForm/actions';
 
 export default createReducer(
   {
@@ -61,6 +62,10 @@ export default createReducer(
       text: action.reason
     }),
     [STOP_SERVER_FAILED]: (reduce, action) => reduce('addNotification', {
+      type: 'error',
+      text: action.reason
+    }),
+    [SUBMIT_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),
