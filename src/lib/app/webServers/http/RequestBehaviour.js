@@ -11,7 +11,7 @@ export default class RequestBehaviour extends Behaviour {
   }
 
   // createReaction :: Object -> ResponseReaction
-  createReaction(reactionCfg) {
+  createReaction(id, reactionCfg) {
     if (this.reactions.length > 1) {
       throw new Error('RequestBehaviour can have only single reaction.');
     }
@@ -19,7 +19,7 @@ export default class RequestBehaviour extends Behaviour {
     let reaction;
 
     if (reactionCfg.type === 'response') {
-      reaction = new ResponseReaction(reactionCfg);
+      reaction = new ResponseReaction(id, reactionCfg);
     } else {
       throw new Error(`Invalid reaction type: ${reactionCfg.type}`);
     }

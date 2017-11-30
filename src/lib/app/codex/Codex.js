@@ -39,9 +39,6 @@ export default class Codex {
   // matchBehaviour :: Object -> Behaviour
   matchBehaviour(event) {
     const b = this.behaviours.find((b) => {
-      console.log(event);
-      console.log(b);
-
       if (!b.event) {
         return true;
       }

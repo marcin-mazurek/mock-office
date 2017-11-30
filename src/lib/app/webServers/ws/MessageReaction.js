@@ -6,12 +6,8 @@ export default class MessageReaction extends Reaction {
     this.ws = ws;
   }
 
-  // prepare :: void -> Observable
-  prepare() {
-    return this.schedule$
-      .do(() => {
-        const { params, ws } = this;
-        ws.send(params.message);
-      });
+  // doCommand$ :: void -> Observable
+  doCommand() {
+    this.ws.send(this.params.message);
   }
 }

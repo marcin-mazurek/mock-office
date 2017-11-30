@@ -1,23 +1,84 @@
-import { Observable, Scheduler } from 'rxjs';
 import unique from 'cuid';
+import { Observable, Scheduler } from 'rxjs';
+import { log } from '../eventBus';
 
 export default class Reaction {
-  constructor(config) {
+  constructor(behaviourId, config) {
     this.id = unique();
-    this.schedule = config.schedule;
+    this.behaviourId = behaviourId;
+    this.schedule = config.schedule || {};
     this.params = config.params || {};
     this.type = config.type;
-    this.schedule$ = Reaction.getSchedule(config.schedule);
+    this.status = 'inactive';
   }
 
-  // getSchedule :: void -> Observable
-  static getSchedule(schedule) {
-    const schedule$ = schedule && schedule.interval
-      ? Observable.interval(schedule.interval)
-      : Observable.from(Promise.resolve());
+  // execute :: void -> Function
+  execute(success) {
+    let schedule$ = this.schedule.interval
+      ? Observable.interval(this.schedule.interval)
+      : Observable.of(1);
 
-    return schedule && schedule.delay
-      ? schedule$.observeOn(Scheduler.async, schedule.delay)
-      : schedule$.observeOn(Scheduler.asap);
+    schedule$ = this.schedule.delay
+    ? schedule$.observeOn(Scheduler.async, this.schedule.delay)
+    : schedule$.observeOn(Scheduler.queue);
+
+    this.status = Reaction.statuses.PENDING;
+
+    log('reaction-status-changed',
+      {
+        status: Reaction.statuses.PENDING,
+        reactionId: this.id,
+        behaviourId: this.behaviourId
+      }
+    );
+
+    const subscription = schedule$
+      .do(() => {
+        this.doCommand();
+      })
+      .subscribe({
+        complete: () => {
+          if (success) {
+            success();
+          }
+
+          this.status = Reaction.statuses.FINISHED;
+
+          log('reaction-status-changed',
+            {
+              status: Reaction.statuses.FINISHED,
+              reactionId: this.id,
+              behaviourId: this.behaviourId
+            }
+          );
+        }
+      });
+
+    return () => {
+      subscription.unsubscribe();
+
+      this.status = Reaction.statuses.CANCELLED;
+
+      log('reaction-status-changed',
+        {
+          status: Reaction.statuses.CANCELLED,
+          reactionId: this.id,
+          behaviourId: this.behaviourId
+        }
+      );
+    };
   }
+
+  /* eslint-disable class-methods-use-this */
+  // To implement by subclasses
+  // action :: void -> void
+  doCommand() {}
+  /* eslint-enable class-methods-use-this */
 }
+
+Reaction.statuses = {
+  INACTIVE: 'inactive',
+  PENDING: 'pending',
+  FINISHED: 'finished',
+  CANCELLED: 'cancelled'
+};

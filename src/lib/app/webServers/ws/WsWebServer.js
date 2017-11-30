@@ -59,10 +59,10 @@ export default class WsWebServer {
         }))
         .map(event => this.codex.matchBehaviour(event))
         .filter(behaviour => !!behaviour)
-        .flatMap((behaviour) => {
+        .do((behaviour) => {
           behaviour
             .configureReceiver(this.ws)
-            .use();
+            .execute();
         });
       this.messagesSub = this.messages$.subscribe();
 
@@ -71,7 +71,6 @@ export default class WsWebServer {
       })
         .take(1)
         .do(() => {
-          console.log('clientDisconnect$ emit');
           this.clearPendingReactions();
           this.ws = null;
           this.connectionSub = this.connections$.subscribe();
@@ -86,16 +85,17 @@ export default class WsWebServer {
       behaviour: this.codex.matchBehaviour(event)
     }))
     .filter(({ behaviour }) => !!behaviour)
-    .flatMap(({ behaviour }) =>
+    .do(({ behaviour }) => {
       behaviour
       .configureReceiver(this.ws)
-      .use()
-    );
+      .execute();
+      this.pendingBehaviours.push(behaviour);
+    });
   }
 
   clearPendingReactions() {
-    this.messagesSub.unsubscribe();
-    this.connectionSub.unsubscribe();
+    this.pendingBehaviours.forEach(pB => pB.cancel());
+    this.pendingBehaviours.length = 0;
   }
 
   start() {
