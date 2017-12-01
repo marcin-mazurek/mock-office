@@ -14,7 +14,7 @@ const EventTypeField = field =>
     className="form-field__select"
     options={[
       { value: 'message', label: 'message' },
-      { value: 'connect', label: 'connect' }
+      { value: 'connection', label: 'connection' }
     ]}
   />;
 // eslint-disable-next-line react/prop-types
