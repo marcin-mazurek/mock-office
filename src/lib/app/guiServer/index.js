@@ -1,10 +1,14 @@
+import express from 'express';
+import path from 'path';
+import colors from 'colors/safe';
 import http from 'http';
 import { Server as WebSocketServer } from 'ws';
-import colors from 'colors/safe';
+import { on } from '../eventLog';
+import serversHub from '../serversHub';
 
 const GUI_EVENTS_SERVER_PORT = 3061;
 
-export function configureGuiEventsServer(on) {
+export function configureGuiEventsServer() {
   const httpServer = http.createServer();
   const server = new WebSocketServer({ server: httpServer });
   let sockets = [];
@@ -38,9 +42,24 @@ export function serveGuiEventsServer(server, port) {
   });
 }
 
-export default {
-  start(serversHub) {
-    const guiEventsServer = configureGuiEventsServer(serversHub);
-    serveGuiEventsServer(guiEventsServer.server, GUI_EVENTS_SERVER_PORT);
-  }
-};
+export function createGuiServer() {
+  const staticAssetsMiddleware = (req, res) => {
+    res.sendFile(path.resolve(__dirname, `../gui/${req.originalUrl}`));
+  };
+  const reactAppMiddleware = (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../gui/index.html'));
+  };
+  const app = express();
+  app.use('/static/*', staticAssetsMiddleware);
+  app.use('*', reactAppMiddleware);
+  return app;
+}
+
+export function serveGuiServer(port) {
+  createGuiServer().listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(colors.green(`GUI address: http://127.0.0.1:${port}`));
+  });
+  const guiEventsServer = configureGuiEventsServer(serversHub);
+  serveGuiEventsServer(guiEventsServer.server, GUI_EVENTS_SERVER_PORT);
+}

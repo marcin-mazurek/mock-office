@@ -34,7 +34,8 @@ module.exports = {
         NODE_ENV: 'production'
       },
       watch: [
-        './dist/lib/app'
+        './dist/lib/app',
+        './dist/index.js'
       ],
       out_file: __dirname + '/pm2.log',
       error_file: __dirname + '/pm2.log',
