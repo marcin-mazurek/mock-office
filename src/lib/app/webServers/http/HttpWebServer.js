@@ -102,8 +102,10 @@ export default class HttpWebServer {
   // stop :: void -> Promise
   stop() {
     return new Promise((resolve) => {
-      this.requestsSub.unsubscribe();
-      this.requestsSub = null;
+      if (this.requestsSub) {
+        this.requestsSub.unsubscribe();
+        this.requestsSub = null;
+      }
       // Browsers can keep connection open, thus callback after
       // HttpBehaviourServer.stop cant be called if there are sockets
       // still open, so we need to ensure that all sockets are
