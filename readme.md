@@ -23,13 +23,55 @@ At first you need to install dependencies with npm.
 
 *`$ npm i`*
 
-#### To start app:
-
 *`$ npm run build`*
 
 *`$ npm run start`*
 
 Local app will be listening on `http://127.0.0.1:3060`
+
+### Adding behaviours
+
+Simple payload required for adding behaviour
+
+```
+{
+  "event": {
+    "type": "event type"
+  },
+  "reactions": [
+    {
+      "type": "reaction type",
+      "params": {} // configuration object specific for reaction,
+      "schedule": {
+        "delay": 1000 // deffered execution
+        "interval": 1000 // time based exection
+      }
+    }
+  ]
+}
+```
+
+#### Http server
+
+Event types:
+
+* `request` - on incoming request
+
+Reaction types:
+
+* `reponse` - send response to request
+
+#### Web socket server
+
+Event types:
+
+* `connection` - when ws client is connecting to server
+
+* `message` - on message from client
+
+Reaction types:
+
+* `message` - send message to client
 
 #### For enabling GUI
 
