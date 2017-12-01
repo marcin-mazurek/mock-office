@@ -1,6 +1,6 @@
 import unique from 'cuid';
 import { Observable, Scheduler } from 'rxjs';
-import { log } from '../eventBus';
+import { log } from '../eventLog';
 
 export default class Reaction {
   constructor(behaviourId, config) {

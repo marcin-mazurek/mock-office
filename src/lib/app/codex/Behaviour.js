@@ -1,6 +1,6 @@
 import unique from 'cuid';
 import Event from './Event';
-import { log } from '../eventBus';
+import { log } from '../eventLog';
 import Reaction from './Reaction';
 
 export default class Behaviour {
