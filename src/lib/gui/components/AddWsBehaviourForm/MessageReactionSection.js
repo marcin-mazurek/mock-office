@@ -1,9 +1,27 @@
 import React from 'react';
 import { Field, FormSection } from 'redux-form/immutable';
+import Select from 'react-select';
+
+const ReactionTypeField = field =>
+  <Select
+    value={field.input.value}
+    onChange={option => field.input.onChange(option.value)}
+    searchable={false}
+    clearable={false}
+    className="form-field__select"
+    options={[
+      { value: 'message', label: 'message' }
+    ]}
+  />;
 
 const AddWsBehaviourFormReactionFormSection = () => (
   <div className="form-section">
-    <header className="form-section__header">Message:</header>
+    <header className="form-section__header">Reaction:</header>
+    <div className="form-row">
+      <div className="form__field">
+        <Field component={ReactionTypeField} name="type" />
+      </div>
+    </div>
     <FormSection name="params">
       <div className="form-row">
         <div className="form__field">
