@@ -3,7 +3,6 @@ import { has, ifElse } from 'ramda';
 import api from '../../resources/api';
 import { SUBMIT_SUCCEEDED as HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddHttpBehaviourForm/actions';
 import { SUBMIT_SUCCEEDED as WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddWsBehaviourForm/actions';
-import { SUBMIT_SUCCEEDED as ADD_BEHAVIOUR_SUBMIT_SUCCEEDED } from '../../components/AddBehaviourForm/actions';
 
 export const SUCCEED = 'addBehaviour/SUCCEEDED';
 export const succeedAction = (serverId, behaviour) => ({
@@ -36,8 +35,7 @@ const onFail = ({ error }) => failedAction(error);
 export default function addBehaviourEpic(action$) {
   return action$.ofType(
     HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED,
-    WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED,
-    ADD_BEHAVIOUR_SUBMIT_SUCCEEDED
+    WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED
   )
     .flatMap(makeRequest)
     .map(
