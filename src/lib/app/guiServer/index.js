@@ -44,10 +44,10 @@ export function serveGuiEventsServer(server, port) {
 
 export function createGuiServer() {
   const staticAssetsMiddleware = (req, res) => {
-    res.sendFile(path.resolve(__dirname, `../gui/${req.originalUrl}`));
+    res.sendFile(path.resolve(__dirname, `../../gui/${req.originalUrl}`));
   };
   const reactAppMiddleware = (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../gui/index.html'));
+    res.sendFile(path.resolve(__dirname, '../../gui/index.html'));
   };
   const app = express();
   app.use('/static/*', staticAssetsMiddleware);

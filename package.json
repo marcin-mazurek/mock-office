@@ -22,7 +22,7 @@
     "pm2-log": "tail -F pm2.log",
     "pm2-log-errors": "tail -F pm2-errors.log",
     "start": "node ./dist/cli/chan.js",
-    "start-with-gui": "node ./dist/cli/chan.js --gui",
+    "start-with-gui": "node ./dist/bin/chan.js --gui",
     "run": "npm-run-all build start",
     "run-with-gui": "npm-run-all build start-with-gui",
     "lint": "eslint 'src/**/*.js'",
