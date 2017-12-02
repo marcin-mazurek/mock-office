@@ -1,4 +1,4 @@
-# Mock server
+# Mock Office
 
 #### Tool for running mock servers locally to faciliate frontend development.
 
