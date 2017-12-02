@@ -21,8 +21,8 @@
     "pm2-run-with-gui": "pm2 start ecosystem.config.js --only app-server-with-gui",
     "pm2-log": "tail -F pm2.log",
     "pm2-log-errors": "tail -F pm2-errors.log",
-    "start": "node ./dist/bin/chan.js",
-    "start-with-gui": "node ./dist/bin/chan.js --gui",
+    "start": "node ./dist/bin/mock-office.js",
+    "start-with-gui": "node ./dist/bin/mock-office.js --gui",
     "run": "npm-run-all build start",
     "run-with-gui": "npm-run-all build start-with-gui",
     "lint": "eslint 'src/**/*.js'",
@@ -142,6 +142,6 @@
     ]
   },
   "bin": {
-    "mock-office": "./dist/bin/chan.js"
+    "mock-office": "./dist/bin/mock-office.js"
   }
 }
