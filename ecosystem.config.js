@@ -8,7 +8,7 @@ module.exports = {
     // App server only
     {
       name: 'app-server',
-      script: './dist/bin/chan.js',
+      script: './dist/bin/mock-office.js',
       env: {
         COMMON_VARIABLE: 'true'
       },
@@ -26,7 +26,7 @@ module.exports = {
     // with GUI
     {
       name: 'app-server-with-gui',
-      script: './dist/bin/chan.js',
+      script: './dist/bin/mock-office.js',
       env: {
         COMMON_VARIABLE: 'true'
       },
