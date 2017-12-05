@@ -1,4 +1,4 @@
-import { createReducer } from 'notifications';
+import { createReducer } from 'mock-office-notifications';
 import {
   SUCCEEDED as ADD_SERVER_SUCCEEDED,
   FAILED as ADD_SERVER_FAILED

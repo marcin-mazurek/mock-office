@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NotificationsConnect } from 'notifications';
+import { NotificationsConnect } from 'mock-office-notifications';
 import Sidebar from '../Sidebar';
 import Modal from '../Modal';
 
