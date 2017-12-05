@@ -7,6 +7,20 @@ import trashIcon from '../../../../../assets/icons_gray_trash@3x.svg';
 import { ReactionListConnect } from '../ReactionList';
 import { HttpReactionListItemConnect } from '../HttpReactionListItem';
 
+const displayAsString = (prop) => {
+  if (!prop) {
+    return null;
+  }
+
+  if (prop.get('enum')) {
+    return prop.get('enum').toJS().join(', ');
+  } else if (prop.get('pattern')) {
+    return prop.get('pattern');
+  }
+
+  return 'Any';
+};
+
 export default class HttpBehaviourListItem extends React.Component {
   constructor() {
     super();
@@ -53,6 +67,9 @@ export default class HttpBehaviourListItem extends React.Component {
       spinner: true,
       'spinner--active': pending
     });
+    const path = displayAsString(behaviour.getIn(['event', 'params', 'properties', 'path']));
+    const method = displayAsString(behaviour.getIn(['event', 'params', 'properties', 'method']));
+
     return (
       <div className={behaviourClassNames}>
         <span className="behaviour-list-item__line" />
@@ -82,25 +99,13 @@ export default class HttpBehaviourListItem extends React.Component {
             <div className="behaviour-list-item__event-property">
               <div className="behaviour-list-item__event-property-label">Path</div>
               <div className="behaviour-list-item__event-property-value">
-                {
-                  behaviour.getIn(['event', 'params', 'path']) || 'Any'
-                }
+                { path }
               </div>
             </div>
             <div className="behaviour-list-item__event-property">
               <div className="behaviour-list-item__event-property-label">Method</div>
               <div className="behaviour-list-item__event-property-value">
-                {
-                  behaviour.getIn(['event', 'params', 'method']) || 'Any'
-                }
-              </div>
-            </div>
-            <div className="behaviour-list-item__event-property">
-              <div className="behaviour-list-item__event-property-label">Headers</div>
-              <div className="behaviour-list-item__event-property-value">
-                {
-                  behaviour.getIn(['event', 'params', 'headers']) ? 'Yes' : 'No'
-                }
+                { method }
               </div>
             </div>
           </div>

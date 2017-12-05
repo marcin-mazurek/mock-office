@@ -11,7 +11,7 @@
           },
           "method": {
             "type": "string",
-            "const": "GET"
+            "enum": ["GET"]
           }
         }
       }
