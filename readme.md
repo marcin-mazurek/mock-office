@@ -36,7 +36,8 @@ Simple payload required for adding behaviour
 ```
 {
   "event": {
-    "type": "event type"
+    "type": "event type",
+    "params": {} // here use ajv objects https://github.com/epoberezkin/ajv
   },
   "reactions": [
     {
