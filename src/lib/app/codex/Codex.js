@@ -1,6 +1,5 @@
-import deepEqual from 'deep-equal';
+import Ajv from 'ajv';
 import Behaviour from './Behaviour';
-import extractSubTree from './extractSubTree';
 
 export default class Codex {
   constructor(serverId) {
@@ -38,6 +37,8 @@ export default class Codex {
 
   // matchBehaviour :: Object -> Behaviour
   matchBehaviour(event) {
+    const ajv = new Ajv();
+
     const behaviour = this.behaviours.find((b) => {
       if (!b.event) {
         return true;
@@ -47,7 +48,11 @@ export default class Codex {
         return false;
       }
 
-      return deepEqual(b.event, extractSubTree(event, b.event));
+      if (b.event.type !== event.type) {
+        return false;
+      }
+
+      return ajv.validate(b.event.params, event.params);
     });
     return behaviour;
   }
