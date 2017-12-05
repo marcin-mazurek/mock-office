@@ -7,7 +7,11 @@
 * You can run it locally or on shared resources, CI.
 * You can use GUI or REST to manage servers.
 
-Command your mock server to behave as you want by adding behaviours:
+Command your mock server to behave as you want by adding behaviours.
+
+Match events by schemas using wide known [AJV schema validator](https://github.com/epoberezkin/ajv)!
+
+Control reactions schedules using delays, intervals etc.
 
 **Behaviour consists of event and reactions**
 
@@ -29,7 +33,7 @@ At first you need to install dependencies with npm.
 
 Local app will be listening on `http://127.0.0.1:3060`
 
-### Adding behaviours
+## Adding behaviours
 
 Simple payload required for adding behaviour
 
@@ -52,29 +56,42 @@ Simple payload required for adding behaviour
 }
 ```
 
-#### Http server
+## Http server
 
 Event types:
 
 * `request` - on incoming request
 
+| Params  | Type   | Description                                            |
+|---------|--------|--------------------------------------------------------|
+| status  | String | HTTP status                                            |
+| method  | String | HTTP method                                            |
+| path    | String | request path                                           |
+| headers | Object | plain object with props { headerName: headerValue }  |
+
+
 Reaction types:
 
 * `reponse` - send response to request
 
-#### Web socket server
+## Web socket server
 
 Event types:
 
 * `connection` - when ws client is connecting to server
 
+
 * `message` - on message from client
+
+| Params  | Type   | Description         |
+|---------|--------|---------------------|
+| message | String | message from client |
 
 Reaction types:
 
 * `message` - send message to client
 
-#### For enabling GUI
+## GUI
 
 *`$ npm run start-with-gui`*
 
