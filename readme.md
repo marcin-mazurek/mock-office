@@ -23,6 +23,15 @@ Use your real backend sevice as fallback for your mock server to provide working
 Currently multiple reactions for one action is usable ony for web socket servers for multiple messages, but we got way to implement more types of reactions for http server in the future.
 
 ## Usage
+
+Install it globally
+
+$ `npm run install mock-office -g`
+
+Run from command line
+
+$ `mock-office [--gui]`
+
 For now it only can be run from node CLI or npm script.
 
 At first you need to install dependencies with npm.
