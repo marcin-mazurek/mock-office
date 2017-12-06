@@ -26,23 +26,11 @@ Currently multiple reactions for one action is usable ony for web socket servers
 
 Install it globally
 
-$ `npm run install mock-office -g`
+`$ npm run install mock-office -g`
 
 Run from command line
 
-$ `mock-office [--gui]`
-
-For now it only can be run from node CLI or npm script.
-
-At first you need to install dependencies with npm.
-
-*`$ npm i`*
-
-*`$ npm run build`*
-
-*`$ npm run start`*
-
-Local app will be listening on `http://127.0.0.1:3060`
+`$ mock-office [--gui]`
 
 ## Adding behaviours
 
@@ -106,20 +94,16 @@ Reaction types:
 
 * `message` - send message to client
 
-## GUI
-
-*`$ npm run start-with-gui`*
-
-GUI is served at `http://127.0.0.1:3070`
-
 ## Development
-To start app development:
+To start app development clone repo first and then:
 
-*`$ npm run watch`*
+`$ npm i`
 
-*`npm run pm2-run-with-gui`*
+`$ npm run watch`
+
+`$ npm run pm2-run-with-gui`
 
 ## Test
 To run tests:
 
-*`$ npm run test`*
+`$ npm run test`
