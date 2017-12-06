@@ -18,7 +18,7 @@ const ServerTypeField = field =>
     ]}
   />;
 
-const AddServerForm = ({ handleSubmit }) =>
+const AddServerForm = ({ handleSubmit, serverType }) =>
   <form className="form add-server-form" onSubmit={handleSubmit}>
     <div className="form-row">
       <div className="form__field">
@@ -57,6 +57,23 @@ const AddServerForm = ({ handleSubmit }) =>
         </div>
       </div>
     </div>
+    {
+      serverType === 'http' &&
+        <div className="form-row">
+          <div className="form__field">
+            <label className="form-field__label" htmlFor="fallbackUrl">
+              Fallback url:
+            </label>
+            <Field
+              component="input"
+              type="text"
+              className="form-field__input"
+              name="fallbackUrl"
+              placeholder={'http://your-fallback-server-url'}
+            />
+          </div>
+        </div>
+    }
     <div className="form-row">
       <button
         className="button form__button"

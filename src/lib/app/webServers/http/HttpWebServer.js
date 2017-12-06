@@ -4,6 +4,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import bodyParser from 'body-parser';
+import proxy from 'http-proxy-middleware';
 import HttpServerCodex from './HttpServerCodex';
 
 export default class HttpWebServer {
@@ -23,6 +24,7 @@ export default class HttpWebServer {
     this.certPath = config.certPath;
     this.pendingBehaviours = [];
     this.codex = new HttpServerCodex(this.id);
+    this.fallbackUrl = config.fallbackUrl || '';
     const httpServer = this.secure ? https : http;
 
     const app = express();
@@ -30,28 +32,36 @@ export default class HttpWebServer {
 
     this.request$ = Observable
       .fromEventPattern((handler) => {
-        app.use('*', (req, res) => {
-          handler({ req, res });
-        });
+        const middlewares = [
+          (req, res, next) => {
+            handler({ req, res, next });
+          }
+        ];
+
+        if (this.fallbackUrl) {
+          middlewares.push(proxy({ target: this.fallbackUrl }));
+        }
+
+        app.use('*', middlewares);
       })
-      .map(({ req, res }) => ({
-        behaviour: this.codex.matchBehaviour({
+      .do(({ req, res, next }) => {
+        const behaviour = this.codex.matchBehaviour({
           type: 'request',
           params: {
             path: req.originalUrl,
             method: req.method,
             headers: req.headers
           }
-        }),
-        req,
-        res
-      }))
-      .filter(({ behaviour }) => !!behaviour)
-      .do(({ behaviour, req, res }) => {
-        behaviour
-        .configureReceiver(req, res)
-        .execute();
-        this.pendingBehaviours.push(behaviour);
+        });
+
+        if (behaviour) {
+          behaviour
+            .configureReceiver(req, res)
+            .execute();
+          this.pendingBehaviours.push(behaviour);
+        } else {
+          next();
+        }
       });
 
     if (this.secure) {
@@ -106,6 +116,7 @@ export default class HttpWebServer {
         this.requestsSub.unsubscribe();
         this.requestsSub = null;
       }
+
       // Browsers can keep connection open, thus callback after
       // HttpBehaviourServer.stop cant be called if there are sockets
       // still open, so we need to ensure that all sockets are

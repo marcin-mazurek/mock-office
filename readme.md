@@ -13,6 +13,8 @@ Match events by schemas using wide known [AJV schema validator](https://github.c
 
 Control reactions schedules using delays, intervals etc.
 
+Use your real backend sevice as fallback for your mock server to provide working endpoints when you can focus on adding new ones.
+
 **Behaviour consists of event and reactions**
 
 * event(what happened): request from client, new connection etc.
@@ -73,6 +75,10 @@ Event types:
 Reaction types:
 
 * `reponse` - send response to request
+
+### Fallback mode
+
+Add fallback url to proxy requests when mock server can't find behaviour.
 
 ## Web socket server
 

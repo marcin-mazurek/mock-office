@@ -10,6 +10,7 @@ const preparePayload = (action) => {
     name: values.get('name'),
     port: parseInt(values.get('port'), 10),
     type: values.get('type'),
+    fallbackUrl: values.get('fallbackUrl'),
     secure: false
   };
 
