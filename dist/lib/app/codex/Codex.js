@@ -88,7 +88,12 @@ var Codex = function () {
           return false;
         }
 
-        return ajv.validate(b.event.params, event.params);
+        var schema = {
+          type: 'object',
+          properties: b.event.params
+        };
+
+        return ajv.validate(schema, event.params);
       });
       return behaviour;
     }

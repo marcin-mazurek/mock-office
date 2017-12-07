@@ -3,16 +3,13 @@
     "event": {
       "type": "request",
       "params": {
-        "type": "object",
-        "properties": {
-          "path": {
-            "type": "string",
-            "enum": ["/"]
-          },
-          "method": {
-            "type": "string",
-            "enum": ["GET"]
-          }
+        "path": {
+          "type": "string",
+          "enum": ["/"]
+        },
+        "method": {
+          "type": "string",
+          "enum": ["GET"]
         }
       }
     },

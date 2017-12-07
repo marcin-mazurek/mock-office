@@ -52,7 +52,12 @@ export default class Codex {
         return false;
       }
 
-      return ajv.validate(b.event.params, event.params);
+      const schema = {
+        type: 'object',
+        properties: b.event.params
+      };
+
+      return ajv.validate(schema, event.params);
     });
     return behaviour;
   }
