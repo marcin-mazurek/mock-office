@@ -1,9 +1,9 @@
 export const SUCCEEDED = 'addServer/SUCCEED';
 export const FAILED = 'addServer/FAILED';
 
-export const succeededAction = params => ({
+export const succeededAction = payload => ({
   type: SUCCEEDED,
-  params
+  payload
 });
 
 export const failedAction = reason => ({

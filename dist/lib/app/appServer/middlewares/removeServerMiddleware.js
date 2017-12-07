@@ -26,12 +26,11 @@ function configure(ajv) {
     if (ajv.validate(schema, req.body)) {
       _serversHub2.default.remove(req.body.id).then(function () {
         res.status(200).end();
-      }, function (err) {
-        console.log(err);
+      }, function () {
         res.status(404).end();
       });
     } else {
-      res.status(400).json(ajv.errors);
+      res.status(400).json(ajv.errors[0]);
     }
   };
 }

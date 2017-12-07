@@ -8,7 +8,6 @@ import {
   FAILED as REMOVE_SERVER_FAILED,
   SUCCEEDED as REMOVE_SERVER_SUCCEEDED
 } from '../../epics/removeServer/actions';
-import { DID_FAIL as REMOVE_BEHAVIOUR_DID_FAIL } from '../../epics/removeBehaviour';
 import {
   SUCCEEDED as IMPORT_BEHAVIOURS_SUCCEEDED,
   FAILED as IMPORT_BEHAVIOURS_FAILED
@@ -16,12 +15,13 @@ import {
 import {
   SUCCEED as ADD_BEHAVIOUR_SUCCEED,
   FAILED as ADD_BEHAVIOUR_FAILED
-} from '../../epics/addBehaviour';
+} from '../../epics/addBehaviour/actions';
 import {
   FAILED as START_SERVER_FAILED
 } from '../../epics/startServer/actions';
-import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer';
+import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer/actions';
 import { SUBMIT_FAILED } from '../../components/AddHttpBehaviourForm/actions';
+import { FAILED as REMOVE_BEHAVIOUR_FAILED } from '../../epics/removeBehaviour';
 
 export default createReducer(
   {
@@ -41,15 +41,15 @@ export default createReducer(
       type: 'error',
       text: action.reason
     }),
-    [REMOVE_BEHAVIOUR_DID_FAIL]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
     [IMPORT_BEHAVIOURS_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),
     [ADD_BEHAVIOUR_FAILED]: (reduce, action) => reduce('addNotification', {
+      type: 'error',
+      text: action.reason
+    }),
+    [REMOVE_BEHAVIOUR_FAILED]: (reduce, action) => reduce('addNotification', {
       type: 'error',
       text: action.reason
     }),

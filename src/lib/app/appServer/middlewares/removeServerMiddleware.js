@@ -18,13 +18,12 @@ export default function configure(ajv) {
           () => {
             res.status(200).end();
           },
-          (err) => {
-            console.log(err);
+          () => {
             res.status(404).end();
           }
         );
     } else {
-      res.status(400).json(ajv.errors);
+      res.status(400).json(ajv.errors[0]);
     }
   };
 }

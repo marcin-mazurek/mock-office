@@ -1,32 +1,25 @@
-import { ifElse, has } from 'ramda';
+import { Observable } from 'rxjs';
 import { push } from 'react-router-redux';
-import api from '../../resources/api';
+import mockOfficeService from '../../resources/mockOfficeService';
 import { REMOVE_BUTTON_CLICKED } from '../../components/ServerViewHeader/actions';
 import { currentDisplayedServerSelector } from '../../app/sidebar';
 import { failedAction, succeededAction } from './actions';
 
-const makeRequest = action => api.removeServer({ id: action.id });
-const onFail = result => [failedAction(result.error)];
-const onSuccess = store => (result) => {
+const onSuccess = (id, store) => {
   const state = store.getState();
-  const { data } = result;
   const actions = [];
   const displayedServerId = currentDisplayedServerSelector(state);
-  if (displayedServerId === data.id) {
+  if (displayedServerId === id) {
     actions.push(push('/'));
   }
-  actions.push(succeededAction(result.data.id));
+  actions.push(succeededAction(id));
   return actions;
 };
-const hasError = has('error');
 
 export default (action$, store) =>
   action$.ofType(REMOVE_BUTTON_CLICKED)
-    .flatMap(makeRequest)
-    .flatMap(
-      ifElse(
-        hasError,
-        onFail,
-        onSuccess(store)
-      )
+    .flatMap(action =>
+      Observable.from(mockOfficeService.removeServer(action.id))
+        .flatMap(() => onSuccess(action.id, store))
+        .catch(e => Observable.of(failedAction(e.message)))
     );

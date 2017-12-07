@@ -1,8 +1,8 @@
 import { START } from '../../actions';
 import { succeededAction } from './actions';
-import api from '../../resources/api';
+import mockOfficeService from '../../resources/mockOfficeService';
 
 export default action$ =>
   action$.ofType(START)
-    .flatMap(api.getState)
+    .flatMap(mockOfficeService.getState)
     .map(succeededAction);

@@ -3,14 +3,14 @@ import { Server } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
 import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServer/actions';
 import { SUCCEEDED as REMOVE_SERVER_SUCCEEDED } from '../../epics/removeServer/actions';
-import { DID_SUCCEED as REMOVE_BEHAVIOUR_DID_SUCCEED } from '../../epics/removeBehaviour';
+import { SUCCEEDED as REMOVE_BEHAVIOUR_DID_SUCCEED } from '../../epics/removeBehaviour';
 import {
   REACTIONS_ENDED,
   REACTIONS_DID_RUN_ACTION,
   REACTIONS_CANCELLED
 } from '../../appSync/actions';
 import { SUCCEEDED as IMPORT_BEHAVIOURS_SUCCEEDED } from '../../epics/importBehaviour';
-import { SUCCEED as ADD_BEHAVIOUR_SUCCEED } from '../../epics/addBehaviour';
+import { SUCCEED as ADD_BEHAVIOUR_SUCCEED } from '../../epics/addBehaviour/actions';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer/actions';
 import { SUCCEEDED as LOAD_STATE_ON_APP_START } from '../../epics/loadStateOnStart/actions';
@@ -146,9 +146,9 @@ export default (state = getInitialState(), action) => {
       return reducers.runBehaviour(state, id);
     }
     case ADD_SERVER_SUCCEED: {
-      const { params: { data } } = action;
+      const { payload } = action;
       let newState = state;
-      newState = reducers.addServer(newState, data.id, data);
+      newState = reducers.addServer(newState, payload.id, payload);
       return newState;
     }
     case EDIT_SERVER_SUCCEEDED: {
