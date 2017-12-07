@@ -40,7 +40,12 @@ Simple payload required for adding behaviour
 {
   "event": {
     "type": "event type",
-    "params": {} // here use ajv objects https://github.com/epoberezkin/ajv
+    "params": { // here use ajv schemas https://github.com/epoberezkin/ajv
+      "prop": {
+        "type": "string",
+        "pattern": "([A-Z])\w+"
+      }
+    }
   },
   "reactions": [
     {
