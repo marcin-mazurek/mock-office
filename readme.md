@@ -68,15 +68,21 @@ Event types:
 
 | Params  | Type   | Description                                            |
 |---------|--------|--------------------------------------------------------|
-| status  | String | HTTP status                                            |
 | method  | String | HTTP method                                            |
 | path    | String | request path                                           |
-| headers | Object | plain object with props { headerName: headerValue }  |
+| headers | Object | oject with props { headerName: headerValue }           |
 
 
 Reaction types:
 
 * `reponse` - send response to request
+
+| Params  | Type   | Description                                            |
+|---------|--------|--------------------------------------------------------|
+| status  | String | HTTP status                                            |
+| method  | String | HTTP method                                            |
+| path    | String | request path                                           |
+| headers | Object | object with props { headerName: headerValue }          |
 
 ### Fallback mode
 
@@ -98,6 +104,10 @@ Event types:
 Reaction types:
 
 * `message` - send message to client
+
+| Params  | Type   | Description         |
+|---------|--------|---------------------|
+| message | String | message from client |
 
 ## Development
 To start app development clone repo first and then:
