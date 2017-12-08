@@ -1,6 +1,6 @@
 import { ifElse, has } from 'ramda';
 import { FILE_PICKED } from '../../components/FilePicker';
-import api from '../../resources/api';
+import mockOfficeService from '../../resources/mockOfficeService';
 
 export const SUCCEEDED = 'importBehaviour/SUCCEEDED';
 export const succeededAction = (serverId, behaviours) => ({
@@ -31,7 +31,7 @@ const readFromFile = (action) => {
 const makeRequests = requestParams =>
   Promise
   .all(requestParams.behaviours.map(
-    behaviour => api.addBehaviour(requestParams.serverId, behaviour)
+    behaviour => mockOfficeService.addBehaviour(requestParams.serverId, behaviour)
   ))
   .then(behaviours => ({
     behaviours,

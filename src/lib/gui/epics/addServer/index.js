@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
-import { ifElse, has } from 'ramda';
 import { SUBMIT_BUTTON_CLICKED } from '../../components/AddServerForm/actions';
-import api from '../../resources/api';
+import mockOfficeService from '../../resources/mockOfficeService';
 import { succeededAction, failedAction } from './actions';
 
 const preparePayload = (action) => {
@@ -21,19 +20,14 @@ const preparePayload = (action) => {
 
   return payload;
 };
-const makeRequest = payload => Observable.from(api.addServer(payload));
-const hasError = has('error');
-const onSuccess = result => succeededAction(result);
-const onFail = result => failedAction(result.error);
+const onSuccess = payload => succeededAction(payload);
+const onFail = message => failedAction(message);
+const makeRequest = payload =>
+  Observable.from(mockOfficeService.addServer(payload))
+    .map(onSuccess)
+    .catch(e => Observable.of(onFail(e.message)));
 
 export default action$ =>
   action$.ofType(SUBMIT_BUTTON_CLICKED)
     .map(preparePayload)
-    .flatMap(makeRequest)
-    .map(
-      ifElse(
-        hasError,
-        onFail,
-        onSuccess
-      )
-    );
+    .flatMap(makeRequest);

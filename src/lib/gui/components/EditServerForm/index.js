@@ -37,6 +37,7 @@ export const EditServerForm = props =>
             className="form-field__input"
             name="port"
             type="number"
+            normalize={value => parseInt(value, 10)}
           />
         </div>
       </div>
@@ -63,7 +64,7 @@ EditServerForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(formSubmittedAction(ownProps.serverId, values))
+  onSubmit: values => dispatch(formSubmittedAction(ownProps.serverId, values.toJS()))
 });
 
 const mapStateToProps = (state, ownProps) => {

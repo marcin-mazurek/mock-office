@@ -1,22 +1,11 @@
 import { Observable } from 'rxjs';
-import { has, ifElse } from 'ramda';
-import api from '../../resources/api';
-import {
-  failedAction,
-  succeededAction
-} from './actions';
-
-const hasError = has('error');
-const onSuccess = result => succeededAction(result.data.id);
-const onFail = result => failedAction(result.error);
+import mockOfficeService from '../../resources/mockOfficeService';
+import { failedAction, succeededAction } from './actions';
 
 export default action$ =>
   action$
-    .flatMap(action => Observable.from(api.stopServer({ id: action.id })))
-    .map(
-      ifElse(
-        hasError,
-        onFail,
-        onSuccess
-      )
+    .flatMap(action =>
+      Observable.from(mockOfficeService.stopServer(action.id))
+        .map(() => succeededAction(action.id))
+        .catch(e => Observable.of(failedAction(e.message)))
     );

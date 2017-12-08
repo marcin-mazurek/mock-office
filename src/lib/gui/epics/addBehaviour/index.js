@@ -1,48 +1,29 @@
 import { Observable } from 'rxjs';
-import { has, ifElse } from 'ramda';
-import api from '../../resources/api';
+import mockOfficeService from '../../resources/mockOfficeService';
 import { SUBMIT_SUCCEEDED as HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddHttpBehaviourForm/actions';
 import { SUBMIT_SUCCEEDED as WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED } from '../../components/AddWsBehaviourForm/actions';
+import { succeedAction, failedAction } from './actions';
 
-export const SUCCEED = 'addBehaviour/SUCCEEDED';
-export const succeedAction = (serverId, behaviour) => ({
-  type: SUCCEED,
-  serverId,
-  behaviour
-});
-export const FAILED = 'addBehaviour/FAILED';
-export const failedAction = reason => ({
-  type: FAILED,
-  reason
-});
-
+const onSuccess = ({ behaviour, serverId }) => succeedAction(serverId, behaviour);
+const onFail = message => failedAction(message);
 const makeRequest = action =>
   Observable.from(
-    api.addBehaviour(
+    mockOfficeService.addBehaviour(
       action.serverId,
       action.values
     )
-    .then(behaviour => ({
+  )
+    .map(behaviour => ({
       behaviour,
       serverId: action.serverId
     }))
-    .catch(error => ({ error: error.message }))
-  );
-const hasError = has('error');
-const onSuccess = ({ behaviour, serverId }) => succeedAction(serverId, behaviour);
-const onFail = ({ error }) => failedAction(error);
+    .map(onSuccess)
+    .catch(e => Observable.of(onFail(e.message)));
 
 export default function addBehaviourEpic(action$) {
   return action$.ofType(
     HTTP_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED,
     WS_BEHAVIOUR_FORM_SUBMIT_SUCCEEDED
   )
-    .flatMap(makeRequest)
-    .map(
-      ifElse(
-        hasError,
-        onFail,
-        onSuccess
-      )
-    );
+    .flatMap(makeRequest);
 }
