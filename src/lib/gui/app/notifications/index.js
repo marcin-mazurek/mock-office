@@ -1,4 +1,4 @@
-import { createReducer, addNotification } from '../../modules/notifications/lib';
+import { createReducer, addNotification } from '../../modules/notifications';
 import {
   SUCCEEDED as ADD_SERVER_SUCCEEDED,
   FAILED as ADD_SERVER_FAILED
@@ -28,13 +28,13 @@ export default createReducer((state, action) => {
     case ADD_BEHAVIOUR_SUCCEED: {
       return addNotification(state, {
         type: 'success',
-        text: 'Behaviour added'
+        message: 'Behaviour added'
       });
     }
     case IMPORT_BEHAVIOURS_SUCCEEDED: {
       return addNotification(state, {
         type: 'success',
-        text: 'Behaviours imported'
+        message: 'Behaviours imported'
       });
     }
     case EDIT_SERVER_FAILED:
@@ -48,19 +48,19 @@ export default createReducer((state, action) => {
     case SUBMIT_FAILED: {
       return addNotification(state, {
         type: 'error',
-        text: action.reason
+        message: action.reason
       });
     }
     case REMOVE_SERVER_SUCCEEDED: {
       return addNotification(state, {
         type: 'success',
-        text: 'Server removed'
+        message: 'Server removed'
       });
     }
     case ADD_SERVER_SUCCEEDED: {
       return addNotification(state, {
         type: 'success',
-        text: 'Server added'
+        message: 'Server added'
       });
     }
     default: {

@@ -12,7 +12,7 @@
 }
 
 .notifications__item {
-  margin-top: 5px;
+  margin-top: 7px;
 }
 
 .notifications-bubble {
@@ -35,13 +35,13 @@
 }
 
 .notifications-bubble--info {
-  background-color: green;
+  background-color: #3498db;
 }
 
 .notifications-bubble--error {
-  background-color: red;
+  background-color: #e74c3c;
 }
 
 .notifications-bubble--success {
-  background-color: #23D1A9;
+  background-color: #2ecc71;
 }

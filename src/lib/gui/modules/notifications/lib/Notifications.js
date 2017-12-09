@@ -23,11 +23,11 @@ export default class NotificationsList extends React.Component {
       <ul className="notifications">
         {
           notifications.map(
-            ({ id, text, type }) => (
-              <li className="notification__item" key={id}>
+            ({ id, message, type }) => (
+              <li className="notifications__item" key={id}>
                 <Notification
                   id={id}
-                  text={text}
+                  message={message}
                   type={type}
                   onNotificationClick={onNotificationClick}
                 />
@@ -43,7 +43,7 @@ export default class NotificationsList extends React.Component {
 NotificationsList.propTypes = {
   notifications: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired
   })),
   onNotificationClick: PropTypes.func.isRequired,

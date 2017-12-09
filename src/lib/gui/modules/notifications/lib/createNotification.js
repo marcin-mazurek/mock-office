@@ -17,7 +17,7 @@ export default (params) => {
       notification.type = 'info';
     }
   }
-  notification.text = params.text;
+  notification.message = params.message;
 
   return notification;
 };
