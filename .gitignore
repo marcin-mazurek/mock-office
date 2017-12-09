@@ -2,7 +2,5 @@ node_modules
 .idea
 .DS_Store
 npm-debug.log
-chanState.json
-dev-state.json
 /pm2.log
 /pm2-errors.log
