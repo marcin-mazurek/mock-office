@@ -1,4 +1,4 @@
-import { createReducer } from 'mock-office-notifications';
+import { createReducer, addNotification } from '../../modules/notifications/lib';
 import {
   SUCCEEDED as ADD_SERVER_SUCCEEDED,
   FAILED as ADD_SERVER_FAILED
@@ -23,60 +23,48 @@ import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer/actions';
 import { SUBMIT_FAILED } from '../../components/AddHttpBehaviourForm/actions';
 import { FAILED as REMOVE_BEHAVIOUR_FAILED } from '../../epics/removeBehaviour';
 
-export default createReducer(
-  {
-    [ADD_BEHAVIOUR_SUCCEED]: reduce => reduce('addNotification', {
-      type: 'success',
-      text: 'Behaviour added'
-    }),
-    [IMPORT_BEHAVIOURS_SUCCEEDED]: reduce => reduce('addNotification', {
-      type: 'success',
-      text: 'Behaviours imported'
-    }),
-    [EDIT_SERVER_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [REMOVE_SERVER_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [IMPORT_BEHAVIOURS_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [ADD_BEHAVIOUR_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [REMOVE_BEHAVIOUR_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [ADD_SERVER_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [START_SERVER_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [STOP_SERVER_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [SUBMIT_FAILED]: (reduce, action) => reduce('addNotification', {
-      type: 'error',
-      text: action.reason
-    }),
-    [REMOVE_SERVER_SUCCEEDED]: reduce => reduce('addNotification', {
-      type: 'success',
-      text: 'Server removed'
-    }),
-    [ADD_SERVER_SUCCEEDED]: reduce => reduce('addNotification', {
-      type: 'success',
-      text: 'Server added'
-    })
-  },
-  true
-);
+export default createReducer((state, action) => {
+  switch (action.type) {
+    case ADD_BEHAVIOUR_SUCCEED: {
+      return addNotification(state, {
+        type: 'success',
+        text: 'Behaviour added'
+      });
+    }
+    case IMPORT_BEHAVIOURS_SUCCEEDED: {
+      return addNotification(state, {
+        type: 'success',
+        text: 'Behaviours imported'
+      });
+    }
+    case EDIT_SERVER_FAILED:
+    case REMOVE_SERVER_FAILED:
+    case IMPORT_BEHAVIOURS_FAILED:
+    case ADD_BEHAVIOUR_FAILED:
+    case REMOVE_BEHAVIOUR_FAILED:
+    case ADD_SERVER_FAILED:
+    case START_SERVER_FAILED:
+    case STOP_SERVER_FAILED:
+    case SUBMIT_FAILED: {
+      return addNotification(state, {
+        type: 'error',
+        text: action.reason
+      });
+    }
+    case REMOVE_SERVER_SUCCEEDED: {
+      return addNotification(state, {
+        type: 'success',
+        text: 'Server removed'
+      });
+    }
+    case ADD_SERVER_SUCCEEDED: {
+      return addNotification(state, {
+        type: 'success',
+        text: 'Server added'
+      });
+    }
+    default: {
+      return state;
+    }
+  }
+});
