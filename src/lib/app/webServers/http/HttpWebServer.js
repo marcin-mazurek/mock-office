@@ -45,14 +45,7 @@ export default class HttpWebServer {
         app.use('*', middlewares);
       })
       .do(({ req, res, next }) => {
-        const behaviour = this.codex.matchBehaviour({
-          type: 'request',
-          params: {
-            path: req.originalUrl,
-            method: req.method,
-            headers: req.headers
-          }
-        });
+        const behaviour = this.codex.matchBehaviour(HttpWebServer.requestToEvent(req));
 
         if (behaviour) {
           behaviour
@@ -77,6 +70,18 @@ export default class HttpWebServer {
 
     // we need store sockets to destroy them manually before closing server
     this.httpServer.on('connection', this.saveSocketRef);
+  }
+
+  // requestToEvent :: http.ClientRequest -> Object
+  static requestToEvent(req) {
+    return {
+      type: 'request',
+      params: {
+        path: req.originalUrl,
+        method: req.method,
+        headers: req.headers
+      }
+    };
   }
 
   // start :: void -> Promise
