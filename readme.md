@@ -1,7 +1,7 @@
 # Mock Office
 
-![travis build status](https://travis-ci.org/xclix/mock-office.svg?branch=master) ![npm version](https://badge.fury.io/js/mock-office.svg)
-#### Tool for running mock servers locally to faciliate frontend development.
+![travis build status](https://travis-ci.org/xclix/mock-office.svg?branch=master) ![npm version](https://badge.fury.io/js/mock-office.svg) [![Coverage Status](https://coveralls.io/repos/github/xclix/mock-office/badge.svg?branch=master)](https://coveralls.io/github/xclix/mock-office?branch=master)
+#### Tool for running mock servers locally to faciliate frontend development. 
 
 * You can create and run multiple http and web socket servers in a second.
 * You can cover complex scenarios, including delays, backend error responses, custom headers etc.
