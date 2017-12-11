@@ -1,5 +1,7 @@
 # Mock Office
 
+![travis build status](https://travis-ci.org/xclix/mock-office.svg?branch=master)
+
 #### Tool for running mock servers locally to faciliate frontend development.
 
 * You can create and run multiple http and web socket servers in a second.
