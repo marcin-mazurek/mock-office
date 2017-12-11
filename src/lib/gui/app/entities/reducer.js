@@ -8,7 +8,7 @@ import {
   REACTIONS_ENDED,
   REACTIONS_DID_RUN_ACTION,
   REACTIONS_CANCELLED
-} from '../../appSync/actions';
+} from '../../epics/syncWithApp/actions';
 import { SUCCEEDED as IMPORT_BEHAVIOURS_SUCCEEDED } from '../../epics/importBehaviour';
 import { SUCCEED as ADD_BEHAVIOUR_SUCCEED } from '../../epics/addBehaviour/actions';
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';

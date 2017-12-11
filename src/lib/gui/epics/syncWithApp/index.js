@@ -3,9 +3,12 @@ import {
   reactionsEndedAction,
   reactionsDidRunAction,
   reactionsCancelledAction,
+  appSyncStartedAction
 } from './actions';
+import { START } from '../../actions';
+import eventsServer from '../../resources/eventsServer';
 
-export default function startAppSync(ws, store) {
+function startAppSync(ws, store) {
   Observable.fromEventPattern(
     (handler) => {
       ws.addEventListener('message', handler);
@@ -33,3 +36,10 @@ export default function startAppSync(ws, store) {
     }
   );
 }
+
+export default (action$, store) =>
+  action$.ofType(START)
+    .do(() => {
+      startAppSync(eventsServer(), store);
+    })
+    .map(appSyncStartedAction);

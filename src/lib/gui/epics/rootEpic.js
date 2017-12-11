@@ -11,6 +11,7 @@ import exportStateEpic from './exportState/exportStateEpic';
 import editServerEpic from './editServer';
 import toggleServer from './toggleServer';
 import loadStateOnStart from './loadStateOnStart';
+import syncWithApp from './syncWithApp';
 
 export default combineEpics(
   addServerEpic,
@@ -22,5 +23,6 @@ export default combineEpics(
   editServerEpic,
   toggleServer,
   createClearExpiredNotificationsEpic(),
-  loadStateOnStart
+  loadStateOnStart,
+  syncWithApp
 );
