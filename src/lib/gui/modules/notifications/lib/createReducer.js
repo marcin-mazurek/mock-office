@@ -1,6 +1,5 @@
-import createNotification from './createNotification';
-import { NOTIFICATION_CLICKED } from './Notifications';
-import { NOTIFICATION_EXPIRED, ADD_NOTIFICATION } from './actions';
+import unique from 'cuid';
+import { NOTIFICATION_CLICKED, NOTIFICATION_EXPIRED, ADD_NOTIFICATION, REMOVE_NOTIFICATION } from './actions';
 
 const initialState = {
   ids: [],
@@ -8,7 +7,12 @@ const initialState = {
 };
 
 export function addNotification(state, notificationParams) {
-  const notification = createNotification(notificationParams);
+  const notification = {
+    id: unique(),
+    mood: notificationParams.mood,
+    message: notificationParams.message,
+    disposable: notificationParams.disposable
+  };
   let newState = state;
 
   newState = Object.assign({}, newState, {
@@ -19,41 +23,41 @@ export function addNotification(state, notificationParams) {
   return newState;
 }
 
-export function removeNotification(state, action) {
+export function removeNotification(state, id) {
   let newState = state;
   newState = Object.assign({}, newState, {
-    ids: newState.ids.filter(notificationId => notificationId !== action.id)
+    ids: newState.ids.filter(notificationId => notificationId !== id)
   });
+  const newEntities = Object.assign({}, newState.entities);
+  delete newEntities[id];
   newState = Object.assign({}, newState, {
-    entities: Object.assign({}, newState.entities, { [action.id]: null })
+    entities: newEntities
   });
 
   return newState;
 }
 
-const createReducer = (customReducer) => {
-  return function reducer(state = initialState, action) {
+const createReducer = customReducer =>
+  (state = initialState, action) => {
     let newState = state;
 
     if (typeof customReducer === 'function') {
-      newState = customReducer(state, action);
+      newState = customReducer(newState, action);
     }
 
     switch (action.type) {
       case ADD_NOTIFICATION: {
         return addNotification(newState, action);
       }
-      case NOTIFICATION_CLICKED: {
-        return removeNotification(newState, action);
-      }
+      case NOTIFICATION_CLICKED:
+      case REMOVE_NOTIFICATION:
       case NOTIFICATION_EXPIRED: {
-        return removeNotification(newState, action);
+        return removeNotification(newState, action.id);
       }
       default: {
         return newState;
       }
     }
   };
-};
 
 export default createReducer;

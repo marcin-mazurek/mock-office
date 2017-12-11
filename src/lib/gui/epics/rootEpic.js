@@ -1,7 +1,7 @@
 import 'rxjs/operator/map';
 import 'rxjs/operator/mergeMap';
-import { clearExpiredNotificationsEpic } from 'mock-office-notifications';
 import { combineEpics } from 'redux-observable';
+import { createClearExpiredNotificationsEpic } from '../modules/notifications';
 import addServerEpic from './addServer';
 import addHttpBehaviourEpic from './addBehaviour';
 import { removeBehaviourEpic } from './removeBehaviour';
@@ -21,6 +21,6 @@ export default combineEpics(
   addHttpBehaviourEpic,
   editServerEpic,
   toggleServer,
-  clearExpiredNotificationsEpic,
+  createClearExpiredNotificationsEpic(),
   loadStateOnStart
 );

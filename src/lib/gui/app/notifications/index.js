@@ -27,13 +27,13 @@ export default createReducer((state, action) => {
   switch (action.type) {
     case ADD_BEHAVIOUR_SUCCEED: {
       return addNotification(state, {
-        type: 'success',
+        mood: 'success',
         message: 'Behaviour added'
       });
     }
     case IMPORT_BEHAVIOURS_SUCCEEDED: {
       return addNotification(state, {
-        type: 'success',
+        mood: 'success',
         message: 'Behaviours imported'
       });
     }
@@ -47,19 +47,19 @@ export default createReducer((state, action) => {
     case STOP_SERVER_FAILED:
     case SUBMIT_FAILED: {
       return addNotification(state, {
-        type: 'error',
+        mood: 'error',
         message: action.reason
       });
     }
     case REMOVE_SERVER_SUCCEEDED: {
       return addNotification(state, {
-        type: 'success',
+        mood: 'success',
         message: 'Server removed'
       });
     }
     case ADD_SERVER_SUCCEEDED: {
       return addNotification(state, {
-        type: 'success',
+        mood: 'success',
         message: 'Server added'
       });
     }

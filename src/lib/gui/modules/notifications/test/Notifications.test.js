@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import enzymeToJson from 'enzyme-to-json';
 
 jest.doMock('cuid', () => () => 'id');
-const { Notifications, createNotification } = require('../lib');
+const { Notifications } = require('../');
 
 describe('NotificationsList', () => {
   describe('snapshots', () => {
@@ -18,7 +18,7 @@ describe('NotificationsList', () => {
     });
 
     test('with notification', () => {
-      const notification = createNotification({ text: 'message' });
+      const notification = { id: 'id', message: 'message' };
       const props = {
         notifications: [notification],
         onNotificationClick: () => {},

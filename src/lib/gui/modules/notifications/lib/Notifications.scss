@@ -1,6 +1,6 @@
 .notifications {
   list-style: none;
-  padding: 20px 0;
+  padding: 0;
   margin: 0;
   align-items: center;
   bottom: 20px;
@@ -16,16 +16,12 @@
 }
 
 .notifications-bubble {
-  outline: none;
-  border: none;
-  background: transparent;
   font-family: inherit;
   border-radius: 22px;
   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  color: #FFF;
   font-size: 14px;
-  padding: 7px 15px;
+  padding: 7px 5px 7px 15px;
   text-align: center;
   margin-bottom: 10px;
 
@@ -34,14 +30,19 @@
   }
 }
 
-.notifications-bubble--info {
-  background-color: #3498db;
+.notifications-bubble__remove-button {
+  opacity: .7;
+  outline: none;
+  border: none;
+  background: transparent;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
-.notifications-bubble--error {
-  background-color: #e74c3c;
-}
-
-.notifications-bubble--success {
-  background-color: #2ecc71;
+.notifications-bubble__remove-icon {
+  height: 9px;
+  width: 9px;
+  margin-left: 5px;
 }

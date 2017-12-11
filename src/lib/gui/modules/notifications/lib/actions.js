@@ -9,6 +9,11 @@ export const addNotificationAction = (status, message) => ({
   status,
   message
 });
+export const REMOVE_NOTIFICATION = 'notifications/REMOVE_NOTIFICATION';
+export const removeNotificationAction = id => ({
+  type: REMOVE_NOTIFICATION,
+  id
+});
 export const NEW_NOTIFICATION_DISPLAYED = 'notifications/NEW_NOTIFICATION_DISPLAYED';
 export const newNotificationDisplayedAction = id => ({
   type: NEW_NOTIFICATION_DISPLAYED,
