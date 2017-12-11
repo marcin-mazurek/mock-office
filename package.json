@@ -27,7 +27,7 @@
     "run-with-gui": "npm-run-all build start-with-gui",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
-    "tdd": "jest --watch",
+    "tdd": "jest --watch --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
