@@ -1,7 +1,6 @@
 # Mock Office
 
-![travis build status](https://travis-ci.org/xclix/mock-office.svg?branch=master)
-
+![travis build status](https://travis-ci.org/xclix/mock-office.svg?branch=master) ![npm version](https://badge.fury.io/js/mock-office.svg)
 #### Tool for running mock servers locally to faciliate frontend development.
 
 * You can create and run multiple http and web socket servers in a second.
