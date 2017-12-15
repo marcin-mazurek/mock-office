@@ -1,3 +1,4 @@
+import { omit } from 'ramda'; 
 import serversHub from '../../serversHub';
 import { serverToResponse } from './transformers';
 
@@ -30,7 +31,7 @@ export default function configure(ajv) {
       return;
     }
 
-    const { id, name, port, recordMode } = req.body;
+    const { id, name, port, recordMode, fallbackUrl } = req.body;
     const server = serversHub.getServer(id);
     if (!server) {
       res.status(404).end();
@@ -41,6 +42,10 @@ export default function configure(ajv) {
       server.name = name;
     }
 
+    if (fallbackUrl) {
+      server.webServer.fallbackUrl = fallbackUrl;
+    }
+
     if (typeof recordMode !== 'undefined') {
       server.webServer.triggerRecordMode(recordMode);
     }
@@ -48,10 +53,10 @@ export default function configure(ajv) {
     if (port) {
       server.webServer.changePort(port)
         .then(() => {
-          res.status(200).json(serverToResponse(server));
+          res.status(200).json(omit(['behaviours'], serverToResponse(server)));
         });
     } else {
-      res.status(200).json(serverToResponse(server));
+      res.status(200).json(omit(['behaviours'], serverToResponse(server)));
     }
   };
 }

@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = configure;
 
+var _ramda = require('ramda');
+
 var _serversHub = require('../../serversHub');
 
 var _serversHub2 = _interopRequireDefault(_serversHub);
@@ -46,7 +48,8 @@ function configure(ajv) {
         id = _req$body.id,
         name = _req$body.name,
         port = _req$body.port,
-        recordMode = _req$body.recordMode;
+        recordMode = _req$body.recordMode,
+        fallbackUrl = _req$body.fallbackUrl;
 
     var server = _serversHub2.default.getServer(id);
     if (!server) {
@@ -58,16 +61,20 @@ function configure(ajv) {
       server.name = name;
     }
 
+    if (fallbackUrl) {
+      server.webServer.fallbackUrl = fallbackUrl;
+    }
+
     if (typeof recordMode !== 'undefined') {
       server.webServer.triggerRecordMode(recordMode);
     }
 
     if (port) {
       server.webServer.changePort(port).then(function () {
-        res.status(200).json((0, _transformers.serverToResponse)(server));
+        res.status(200).json((0, _ramda.omit)(['behaviours'], (0, _transformers.serverToResponse)(server)));
       });
     } else {
-      res.status(200).json((0, _transformers.serverToResponse)(server));
+      res.status(200).json((0, _ramda.omit)(['behaviours'], (0, _transformers.serverToResponse)(server)));
     }
   };
 }

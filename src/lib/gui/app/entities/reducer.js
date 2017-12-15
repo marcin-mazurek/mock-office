@@ -63,7 +63,7 @@ export const reducers = {
   updateServer(state, id, params) {
     return state.setIn(
       ['servers', 'entities', id],
-      new Server(Object.assign({ id, }, params))
+      new Server(Object.assign({ id }, params))
     );
   },
   addBehaviour(state, serverId, params) {
