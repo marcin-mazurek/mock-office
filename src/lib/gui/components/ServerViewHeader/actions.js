@@ -9,3 +9,9 @@ export const addBehaviourButtonClickedAction = (serverId, serverType) => ({
   serverId,
   serverType
 });
+export const RECORD_MODE_TRIGGER_CLICKED = 'ServerViewHeader/RECORD_MODE_TRIGGER_CLICKED';
+export const recordModeTriggerClickedAction = (serverId, recordModeChecked) => ({
+  type: RECORD_MODE_TRIGGER_CLICKED,
+  recordModeChecked,
+  serverId
+});

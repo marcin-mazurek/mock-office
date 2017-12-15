@@ -10,7 +10,9 @@ const serverMapStateToProps = (state, ownProps) => {
     type: server.type,
     name: server.name,
     port: server.port,
-    running: server.running
+    running: server.running,
+    fallbackUrl: server.fallbackUrl,
+    recordMode: server.recordMode
   };
 };
 

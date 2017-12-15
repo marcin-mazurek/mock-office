@@ -14,6 +14,7 @@ import { SUCCEED as ADD_BEHAVIOUR_SUCCEED } from '../../epics/addBehaviour/actio
 import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actions';
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer/actions';
 import { SUCCEEDED as LOAD_STATE_ON_APP_START } from '../../epics/loadStateOnStart/actions';
+import { SUCCEEDED as TRIGGER_RECORD_MODE_SUCCEEDED } from '../../epics/triggerRecordMode/actions';
 
 export const getInitialState = () => new Map({
   servers: new Map({
@@ -37,7 +38,9 @@ export const reducers = {
       name: params.name,
       port: params.port,
       type: params.type,
-      secure: params.secure
+      secure: params.secure,
+      fallbackUrl: params.fallbackUrl,
+      recordMode: params.recordMode
     });
 
     return state
@@ -216,6 +219,9 @@ export default (state = getInitialState(), action) => {
     }
     case STOP_SERVER_SUCCEED: {
       return reducers.stopServer(state, action.id);
+    }
+    case TRIGGER_RECORD_MODE_SUCCEEDED: {
+      return reducers.updateServer(state, action.result.id, action.result);
     }
     default: {
       return state;
