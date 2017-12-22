@@ -82,14 +82,7 @@ var HttpWebServer = function () {
           res = _ref.res,
           next = _ref.next;
 
-      var behaviour = _this.codex.matchBehaviour({
-        type: 'request',
-        params: {
-          path: req.originalUrl,
-          method: req.method,
-          headers: req.headers
-        }
-      });
+      var behaviour = _this.codex.matchBehaviour(HttpWebServer.requestToEvent(req));
 
       if (behaviour) {
         behaviour.configureReceiver(req, res).execute();
@@ -114,11 +107,14 @@ var HttpWebServer = function () {
     this.httpServer.on('connection', this.saveSocketRef);
   }
 
-  // start :: void -> Promise
+  // requestToEvent :: http.ClientRequest -> Object
 
 
   _createClass(HttpWebServer, [{
     key: 'start',
+
+
+    // start :: void -> Promise
     value: function start() {
       var _this2 = this;
 
@@ -211,6 +207,18 @@ var HttpWebServer = function () {
 
       this.port = port;
       return Promise.resolve();
+    }
+  }], [{
+    key: 'requestToEvent',
+    value: function requestToEvent(req) {
+      return {
+        type: 'request',
+        params: {
+          path: req.originalUrl,
+          method: req.method,
+          headers: req.headers
+        }
+      };
     }
   }]);
 
