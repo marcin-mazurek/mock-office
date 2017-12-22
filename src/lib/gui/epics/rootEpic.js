@@ -12,6 +12,7 @@ import editServerEpic from './editServer';
 import toggleServer from './toggleServer';
 import loadStateOnStart from './loadStateOnStart';
 import syncWithApp from './syncWithApp';
+import triggerRecordMode from './triggerRecordMode';
 
 export default combineEpics(
   addServerEpic,
@@ -24,5 +25,6 @@ export default combineEpics(
   toggleServer,
   createClearExpiredNotificationsEpic(),
   loadStateOnStart,
-  syncWithApp
+  syncWithApp,
+  triggerRecordMode
 );

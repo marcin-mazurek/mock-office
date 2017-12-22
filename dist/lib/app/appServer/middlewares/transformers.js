@@ -32,7 +32,9 @@ var serverToResponse = exports.serverToResponse = function serverToResponse(serv
     type: server.type,
     port: server.webServer.port,
     id: server.id,
-    behaviours: server.webServer.codex.behaviours.map(behaviourToResponse)
+    behaviours: server.webServer.codex.behaviours.map(behaviourToResponse),
+    fallbackUrl: server.webServer.fallbackUrl,
+    recordMode: server.webServer.recordMode
   };
 };
 //# sourceMappingURL=transformers.js.map

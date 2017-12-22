@@ -4,7 +4,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import bodyParser from 'body-parser';
-import proxy from 'http-proxy-middleware';
+import httpProxy from 'http-proxy';
 import HttpServerCodex from './HttpServerCodex';
 
 export default class HttpWebServer {
@@ -25,24 +25,78 @@ export default class HttpWebServer {
     this.pendingBehaviours = [];
     this.codex = new HttpServerCodex(this.id);
     this.fallbackUrl = config.fallbackUrl || '';
+    this.recordMode = false;
     const httpServer = this.secure ? https : http;
+    this.proxy = httpProxy.createProxyServer();
 
     const app = express();
     app.use(bodyParser.json());
 
+    let event;
+    let reaction;
+
+    // record
+    this.proxy.on('proxyReq', (proxyReq, clientReq) => {
+      if (this.recordMode) {
+        event = {
+          type: 'request',
+          params: {
+            path: {
+              type: 'string',
+              enum: [clientReq.url]
+            },
+            method: {
+              type: 'string',
+              enum: [clientReq.method]
+            }
+          }
+        };
+      }
+    });
+
+    this.proxy.on('proxyRes', (proxyRes) => {
+      if (this.recordMode) {
+        reaction = {
+          type: 'response',
+          params: {
+            status: proxyRes.statusCode
+          }
+        };
+
+        let body = '';
+
+        proxyRes.on('data', (chunk) => {
+          body += chunk;
+        });
+        proxyRes.on('end', () => {
+          reaction.params.payload = body;
+          this.codex.addBehaviour({
+            event,
+            reactions: [reaction],
+            loadedCounter: 1000
+          });
+        });
+      }
+    });
+
+    const middlewares = [
+      (req, res, next) => {
+        this.handler({ req, res, next });
+      },
+      (req, res, next) => {
+        if (this.fallbackUrl) {
+          this.proxy.web(req, res, { target: this.fallbackUrl });
+        } else {
+          next();
+        }
+      }
+    ];
+
+    app.use('*', middlewares);
+
     this.request$ = Observable
       .fromEventPattern((handler) => {
-        const middlewares = [
-          (req, res, next) => {
-            handler({ req, res, next });
-          }
-        ];
-
-        if (this.fallbackUrl) {
-          middlewares.push(proxy({ target: this.fallbackUrl }));
-        }
-
-        app.use('*', middlewares);
+        this.handler = handler;
       })
       .do(({ req, res, next }) => {
         const behaviour = this.codex.matchBehaviour(HttpWebServer.requestToEvent(req));
@@ -95,6 +149,11 @@ export default class HttpWebServer {
         }
       });
     });
+  }
+
+  // triggerRecordMode :: Boolean -> void
+  triggerRecordMode(shouldRecord) {
+    this.recordMode = shouldRecord;
   }
 
   // saveSocketRef :: Socket -> void

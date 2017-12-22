@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import FilePickerConnect from '../FilePicker/index';
+import Switch from 'rc-switch';
+import FilePickerConnect from '../FilePicker';
 import trashIcon from '../../../../../assets/icons_gray_trash@3x.svg';
 import plusIcon from '../../../../../assets/icons_gray_add@3x.svg';
 import { ServerViewHeaderToggleConnect } from '../ServerViewHeaderToggle';
@@ -13,7 +14,10 @@ const ServerViewHeader = ({
   port,
   onRemoveButtonClick,
   onAddBehaviourButtonClickedAction,
-  serverId
+  serverId,
+  fallbackUrl,
+  recordMode,
+  onRecordModeTriggerClick
 }) => (
   <div className="server-view-header">
     <div className="server-view-header__toggle">
@@ -32,6 +36,33 @@ const ServerViewHeader = ({
           <span className="server-view-header-spec__label">Type:</span>
           <span className="server-view-header-spec__value">{type}</span>
         </div>
+        {
+          fallbackUrl
+            ? (
+              <div className="server-view-header-spec__item">
+                <span className="server-view-header-spec__label">Fallback server:</span>
+                <span className="server-view-header-spec__value">{fallbackUrl}</span>
+              </div>
+            )
+            : null
+        }
+        {
+          fallbackUrl
+            ? (
+              <div className="server-view-header-spec__item">
+                <span className="server-view-header-spec__label">Record mode:</span>
+                <span className="server-view-header-spec__value">
+                  <Switch
+                    onChange={checked => onRecordModeTriggerClick(serverId, checked)}
+                    checked={recordMode}
+                    checkedChildren={'yes'}
+                    unCheckedChildren={'no'}
+                  />
+                </span>
+              </div>
+            )
+            : null
+        }
       </div>
     </div>
     <div className="server-view-header__buttons">
@@ -69,7 +100,10 @@ ServerViewHeader.propTypes = {
   port: PropTypes.number.isRequired,
   serverId: PropTypes.string.isRequired,
   onRemoveButtonClick: PropTypes.func.isRequired,
-  onAddBehaviourButtonClickedAction: PropTypes.func.isRequired
+  onAddBehaviourButtonClickedAction: PropTypes.func.isRequired,
+  fallbackUrl: PropTypes.string.isRequired,
+  recordMode: PropTypes.bool.isRequired,
+  onRecordModeTriggerClick: PropTypes.func.isRequired
 };
 
 export default ServerViewHeader;

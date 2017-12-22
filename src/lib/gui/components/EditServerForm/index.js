@@ -43,6 +43,21 @@ export const EditServerForm = props =>
       </div>
     </div>
     <div className="form-row">
+      <div className="form__col">
+        <div className="form__field">
+          <label className="form-field__label" htmlFor="server-port">
+            Fallback url:
+          </label>
+          <Field
+            component="input"
+            className="form-field__input"
+            name="fallbackUrl"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div className="form-row">
       <button
         className="button form__button"
         type="submit"
@@ -73,7 +88,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     initialValues: {
       name: server.name,
-      port: server.port
+      port: server.port,
+      fallbackUrl: server.fallbackUrl
     }
   };
 };

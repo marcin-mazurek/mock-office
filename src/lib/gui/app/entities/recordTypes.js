@@ -8,7 +8,9 @@ export const Server = new Record({
   secure: false,
   scenario: null,
   running: false,
-  behaviours: new List()
+  behaviours: new List(),
+  fallbackUrl: '',
+  recordMode: false
 });
 
 export const Reaction = new Record({

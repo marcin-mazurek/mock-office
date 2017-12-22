@@ -97,10 +97,12 @@
     "express": "^4.16.2",
     "font-awesome": "^4.7.0",
     "fun-task": "^1.5.2",
+    "http-proxy": "^1.16.2",
     "http-proxy-middleware": "^0.17.4",
     "immutable": "^3.8.1",
     "json8": "^0.9.2",
     "modalo": "^0.1.8",
+    "node-http-proxy": "^0.2.3",
     "npm-watch": "^0.1.8",
     "prop-types": "^15.5.7",
     "ramda": "^0.23.0",
@@ -140,7 +142,7 @@
     ],
     "roots": [
       "<rootDir>/src",
-      "<rootDir>/test"
+      "<rootDir>/test/unit"
     ],
     "collectCoverage": true
   },

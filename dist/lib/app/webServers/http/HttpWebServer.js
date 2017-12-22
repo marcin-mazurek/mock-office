@@ -28,9 +28,9 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _httpProxyMiddleware = require('http-proxy-middleware');
+var _httpProxy = require('http-proxy');
 
-var _httpProxyMiddleware2 = _interopRequireDefault(_httpProxyMiddleware);
+var _httpProxy2 = _interopRequireDefault(_httpProxy);
 
 var _HttpServerCodex = require('./HttpServerCodex');
 
@@ -62,21 +62,74 @@ var HttpWebServer = function () {
     this.pendingBehaviours = [];
     this.codex = new _HttpServerCodex2.default(this.id);
     this.fallbackUrl = config.fallbackUrl || '';
+    this.recordMode = false;
     var httpServer = this.secure ? _https2.default : _http2.default;
+    this.proxy = _httpProxy2.default.createProxyServer();
 
     var app = (0, _express2.default)();
     app.use(_bodyParser2.default.json());
 
-    this.request$ = _rxjs.Observable.fromEventPattern(function (handler) {
-      var middlewares = [function (req, res, next) {
-        handler({ req: req, res: res, next: next });
-      }];
+    var event = void 0;
+    var reaction = void 0;
 
-      if (_this.fallbackUrl) {
-        middlewares.push((0, _httpProxyMiddleware2.default)({ target: _this.fallbackUrl }));
+    // record
+    this.proxy.on('proxyReq', function (proxyReq, clientReq) {
+      if (_this.recordMode) {
+        event = {
+          type: 'request',
+          params: {
+            path: {
+              type: 'string',
+              enum: [clientReq.url]
+            },
+            method: {
+              type: 'string',
+              enum: [clientReq.method]
+            }
+          }
+        };
       }
+    });
 
-      app.use('*', middlewares);
+    this.proxy.on('proxyRes', function (proxyRes) {
+      if (_this.recordMode) {
+        reaction = {
+          type: 'response',
+          params: {
+            status: proxyRes.statusCode
+          }
+        };
+
+        var body = '';
+
+        proxyRes.on('data', function (chunk) {
+          body += chunk;
+        });
+        proxyRes.on('end', function () {
+          reaction.params.payload = body;
+          _this.codex.addBehaviour({
+            event: event,
+            reactions: [reaction],
+            loadedCounter: 1000
+          });
+        });
+      }
+    });
+
+    var middlewares = [function (req, res, next) {
+      _this.handler({ req: req, res: res, next: next });
+    }, function (req, res, next) {
+      if (_this.fallbackUrl) {
+        _this.proxy.web(req, res, { target: _this.fallbackUrl });
+      } else {
+        next();
+      }
+    }];
+
+    app.use('*', middlewares);
+
+    this.request$ = _rxjs.Observable.fromEventPattern(function (handler) {
+      _this.handler = handler;
     }).do(function (_ref) {
       var req = _ref.req,
           res = _ref.res,
@@ -127,6 +180,14 @@ var HttpWebServer = function () {
           }
         });
       });
+    }
+
+    // triggerRecordMode :: Boolean -> void
+
+  }, {
+    key: 'triggerRecordMode',
+    value: function triggerRecordMode(shouldRecord) {
+      this.recordMode = shouldRecord;
     }
 
     // saveSocketRef :: Socket -> void

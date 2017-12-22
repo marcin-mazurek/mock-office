@@ -1,15 +1,8 @@
+import { omit } from 'ramda'; 
 import serversHub from '../../serversHub';
+import { serverToResponse } from './transformers';
 
 export default function configure(ajv) {
-  const createResponseBody = server => ({
-    name: server.name,
-    port: server.webServer.port,
-    type: server.type,
-    secure: server.webServer.secure,
-    id: server.id,
-    running: server.webServer.isLive(),
-  });
-
   return (req, res) => {
     const schema = {
       properties: {
@@ -20,6 +13,9 @@ export default function configure(ajv) {
         port: {
           type: 'number',
           minimum: 3000
+        },
+        recordMode: {
+          type: 'boolean'
         },
         id: {
           type: 'string'
@@ -35,22 +31,32 @@ export default function configure(ajv) {
       return;
     }
 
-    const { id, name, port } = req.body;
+    const { id, name, port, recordMode, fallbackUrl } = req.body;
     const server = serversHub.getServer(id);
     if (!server) {
       res.status(404).end();
       return;
     }
+
     if (name) {
       server.name = name;
     }
 
+    if (fallbackUrl) {
+      server.webServer.fallbackUrl = fallbackUrl;
+    }
+
+    if (typeof recordMode !== 'undefined') {
+      server.webServer.triggerRecordMode(recordMode);
+    }
+
     if (port) {
-      server.webServer.changePort(port).then(() => {
-        res.status(200).json(createResponseBody(server));
-      });
+      server.webServer.changePort(port)
+        .then(() => {
+          res.status(200).json(omit(['behaviours'], serverToResponse(server)));
+        });
     } else {
-      res.status(200).json(createResponseBody(server));
+      res.status(200).json(omit(['behaviours'], serverToResponse(server)));
     }
   };
 }

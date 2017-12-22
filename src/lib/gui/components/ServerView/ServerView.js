@@ -11,7 +11,9 @@ const ServerView = ({
   running,
   type,
   name,
-  port
+  port,
+  fallbackUrl,
+  recordMode
 }) =>
   <div className="server-view">
     <header className="server-view__header">
@@ -21,6 +23,8 @@ const ServerView = ({
         type={type}
         name={name}
         port={port}
+        fallbackUrl={fallbackUrl}
+        recordMode={recordMode}
       />
     </header>
     <main className="server-view-main server-view__main">
@@ -46,7 +50,9 @@ ServerView.propTypes = {
   running: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  port: PropTypes.number.isRequired
+  port: PropTypes.number.isRequired,
+  fallbackUrl: PropTypes.string.isRequired,
+  recordMode: PropTypes.bool.isRequired
 };
 
 export default ServerView;
