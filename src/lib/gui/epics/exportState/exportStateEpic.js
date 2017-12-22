@@ -1,4 +1,4 @@
-import { EXPORT_BUTTON_CLICKED } from '../../components/SidebarServers/SideBarServers';
+import { EXPORT_BUTTON_CLICKED } from '../../components/SidebarServers';
 import { succeedAction } from './actions';
 
 export default action$ =>

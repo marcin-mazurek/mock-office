@@ -1,4 +1,4 @@
-import { createReducer, addNotification } from '../../modules/notifications';
+import { createReducer, addNotification } from '../../packages/notifications';
 import {
   SUCCEEDED as ADD_SERVER_SUCCEEDED,
   FAILED as ADD_SERVER_FAILED

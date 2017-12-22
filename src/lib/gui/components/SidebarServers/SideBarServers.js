@@ -7,15 +7,7 @@ import { allServersSelector } from '../../app/entities/index';
 import plusIcon from '../../../../../assets/icons_white_add.svg';
 import lockIcon from '../../../../../assets/icons_general_locked@3x.svg';
 import { currentDisplayedServerSelector } from '../../app/sidebar';
-
-export const EXPORT_BUTTON_CLICKED = 'component/sidebarServers/EXPORT_BUTTON_CLICKED';
-export const exportButtonClickedAction = () => ({
-  type: EXPORT_BUTTON_CLICKED
-});
-export const ADD_BUTTON_CLICKED = 'component/sidebarServers/ADD_BUTTON_CLICKED';
-export const addButtonClickedAction = () => ({
-  type: ADD_BUTTON_CLICKED
-});
+import { addButtonClickedAction, exportButtonClickedAction } from './actions';
 
 export const SideBarServers = ({ servers, selected, onExportButtonClick, onAddButtonClick }) => (
   <div className="sidebar-servers">
