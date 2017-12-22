@@ -1,5 +1,5 @@
 import { createReducer } from 'modalo';
-import { ADD_BUTTON_CLICKED } from '../../components/SidebarServers/SideBarServers';
+import { ADD_BUTTON_CLICKED } from '../../components/SidebarServers';
 import { ADD_BEHAVIOUR_BUTTON_CLICKED } from '../../components/ServerViewHeader/actions';
 import { FORM_SUBMITTED } from '../../components/AddHttpBehaviourForm';
 import { SUCCEED } from '../../epics/addBehaviour/actions';
