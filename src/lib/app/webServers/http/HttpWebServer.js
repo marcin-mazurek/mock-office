@@ -85,6 +85,7 @@ export default class HttpWebServer {
       },
       (req, res, next) => {
         if (this.fallbackUrl) {
+          req.url = req.originalUrl;
           this.proxy.web(req, res, { target: this.fallbackUrl });
         } else {
           next();
