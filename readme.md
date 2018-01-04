@@ -37,7 +37,7 @@ Run from command line
 
 Simple payload required for adding behaviour
 
-```
+```js
 {
   "event": {
     "type": "event type",
