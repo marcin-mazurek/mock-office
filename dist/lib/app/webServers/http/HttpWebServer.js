@@ -120,6 +120,7 @@ var HttpWebServer = function () {
       _this.handler({ req: req, res: res, next: next });
     }, function (req, res, next) {
       if (_this.fallbackUrl) {
+        req.url = req.originalUrl;
         _this.proxy.web(req, res, { target: _this.fallbackUrl });
       } else {
         next();
