@@ -1,125 +1,115 @@
 # Mock Office
 
 ![travis build status](https://travis-ci.org/xclix/mock-office.svg?branch=master) ![npm version](https://badge.fury.io/js/mock-office.svg) [![Coverage Status](https://coveralls.io/repos/github/xclix/mock-office/badge.svg?branch=master)](https://coveralls.io/github/xclix/mock-office?branch=master)
-#### Tool for running mock servers locally to faciliate frontend development. 
 
-* You can create and run multiple http and web socket servers in a second.
-* You can cover complex scenarios, including delays, backend error responses, custom headers etc.
-* You can run it locally or on shared resources, CI.
-* You can use GUI or REST to manage servers.
+**Tool for running mock servers locally to faciliate frontend development.**
 
-Command your mock server to behave as you want by adding behaviours.
+* Create and run multiple **HTTP** and **Web Socket** servers instantly.
+* Cover complex scenarios, including delays, backend error responses, custom headers etc.
+* Run it locally or on shared resources, CI.
+* Use GUI or REST to manage servers.
 
-Match events by schemas using wide known [AJV schema validator](https://github.com/epoberezkin/ajv)!
+## Table of contents:
+1. [Introduction](#introduction)
+1. [Installation](#installation)
+1. [Usage](#usage)
+1. [Adding server](#adding-server)
+1. [Adding behaviour](#adding-behaviour)
+    1. [Behaviour config object](#behaviour-config-object)
+    1. [Event config object](#event-config-object)
+    1. [Reaction config object](#reaction-config-object)
+1. [Fallback mode](#fallback-mode)
+1. [Development](#development)
+1. [Test](#test)
 
-Control reactions schedules using delays, intervals etc.
+## Introduction
+Mock Office works like respository of mock servers. Idea was to have one common interface for spawning and managing HTTP and Web Socket servers.
 
-Use your real backend sevice as fallback for your mock server to provide working endpoints when you can focus on adding new ones.
+You have two ways to interact with it.
+* REST API
+* GUI
 
-**Behaviour consists of event and reactions**
-
-* event(what happened): request from client, new connection etc.
-* reactions(what should do): send a response or emit message, disconnect etc.
-
-Currently multiple reactions for one action is usable ony for web socket servers for multiple messages, but we got way to implement more types of reactions for http server in the future.
-
-## Usage
-
-Install it globally
-
-`$ npm run install mock-office -g`
-
-Run from command line
-
-`$ mock-office [--gui]`
-
-## Adding behaviours
-
-Simple payload required for adding behaviour
-
-```js
-{
-  "event": {
-    "type": "event type",
-    "params": { // here use ajv schemas https://github.com/epoberezkin/ajv
-      "prop": {
-        "type": "string",
-        "pattern": "([A-Z])\w+"
-      }
-    }
-  },
-  "reactions": [
-    {
-      "type": "reaction type",
-      "params": {} // configuration object specific for reaction,
-      "schedule": {
-        "delay": 1000 // deffered execution
-        "interval": 1000 // time based exection
-      }
-    }
-  ]
-}
+## Instalation
+---
+Install from npm:
+```sh
+$ npm run install mock-office -g
 ```
 
-## Http server
+## Usage
+---
+```sh
+$ mock-office [--gui]
+```
 
-Event types:
+It exposes:
+* REST API: `http://localhost:3060`
+* GUI: `http://localhost:3070`
 
-* `request` - on incoming request
+## Adding server
+---
+POST `/add-server`
 
-| Params  | Type   | Description                                            |
-|---------|--------|--------------------------------------------------------|
-| method  | String | HTTP method                                            |
-| path    | String | request path                                           |
-| headers | Object | oject with props { headerName: headerValue }           |
+key|type|required|default|value|description|
+-|-|-|-|-|-|
+name|string|yes|-|any|identify your server
+type|string|yes|-|'http' or 'ws'|server type
+port|number|no|3000|any|listening port
+fallbackUrl|string|no|''|any|if provided it triggers [fallback mode](#fallback-mode)
 
+## Adding behaviours
+---
+POST `/add-behaviour`
 
-Reaction types:
+key|type|required|default|value|description|
+-|-|-|-|-|-|
+serverId|string|yes|-|any|the server id to which we want to add the behavior
+behaviour|object|yes|-|any|[behaviour config object](#behaviour-config-object)
 
-* `reponse` - send response to request
+Behaviour options<span id="behaviour-config-object"></span>
+key|type|required|default|value|description|
+-|-|-|-|-|-|
+event|[event config object](#event-config-object)|yes|-|any|event config
+reactions|array of [reaction config object](#reaction-config-object)|yes|-|any|list of reaction configs
 
-| Params  | Type   | Description                                            |
-|---------|--------|--------------------------------------------------------|
-| status  | String | HTTP status                                            |
-| method  | String | HTTP method                                            |
-| path    | String | request path                                           |
-| headers | Object | object with props { headerName: headerValue }          |
+Event options<span id="event-config-object"></span>
+key|type|required|default|value|description|
+-|-|-|-|-|-|
+type|string|yes|-|any|event type
+params|[ajv schema object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type
 
-### Fallback mode
+Reaction options<span id="reaction-config-object"></span>
+key|type|required|default|value|description|
+-|-|-|-|-|-|
+type|string|yes|-|any|reaction type
+params|[ajv schema object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type
+schedule|[schedule config object](#schedule-config-object)|no|{}|any|schedule params e.g. delay, interval
 
-Add fallback url to proxy requests when mock server can't find behaviour.
+Schedule options<span id="schedule-config-object"></span>
+key|type|required|default|value|description|
+-|-|-|-|-|-|
+delay|number|no|0|any|reaction delay in ms
+interval|number|no|0|any|interval in ms
 
-## Web socket server
+## Fallback mode
+---
+Fallback mode let you use your real API while mocking some endpoints not ready yet. This is done by mock server proxying request to fallback API when it can't find behaviour. Nevertheless when in fallback mode you can cover existing endpoints with mocked counterparts.
 
-Event types:
-
-* `connection` - when ws client is connecting to server
-
-
-* `message` - on message from client
-
-| Params  | Type   | Description         |
-|---------|--------|---------------------|
-| message | String | message from client |
-
-Reaction types:
-
-* `message` - send message to client
-
-| Params  | Type   | Description         |
-|---------|--------|---------------------|
-| message | String | message from client |
 
 ## Development
+---
 To start app development clone repo first and then:
 
 `$ npm i`
 
-`$ npm run watch`
+`$ npm run watch` runs webpack dev-server for GUI development
 
-`$ npm run pm2-run-with-gui`
+`$ npm run serve-app` runs node app
+
+`$ npm run serve-app-with-gui` runs node app with GUI events server required for GUI being updated
 
 ## Test
+---
 To run tests:
 
 `$ npm run test`
