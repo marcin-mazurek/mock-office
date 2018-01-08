@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StateFilePickerConnect } from '../StateFilePicker';
 
-const AppHeader = ({ onExportButtonClick, onImportButtonClick }) => (
+const AppHeader = ({ onExportButtonClick }) => (
   <div className="app-header">
     <button
       className="app-header__button"
@@ -9,18 +10,14 @@ const AppHeader = ({ onExportButtonClick, onImportButtonClick }) => (
     >
       Export
     </button>
-    <button
-      className="app-header__button"
-      onClick={onImportButtonClick}
-    >
-      Import
-    </button>
+    <div className="app-header__button">
+      <StateFilePickerConnect />
+    </div>
   </div>
 );
 
 AppHeader.propTypes = {
-  onExportButtonClick: PropTypes.func.isRequired,
-  onImportButtonClick: PropTypes.func.isRequired
+  onExportButtonClick: PropTypes.func.isRequired
 };
 
 export default AppHeader;

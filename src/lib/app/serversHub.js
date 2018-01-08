@@ -79,13 +79,25 @@ class ServersHub {
 
   setState(state) {
     state.forEach((s) => {
-      const id = this.add(
-        s.name, s.port, s.type, s.secure, s.keyPath, s.certPath, false
-      );
-      const server = this.getServer(id);
+      const server = this.add(s);
       s.behaviours.forEach((behaviour) => {
-        server.getScenario().addBehaviour(behaviour);
+        server.webServer.codex.addBehaviour(behaviour);
       });
+    });
+  }
+
+  import(state) {
+    const serversStoppingPromises = [];
+
+    this.servers.forEach((server) => {
+      if (server.webServer.isLive()) {
+        serversStoppingPromises.push(server.webServer.stop());
+      }
+    });
+
+    return Promise.all(serversStoppingPromises).then(() => {
+      this.servers.length = 0;
+      this.setState(state);
     });
   }
 }
