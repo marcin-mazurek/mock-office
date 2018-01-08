@@ -90,14 +90,14 @@ reactions|array of [reaction config object](#reaction-options)|yes|-|any|list of
 key|type|required|default|value|description|
 -|-|-|-|-|-|
 type|string|yes|-|any|event type|
-params|[ajv schema object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type|
+params|[ajv schema properties object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type|
 
 ### Reaction options
 
 key|type|required|default|value|description|
 -|-|-|-|-|-|
 type|string|yes|-|any|reaction type|
-params|[ajv schema object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type|
+params|[ajv schema properties object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type|
 schedule|[schedule config object](#schedule-options)|no|{}|any|schedule params e.g. delay, interval|
 
 ### Schedule options
