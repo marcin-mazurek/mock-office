@@ -1,4 +1,4 @@
-import { omit } from 'ramda'; 
+import { omit } from 'ramda';
 import serversHub from '../../serversHub';
 import { serverToResponse } from './transformers';
 

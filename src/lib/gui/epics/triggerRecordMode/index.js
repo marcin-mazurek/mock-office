@@ -8,7 +8,10 @@ export default action$ =>
     .ofType(RECORD_MODE_TRIGGER_CLICKED)
     .flatMap(action =>
       Observable
-        .from(mockOfficeService.editServer(action.serverId, { recordMode: action.recordModeChecked }))
+        .from(mockOfficeService.editServer(
+          action.serverId,
+          { recordMode: action.recordModeChecked }
+        ))
         .map(payload => succeededAction(payload))
         .catch(e => Observable.from(failedAction(e.message)))
     );

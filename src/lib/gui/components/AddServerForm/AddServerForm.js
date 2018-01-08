@@ -85,6 +85,7 @@ const AddServerForm = ({ handleSubmit, serverType }) =>
   </form>;
 
 AddServerForm.propTypes = {
+  serverType: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
 
