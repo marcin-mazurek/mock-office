@@ -9,6 +9,8 @@ var _serversHub = require('../../serversHub');
 
 var _serversHub2 = _interopRequireDefault(_serversHub);
 
+var _transformers = require('./transformers');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var schema = {
@@ -58,7 +60,7 @@ function configure(ajv) {
     }
 
     _serversHub2.default.import(req.body).then(function () {
-      res.end();
+      res.json(_serversHub2.default.getServers().map(_transformers.serverToResponse));
     });
   };
 }

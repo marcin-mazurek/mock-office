@@ -1,4 +1,5 @@
 import serversHub from '../../serversHub';
+import { serverToResponse } from './transformers';
 
 const schema = {
   type: 'array',
@@ -47,7 +48,7 @@ export default function configure(ajv) {
     }
 
     serversHub.import(req.body).then(() => {
-      res.end();
+      res.json(serversHub.getServers().map(serverToResponse));
     });
   };
 }
