@@ -15,6 +15,7 @@ import { SUCCEEDED as START_SERVER_SUCCEED } from '../../epics/startServer/actio
 import { SUCCEEDED as STOP_SERVER_SUCCEED } from '../../epics/stopServer/actions';
 import { SUCCEEDED as LOAD_STATE_ON_APP_START } from '../../epics/loadStateOnStart/actions';
 import { SUCCEEDED as TRIGGER_RECORD_MODE_SUCCEEDED } from '../../epics/triggerRecordMode/actions';
+import { SUCCEEDED as IMPORT_STATE_SUCCEEDED } from '../../epics/importState/actions';
 
 export const getInitialState = () => new Map({
   servers: new Map({
@@ -157,9 +158,10 @@ export default (state = getInitialState(), action) => {
     case EDIT_SERVER_SUCCEEDED: {
       return reducers.updateServer(state, action.result.id, action.result);
     }
+    case IMPORT_STATE_SUCCEEDED:
     case LOAD_STATE_ON_APP_START: {
       const { servers } = action;
-      let newState = state;
+      let newState = getInitialState();
 
       servers.forEach((serverParams) => {
         newState = reducers.addServer(newState, serverParams.id, serverParams);

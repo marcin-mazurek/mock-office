@@ -19,6 +19,7 @@ export default class StateFilePicker extends React.Component {
     return (
       <div className="state-file-picker">
         <label
+          className="state-file-picker__label"
           htmlFor="state-file-picker__input"
         >
           Import state

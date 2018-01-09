@@ -8,7 +8,7 @@ const AppHeader = ({ onExportButtonClick }) => (
       className="app-header__button"
       onClick={onExportButtonClick}
     >
-      Export
+      Export state
     </button>
     <div className="app-header__button">
       <StateFilePickerConnect />
