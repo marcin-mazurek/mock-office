@@ -85,6 +85,8 @@ export default class HttpWebServer {
       },
       (req, res, next) => {
         if (this.fallbackUrl) {
+          // add url property to request to path be visible to servers other than node http
+          // eslint-disable-next-line no-param-reassign
           req.url = req.originalUrl;
           this.proxy.web(req, res, { target: this.fallbackUrl });
         } else {

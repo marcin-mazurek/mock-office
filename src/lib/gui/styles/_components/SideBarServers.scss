@@ -11,15 +11,6 @@ $lock-icon-width: 20px;
   text-transform: uppercase;
 }
 
-.sidebar-servers__header-export-button {
-  @extend %button-reset;
-  display: block;
-  color: #23D1A9;
-  font-size: 12px;
-  padding: 0;
-  margin: 0;
-}
-
 .sidebar-servers-header__icon {
   font-size: 18px;
   margin-right: 10px;

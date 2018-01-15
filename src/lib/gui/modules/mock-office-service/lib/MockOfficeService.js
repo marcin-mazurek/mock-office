@@ -234,4 +234,25 @@ export default class MockOfficeService {
       throw new UnsupportedStatusError(res.status);
     });
   }
+
+  importState(state) {
+    return MockOfficeService.fetch(
+      `${this.host}/import`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(state)
+      }
+    )
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+
+        throw new InvalidRequestError(res.error);
+      });
+  }
 }

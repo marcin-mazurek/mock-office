@@ -69,6 +69,10 @@ var _getStateMiddleware = require('./middlewares/getStateMiddleware');
 
 var _getStateMiddleware2 = _interopRequireDefault(_getStateMiddleware);
 
+var _importMiddleware = require('./middlewares/importMiddleware');
+
+var _importMiddleware2 = _interopRequireDefault(_importMiddleware);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var persistentState = (0, _configurePersistentState2.default)();
@@ -89,6 +93,7 @@ var createAppServer = exports.createAppServer = function createAppServer() {
   app.get('/export', (0, _exportMiddleware2.default)());
   app.get('/behaviour', (0, _getBehaviourMiddleware2.default)(ajv));
   app.get('/state', (0, _getStateMiddleware2.default)());
+  app.post('/import', _bodyParser2.default.json(), (0, _importMiddleware2.default)(ajv));
 
   return app;
 };

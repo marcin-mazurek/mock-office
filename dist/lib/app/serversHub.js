@@ -117,11 +117,28 @@ var ServersHub = function () {
       var _this2 = this;
 
       state.forEach(function (s) {
-        var id = _this2.add(s.name, s.port, s.type, s.secure, s.keyPath, s.certPath, false);
-        var server = _this2.getServer(id);
+        var server = _this2.add(s);
         s.behaviours.forEach(function (behaviour) {
-          server.getScenario().addBehaviour(behaviour);
+          server.webServer.codex.addBehaviour(behaviour);
         });
+      });
+    }
+  }, {
+    key: 'import',
+    value: function _import(state) {
+      var _this3 = this;
+
+      var serversStoppingPromises = [];
+
+      this.servers.forEach(function (server) {
+        if (server.webServer.isLive()) {
+          serversStoppingPromises.push(server.webServer.stop());
+        }
+      });
+
+      return Promise.all(serversStoppingPromises).then(function () {
+        _this3.servers.length = 0;
+        _this3.setState(state);
       });
     }
   }]);

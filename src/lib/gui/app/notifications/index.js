@@ -22,6 +22,7 @@ import {
 import { FAILED as STOP_SERVER_FAILED } from '../../epics/stopServer/actions';
 import { SUBMIT_FAILED } from '../../components/AddHttpBehaviourForm/actions';
 import { FAILED as REMOVE_BEHAVIOUR_FAILED } from '../../epics/removeBehaviour';
+import { SUCCEEDED as IMPORT_STATE_SUCCEEDED } from '../../epics/importState/actions';
 
 export default createReducer((state, action) => {
   switch (action.type) {
@@ -61,6 +62,12 @@ export default createReducer((state, action) => {
       return addNotification(state, {
         mood: 'success',
         message: 'Server added'
+      });
+    }
+    case IMPORT_STATE_SUCCEEDED: {
+      return addNotification(state, {
+        mood: 'success',
+        message: 'State imported.'
       });
     }
     default: {

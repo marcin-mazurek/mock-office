@@ -14,6 +14,7 @@ import configureExportMiddleware from './middlewares/exportMiddleware';
 import configureGetBehaviourMiddleware from './middlewares/getBehaviourMiddleware';
 import configurePersistentState from './configurePersistentState';
 import configureGetStateMiddleware from './middlewares/getStateMiddleware';
+import configureImportMiddleware from './middlewares/importMiddleware';
 
 const persistentState = configurePersistentState();
 persistentState.restore();
@@ -33,6 +34,7 @@ export const createAppServer = () => {
   app.get('/export', configureExportMiddleware());
   app.get('/behaviour', configureGetBehaviourMiddleware(ajv));
   app.get('/state', configureGetStateMiddleware());
+  app.post('/import', bodyParser.json(), configureImportMiddleware(ajv));
 
   return app;
 };

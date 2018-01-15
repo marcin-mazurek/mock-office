@@ -8,26 +8,16 @@ import plusIcon from '../../../../../assets/icons_white_add.svg';
 import lockIcon from '../../../../../assets/icons_general_locked@3x.svg';
 import { currentDisplayedServerSelector } from '../../app/sidebar';
 
-export const EXPORT_BUTTON_CLICKED = 'component/sidebarServers/EXPORT_BUTTON_CLICKED';
-export const exportButtonClickedAction = () => ({
-  type: EXPORT_BUTTON_CLICKED
-});
 export const ADD_BUTTON_CLICKED = 'component/sidebarServers/ADD_BUTTON_CLICKED';
 export const addButtonClickedAction = () => ({
   type: ADD_BUTTON_CLICKED
 });
 
-export const SideBarServers = ({ servers, selected, onExportButtonClick, onAddButtonClick }) => (
+export const SideBarServers = ({ servers, selected, onAddButtonClick }) => (
   <div className="sidebar-servers">
     <div className="sidebar-servers__header">
       <div>
         <div>Servers</div>
-        <button
-          className="sidebar-servers__header-export-button"
-          onClick={onExportButtonClick}
-        >
-          Export
-        </button>
       </div>
       <button className="sidebar-servers__add-server-button" onClick={onAddButtonClick}>
         <img src={plusIcon} role="presentation" />
@@ -73,7 +63,6 @@ export const SideBarServers = ({ servers, selected, onExportButtonClick, onAddBu
 SideBarServers.propTypes = {
   servers: PropTypes.shape().isRequired,
   selected: PropTypes.string,
-  onExportButtonClick: PropTypes.func.isRequired,
   onAddButtonClick: PropTypes.func.isRequired
 };
 
@@ -83,7 +72,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onExportButtonClick: exportButtonClickedAction,
   onAddButtonClick: addButtonClickedAction
 };
 

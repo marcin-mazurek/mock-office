@@ -24,4 +24,3 @@ export const notificationsClickedAction = id => ({
   type: NOTIFICATION_CLICKED,
   id
 });
-

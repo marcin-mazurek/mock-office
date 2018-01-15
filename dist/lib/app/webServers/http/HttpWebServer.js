@@ -120,6 +120,8 @@ var HttpWebServer = function () {
       _this.handler({ req: req, res: res, next: next });
     }, function (req, res, next) {
       if (_this.fallbackUrl) {
+        // add url property to request to path be visible to servers other than node http
+        // eslint-disable-next-line no-param-reassign
         req.url = req.originalUrl;
         _this.proxy.web(req, res, { target: _this.fallbackUrl });
       } else {

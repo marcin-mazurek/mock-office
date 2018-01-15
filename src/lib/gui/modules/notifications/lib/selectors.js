@@ -4,4 +4,4 @@ export const allNotificationsSelector = (state) => {
   const entities = state.notifications.entities;
 
   return ids.map(id => entities[id]);
-}
+};
