@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export const currentDisplayedServerSelector = state => state.getIn(['sidebar', 'currentDisplayedServerId']);
+export const currentDisplayedServerSelector = state => state.sidebar.currentDisplayedServerId;

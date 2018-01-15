@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NotificationsConnect } from '../../modules/notifications/lib/immutable';
+import { NotificationsConnect } from '../../packages/notifications';
 import Sidebar from '../Sidebar';
 import Modal from '../Modal';
 import { AppHeaderConnect } from '../AppHeader';

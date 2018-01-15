@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import { Field } from 'redux-form/immutable';
+import { Field } from 'redux-form';
 import plusIcon from '../../../../../assets/icons_white_add.svg';
 
 const ServerTypeField = field =>
@@ -45,6 +45,7 @@ const AddServerForm = ({ handleSubmit, serverType }) =>
             className="form-field__input"
             name="port"
             type="number"
+            normalize={val => parseInt(val, 10)}
           />
         </div>
       </div>
@@ -85,8 +86,12 @@ const AddServerForm = ({ handleSubmit, serverType }) =>
   </form>;
 
 AddServerForm.propTypes = {
-  serverType: PropTypes.string.isRequired,
+  serverType: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired
+};
+
+AddServerForm.defaultProps = {
+  serverType: null
 };
 
 export default AddServerForm;

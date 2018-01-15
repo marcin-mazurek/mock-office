@@ -1,15 +1,8 @@
-import { Map } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
-const initialState = new Map({
+const initialState = {
   currentDisplayedServerId: ''
-});
-
-const resetCurrentDisplayedServer = state =>
-  state.delete('currentDisplayedServerId');
-
-const setCurrentDisplayedServer = (state, serverId) =>
-  state.set('currentDisplayedServerId', serverId);
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -23,10 +16,14 @@ export default function reducer(state = initialState, action) {
       });
 
       if (serverId) {
-        return setCurrentDisplayedServer(state, serverId);
+        return {
+          currentDisplayedServerId: serverId
+        };
       }
 
-      return resetCurrentDisplayedServer(state);
+      return {
+        currentDisplayedServerId: ''
+      };
     }
     default: {
       return state;

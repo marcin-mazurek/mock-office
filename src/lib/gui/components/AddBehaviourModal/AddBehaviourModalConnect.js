@@ -6,8 +6,8 @@ const mapStateToProps = (state) => {
   const params = paramsSelector(state);
 
   return {
-    serverType: params.get('serverType'),
-    serverId: params.get('serverId')
+    serverType: params.serverType,
+    serverId: params.serverId
   };
 };
 

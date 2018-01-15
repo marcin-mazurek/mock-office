@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FormSection } from 'redux-form/immutable';
+import { Field, FormSection } from 'redux-form';
 import Select from 'react-select';
 
 const ReactionTypeField = field =>

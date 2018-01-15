@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, FormSection, FieldArray } from 'redux-form/immutable';
+import { Field, reduxForm, FormSection, FieldArray } from 'redux-form';
 import Select from 'react-select';
 import MessageReactionSection from './MessageReactionSection';
 import { submitSucceededAction } from './actions';
@@ -107,7 +107,7 @@ export default reduxForm(
       }]
     },
     onSubmit(values) {
-      return values.toJS();
+      return values;
     },
     onSubmitSuccess(values, dispatch, props) {
       dispatch(submitSucceededAction(values, props.serverId));
