@@ -57,7 +57,7 @@ export const SideBarServers = ({ servers, selected, onAddButtonClick }) => (
 );
 
 SideBarServers.propTypes = {
-  servers: PropTypes.shape().isRequired,
+  servers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   selected: PropTypes.string,
   onAddButtonClick: PropTypes.func.isRequired
 };

@@ -1,14 +1,14 @@
-import { combineReducers } from 'redux-immutable';
-import { reducer as formReducer } from 'redux-form/immutable';
-import routingReducer from './routing/utils';
-import { reducer as entitiesReducer } from '../app/entities';
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
+import { routerReducer } from 'react-router-redux';
+import { reducer as entitiesReducer } from './entities';
 import notificationsReducer from './notifications';
 import { reducer as sidebarReducer } from './sidebar';
 import modalReducer from './modal';
 import addBehaviourReducer from './addBehaviour';
 
 export default combineReducers({
-  routing: routingReducer,
+  routing: routerReducer,
   entities: entitiesReducer,
   notifications: notificationsReducer,
   form: formReducer,

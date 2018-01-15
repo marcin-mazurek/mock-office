@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, FormSection, FieldArray, SubmissionError } from 'redux-form/immutable';
+import { Field, reduxForm, FormSection, FieldArray, SubmissionError } from 'redux-form';
 import Select from 'react-select';
 import ResponseReactionSection from './ResponseReactionSection';
 import { submitSucceededAction, submitFailedAction } from './actions';
@@ -96,27 +96,25 @@ export default reduxForm(
       }]
     },
     onSubmit(values, dispatch) {
-      const plainValues = values.toJS();
-
-      if (plainValues.reactions[0].params) {
+      if (values.reactions[0].params) {
         try {
-          plainValues.reactions[0].params = JSON.parse(plainValues.reactions[0].params);
+          JSON.parse(values.reactions[0].params);
         } catch (e) {
           dispatch(submitFailedAction('reactions[0].params: Invalid json'));
           throw new SubmissionError({ 'reactions[0].params': 'Invalid json' });
         }
       }
 
-      if (plainValues.event.params) {
+      if (values.event.params) {
         try {
-          plainValues.event.params = JSON.parse(plainValues.event.params);
+          JSON.parse(values.event.params);
         } catch (e) {
           dispatch(submitFailedAction('event.params: Invalid json'));
           throw new SubmissionError({ 'event.params': 'Invalid json' });
         }
       }
 
-      return plainValues;
+      return values;
     },
     onSubmitSuccess(values, dispatch, props) {
       dispatch(submitSucceededAction(values, props.serverId));

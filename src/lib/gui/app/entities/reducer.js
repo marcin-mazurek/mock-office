@@ -1,4 +1,4 @@
-import { List, Map, fromJS } from 'immutable';
+import { mergeDeepRight, omit } from 'ramda';
 import { Server } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
 import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServer/actions';
@@ -17,20 +17,20 @@ import { SUCCEEDED as LOAD_STATE_ON_APP_START } from '../../epics/loadStateOnSta
 import { SUCCEEDED as TRIGGER_RECORD_MODE_SUCCEEDED } from '../../epics/triggerRecordMode/actions';
 import { SUCCEEDED as IMPORT_STATE_SUCCEEDED } from '../../epics/importState/actions';
 
-export const getInitialState = () => new Map({
-  servers: new Map({
-    ids: new List(),
-    entities: new Map()
-  }),
-  reactions: new Map({
-    ids: new List(),
-    entities: new Map()
-  }),
-  behaviours: new Map({
-    ids: new List(),
-    entities: new Map()
-  })
-});
+export const initialState = {
+  servers: {
+    ids: [],
+    entities: {}
+  },
+  reactions: {
+    ids: [],
+    entities: {}
+  },
+  behaviours: {
+    ids: [],
+    entities: {}
+  }
+};
 
 export const reducers = {
   addServer(state, id, params) {
@@ -44,51 +44,92 @@ export const reducers = {
       recordMode: params.recordMode
     });
 
-    return state
-      .setIn(['servers', 'entities', server.id], server)
-      .updateIn(['servers', 'ids'], ids => ids.push(server.id));
+    return mergeDeepRight(state, {
+      servers: {
+        entities: {
+          [id]: server
+        },
+        ids: [...state.servers.ids, id]
+      }
+    });
   },
   startServer(state, id) {
-    return state.setIn(['servers', 'entities', id, 'running'], true);
+    return mergeDeepRight(state, {
+      servers: {
+        entities: {
+          [id]: {
+            running: true
+          }
+        }
+      }
+    });
   },
   stopServer(state, id) {
-    return state.setIn(['servers', 'entities', id, 'running'], false);
+    return mergeDeepRight(state, {
+      servers: {
+        entities: {
+          [id]: {
+            running: false
+          }
+        }
+      }
+    });
   },
   removeServer(state, id) {
-    let newState = state;
-
-    newState = state.updateIn(['servers', 'ids'], ids => ids.filter(serverId => serverId !== id));
-    newState = newState.deleteIn(['servers', 'entities', id]);
-    return newState;
+    return mergeDeepRight(state, {
+      servers: {
+        ids: state.servers.ids.filter(serverId => serverId !== id),
+        entities: omit([id], state.servers.entities)
+      }
+    });
   },
   updateServer(state, id, params) {
-    return state.setIn(
-      ['servers', 'entities', id],
-      new Server(Object.assign({ id }, params))
-    );
+    return mergeDeepRight(state, {
+      servers: {
+        entities: {
+          [id]: params
+        }
+      }
+    });
   },
   addBehaviour(state, serverId, params) {
-    const behaviour = fromJS(Object.assign(
-      { expired: false },
-      Object.assign({}, params, { reactions: new List() })
-    ));
+    const behaviour = Object.assign({ expired: false }, params, { reactions: [] });
 
-    return state
-      .setIn(['behaviours', 'entities', params.id], behaviour)
-      .updateIn(['behaviours', 'ids'], ids => ids.push(params.id))
-      .updateIn(['servers', 'entities', serverId, 'behaviours'], behaviours => behaviours.push(params.id));
+    return mergeDeepRight(state, {
+      behaviours: {
+        entities: {
+          [params.id]: behaviour
+        },
+        ids: [...state.behaviours.ids, params.id]
+      },
+      servers: {
+        entities: {
+          [serverId]: {
+            behaviours: [...state.servers.entities[serverId].behaviours, params.id]
+          }
+        }
+      }
+    });
   },
   addReaction(state, behaviourId, reaction) {
-    return state
-      .updateIn(['behaviours', 'entities', behaviourId, 'reactions'], reactions => reactions.push(reaction.id))
-      .updateIn(['reactions', 'ids'], ids => ids.push(reaction.id))
-      .setIn(
-        ['reactions', 'entities', reaction.id],
-        fromJS(reaction)
-      );
+    return mergeDeepRight(state, {
+      behaviours: {
+        entities: {
+          [behaviourId]: {
+            reactions: [...state.behaviours.entities[behaviourId].reactions, reaction.id]
+          }
+        }
+      },
+      reactions: {
+        ids: [...state.reactions.ids, reaction.id],
+        entities: {
+          [reaction.id]: reaction
+        }
+      }
+    });
   },
   removeBehaviour(state, serverId, behaviourId) {
-    const reactions = state.getIn(['behaviours', 'entities', behaviourId, 'reactions']);
+    const reactions = state.behaviours.entities[behaviourId].reactions;
     let newState = state;
 
     newState = reactions
@@ -96,46 +137,79 @@ export const reducers = {
       (acc, next) => reducers.removeReaction(acc, behaviourId, next),
       newState
     );
-    newState = newState
-      .updateIn(['behaviours', 'ids'], ids => ids.filter(id => id !== behaviourId))
-      .deleteIn(['behaviours', 'entities', behaviourId])
-      .updateIn(['servers', 'entities', serverId, 'behaviours'], m => m.filter(mId => mId !== behaviourId));
 
-    return newState;
+    return mergeDeepRight(newState, {
+      behaviours: {
+        ids: newState.behaviours.ids.filter(id => id !== behaviourId),
+        entities: omit([behaviourId], newState.behaviours.entities)
+      },
+      servers: {
+        entities: {
+          [serverId]: {
+            behaviours: newState.servers.entities[serverId].behaviours
+              .filter(mId => mId !== behaviourId)
+          }
+        }
+      }
+    });
   },
   removeReaction(state, behaviour, id) {
-    return state
-      .updateIn(['reactions', 'ids'], ids => ids.filter(reactionId => reactionId !== id))
-      .deleteIn(['reactions', 'entities', id])
-      .updateIn(['behaviours', 'entities', behaviour, 'reactions'], reactions => reactions.filter(reactionId => reactionId !== id));
+    return mergeDeepRight(state, {
+      reactions: {
+        ids: state.reactions.ids.filter(reactionId => reactionId !== id),
+        entities: omit([id], state.reactions.entities)
+      },
+      behaviours: {
+        entities: {
+          [behaviour]: {
+            reactions: state.behaviours.entities[behaviour].reactions
+              .filter(reactionId => reactionId !== id)
+          }
+        }
+      }
+    });
   },
   cancelReactions(state, id) {
-    const prevState = state.getIn(['behaviours', 'entities', id]);
-    return state.mergeIn(['behaviours', 'entities', id], {
-      pending: false,
-      lastDuration: Date.now() - prevState.get('lastRunTimestamp')
+    return mergeDeepRight(state, {
+      behaviours: {
+        entities: {
+          [id]: {
+            pending: false
+          }
+        }
+      }
     });
   },
   endReactions(state, id) {
-    let newState = state
-      .setIn(['behaviours', 'entities', id, 'pending'], false);
+    const runCounter = state.behaviours.entities[id].runCounter;
+    const loadedCounter = state.behaviours.entities[id].loadedCounter;
 
-    const behaviour = state.getIn(['behaviours', 'entities', id]);
-    newState = newState.updateIn(['behaviours', 'entities', id, 'runCounter'], runCounter => runCounter + 1);
-    if (behaviour.get('runCounter') === behaviour.get('loadedCounter')) {
-      newState = newState.setIn(['behaviours', 'entities', id, 'expired'], true);
-    }
-
-    return newState;
+    return mergeDeepRight(state, {
+      behaviours: {
+        entities: {
+          [id]: {
+            pending: false,
+            runCounter: runCounter + 1,
+            expired: runCounter + 1 === loadedCounter
+          }
+        }
+      }
+    });
   },
   runBehaviour(state, id) {
-    return state.mergeIn(['behaviours', 'entities', id], {
-      pending: true
+    return mergeDeepRight(state, {
+      behaviours: {
+        entities: {
+          [id]: {
+            pending: true
+          }
+        }
+      }
     });
   }
 };
 
-export default (state = getInitialState(), action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case REACTIONS_CANCELLED: {
       const { id } = action;
@@ -161,7 +235,7 @@ export default (state = getInitialState(), action) => {
     case IMPORT_STATE_SUCCEEDED:
     case LOAD_STATE_ON_APP_START: {
       const { servers } = action;
-      let newState = getInitialState();
+      let newState = initialState;
 
       servers.forEach((serverParams) => {
         newState = reducers.addServer(newState, serverParams.id, serverParams);
@@ -183,7 +257,7 @@ export default (state = getInitialState(), action) => {
     case REMOVE_SERVER_SUCCEEDED: {
       let newState = state;
       const { id } = action;
-      const server = state.getIn(['servers', 'entities', id]);
+      const server = state.servers.entities[id];
       newState = reducers.removeServer(newState, server.id);
 
       return newState;

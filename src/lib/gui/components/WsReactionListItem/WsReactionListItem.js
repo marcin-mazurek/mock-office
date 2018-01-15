@@ -1,9 +1,9 @@
 import React from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
 
 const WsReactionListItem = ({ reaction }) => {
-  const delay = reaction.getIn(['schedule', 'delay']);
-  const interval = reaction.getIn(['schedule', 'interval']);
+  const delay = reaction.schedule.delay;
+  const interval = reaction.schedule.interval;
   return (
     <div className="reaction-list-item">
       <div className="reaction-list-item__params">
@@ -31,7 +31,7 @@ const WsReactionListItem = ({ reaction }) => {
 };
 
 WsReactionListItem.propTypes = {
-  reaction: ImmutablePropTypes.map
+  reaction: PropTypes.shape({})
 };
 
 export default WsReactionListItem;

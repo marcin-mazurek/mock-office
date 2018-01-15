@@ -7,7 +7,7 @@ import App from '../../components/App';
 
 export default function configureRoutes(store) {
   const checkIfServerExists = (nextState, replace) => {
-    if (!store.getState().getIn(['entities', 'servers', 'entities', nextState.params.id])) {
+    if (!store.getState().entities.servers.entities[nextState.params.id]) {
       replace('/');
     }
   };

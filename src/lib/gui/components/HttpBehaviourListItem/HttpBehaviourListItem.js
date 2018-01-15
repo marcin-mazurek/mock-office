@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import classnames from 'classnames';
 import expandIcon from '../../../../../assets/icons_green_expand@3x.svg';
 import trashIcon from '../../../../../assets/icons_gray_trash@3x.svg';
@@ -12,10 +11,10 @@ const displayAsString = (prop) => {
     return null;
   }
 
-  if (prop.get('enum')) {
-    return prop.get('enum').toJS().join(', ');
-  } else if (prop.get('pattern')) {
-    return prop.get('pattern');
+  if (prop.enum) {
+    return prop.enum.join(', ');
+  } else if (prop.pattern) {
+    return prop.pattern;
   }
 
   return 'Any';
@@ -48,8 +47,8 @@ export default class HttpBehaviourListItem extends React.Component {
       'behaviour-list-item__reactions--visible': expanded
     });
 
-    const expired = behaviour.get('expired');
-    const pending = behaviour.get('pending');
+    const expired = behaviour.expired;
+    const pending = behaviour.pending;
     const behaviourClassNames = classnames({
       'behaviour-list-item': true,
       'behaviour-list-item--expired': expired
@@ -60,15 +59,17 @@ export default class HttpBehaviourListItem extends React.Component {
       'behaviour-list-item__expand-button--active': expanded
     });
 
-    const id = behaviour.get('id');
-    const runCounter = behaviour.get('runCounter');
-    const loadedCounter = behaviour.get('loadedCounter');
+    const id = behaviour.id;
+    const runCounter = behaviour.runCounter;
+    const loadedCounter = behaviour.loadedCounter;
     const spinnerClassNames = classnames({
       spinner: true,
       'spinner--active': pending
     });
-    const path = displayAsString(behaviour.getIn(['event', 'params', 'properties', 'path']));
-    const method = displayAsString(behaviour.getIn(['event', 'params', 'properties', 'method']));
+    const path = behaviour.event.params && behaviour.event.params.path
+      ? displayAsString(behaviour.event.params.path) : null;
+    const method = behaviour.event.params && behaviour.event.params.method
+      ? displayAsString(behaviour.event.params.method) : null;
 
     return (
       <div className={behaviourClassNames}>
@@ -92,7 +93,7 @@ export default class HttpBehaviourListItem extends React.Component {
               <div className="behaviour-list-item__event-property-label">Event type</div>
               <div className="behaviour-list-item__event-property-value">
                 {
-                  behaviour.getIn(['event', 'type']) || 'Any'
+                  behaviour.event.type || 'Any'
                 }
               </div>
             </div>
@@ -132,7 +133,7 @@ export default class HttpBehaviourListItem extends React.Component {
 }
 
 HttpBehaviourListItem.propTypes = {
-  behaviour: ImmutablePropTypes.map.isRequired,
+  behaviour: PropTypes.shape({}).isRequired,
   onRemoveButtonClick: PropTypes.func.isRequired,
   serverId: PropTypes.string.isRequired,
 };

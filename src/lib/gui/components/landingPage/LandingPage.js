@@ -13,7 +13,7 @@ LandingPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  serverExists: !allServersSelector(state).isEmpty()
+  serverExists: allServersSelector(state).length !== 0
 });
 
 export default connect(mapStateToProps)(LandingPage);
