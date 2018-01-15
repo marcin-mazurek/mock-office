@@ -62,50 +62,50 @@ Reactions are simply server commands e.g. send a http response, start sending we
 
 POST `/add-server`
 
-key|type|required|default|value|description|
--|-|-|-|-|-|
-name|string|yes|-|any|identify your server|
-type|string|yes|-|'http' or 'ws'|server type|
-port|number|no|3000|any|listening port|
-fallbackUrl|string|no|''|any|if provided it triggers [fallback mode](#fallback-mode)|
+key|type|required|default|description|
+-|-|-|-|-|
+name|string|yes|-|identify your server|
+type|string|yes|-|server type, it can be 'http' or 'ws'|
+port|number|no|3000|listening port|
+fallbackUrl|string|no|''|if provided it triggers [fallback mode](#fallback-mode)|
 
 ## Adding behaviours
 
 POST `/add-behaviour`
 
-key|type|required|default|value|description|
--|-|-|-|-|-|
-serverId|string|yes|-|any|the server id to which we want to add the behavior|
-behaviour|object|yes|-|any|[behaviour config object](#behaviour-options)|
+key|type|required|default|description|
+-|-|-|-|-|
+serverId|string|yes|-|the server id to which we want to add the behavior|
+behaviour|object|yes|-|[behaviour config object](#behaviour-options)|
 
 ### Behaviour options
 
-key|type|required|default|value|description|
--|-|-|-|-|-|
-event|[event config object](#event-options)|yes|-|any|object describing event which must happen to trigger reactions, see event types and they params for specific servers|
-reactions|array of [reaction config object](#reaction-options)|yes|-|any|list of reaction configs|
+key|type|required|default|description|
+-|-|-|-|-|
+event|[event config object](#event-options)|yes|-|object describing event which must happen to trigger reactions, see event types and they params for specific servers|
+reactions|array of [reaction config object](#reaction-options)|yes|-|list of reaction configs|
 
 ### Event options
 
-key|type|required|default|value|description|
--|-|-|-|-|-|
-type|string|yes|-|any|event type|
-params|[ajv schema properties object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type|
+key|type|required|default|description|
+-|-|-|-|-|
+type|string|yes|-|event type|
+params|[ajv schema properties object](https://github.com/epoberezkin/ajv)|no|{}| custom params specific to the event type|
 
 ### Reaction options
 
-key|type|required|default|value|description|
--|-|-|-|-|-|
-type|string|yes|-|any|reaction type|
-params|[ajv schema properties object](https://github.com/epoberezkin/ajv)|no|{}|any| custom params specific to the event type|
-schedule|[schedule config object](#schedule-options)|no|{}|any|schedule params e.g. delay, interval|
+key|type|required|default|description|
+-|-|-|-|-|
+type|string|yes|-|reaction type|
+params|[ajv schema properties object](https://github.com/epoberezkin/ajv)|no|{}| custom params specific to the event type|
+schedule|[schedule config object](#schedule-options)|no|{}|schedule params e.g. delay, interval|
 
 ### Schedule options
 
-key|type|required|default|value|description|
--|-|-|-|-|-|
-delay|number|no|0|any|reaction delay in ms|
-interval|number|no|0|any|interval in ms|
+key|type|required|default|description|
+-|-|-|-|-|
+delay|number|no|0|reaction delay in ms|
+interval|number|no|0|interval in ms|
 
 ## Fallback mode
 

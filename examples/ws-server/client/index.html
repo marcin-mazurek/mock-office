@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Tahoma, Geneva, sans-serif;
+    }
+    div {
+      display: inline;
+    }
+  </style>
+  <script>
+    var index = 1;
+    function showMessage(message) {
+      var message = document.createTextNode(index + '. ' + message);
+      var newLine = document.createElement('br');
+      document.getElementById('message').appendChild(message);
+      document.getElementById('message').appendChild(newLine);
+      index += 1;
+    }
+    var ws = new WebSocket('ws://localhost:3000');
+    ws.onmessage = function (event) {
+      console.log(event);
+      showMessage(event.data);
+
+      if (event === 'hello') {
+        ws.send('start messaging');
+      }
+    };
+    ws.onopen = function() {
+      setTimeout(function() {
+        ws.send('sportsbook/football/10757595/stats/score');
+        ws.send('sportsbook/football/10757595/stats/time');
+      }, 5000);
+    };
+
+    ws.onclose = function() {
+      showMessage('server closed');
+    };
+  </script>
+</head>
+<body>
+  <h1>Message</h1>
+  <div id="message"></div>
+</body>
+</html>
