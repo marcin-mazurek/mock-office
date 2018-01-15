@@ -1,0 +1,18 @@
+[
+  {
+    "event": {
+      "type": "connection"
+    },
+    "reactions": [
+      {
+        "type": "message",
+        "params": {
+          "message": "welcome message"
+        },
+        "schedule": {
+          "delay": 1000
+        }
+      }
+    ]
+  }
+]
