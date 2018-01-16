@@ -1,8 +1,8 @@
-import { createModalConnect, createModal } from '../../packages/modal';
+import { createReduxModal } from 'modalo';
 import AddServerModal from '../AddServerModal';
 import { AddBehaviourModalConnect } from '../AddBehaviourModal';
 
-export default createModalConnect(createModal({
+export default createReduxModal({
   AddServerModal,
   AddBehaviourModal: AddBehaviourModalConnect
-}));
+});

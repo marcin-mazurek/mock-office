@@ -1,4 +1,4 @@
-import { createReducer, openModal, closeModal } from '../../packages/modal';
+import { createReducer, openModal, closeModal } from 'modalo';
 import { ADD_BUTTON_CLICKED } from '../../components/SidebarServers';
 import { ADD_BEHAVIOUR_BUTTON_CLICKED } from '../../components/ServerViewHeader/actions';
 import { FORM_SUBMITTED } from '../../components/AddHttpBehaviourForm';
