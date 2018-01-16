@@ -1,15 +1,15 @@
 import React from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
 
 const HttpReactionListItem = ({ reaction }) => {
-  const delay = reaction.getIn(['schedule', 'delay']);
+  const delay = reaction.schedule.delay;
 
   return (
     <div className="reaction-list-item">
       <div className="reaction-list-item__event-property">
         <div className="reaction-list-item__event-property-label">Status</div>
         <div className="reaction-list-item__event-property-value">
-          { reaction.getIn(['params', 'status']) || 'Any' }
+          { reaction.params.status || 'Any' }
         </div>
       </div>
       <div className="reaction-list-item__event-property">
@@ -23,7 +23,7 @@ const HttpReactionListItem = ({ reaction }) => {
 };
 
 HttpReactionListItem.propTypes = {
-  reaction: ImmutablePropTypes.map
+  reaction: PropTypes.shape({})
 };
 
 export default HttpReactionListItem;

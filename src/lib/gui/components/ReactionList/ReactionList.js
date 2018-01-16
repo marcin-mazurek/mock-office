@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 
 const ReactionList = ({ reactions, render }) => (
   <ul className="reaction-list">
@@ -15,7 +14,7 @@ const ReactionList = ({ reactions, render }) => (
 );
 
 ReactionList.propTypes = {
-  reactions: ImmutablePropTypes.listOf(PropTypes.string).isRequired,
+  reactions: PropTypes.arrayOf(PropTypes.string).isRequired,
   render: PropTypes.func.isRequired
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form/immutable';
+import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router';
 import serverIcon from '../../../../../assets/icons_gray_server.svg';
 import { serverSelector } from '../../app/entities/index';
@@ -79,7 +79,7 @@ EditServerForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: values => dispatch(formSubmittedAction(ownProps.serverId, values.toJS()))
+  onSubmit: values => dispatch(formSubmittedAction(ownProps.serverId, values))
 });
 
 const mapStateToProps = (state, ownProps) => {

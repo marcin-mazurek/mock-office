@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 
 const BehaviourList = ({ behaviours, render }) => (
   <ul className="behaviour-list">
@@ -15,7 +14,7 @@ const BehaviourList = ({ behaviours, render }) => (
 );
 
 BehaviourList.propTypes = {
-  behaviours: ImmutablePropTypes.list.isRequired,
+  behaviours: PropTypes.arrayOf(PropTypes.string).isRequired,
   render: PropTypes.func.isRequired
 };
 

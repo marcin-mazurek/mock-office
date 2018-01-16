@@ -1,7 +1,7 @@
 @import '~font-awesome/css/font-awesome.css';
 @import '~react-select/dist/react-select.css';
-@import '~modalo/dist/modalo-renderer/Renderer';
-@import '../modules/notifications/lib/Notifications';
+@import '~modalo/dist/Renderer/Renderer';
+@import '../packages/notifications/lib/Notifications';
 @import '___settings/reset';
 @import '___settings/default-theme';
 @import '___settings/fonts';
