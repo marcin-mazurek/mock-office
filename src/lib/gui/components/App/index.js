@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NotificationsConnect } from '../../packages/notifications';
+import { NotificationsConnect } from 'xync';
 import Sidebar from '../Sidebar';
 import Modal from '../Modal';
 import { AppHeaderConnect } from '../AppHeader';

@@ -10,7 +10,7 @@ import addBehaviourReducer from './addBehaviour';
 export default combineReducers({
   routing: routerReducer,
   entities: entitiesReducer,
-  notifications: notificationsReducer,
+  xync: notificationsReducer,
   form: formReducer,
   sidebar: sidebarReducer,
   modal: modalReducer,

@@ -1,7 +1,7 @@
 @import '~font-awesome/css/font-awesome.css';
 @import '~react-select/dist/react-select.css';
 @import '~modalo/dist/Renderer/Renderer';
-@import '../packages/notifications/lib/Notifications';
+@import '~xync/dist/Notifications.css';
 @import '___settings/reset';
 @import '___settings/default-theme';
 @import '___settings/fonts';
@@ -30,4 +30,4 @@
 @import '_components/EditServerPage';
 @import '_components/AddServerForm';
 @import '_components/AddBehaviourModal';
-@import 'trumps/Notifications';
+@import 'trumps/xync';
