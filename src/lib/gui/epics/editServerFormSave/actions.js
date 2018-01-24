@@ -1,5 +1,5 @@
-export const SUCCEEDED = 'editServer/SUCCEEDED';
-export const FAILED = 'editServer/FAILED';
+export const SUCCEEDED = 'editServerFormSave/SUCCEEDED';
+export const FAILED = 'editServerFormSave/FAILED';
 export const failedAction = reason => ({
   type: FAILED,
   reason

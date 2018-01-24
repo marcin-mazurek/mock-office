@@ -6,7 +6,7 @@ export class MockOfficeRESTApiError {
 
 export class ConnectionError extends MockOfficeRESTApiError {
   constructor() {
-    super('Connection to server failed.');
+    super('Internet connection failed.');
   }
 }
 

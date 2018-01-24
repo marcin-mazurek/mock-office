@@ -1,7 +1,7 @@
 import { mergeDeepRight, omit } from 'ramda';
 import { Server } from './recordTypes';
 import { SUCCEEDED as ADD_SERVER_SUCCEED } from '../../epics/addServer/actions';
-import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServer/actions';
+import { SUCCEEDED as EDIT_SERVER_SUCCEEDED } from '../../epics/editServerFormSave/actions';
 import { SUCCEEDED as REMOVE_SERVER_SUCCEEDED } from '../../epics/removeServer/actions';
 import { SUCCEEDED as REMOVE_BEHAVIOUR_DID_SUCCEED } from '../../epics/removeBehaviour';
 import {
