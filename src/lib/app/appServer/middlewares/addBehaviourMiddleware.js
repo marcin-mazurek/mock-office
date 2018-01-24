@@ -1,5 +1,6 @@
 import serversHub from '../../serversHub';
 import { behaviourToResponse } from './transformers';
+import ajv from '../ajv';
 
 const schema = {
   properties: {
@@ -37,25 +38,23 @@ const schema = {
   required: ['serverId', 'behaviour']
 };
 
-export default function configure(ajv) {
-  return (req, res) => {
-    if (!ajv.validate(schema, req.body)) {
-      res.status(400).json({ error: `${ajv.errors[0].dataPath} ${ajv.errors[0].message}` });
+export default function addBehaviourMiddleware(req, res) {
+  if (!ajv.validate(schema, req.body)) {
+    res.status(400).json({ error: `${ajv.errors[0].dataPath} ${ajv.errors[0].message}` });
+    return;
+  }
+
+  try {
+    const server = serversHub.getServer(req.body.serverId);
+
+    if (!server) {
+      res.status(400).json({ error: 'Server not found.' });
       return;
     }
 
-    try {
-      const server = serversHub.getServer(req.body.serverId);
-
-      if (!server) {
-        res.status(400).json({ error: 'Server not found.' });
-        return;
-      }
-
-      const behaviour = server.webServer.codex.addBehaviour(req.body.behaviour);
-      res.status(200).json(behaviourToResponse(behaviour));
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
+    const behaviour = server.webServer.codex.addBehaviour(req.body.behaviour);
+    res.status(200).json(behaviourToResponse(behaviour));
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
