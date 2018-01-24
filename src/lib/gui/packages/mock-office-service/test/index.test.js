@@ -3,12 +3,15 @@ import MockOfficeService, { ConnectionError, InvalidRequestError, UnsupportedSta
 describe('MockOfficeService', () => {
   describe('.fetch', () => {
     it('should throw ConnectionError when fetch fails', () => {
-      const mos = new MockOfficeService('http://host.com');
       fetch.mockRejectOnce();
 
-      return mos.getState().catch((e) => {
+      return MockOfficeService.fetch('http://host.com').catch((e) => {
         expect(e).toBeInstanceOf(ConnectionError);
       });
+    });
+
+    it('should throw errror when no arguments have been provided', () => {
+      expect(() => MockOfficeService.fetch()).toThrow();
     });
 
     it('should throw ServerError when response status 500', () => {

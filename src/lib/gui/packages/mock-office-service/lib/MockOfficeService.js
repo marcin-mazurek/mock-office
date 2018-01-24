@@ -17,6 +17,10 @@ export default class MockOfficeService {
   }
 
   static fetch(...args) {
+    if (!args.length) {
+      throw new TypeError('Argument required, but only 0 present');
+    }
+
     return fetch(...args)
       .catch(() => {
         throw new ConnectionError();
