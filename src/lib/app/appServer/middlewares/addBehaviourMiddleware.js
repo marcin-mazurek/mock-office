@@ -16,8 +16,7 @@ const schema = {
             type: {
               type: 'string'
             }
-          },
-          required: ['type']
+          }
         },
         reactions: {
           type: 'array',
@@ -27,8 +26,7 @@ const schema = {
               type: {
                 type: 'string'
               }
-            },
-            required: ['type']
+            }
           }
         }
       },

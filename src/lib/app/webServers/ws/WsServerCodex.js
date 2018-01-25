@@ -1,6 +1,15 @@
+import { mergeDeepRight } from 'ramda';
 import MessageBehaviour from '../ws/MessageBehaviour';
 import ConnectionBehaviour from '../ws/ConnectionBehaviour';
 import Codex from '../../codex';
+
+const defaultEvent = {
+  type: 'message'
+};
+
+const defaultReaction = {
+  type: 'message'
+};
 
 export default class WsServerCodex extends Codex {
   constructor(serverId) {
@@ -11,14 +20,16 @@ export default class WsServerCodex extends Codex {
   // addBehaviour :: Object -> Behaviour
   addBehaviour(behaviourCfg) {
     let behaviour;
+    const cfg = mergeDeepRight({ event: defaultEvent }, behaviourCfg);
+    cfg.reactions = cfg.reactions.map(r => mergeDeepRight(defaultReaction, r));
 
-    switch (behaviourCfg.event.type) {
+    switch (cfg.event.type) {
       case 'message': {
-        behaviour = new MessageBehaviour(this.serverId, behaviourCfg);
+        behaviour = new MessageBehaviour(this.serverId, cfg);
         break;
       }
       case 'connection': {
-        behaviour = new ConnectionBehaviour(this.serverId, behaviourCfg);
+        behaviour = new ConnectionBehaviour(this.serverId, cfg);
         break;
       }
       default: {

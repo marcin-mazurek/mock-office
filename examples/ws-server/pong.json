@@ -1,11 +1,8 @@
 [
   {
-    "event": {
-      "type": "connection"
-    },
+    "event": {},
     "reactions": [
       {
-        "type": "message",
         "params": {
           "message": "welcome message"
         },

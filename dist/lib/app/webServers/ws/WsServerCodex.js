@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _ramda = require('ramda');
+
 var _MessageBehaviour = require('../ws/MessageBehaviour');
 
 var _MessageBehaviour2 = _interopRequireDefault(_MessageBehaviour);
@@ -26,6 +28,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var defaultEvent = {
+  type: 'message'
+};
+
+var defaultReaction = {
+  type: 'message'
+};
+
 var WsServerCodex = function (_Codex) {
   _inherits(WsServerCodex, _Codex);
 
@@ -45,16 +55,20 @@ var WsServerCodex = function (_Codex) {
     key: 'addBehaviour',
     value: function addBehaviour(behaviourCfg) {
       var behaviour = void 0;
+      var cfg = (0, _ramda.mergeDeepRight)({ event: defaultEvent }, behaviourCfg);
+      cfg.reactions = cfg.reactions.map(function (r) {
+        return (0, _ramda.mergeDeepRight)(defaultReaction, r);
+      });
 
-      switch (behaviourCfg.event.type) {
+      switch (cfg.event.type) {
         case 'message':
           {
-            behaviour = new _MessageBehaviour2.default(this.serverId, behaviourCfg);
+            behaviour = new _MessageBehaviour2.default(this.serverId, cfg);
             break;
           }
         case 'connection':
           {
-            behaviour = new _ConnectionBehaviour2.default(this.serverId, behaviourCfg);
+            behaviour = new _ConnectionBehaviour2.default(this.serverId, cfg);
             break;
           }
         default:

@@ -31,8 +31,7 @@ var schema = {
             type: {
               type: 'string'
             }
-          },
-          required: ['type']
+          }
         },
         reactions: {
           type: 'array',
@@ -42,8 +41,7 @@ var schema = {
               type: {
                 type: 'string'
               }
-            },
-            required: ['type']
+            }
           }
         }
       },

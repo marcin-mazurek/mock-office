@@ -1,5 +1,14 @@
+import { mergeDeepRight } from 'ramda';
 import RequestBehaviour from './RequestBehaviour';
 import Codex from '../../codex';
+
+const defaultEvent = {
+  type: 'request'
+};
+
+const defaultReaction = {
+  type: 'response'
+};
 
 export default class HttpServerCodex extends Codex {
   constructor(serverId) {
@@ -10,10 +19,12 @@ export default class HttpServerCodex extends Codex {
   // addBehaviour :: Object -> Behaviour
   addBehaviour(behaviourCfg) {
     let behaviour;
+    const cfg = mergeDeepRight({ event: defaultEvent }, behaviourCfg);
+    cfg.reactions = cfg.reactions.map(r => mergeDeepRight(defaultReaction, r));
 
-    switch (behaviourCfg.event.type) {
+    switch (cfg.event.type) {
       case 'request': {
-        behaviour = new RequestBehaviour(this.serverId, behaviourCfg);
+        behaviour = new RequestBehaviour(this.serverId, cfg);
         break;
       }
       default: {
