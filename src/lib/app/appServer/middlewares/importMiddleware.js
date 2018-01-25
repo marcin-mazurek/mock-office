@@ -1,5 +1,6 @@
 import serversHub from '../../serversHub';
 import { serverToResponse } from './transformers';
+import ajv from '../ajv';
 
 const schema = {
   type: 'array',
@@ -40,15 +41,13 @@ const schema = {
   }
 };
 
-export default function configure(ajv) {
-  return (req, res) => {
-    if (!ajv.validate(schema, req.body)) {
-      res.status(400).json({ error: `${ajv.errors[0].dataPath} ${ajv.errors[0].message}` });
-      return;
-    }
+export default function importMiddleware(req, res) {
+  if (!ajv.validate(schema, req.body)) {
+    res.status(400).json({ error: `${ajv.errors[0].dataPath} ${ajv.errors[0].message}` });
+    return;
+  }
 
-    serversHub.import(req.body).then(() => {
-      res.json(serversHub.getServers().map(serverToResponse));
-    });
-  };
+  serversHub.import(req.body).then(() => {
+    res.json(serversHub.getServers().map(serverToResponse));
+  });
 }

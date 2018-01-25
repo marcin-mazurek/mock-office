@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = configure;
+exports.default = getStateMiddleware;
 
 var _serversHub = require('../../serversHub');
 
@@ -13,9 +13,7 @@ var _transformers = require('./transformers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function configure() {
-  return function (req, res) {
-    res.send(_serversHub2.default.getServers().map(_transformers.serverToResponse));
-  };
+function getStateMiddleware(req, res) {
+  res.send(_serversHub2.default.getServers().map(_transformers.serverToResponse));
 }
 //# sourceMappingURL=getStateMiddleware.js.map

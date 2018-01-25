@@ -3,13 +3,17 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = configure;
+exports.default = importMiddleware;
 
 var _serversHub = require('../../serversHub');
 
 var _serversHub2 = _interopRequireDefault(_serversHub);
 
 var _transformers = require('./transformers');
+
+var _ajv = require('../ajv');
+
+var _ajv2 = _interopRequireDefault(_ajv);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52,16 +56,14 @@ var schema = {
   }
 };
 
-function configure(ajv) {
-  return function (req, res) {
-    if (!ajv.validate(schema, req.body)) {
-      res.status(400).json({ error: ajv.errors[0].dataPath + ' ' + ajv.errors[0].message });
-      return;
-    }
+function importMiddleware(req, res) {
+  if (!_ajv2.default.validate(schema, req.body)) {
+    res.status(400).json({ error: _ajv2.default.errors[0].dataPath + ' ' + _ajv2.default.errors[0].message });
+    return;
+  }
 
-    _serversHub2.default.import(req.body).then(function () {
-      res.json(_serversHub2.default.getServers().map(_transformers.serverToResponse));
-    });
-  };
+  _serversHub2.default.import(req.body).then(function () {
+    res.json(_serversHub2.default.getServers().map(_transformers.serverToResponse));
+  });
 }
 //# sourceMappingURL=importMiddleware.js.map
