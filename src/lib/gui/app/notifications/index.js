@@ -3,7 +3,7 @@ import {
   SUCCEEDED as ADD_SERVER_SUCCEEDED,
   FAILED as ADD_SERVER_FAILED
 } from '../../epics/addServer/actions';
-import { FAILED as EDIT_SERVER_FAILED } from '../../epics/editServer/actions';
+import { FAILED as EDIT_SERVER_FORM_SAVE_FAILED } from '../../epics/editServerFormSave/actions';
 import {
   FAILED as REMOVE_SERVER_FAILED,
   SUCCEEDED as REMOVE_SERVER_SUCCEEDED
@@ -38,7 +38,7 @@ export default createReducer((state, action) => {
         message: 'Behaviours imported'
       });
     }
-    case EDIT_SERVER_FAILED:
+    case EDIT_SERVER_FORM_SAVE_FAILED:
     case REMOVE_SERVER_FAILED:
     case IMPORT_BEHAVIOURS_FAILED:
     case ADD_BEHAVIOUR_FAILED:

@@ -8,7 +8,7 @@ import { removeBehaviourEpic } from './removeBehaviour';
 import addBehaviourFromFileEpic from './importBehaviour';
 import removeServerEpic from './removeServer';
 import exportStateEpic from './exportState/exportStateEpic';
-import editServerEpic from './editServer';
+import editServerFormSave from './editServerFormSave';
 import toggleServer from './toggleServer';
 import loadStateOnStart from './loadStateOnStart';
 import syncWithApp from './syncWithApp';
@@ -22,7 +22,7 @@ export default combineEpics(
   removeServerEpic,
   exportStateEpic,
   addHttpBehaviourEpic,
-  editServerEpic,
+  editServerFormSave,
   toggleServer,
   createClearExpiredNotificationsEpic(),
   loadStateOnStart,

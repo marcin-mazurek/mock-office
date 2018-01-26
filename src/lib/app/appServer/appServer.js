@@ -1,4 +1,3 @@
-import Ajv from 'ajv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -8,19 +7,19 @@ import configureRemoveServerMiddleware from './middlewares/removeServerMiddlewar
 import configureStartServerMiddleware from './middlewares/startServerMiddleware';
 import configureStopServerMiddleware from './middlewares/stopServerMiddleware';
 import configureEditServerMiddleware from './middlewares/editServerMiddleware';
-import configureAddBehaviourMiddleware from './middlewares/addBehaviourMiddleware';
+import addBehaviourMiddleware from './middlewares/addBehaviourMiddleware';
 import configureRemoveBehaviourMiddleware from './middlewares/removeBehaviourMiddleware';
 import configureExportMiddleware from './middlewares/exportMiddleware';
 import configureGetBehaviourMiddleware from './middlewares/getBehaviourMiddleware';
 import configurePersistentState from './configurePersistentState';
 import configureGetStateMiddleware from './middlewares/getStateMiddleware';
 import configureImportMiddleware from './middlewares/importMiddleware';
+import ajv from './ajv';
 
 const persistentState = configurePersistentState();
 persistentState.restore();
 
 export const createAppServer = () => {
-  const ajv = new Ajv();
   const app = express();
   app.use(cors());
 
@@ -29,7 +28,7 @@ export const createAppServer = () => {
   app.post('/start-server', bodyParser.json(), configureStartServerMiddleware(ajv));
   app.post('/stop-server', bodyParser.json(), configureStopServerMiddleware(ajv));
   app.post('/edit-server', bodyParser.json(), configureEditServerMiddleware(ajv));
-  app.post('/add-behaviour', bodyParser.json(), configureAddBehaviourMiddleware(ajv));
+  app.post('/add-behaviour', bodyParser.json(), addBehaviourMiddleware);
   app.post('/remove-behaviour', bodyParser.json(), configureRemoveBehaviourMiddleware(ajv));
   app.get('/export', configureExportMiddleware());
   app.get('/behaviour', configureGetBehaviourMiddleware(ajv));

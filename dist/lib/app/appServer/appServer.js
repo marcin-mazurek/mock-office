@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.serveAppServer = exports.createAppServer = undefined;
 
-var _ajv = require('ajv');
-
-var _ajv2 = _interopRequireDefault(_ajv);
-
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -73,27 +69,30 @@ var _importMiddleware = require('./middlewares/importMiddleware');
 
 var _importMiddleware2 = _interopRequireDefault(_importMiddleware);
 
+var _ajv = require('./ajv');
+
+var _ajv2 = _interopRequireDefault(_ajv);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var persistentState = (0, _configurePersistentState2.default)();
 persistentState.restore();
 
 var createAppServer = exports.createAppServer = function createAppServer() {
-  var ajv = new _ajv2.default();
   var app = (0, _express2.default)();
   app.use((0, _cors2.default)());
 
-  app.post('/add-server', _bodyParser2.default.json(), (0, _addServerMiddleware2.default)(ajv));
-  app.post('/remove-server', _bodyParser2.default.json(), (0, _removeServerMiddleware2.default)(ajv));
-  app.post('/start-server', _bodyParser2.default.json(), (0, _startServerMiddleware2.default)(ajv));
-  app.post('/stop-server', _bodyParser2.default.json(), (0, _stopServerMiddleware2.default)(ajv));
-  app.post('/edit-server', _bodyParser2.default.json(), (0, _editServerMiddleware2.default)(ajv));
-  app.post('/add-behaviour', _bodyParser2.default.json(), (0, _addBehaviourMiddleware2.default)(ajv));
-  app.post('/remove-behaviour', _bodyParser2.default.json(), (0, _removeBehaviourMiddleware2.default)(ajv));
+  app.post('/add-server', _bodyParser2.default.json(), (0, _addServerMiddleware2.default)(_ajv2.default));
+  app.post('/remove-server', _bodyParser2.default.json(), (0, _removeServerMiddleware2.default)(_ajv2.default));
+  app.post('/start-server', _bodyParser2.default.json(), (0, _startServerMiddleware2.default)(_ajv2.default));
+  app.post('/stop-server', _bodyParser2.default.json(), (0, _stopServerMiddleware2.default)(_ajv2.default));
+  app.post('/edit-server', _bodyParser2.default.json(), (0, _editServerMiddleware2.default)(_ajv2.default));
+  app.post('/add-behaviour', _bodyParser2.default.json(), _addBehaviourMiddleware2.default);
+  app.post('/remove-behaviour', _bodyParser2.default.json(), (0, _removeBehaviourMiddleware2.default)(_ajv2.default));
   app.get('/export', (0, _exportMiddleware2.default)());
-  app.get('/behaviour', (0, _getBehaviourMiddleware2.default)(ajv));
+  app.get('/behaviour', (0, _getBehaviourMiddleware2.default)(_ajv2.default));
   app.get('/state', (0, _getStateMiddleware2.default)());
-  app.post('/import', _bodyParser2.default.json(), (0, _importMiddleware2.default)(ajv));
+  app.post('/import', _bodyParser2.default.json(), (0, _importMiddleware2.default)(_ajv2.default));
 
   return app;
 };
