@@ -29,7 +29,7 @@
 
 Install from npm:
 ```sh
-$ npm run install mock-office -g
+$ npm install mock-office -g
 ```
 
 ## Usage
